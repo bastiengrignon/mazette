@@ -30,12 +30,8 @@
       "error",
       4,
       {
-        "SwitchCas": 1
+        "SwitchCase": 1
       }
-    ],
-    "linebreak-style": [
-      "error",
-      "windows"
     ],
     "quotes": [
       "error",
