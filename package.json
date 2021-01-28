@@ -22,10 +22,13 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+    "prestart": "npm run build:tailwind",
+    "prebuild": "npm run build:tailwind",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:tailwind": "tailwindcss build public/css/tailwind.css -c tailwind.config.js -o public/css/index.css"
   },
   "eslintConfig": {
     "extends": [
