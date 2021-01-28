@@ -23,7 +23,7 @@
   "rules": {
     "react/prop-types": "off",
     "no-var": "warn",
-    "no-unused-vars": "error",
+    "no-unused-vars": "off",
     "camelcase": "warn",
     "arrow-spacing": "error",
     "indent": [
