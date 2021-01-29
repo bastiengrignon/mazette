@@ -3,8 +3,8 @@ import {Link, useHistory} from "react-router-dom"
 import {RouterUrl, TabName} from "../../constants"
 import {BiMenuAltRight} from "react-icons/bi"
 
-const activeClass = "text-yellow-300 hover:font-normal"
-const inactiveClass = "text-white hover:text-yellow-300"
+const activeClass = "text-yellow-400 hover:font-normal"
+const inactiveClass = "text-white hover:text-yellow-400"
 
 const Navbar: React.FC = () => {
     const history = useHistory()
