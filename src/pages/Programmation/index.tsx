@@ -6,7 +6,7 @@ import Film from "../../components/Film"
 const Programmation: React.FC = () => (
     <div>
         <Navbar/>
-        <div className="flex flex-col z-10 text-my-indigo mt-10 sm:mt-28 md:mt-56 ml-24">
+        <div className="flex flex-col z-10 text-my-indigo mt-10 sm:mt-28 md:mt-56 pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
                 id={DropdownMenuName.films}>
