@@ -23,25 +23,25 @@ const Popup: React.FC<PopupProps> = ({
     open
 }) => (
     <div
-        className={`fixed z-20 inset-0 overflow-auto ${open ? "block" : "hidden"} flex`}>
+        className={`fixed z-30 inset-0 overflow-auto ${open ? "block" : "hidden"} flex`}>
         <div
-            className="absolute inset-0 z-10 bg-gray-500 opacity-75 transition-opacity flex items-start justify-center"/>
+            className="absolute inset-0 z-20 bg-gray-500 opacity-75 transition-opacity flex items-start justify-center"/>
         <div
-            className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-20 max-w-5xl rounded-md border-4 border-my-indigo">
+            className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-30 max-w-5xl rounded-md border-4 border-my-indigo">
             <div
-                className="flex justify-between items-center border-b p-2 ml-5 text-5xl bg-white rounded-lg">
+                className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white rounded-lg">
                 <div>
                     <span className="font-medium uppercase">{filmName}</span>
-                    <span className="text-4xl">&nbsp;{` de ${author}`}</span>
+                    <span className="text-base md:text-4xl">&nbsp;{` de ${author}`}</span>
                 </div>
-                <div className="flex text-xl cursor-pointer text-3xl hover:text-yellow-400">
+                <div className="flex cursor-pointer text-2xl sm:text-3xl hover:text-yellow-400">
                     <AiFillCloseCircle/>
                 </div>
             </div>
-            <div className="ml-5 mt-5 text-2xl">{date}, {location}, {duration}</div>
-            <div className="flex m-5 items-start">
-                <img src={img} alt={img} className="h-1/2"/>
-                <div className="px-5 leading-relaxed text-lg">{description}</div>
+            <div className="mx-5 mt-5 text-2xl">{date}, {location}, {duration}</div>
+            <div className="flex flex-col sm:flex-row m-5 items-start">
+                <img src={img} alt={img} className="h-1/2 mx-auto"/>
+                <div className="px-5 leading-relaxed text-sm sm:text-lg">{description}</div>
             </div>
         </div>
     </div>
