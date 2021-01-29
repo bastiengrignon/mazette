@@ -25,7 +25,7 @@ const Film: React.FC<FilmProps> = ({
     const [visibility, setVisibility] = useState<boolean>(false)
 
     return (
-        <div className="" onClick={() => setVisibility(!visibility)}>
+        <div className="pb-5 sm:pb-5" onClick={() => setVisibility(!visibility)}>
             <div className="relative w-56 h-56 cursor-pointer">
                 <img src={imgThumbnail} alt={`${filmName} ${author}`} className="w-full h-full"/>
                 <div
