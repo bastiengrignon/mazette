@@ -15,7 +15,8 @@ const Navbar: React.FC = () => {
             <img className="absolute top-0 w-full" src={`${process.env.PUBLIC_URL}/img/wave.svg`}
                 alt="Navbar Wave"/>
             <div
-                className="flex flex-col z-30 uppercase sm:mt-2 md:mt-5 lg:mt-6 xl:mt-12 md:ml-10 lg:ml-10 xl:ml-24 m-auto">
+                className={"flex flex-col z-10 uppercase sm:mt-2 md:mt-5 lg:mt-6 xl:mt-12" +
+                " md:ml-10 lg:ml-10 xl:ml-24 m-auto"}>
                 <div className="flex text-xl sm:text-4xl md:text-5xl font-medium">
                     indigo
                 </div>
@@ -25,12 +26,9 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
             <div
-                className={"fixed lg:absolute flex flex-col lg:flex-row text-right items-end" +
-                " xl:items-center bg-my-indigo w-full lg:w-3/4 right-0 top-0 text-sm sm:text-base" +
-                " md:text-2xl xl:text-3xl font-light uppercase z-10 mt-0 mr-0 md:mt-2 lg:mt-5" +
-                " xl:mt-10 lg:mr-2 xl:mr-10"}>
+                className={`fixed lg:absolute flex flex-col lg:flex-row text-right items-end xl:items-center ${burgerOpen ? "bg-my-indigo" : ""} w-full lg:w-3/4 right-0 top-0 text-sm sm:text-base md:text-2xl xl:text-3xl font-light uppercase z-0 mt-0 mr-0 md:mt-2 lg:mt-5 xl:mt-10 lg:mr-2 xl:mr-10`}>
                 <BiMenuAltRight
-                    className="transform lg:rotate-180 text-3xl border rounded-md flex items-end border-yellow-400 md:text-5xl mx-2 block lg:hidden"
+                    className="transform lg:rotate-180 text-3xl rounded-md flex items-end md:text-5xl mx-2 block lg:hidden"
                     onClick={() => setBurgerOpen(!burgerOpen)}/>
                 <Link to={RouterUrl.home}
                     className={`px-4 py-1 ${burgerOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.home
