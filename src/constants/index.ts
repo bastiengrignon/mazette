@@ -12,6 +12,12 @@ export enum TabName {
     information = "Infos Pratiques"
 }
 
+export enum DropdownMenuName {
+    films = "Courts-métrages",
+    musique = "Musique",
+    concours = "Concours"
+}
+
 export const films = [
     {
         filmName: "J'suis pas malheureuse",
@@ -48,8 +54,7 @@ export const films = [
         location: "France",
         duration: "25min",
         imgThumbnail: `${process.env.PUBLIC_URL}/img/portrait.jpg`
-    }
-    ,
+    },
     {
         filmName: "Fille dans un champ",
         author: "Sandy Nancy",
