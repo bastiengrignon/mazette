@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
                     indigo
                 </div>
                 <div
-                    className={`flex justify-end text-sm sm:text-2xl lg:text-3xl font-light sm:font-medium ${menuOpen ? "mb-16 sm:mb-0" : "mb-0"}`}>
+                    className={`flex justify-end text-yellow-400 text-sm sm:text-2xl lg:text-3xl font-light sm:font-medium ${menuOpen ? "mb-16 sm:mb-0" : "mb-0"}`}>
                     festival
                 </div>
             </div>
