@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
 import {RouterUrl, TabName} from "../../constants"
 import {BiMenuAltRight} from "react-icons/bi"
+import DropDown from "../DropDown"
 
 const activeClass = "text-yellow-400 hover:font-normal"
 const inactiveClass = "text-white hover:text-yellow-400"
@@ -35,16 +36,14 @@ const Navbar: React.FC = () => {
                         ? activeClass : inactiveClass}`}>
                     {TabName.festival}
                 </Link>
-                <Link to={RouterUrl.programmation}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.programmation ? activeClass : inactiveClass}`}>
-                    {TabName.programmation}
-                </Link>
+                <DropDown name={TabName.programmation}
+                    className={`pl-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.programmation ? activeClass : inactiveClass}`}/>
                 <Link to={RouterUrl.association}
                     className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.association ? activeClass : inactiveClass}`}>
                     {TabName.association}
                 </Link>
                 <Link to={RouterUrl.information}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full whitespace-nowrap mb-0 md:mb-4 lg:mb-0  ${history.location.pathname === RouterUrl.information ? activeClass : inactiveClass}`}>
+                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full whitespace-nowrap mb-0 md:mb-4 lg:mb-0 ${history.location.pathname === RouterUrl.information ? activeClass : inactiveClass}`}>
                     {TabName.information}
                 </Link>
             </div>
