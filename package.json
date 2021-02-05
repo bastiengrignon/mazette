@@ -1,7 +1,26 @@
 {
   "name": "indigo",
   "version": "0.1.0",
+  "description": "A website for the Indigo Festival",
   "private": true,
+  "author": {
+    "name": "Bastien Grignon",
+    "email": "basgrignon@gmail.com",
+    "url": "https://bastiengrignon.github.io/"
+  },
+  "bugs": "https://github.com/bastiengrignon/indigo/issues",
+  "keywords": [
+    "Website festival",
+    "Festival",
+    "Indigo",
+    "Festival Indigo",
+    "git",
+    "Association"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bastiengrignon/indigo"
+  },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@testing-library/jest-dom": "^5.11.9",
