@@ -1,13 +1,18 @@
 import React, {useState} from "react"
 import {HiChevronDown, HiChevronUp} from "react-icons/hi"
-import {DropdownMenuName, RouterUrl} from "../../constants"
+
+export interface DropdownItem {
+    name: string
+    link: string
+}
 
 interface DropDownProps {
     name: string
     className: string
+    items: DropdownItem[]
 }
 
-const DropDown: React.FC<DropDownProps> = ({name, className}) => {
+const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
     return (
         <div className={`${className} relative inline-flex items-center justify-end text-right`}>
@@ -20,26 +25,16 @@ const DropDown: React.FC<DropDownProps> = ({name, className}) => {
             <div
                 className={`${open ? "block" : "hidden"} absolute right-0 mt-2 w-full" +
                     " rounded-md shadow-lg text-my-indigo bg-gray-100 top-5 md:top-auto`}>
-                <div className="py-1" role="menu">
-                    <a href={`${RouterUrl.programmation}#${DropdownMenuName.films}`}
-                        onClick={() => setOpen(false)}
-                        className="block px-4 py-2 text-base hover:bg-yellow-400 hover:text-my-indigo"
-                        role="menuitem">
-                        {DropdownMenuName.films}
-                    </a>
-                    <a href={`${RouterUrl.programmation}#${DropdownMenuName.musique}`}
-                        onClick={() => setOpen(false)}
-                        className="block px-4 py-2 text-base hover:bg-yellow-400 hover:text-my-indigo"
-                        role="menuitem">
-                        {DropdownMenuName.musique}
-                    </a>
-                    <a href={`${RouterUrl.programmation}#${DropdownMenuName.concours}`}
-                        onClick={() => setOpen(false)}
-                        className="block px-4 py-2 text-base hover:bg-yellow-400 hover:text-my-indigo"
-                        role="menuitem">
-                        {DropdownMenuName.concours}
-                    </a>
-                </div>
+                {
+                    items.map((item, index) => (
+                        <a key={index} href={`${item.link}#${item.name}`}
+                            onClick={() => setOpen(false)}
+                            className="block px-4 py-2 text-base hover:bg-yellow-400 hover:text-my-indigo rounded-md"
+                            role="menuitem">
+                            {item.name}
+                        </a>
+                    ))
+                }
             </div>
         </div>
     )

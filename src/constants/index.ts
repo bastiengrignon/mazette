@@ -12,10 +12,15 @@ export enum TabName {
     information = "Infos Pratiques"
 }
 
-export enum DropdownMenuName {
+export enum DropdownMenuProgrammation {
     films = "Courts-métrages",
     musique = "Musique",
     concours = "Concours"
+}
+
+export enum DropdownMenuInformation {
+    festival = "Venir au festival",
+    contact = "Nous contacter"
 }
 
 export const films = [
