@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import Input from "../Input"
+import emailJs from "emailjs-com"
 
 const ContactForm: React.FC = () => {
     const [name, setName] = useState<string>("")
@@ -7,10 +8,24 @@ const ContactForm: React.FC = () => {
     const [subject, setSubject] = useState<string>("")
     const [message, setMessage] = useState<string>("")
 
+    const templateParameters = {
+        fromName: name,
+        userEmail: email,
+        subject: subject,
+        message: message
+    }
+
     const sendEmail = () => {
-        console.log("Send email")
         if (!!name && !!email) {
-            console.log("name: ", name, "\temail: ", email, "\nsubject: ", subject, "\nmessage: ", message)
+            emailJs.send("",
+                "template_z6zcr97",
+                templateParameters,
+                "user_e7JBBEfDXzqf5dvzTmWKz")
+                .then(response => {
+                    console.log("Success ! ", response.status, response.text)
+                }).catch(error => {
+                    console.log("Failed ! ", error)
+                })
         }
     }
 
