@@ -43,9 +43,9 @@ const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
     return (
-        <div className="flex text-white">
-            <img className="absolute top-0 w-full" src={`${process.env.PUBLIC_URL}/img/wave.svg`}
-                alt="Navbar Wave"/>
+        <div className="flex text-white bg-my-indigo">
+            {/*<img className="absolute top-0 w-full" src={`${process.env.PUBLIC_URL}/img/wave.svg`}*/}
+            {/*    alt="Navbar Wave"/>*/}
             <div
                 className={"flex flex-col z-10 uppercase sm:mt-2 md:mt-5 lg:mt-6 xl:mt-12" +
                 " md:ml-10 lg:ml-10 xl:ml-24 m-auto"}>
