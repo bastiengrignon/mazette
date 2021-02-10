@@ -2,6 +2,7 @@ import React from "react"
 import Navbar from "../../components/Navbar"
 import {DropdownMenuInformation} from "../../constants"
 import ContactForm from "../../components/ContactForm"
+import Maps from "../../components/Maps"
 
 const Information: React.FC = () => (
     <div>
@@ -12,8 +13,27 @@ const Information: React.FC = () => (
                 className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
                 Venir au festival
             </div>
+            <div className="flex flex-col lg:flex-row items-center">
+                <div className="w-full lg:w-1/2 px-2 my-5">
+                    <Maps />
+                </div>
+                <div className="text-black text-xl mx-10">
+                    <p><span className="font-extrabold">Adresse : </span>
+                        La Payotte, Gué de Mazé, 49630 Mazé-Milon
+                    </p>
+                    <p className="pt-5"><span className="font-extrabold">En voiture : </span>
+                        tourner à droite sur la D356, un parking sera prévu à l’entrée du festival
+                    </p>
+                    <p><span className="font-extrabold">En vélo : </span>
+                        5 min du centre-ville de Mazé
+                    </p>
+                    <p><span className="font-extrabold">En covoiturage : </span>
+                        utilisez Blablacar, pour une planète verte en bonne santé
+                    </p>
+                </div>
+            </div>
             <div id={DropdownMenuInformation.contact}
-                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
+                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
                 Nous contacter
             </div>
             <ContactForm/>
