@@ -85,10 +85,9 @@ const Navbar: React.FC = () => {
                 </Link>
                 <DropDown name={TabName.programmation} items={programmationItems}
                     className={`pl-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.programmation ? activeClass : inactiveClass}`}/>
-                <Link to={RouterUrl.association}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.association ? activeClass : inactiveClass}`}>
-                    {TabName.association}
-                </Link>
+
+                <DropDown name={TabName.association} items={associationItems}
+                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.association ? activeClass : inactiveClass}`}/>
 
                 <DropDown name={TabName.information} items={informationItems}
                     className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full whitespace-nowrap mb-0 md:mb-4 lg:mb-0 ${history.location.pathname === RouterUrl.information ? activeClass : inactiveClass}`}/>
