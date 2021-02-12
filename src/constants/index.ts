@@ -18,6 +18,12 @@ export enum DropdownMenuProgrammation {
     concours = "Concours"
 }
 
+export enum DropdownMenuAssociation {
+    association = "L'association",
+    equipe = "L'équipe",
+    adherer = "Adhérer"
+}
+
 export enum DropdownMenuInformation {
     festival = "Venir au festival",
     contact = "Nous contacter"

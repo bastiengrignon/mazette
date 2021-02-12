@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
 import {
+    DropdownMenuAssociation,
     DropdownMenuInformation,
     DropdownMenuProgrammation,
     RouterUrl,
@@ -24,6 +25,21 @@ const programmationItems: DropdownItem[] = [
     {
         name: DropdownMenuProgrammation.concours,
         link: RouterUrl.programmation
+    }
+]
+
+const associationItems: DropdownItem[] = [
+    {
+        name: DropdownMenuAssociation.association,
+        link: RouterUrl.association
+    },
+    {
+        name: DropdownMenuAssociation.equipe,
+        link: RouterUrl.association
+    },
+    {
+        name: DropdownMenuAssociation.adherer,
+        link: RouterUrl.association
     }
 ]
 
