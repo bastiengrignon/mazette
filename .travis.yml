@@ -8,8 +8,3 @@ cache:
     - node_modules
 script:
   - npm run build
-deploy:
-  provider: heroku
-  api_key: $heroku_token
-  on:
-    all_branches: true
