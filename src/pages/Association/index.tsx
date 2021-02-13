@@ -50,7 +50,7 @@ const Association: React.FC = () => (
                 {DropdownMenuAssociation.adherer}
             </div>
             <div className="flex flex-col my-10 items-start">
-                <iframe id="haWidget" allowTransparency={true}
+                <iframe id="haWidget"
                     src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget-bouton"/>
                 <div>
                     Propulsé par <a href="https://www.helloasso.com"
