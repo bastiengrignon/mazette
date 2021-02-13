@@ -50,13 +50,9 @@ const Association: React.FC = () => (
                 {DropdownMenuAssociation.adherer}
             </div>
             <div className="flex flex-col my-10 items-start">
-                <iframe id="haWidget"
-                    src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget-bouton"/>
-                <div>
-                    Propulsé par <a href="https://www.helloasso.com"
-                        className="hover:font-semibold hover:underline"
-                        target={"_blank"} rel={"noopener noreferrer nofollow"}>HelloAsso</a>
-                </div>
+                <iframe id="haWidget" allowTransparency={true} scrolling="auto"
+                    src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
+                    className="w-full px-2 h-screen pr-0 md:pr-10"/>
             </div>
         </div>
     </div>
