@@ -17,10 +17,15 @@ const ContactForm: React.FC = () => {
 
     const sendEmail = () => {
         if (!!name && !!email) {
-            emailJs.send("",
-                "template_z6zcr97",
+            if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
+                || process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined
+                || process.env.REACT_APP_EMAILJS_USER_ID === undefined) {
+                return
+            }
+            emailJs.send(process.env.REACT_APP_EMAILJS_SERVICE_ID,
+                process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
                 templateParameters,
-                "user_e7JBBEfDXzqf5dvzTmWKz")
+                process.env.REACT_APP_EMAILJS_USER_ID)
                 .then(response => {
                     console.log("Success ! ", response.status, response.text)
                 }).catch(error => {
