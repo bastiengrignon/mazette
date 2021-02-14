@@ -15,22 +15,19 @@ interface DropDownProps {
 const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
     return (
-        <div className={`${className} relative inline-flex items-center justify-end text-right`}>
-            <button type="button" onClick={() => setOpen(!open)}
-                className="inline-flex justify-end items-center w-full rounded-md shadow-sm text-sm sm:text-base md:text-2xl xl:text-3xl font-light uppercase focus:outline-none">
+        <div className={`relative ${className} focus:outline-none`}>
+            <button onClick={() => setOpen(!open)}
+                className="inline-flex items-center uppercase focus:outline-none">
                 {name}
                 {open ? <HiChevronUp className="mx-1"/> : <HiChevronDown className="mx-1"/>}
             </button>
-
             <div
-                className={`${open ? "block" : "hidden"} absolute right-0 mt-2 w-full" +
-                    " rounded-md shadow-lg text-my-indigo bg-gray-100 top-5 md:top-auto`}>
+                className={`${open ? "flex" : "hidden"} flex-col text-right bg-my-indigo text-white lg:absolute lg:right-0 lg:rounded`}>
                 {
                     items.map((item, index) => (
-                        <a key={index} href={`${item.link}#${item.name}`}
+                        <a key={index} href={`${item.link}#${item.name}`} role="menuitem"
                             onClick={() => setOpen(false)}
-                            className="block px-4 py-2 text-base hover:bg-yellow-400 hover:text-my-indigo rounded-md"
-                            role="menuitem">
+                            className="w-full pr-1 py-0.5 hover:bg-yellow-400 hover:text-my-indigo font-light text-sm md:text-base lg:text-xl lg:last:rounded-b lg:pl-5 lg:py-1">
                             {item.name}
                         </a>
                     ))
