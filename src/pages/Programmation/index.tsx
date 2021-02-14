@@ -8,7 +8,7 @@ const Programmation: React.FC = () => (
         <Navbar/>
         <div className="flex flex-col z-10 text-my-indigo mt-10 sm:mt-28 md:mt-56 pl-0 lg:pl-24">
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2"
                 id={DropdownMenuProgrammation.films}>
                 {DropdownMenuProgrammation.films}
             </div>
@@ -24,12 +24,12 @@ const Programmation: React.FC = () => (
                 }
             </div>
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 my-52"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52"
                 id={DropdownMenuProgrammation.musique}>
                 {DropdownMenuProgrammation.musique}
             </div>
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 my-52"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52"
                 id={DropdownMenuProgrammation.concours}>
                 {DropdownMenuProgrammation.concours}
             </div>
