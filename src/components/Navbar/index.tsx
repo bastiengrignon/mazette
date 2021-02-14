@@ -64,10 +64,12 @@ const Navbar: React.FC = () => {
     return (
         <nav
             className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4">
-            <div className="flex flex-col text-center text-xl uppercase">Festival
-                <div
-                    className="text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">Indigo</div>
-            </div>
+            <Link to={RouterUrl.home} className="flex flex-col text-center text-xl uppercase">
+                Festival
+                <div className="text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">
+                    Indigo
+                </div>
+            </Link>
             <div className="flex flex-col items-end">
                 <BiMenu className="text-3xl md:text-5xl lg:hidden"
                     onClick={() => setMenuOpen(!menuOpen)}/>
