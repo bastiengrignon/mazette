@@ -10,7 +10,8 @@ module.exports = {
     },
     variants: {
         extend: {
-            fontWeight: ["hover"]
+            fontWeight: ["hover"],
+            borderRadius: ["last"]
         },
     },
     plugins: [],
