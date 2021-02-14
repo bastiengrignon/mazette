@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
 
     return (
         <nav
-            className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4">
+            className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4 mb-10">
             <Link to={RouterUrl.home} className="flex flex-col text-center text-xl uppercase">
                 Festival
                 <div className="text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">
