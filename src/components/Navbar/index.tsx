@@ -7,11 +7,9 @@ import {
     RouterUrl,
     TabName
 } from "../../constants"
-import {BiMenuAltRight} from "react-icons/bi"
+import {BiMenu} from "react-icons/bi"
 import DropDown, {DropdownItem} from "../DropDown"
 
-const activeClass = "text-yellow-400 hover:font-normal"
-const inactiveClass = "text-white hover:text-yellow-400"
 
 const programmationItems: DropdownItem[] = [
     {
@@ -27,7 +25,6 @@ const programmationItems: DropdownItem[] = [
         link: RouterUrl.programmation
     }
 ]
-
 const associationItems: DropdownItem[] = [
     {
         name: DropdownMenuAssociation.association,
@@ -42,7 +39,6 @@ const associationItems: DropdownItem[] = [
         link: RouterUrl.association
     }
 ]
-
 const informationItems: DropdownItem[] = [
     {
         name: DropdownMenuInformation.festival,
@@ -58,41 +54,38 @@ const Navbar: React.FC = () => {
     const history = useHistory()
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
+    const activeTab = (item: string) => {
+        const activeClass = "text-yellow-400 hover:font-normal"
+        const inactiveClass = "text-white border-b-2 border-my-indigo lg:hover:border-b-2" +
+            " lg:hover:border-yellow-400 lg:hover:text-yellow-400"
+        return history.location.pathname === item ? activeClass : inactiveClass
+    }
+
     return (
-        <div className="flex text-white bg-my-indigo">
-            {/*<img className="absolute top-0 w-full" src={`${process.env.PUBLIC_URL}/img/wave.svg`}*/}
-            {/*    alt="Navbar Wave"/>*/}
-            <div
-                className={"flex flex-col z-10 uppercase sm:mt-2 md:mt-5 lg:mt-6 xl:mt-12" +
-                " md:ml-10 lg:ml-10 xl:ml-24 m-auto"}>
-                <div className="flex text-xl sm:text-4xl md:text-5xl font-medium">
-                    indigo
-                </div>
+        <nav
+            className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4">
+            <div className="flex flex-col text-center text-xl uppercase">Festival
                 <div
-                    className={`flex justify-end text-yellow-400 text-sm sm:text-2xl lg:text-3xl font-light sm:font-medium ${menuOpen ? "mb-16 sm:mb-0" : "mb-0"}`}>
-                    festival
+                    className="text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">Indigo</div>
+            </div>
+            <div className="flex flex-col items-end">
+                <BiMenu className="text-3xl md:text-5xl lg:hidden"
+                    onClick={() => setMenuOpen(!menuOpen)}/>
+                <div
+                    className={`${menuOpen ? "flex" : "hidden"} lg:flex flex-col items-end lg:flex-row lg:justify-end w-full uppercase text-base md:text-2xl xl:text-3xl`}>
+                    <Link to={RouterUrl.home}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.home)} pr-6 md:pr-8 lg:pr-0`}>
+                        {TabName.festival}
+                    </Link>
+                    <DropDown name={TabName.programmation} items={programmationItems}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.programmation)}`}/>
+                    <DropDown name={TabName.association} items={associationItems}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.association)}`}/>
+                    <DropDown name={TabName.information} items={informationItems}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.information)}`}/>
                 </div>
             </div>
-            <div
-                className={`fixed lg:absolute flex flex-col lg:flex-row text-right items-end xl:items-center ${menuOpen ? "bg-my-indigo" : ""} w-full lg:w-3/4 right-0 top-0 text-sm sm:text-base md:text-2xl xl:text-3xl font-light uppercase z-0 mt-0 mr-0 md:mt-2 lg:mt-5 xl:mt-10 lg:mr-2 xl:mr-10`}>
-                <BiMenuAltRight
-                    className="transform lg:rotate-180 text-3xl rounded-md flex items-end md:text-5xl mx-2 block lg:hidden"
-                    onClick={() => setMenuOpen(!menuOpen)}/>
-                <Link to={RouterUrl.home}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.home
-                        ? activeClass : inactiveClass}`}>
-                    {TabName.festival}
-                </Link>
-                <DropDown name={TabName.programmation} items={programmationItems}
-                    className={`pl-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.programmation ? activeClass : inactiveClass}`}/>
-
-                <DropDown name={TabName.association} items={associationItems}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full ${history.location.pathname === RouterUrl.association ? activeClass : inactiveClass}`}/>
-
-                <DropDown name={TabName.information} items={informationItems}
-                    className={`px-4 py-1 ${menuOpen ? "block" : "hidden"} lg:block w-full whitespace-nowrap mb-0 md:mb-4 lg:mb-0 ${history.location.pathname === RouterUrl.information ? activeClass : inactiveClass}`}/>
-            </div>
-        </div>
+        </nav>
     )
 }
 
