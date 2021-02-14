@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
 import {
     DropdownMenuAssociation,
-    DropdownMenuInformation,
     DropdownMenuProgrammation,
     RouterUrl,
     TabName
@@ -39,16 +38,6 @@ const associationItems: DropdownItem[] = [
         link: RouterUrl.association
     }
 ]
-const informationItems: DropdownItem[] = [
-    {
-        name: DropdownMenuInformation.festival,
-        link: RouterUrl.information
-    },
-    {
-        name: DropdownMenuInformation.contact,
-        link: RouterUrl.information
-    }
-]
 
 const Navbar: React.FC = () => {
     const history = useHistory()
@@ -83,8 +72,10 @@ const Navbar: React.FC = () => {
                         className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.programmation)}`}/>
                     <DropDown name={TabName.association} items={associationItems}
                         className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.association)}`}/>
-                    <DropDown name={TabName.information} items={informationItems}
-                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.information)}`}/>
+                    <Link to={RouterUrl.information}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 ${activeTab(RouterUrl.information)} pr-6 md:pr-8 lg:pr-0`}>
+                        {TabName.information}
+                    </Link>
                 </div>
             </div>
         </nav>
