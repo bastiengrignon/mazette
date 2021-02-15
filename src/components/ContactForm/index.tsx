@@ -13,12 +13,29 @@ const ContactForm: React.FC = () => {
     const [message, setMessage] = useState<string>("")
     const [messageSent, setMessageSent] = useState<boolean>(false)
     const [messageSentError, setMessageSentError] = useState<boolean>(false)
+    const [emailValid, setEmailValid] = useState<boolean>(true)
+    const [nameValid, setNameValid] = useState<boolean>(true)
 
     const templateParameters = {
         fromName: name,
         userEmail: email,
         subject: subject,
         message: message
+    }
+
+    const validName = (value: string) => {
+        if (value) {
+            setNameValid(true)
+            setName(value)
+        } else setNameValid(false)
+    }
+
+    const validEmail = (value: string) => {
+        const regexpEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        if (regexpEmail.test(value)) {
+            setEmailValid(true)
+            setEmail(value)
+        } else setEmailValid(false)
     }
 
     const sendEmail = () => {
@@ -40,12 +57,15 @@ const ContactForm: React.FC = () => {
         <div className="my-5 flex flex-col px-3 w-full sm:w-2/3 xl:w-2/5">
             <div className="mt-2">
                 <p>Votre nom <span className="text-2xl text-red-600">*</span></p>
-                <Input required={true} onChange={setName} className="capitalize"/>
+                <Input required={true} onChange={validName}
+                    className={`capitalize ${nameValid ? "" : "border-red-600 bg-red-200 focus:border-red-600"}`}/>
             </div>
 
             <div className="mt-2">
                 <p>Votre e-mail <span className="text-2xl text-red-600">*</span></p>
-                <Input required={true} onChange={setEmail}/>
+                <Input required={true} type="email" title={emailValid ? "" : "Email not valid"}
+                    className={emailValid ? "" : "border-red-600 bg-red-200 focus:border-red-600"}
+                    onChange={validEmail}/>
             </div>
 
             <div className="mt-2">
@@ -63,7 +83,8 @@ const ContactForm: React.FC = () => {
                         className="px-6 py-1 rounded bg-my-indigo text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-yellow-400 hover:text-my-indigo hover:font-bold focus:outline-none w-min">
                         Envoyer
                     </button>
-                    <div className={`flex w-full ml-5 ${messageSent ? "text-green-700" : "text-red-500"} font-bold`}>
+                    <div
+                        className={`flex w-full ml-5 ${messageSent ? "text-green-700" : "text-red-500"} font-bold`}>
                         {messageSent && <Notification text={successMessage}/>}
                         {!messageSent && messageSentError && <Notification text={errorMessage}/>}
                     </div>
