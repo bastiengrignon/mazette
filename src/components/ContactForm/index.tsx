@@ -40,18 +40,17 @@ const ContactForm: React.FC = () => {
         <div className="my-5 flex flex-col px-3 w-full sm:w-2/3 xl:w-2/5">
             <div className="mt-2">
                 <p>Votre nom <span className="text-2xl text-red-600">*</span></p>
-                <label><Input required={true} onChange={setName}
-                    className="capitalize"/></label>
+                <Input required={true} onChange={setName} className="capitalize"/>
             </div>
 
             <div className="mt-2">
                 <p>Votre e-mail <span className="text-2xl text-red-600">*</span></p>
-                <label><Input required={true} onChange={setEmail}/></label>
+                <Input required={true} onChange={setEmail}/>
             </div>
 
             <div className="mt-2">
                 <p>Sujet</p>
-                <label><Input onChange={setSubject}/></label>
+                <Input onChange={setSubject}/>
             </div>
 
             <div className="flex flex-col mt-2">
