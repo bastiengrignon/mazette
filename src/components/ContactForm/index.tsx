@@ -25,9 +25,8 @@ const ContactForm: React.FC = () => {
         if (!!name && !!email) {
             if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
                 || process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined
-                || process.env.REACT_APP_EMAILJS_USER_ID === undefined) {
-                return
-            }
+                || process.env.REACT_APP_EMAILJS_USER_ID === undefined) return
+
             emailJs.send(process.env.REACT_APP_EMAILJS_SERVICE_ID,
                 process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
                 templateParameters,

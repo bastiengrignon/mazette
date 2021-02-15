@@ -10,14 +10,10 @@ const Notification: React.FC<NotificationProps> = ({text, timeout = 5000}) => {
 
     useEffect(() => {
         const timer = setTimeout(() => setVisibility(false), timeout)
-        return () => {
-            clearTimeout(timer)
-        }
+        return () => clearTimeout(timer)
     }, [visibility, timeout])
 
-    return (
-        <div className={`${visibility ? "flex" : "hidden"}`}>{text}</div>
-    )
+    return <div className={`${visibility ? "flex" : "hidden"}`}>{text}</div>
 }
 
 export default Notification
