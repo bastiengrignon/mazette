@@ -1,12 +1,18 @@
 import React, {useState} from "react"
 import Input from "../Input"
 import emailJs from "emailjs-com"
+import Notification from "../Notification"
+
+const successMessage = "Votre message à bien été envoyé"
+const errorMessage = "Une erreur est survenue ! Ré-essayer plus tard"
 
 const ContactForm: React.FC = () => {
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [subject, setSubject] = useState<string>("")
     const [message, setMessage] = useState<string>("")
+    const [messageSent, setMessageSent] = useState<boolean>(false)
+    const [messageSentError, setMessageSentError] = useState<boolean>(false)
 
     const templateParameters = {
         fromName: name,
@@ -26,11 +32,8 @@ const ContactForm: React.FC = () => {
                 process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
                 templateParameters,
                 process.env.REACT_APP_EMAILJS_USER_ID)
-                .then(response => {
-                    console.log("Success ! ", response.status, response.text)
-                }).catch(error => {
-                    console.log("Failed ! ", error)
-                })
+                .then(() => setMessageSent(true))
+                .catch(() => setMessageSentError(true))
         }
     }
 
@@ -57,10 +60,16 @@ const ContactForm: React.FC = () => {
                 <label><textarea rows={5}
                     onChange={({target: {value}}) => setMessage(value)}
                     className="border border-gray-300 rounded focus:border focus:outline-none focus:border-my-indigo px-0.5 mt-1.5 w-full"/></label>
-                <button onClick={sendEmail}
-                    className="px-6 py-1 mt-2 rounded bg-my-indigo text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-yellow-400 hover:text-my-indigo hover:font-bold focus:outline-none w-min">
-                    Envoyer
-                </button>
+                <div className="flex items-center">
+                    <button onClick={sendEmail}
+                        className="px-6 py-1 rounded bg-my-indigo text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-yellow-400 hover:text-my-indigo hover:font-bold focus:outline-none w-min">
+                        Envoyer
+                    </button>
+                    <div className={`flex w-full ml-5 ${messageSent ? "text-green-700" : "text-red-500"} font-bold`}>
+                        {messageSent && <Notification text={successMessage}/>}
+                        {!messageSent && messageSentError && <Notification text={errorMessage}/>}
+                    </div>
+                </div>
             </div>
         </div>
     )
