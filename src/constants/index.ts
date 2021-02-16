@@ -45,8 +45,8 @@ export const films = [
         imgExtended: `${process.env.PUBLIC_URL}/img/malheureuse_extended.jpg`
     },
     {
-        filmName: "Gros bonhomme sur des chaises",
-        author: "Jean Pierre",
+        filmName: "Le repas dominical",
+        author: "Décile Devaux",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi" +
         " consectetur consequatur dolores excepturi exercitationem in iusto laborum magnam" +
             " quaerat quos, sint soluta ullam ut",
@@ -67,8 +67,8 @@ export const films = [
         imgThumbnail: `${process.env.PUBLIC_URL}/img/portrait.jpg`
     },
     {
-        filmName: "Fille dans un champ",
-        author: "Sandy Nancy",
+        filmName: "Anaïs s'en va en guerre",
+        author: "Marion Gervais",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi" +
             " consectetur consequatur dolores excepturi exercitationem in iusto laborum magnam" +
             " quaerat quos, sint soluta ullam ut",
