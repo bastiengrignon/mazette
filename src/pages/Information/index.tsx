@@ -9,9 +9,8 @@ const Information: React.FC = () => (
         <Navbar/>
         <div
             className="flex flex-col z-10 text-my-indigo pl-0 lg:pl-24 w-auto">
-            <div id={DropdownMenuInformation.festival}
-                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
-                Boire & Manger
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
+                {DropdownMenuInformation.food}
             </div>
             <div className="px-2 mt-5 text-black text-xl">
                 Une buvette sera proposée sur le lieu du festival, avec bière, vin et jus de fruits,

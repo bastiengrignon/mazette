@@ -26,6 +26,7 @@ export enum DropdownMenuAssociation {
 }
 
 export enum DropdownMenuInformation {
+    food = "Boire & Manger",
     festival = "Venir au festival",
     contact = "Nous contacter"
 }
