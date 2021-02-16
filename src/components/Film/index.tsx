@@ -1,6 +1,14 @@
 import React, {useState} from "react"
 import Popup from "../Popup"
 
+const randomFilmColor = (): string => {
+    const colors: string[] = ["yellow", "green", "pink", "blue"]
+    const opacities: number[] = [400]
+    const randomColor: string = colors[Math.floor(Math.random() * colors.length)]
+    const randomOpacity: number = opacities[Math.floor(Math.random() * opacities.length)]
+    return `text-${randomColor}-${randomOpacity}`
+}
+
 interface FilmProps {
     filmName: string
     author: string
@@ -26,13 +34,12 @@ const Film: React.FC<FilmProps> = ({
 
     return (
         <div className="pb-5 sm:pb-5" onClick={() => setVisibility(!visibility)}>
-            <div className="relative w-56 h-56 cursor-pointer">
-                <img src={imgThumbnail} alt={`${filmName} ${author}`} className="w-full h-full"/>
+            <div className="relative w-56 h-56 cursor-pointer transform transition duration-500 hover:scale-110">
+                <img src={imgThumbnail} alt={`${filmName} ${author}`} className="w-full h-full rounded"/>
                 <div
-                    className="absolute top-0 bottom-0 right-0 left-0 opacity-0 h-full w-full bg-yellow-400
-                     hover:opacity-100 transition ease-in duration-200 flex flex-wrap items-center justify-center text-center">
-                    <span className="font-medium uppercase text-2xl">{filmName}</span><span
-                        className="font-semibold text-xl">de {author}</span>
+                    className={`fixed top-0 h-full w-full flex flex-wrap items-center justify-center text-center ${randomFilmColor()}`}>
+                    <span className="font-medium uppercase text-2xl">{filmName}</span>
+                    <span className="font-semibold text-xl">de {author}</span>
                 </div>
             </div>
             <Popup filmName={filmName} author={author} description={description} date={date}
