@@ -13,19 +13,17 @@ import {RouterUrl} from "./constants"
 import Footer from "./components/Footer"
 
 const App: React.FC = () => (
-    <body className="flex flex-col h-full">
+    <div className="h-screen relative">
         <Router>
-            <div style={{flex: "1 0 auto"}}>
-                <Switch>
-                    <Route path={RouterUrl.programmation} component={Programmation}/>
-                    <Route path={RouterUrl.association} component={Association}/>
-                    <Route path={RouterUrl.information} component={Information}/>
-                    <Route path={RouterUrl.home} component={Home}/>
-                </Switch>
-            </div>
-            <Footer/>
+            <Switch>
+                <Route path={RouterUrl.programmation} component={Programmation}/>
+                <Route path={RouterUrl.association} component={Association}/>
+                <Route path={RouterUrl.information} component={Information}/>
+                <Route path={RouterUrl.home} component={Home}/>
+            </Switch>
         </Router>
-    </body>
+        <Footer/>
+    </div>
 )
 
 ReactDOM.render(
