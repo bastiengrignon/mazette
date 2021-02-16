@@ -21,7 +21,8 @@ export enum DropdownMenuProgrammation {
 export enum DropdownMenuAssociation {
     association = "L'association",
     equipe = "L'équipe",
-    adherer = "Adhérer"
+    adherer = "Adhérer",
+    sponsor = "Partenaires"
 }
 
 export enum DropdownMenuInformation {

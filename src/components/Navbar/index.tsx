@@ -37,6 +37,11 @@ const associationItems: DropdownItem[] = [
         name: DropdownMenuAssociation.adherer,
         link: RouterUrl.association
     }
+    ,
+    {
+        name: DropdownMenuAssociation.sponsor,
+        link: RouterUrl.association
+    }
 ]
 
 const Navbar: React.FC = () => {
