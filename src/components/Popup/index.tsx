@@ -29,7 +29,7 @@ const Popup: React.FC<PopupProps> = ({
         <div
             className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-30 max-w-5xl rounded-md border-4 border-my-indigo">
             <div
-                className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white rounded-lg">
+                className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white">
                 <div>
                     <span className="font-medium uppercase">{filmName}</span>
                     <span className="text-base md:text-4xl">&nbsp;{` de ${author}`}</span>
@@ -40,7 +40,7 @@ const Popup: React.FC<PopupProps> = ({
             </div>
             <div className="mx-5 mt-5 text-2xl">{date}, {location}, {duration}</div>
             <div className="flex flex-col sm:flex-row m-5 items-start">
-                <img src={img} alt={img} className="h-1/2 mx-auto"/>
+                <img src={img} alt={img} className="h-1/2 mx-auto rounded"/>
                 <div className="px-5 leading-relaxed text-sm sm:text-lg">{description}</div>
             </div>
         </div>
