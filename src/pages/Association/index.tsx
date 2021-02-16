@@ -49,10 +49,16 @@ const Association: React.FC = () => (
                 id={DropdownMenuAssociation.adherer}>
                 {DropdownMenuAssociation.adherer}
             </div>
-            <div className="flex flex-col my-10 items-start">
+            <div className="flex flex-col mt-10 items-start">
                 <iframe id="haWidget" allowTransparency={true} scrolling="auto"
                     src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                     className="w-full px-2 h-screen pr-0 md:pr-10"/>
+            </div>
+
+            <div
+                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                id={DropdownMenuAssociation.sponsor}>
+                {DropdownMenuAssociation.sponsor}
             </div>
         </div>
     </div>
