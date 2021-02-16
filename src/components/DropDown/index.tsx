@@ -15,12 +15,11 @@ interface DropDownProps {
 const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
     return (
-        <div className={`relative ${className} focus:outline-none`}>
-            <button onClick={() => setOpen(!open)}
-                className="inline-flex items-center uppercase focus:outline-none">
+        <div className={`relative ${className} focus:outline-none`}
+            onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+            <div className="inline-flex items-center uppercase focus:outline-none">
                 {name}
-                {open ? <HiChevronUp className="mx-1"/> : <HiChevronDown className="mx-1"/>}
-            </button>
+            </div>
             <div
                 className={`${open ? "flex" : "hidden"} flex-col text-right bg-my-indigo text-white lg:absolute lg:right-0 lg:rounded`}>
                 {
