@@ -29,7 +29,7 @@ const Popup: React.FC<PopupProps> = ({
         <div
             className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-30 max-w-5xl rounded-md border-4 border-my-indigo">
             <div
-                className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white rounded-lg">
+                className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white">
                 <div>
                     <span className="font-medium uppercase">{filmName}</span>
                     <span className="text-base md:text-4xl">&nbsp;{` de ${author}`}</span>
