@@ -19,9 +19,8 @@ const Information: React.FC = () => (
                 Vous pourrez également profiter du bar-restaurant de La Payotte, situé à deux pas du
                 lieu du festival.
             </div>
-            <div id={DropdownMenuInformation.festival}
-                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
-                Venir au festival
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
+                {DropdownMenuInformation.festival}
             </div>
             <div className="flex flex-col lg:flex-row items-center">
                 <div className="w-full lg:w-1/2 px-2 my-5">
@@ -42,9 +41,8 @@ const Information: React.FC = () => (
                     </p>
                 </div>
             </div>
-            <div id={DropdownMenuInformation.contact}
-                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
-                Nous contacter
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
+                {DropdownMenuInformation.contact}
             </div>
             <ContactForm/>
         </div>
