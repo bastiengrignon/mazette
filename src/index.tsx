@@ -13,7 +13,7 @@ import {RouterUrl} from "./constants"
 import Footer from "./components/Footer"
 
 const App: React.FC = () => (
-    <div className="h-screen relative">
+    <div className="min-h-full flex flex-col justify-between">
         <Router>
             <Switch>
                 <Route path={RouterUrl.programmation} component={Programmation}/>
