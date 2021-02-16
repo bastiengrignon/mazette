@@ -1,5 +1,4 @@
 import React, {useState} from "react"
-import {HiChevronDown, HiChevronUp} from "react-icons/hi"
 
 export interface DropdownItem {
     name: string
