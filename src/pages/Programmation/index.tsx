@@ -13,7 +13,7 @@ const Programmation: React.FC = () => (
                 {DropdownMenuProgrammation.films}
             </div>
             <div
-                className="mt-8 md:mt-16 lg:mt-20 xl:mt-24 flex flex-col sm:flex-row-reverse mx-auto justify-evenly flex-wrap lg:w-4/5 xl:w-3/5 ">
+                className="mt-10 flex flex-wrap justify-evenly mx-auto">
                 {
                     films.map((film, i) => (
                         <Film key={i} filmName={film.filmName} author={film.author}
