@@ -11,11 +11,22 @@ const Information: React.FC = () => (
             className="flex flex-col z-10 text-my-indigo pl-0 lg:pl-24 w-auto">
             <div id={DropdownMenuInformation.festival}
                 className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
+                Boire & Manger
+            </div>
+            <div className="px-2 mt-5 text-black text-xl">
+                Une buvette sera proposée sur le lieu du festival, avec bière, vin et jus de fruits,
+                ainsi que de la petite restauration (galettes saucisses).
+                <br/>
+                Vous pourrez également profiter du bar-restaurant de La Payotte, situé à deux pas du
+                lieu du festival.
+            </div>
+            <div id={DropdownMenuInformation.festival}
+                className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
                 Venir au festival
             </div>
             <div className="flex flex-col lg:flex-row items-center">
                 <div className="w-full lg:w-1/2 px-2 my-5">
-                    <Maps />
+                    <Maps/>
                 </div>
                 <div className="text-black text-xl mx-10">
                     <p><span className="font-extrabold">Adresse : </span>
