@@ -15,7 +15,7 @@ interface DropDownProps {
 const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
     return (
-        <div className={`relative ${className} focus:outline-none`}
+        <div className={`relative ${className} focus:outline-none`} onClick={() => setOpen(!open)}
             onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div className="inline-flex items-center uppercase focus:outline-none">
                 {name}
