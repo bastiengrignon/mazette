@@ -33,13 +33,13 @@ const Film: React.FC<FilmProps> = ({
     const [visibility, setVisibility] = useState<boolean>(false)
 
     return (
-        <div className="pb-5 sm:pb-5" onClick={() => setVisibility(!visibility)}>
-            <div className="relative w-56 h-56 cursor-pointer transform transition duration-500 hover:scale-110">
+        <div className="py-2" onClick={() => setVisibility(!visibility)}>
+            <div className="relative w-56 md:w-40 lg:w-72 h-56 md:h-40 lg:h-72 cursor-pointer mx-2 md:mx-4 transform transition duration-500 hover:scale-110">
                 <img src={imgThumbnail} alt={`${filmName} ${author}`} className="w-full h-full rounded"/>
                 <div
                     className={`fixed top-0 h-full w-full flex flex-wrap items-center justify-center text-center ${randomFilmColor()}`}>
-                    <span className="font-medium uppercase text-2xl">{filmName}</span>
-                    <span className="font-semibold text-xl">de {author}</span>
+                    <span className="font-medium uppercase text-xl sm:text-2xl w-full">{filmName}</span>
+                    <span className="font-semibold text-md sm:text-xl w-full">de {author}</span>
                 </div>
             </div>
             <Popup filmName={filmName} author={author} description={description} date={date}
