@@ -1,5 +1,5 @@
 import React from "react"
-import {associationTitle} from "../../constants"
+import {associationTitle, staticImgFolder} from "../../constants"
 import Navbar from "../../components/Navbar"
 
 const Association: React.FC = () => (
@@ -12,7 +12,7 @@ const Association: React.FC = () => (
                 {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
             <div className="flex flex-col xl:flex-row my-10 items-center">
-                <img src={`${process.env.PUBLIC_URL}/img/mazette_association.png`}
+                <img src={`${staticImgFolder}/mazette_association.png`}
                     alt="Association Mazette Image"
                     className="w-10/12 md:w-9/12 xl:w-1/4 h-full px-5 mx-auto"/>
                 <p className="text-sm sm:text-2xl md:text-4xl mx-5 md:mx-10 mt-5 xl:mt-0">
@@ -35,13 +35,13 @@ const Association: React.FC = () => (
                 Mazette! C’est qui ?
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap my-10 items-center">
-                <img src={`${process.env.PUBLIC_URL}/img/mathilde_trombinoscope.png`}
-                    alt="Mathilde" className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${process.env.PUBLIC_URL}/img/lea_trombinoscope.png`} alt="Léa"
+                <img src={`${staticImgFolder}/mathilde_trombinoscope.png`} alt="Mathilde"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${process.env.PUBLIC_URL}/img/lisa_trombinoscope.png`} alt="Lisa"
+                <img src={`${staticImgFolder}/lea_trombinoscope.png`} alt="Léa"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${process.env.PUBLIC_URL}/img/marine_trombinoscope.png`} alt="Marine"
+                <img src={`${staticImgFolder}/lisa_trombinoscope.png`} alt="Lisa"
+                    className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
+                <img src={`${staticImgFolder}/marine_trombinoscope.png`} alt="Marine"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
             </div>
             <div
