@@ -26,7 +26,7 @@ const Information: React.FC = () => (
                 <div className="w-full lg:w-1/2 px-2 my-5">
                     <Maps/>
                 </div>
-                <div className="text-black text-xl mx-10">
+                <div className="text-black text-lg sm:text-xl mx-10">
                     <p><span className="font-extrabold">Adresse : </span>
                         La Payotte, Gué de Mazé, 49630 Mazé-Milon
                     </p>
