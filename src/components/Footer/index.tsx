@@ -1,5 +1,6 @@
 import React from "react"
 import {FaFacebookF, FaInstagram} from "react-icons/fa"
+import {associationTitle, RouterUrl} from "../../constants"
 
 const links = {
     instagram: "https://instagram.com/",
@@ -16,7 +17,11 @@ const Footer: React.FC = () => (
                 <FaFacebookF className="mx-2"/>
             </a>
         </div>
-        <div className="uppercase">Partenaires</div>
+        <div className="uppercase">
+            <a href={`${RouterUrl.association}#${associationTitle.sponsor}`}>
+                Partenaires
+            </a>
+        </div>
         <div className="italic">Mentions Légales /// crédits</div>
     </footer>
 )
