@@ -1,3 +1,6 @@
+const filmsImgFolder = `${process.env.PUBLIC_URL}/img/films`
+export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
+
 export enum RouterUrl {
     home = "/",
     programmation = "/programmation",
@@ -43,8 +46,8 @@ export const films = [
         date: "2018",
         location: "France",
         duration: "45min",
-        imgThumbnail: `${process.env.PUBLIC_URL}/img/malheureuse.jpg`,
-        imgExtended: `${process.env.PUBLIC_URL}/img/malheureuse_extended.jpg`
+        imgThumbnail: `${filmsImgFolder}/malheureuse.jpg`,
+        imgExtended: `${filmsImgFolder}/malheureuse_extended.jpg`
     },
     {
         filmName: "Le repas dominical",
@@ -55,7 +58,7 @@ export const films = [
         date: "2018",
         location: "France",
         duration: "39min",
-        imgThumbnail: `${process.env.PUBLIC_URL}/img/chair.jpg`
+        imgThumbnail: `${filmsImgFolder}/chair.jpg`
     },
     {
         filmName: "L'homme au sourire",
@@ -66,7 +69,7 @@ export const films = [
         date: "2018",
         location: "France",
         duration: "25min",
-        imgThumbnail: `${process.env.PUBLIC_URL}/img/portrait.jpg`
+        imgThumbnail: `${filmsImgFolder}/portrait.jpg`
     },
     {
         filmName: "Anaïs s'en va en guerre",
@@ -77,6 +80,6 @@ export const films = [
         date: "2016",
         location: "Américain",
         duration: "1h15min",
-        imgThumbnail: `${process.env.PUBLIC_URL}/img/leaf.jpg`
+        imgThumbnail: `${filmsImgFolder}/leaf.jpg`
     }
 ]
