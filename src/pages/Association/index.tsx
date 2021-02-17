@@ -1,6 +1,6 @@
 import React from "react"
+import {associationTitle} from "../../constants"
 import Navbar from "../../components/Navbar"
-import {DropdownMenuAssociation} from "../../constants"
 
 const Association: React.FC = () => (
     <div>
@@ -8,8 +8,8 @@ const Association: React.FC = () => (
         <div className="text-my-indigo pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
-                id={DropdownMenuAssociation.association}>
-                {DropdownMenuAssociation.association} <span className="italic"> Mazette!</span>
+                id={associationTitle.association}>
+                {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
             <div className="flex flex-col xl:flex-row my-10 items-center">
                 <img src={`${process.env.PUBLIC_URL}/img/mazette_association.png`}
@@ -31,7 +31,7 @@ const Association: React.FC = () => (
             </div>
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
-                id={DropdownMenuAssociation.equipe}>
+                id={associationTitle.equipe}>
                 Mazette! C’est qui ?
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap my-10 items-center">
@@ -46,8 +46,8 @@ const Association: React.FC = () => (
             </div>
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
-                id={DropdownMenuAssociation.adherer}>
-                {DropdownMenuAssociation.adherer}
+                id={associationTitle.adherer}>
+                {associationTitle.adherer}
             </div>
             <div className="flex flex-col mt-10 items-start">
                 <iframe id="haWidget" allowTransparency={true} scrolling="auto"
@@ -57,8 +57,8 @@ const Association: React.FC = () => (
 
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
-                id={DropdownMenuAssociation.sponsor}>
-                {DropdownMenuAssociation.sponsor}
+                id={associationTitle.sponsor}>
+                {associationTitle.sponsor}
             </div>
         </div>
     </div>

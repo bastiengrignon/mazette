@@ -1,8 +1,8 @@
 import React from "react"
-import Navbar from "../../components/Navbar"
-import {DropdownMenuInformation} from "../../constants"
+import {informationTitle} from "../../constants"
 import ContactForm from "../../components/ContactForm"
 import Maps from "../../components/Maps"
+import Navbar from "../../components/Navbar"
 
 const Information: React.FC = () => (
     <div>
@@ -10,7 +10,7 @@ const Information: React.FC = () => (
         <div
             className="flex flex-col z-10 text-my-indigo pl-0 lg:pl-24 w-auto">
             <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
-                {DropdownMenuInformation.food}
+                {informationTitle.food}
             </div>
             <div className="px-2 mt-5 text-black text-xl">
                 Une buvette sera proposée sur le lieu du festival, avec bière, vin et jus de fruits,
@@ -20,7 +20,7 @@ const Information: React.FC = () => (
                 lieu du festival.
             </div>
             <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
-                {DropdownMenuInformation.festival}
+                {informationTitle.festival}
             </div>
             <div className="flex flex-col lg:flex-row items-center">
                 <div className="w-full lg:w-1/2 px-2 my-5">
@@ -42,7 +42,7 @@ const Information: React.FC = () => (
                 </div>
             </div>
             <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
-                {DropdownMenuInformation.contact}
+                {informationTitle.contact}
             </div>
             <ContactForm/>
         </div>

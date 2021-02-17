@@ -1,45 +1,44 @@
 import React, {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
 import {
-    DropdownMenuAssociation,
-    DropdownMenuProgrammation,
+    associationTitle,
+    programmationTitle,
     RouterUrl,
     TabName
 } from "../../constants"
 import {BiMenu} from "react-icons/bi"
 import DropDown, {DropdownItem} from "../DropDown"
 
-
 const programmationItems: DropdownItem[] = [
     {
-        name: DropdownMenuProgrammation.films,
+        name: programmationTitle.films,
         link: RouterUrl.programmation
     },
     {
-        name: DropdownMenuProgrammation.musique,
+        name: programmationTitle.musique,
         link: RouterUrl.programmation
     },
     {
-        name: DropdownMenuProgrammation.concours,
+        name: programmationTitle.concours,
         link: RouterUrl.programmation
     }
 ]
 const associationItems: DropdownItem[] = [
     {
-        name: DropdownMenuAssociation.association,
+        name: associationTitle.association,
         link: RouterUrl.association
     },
     {
-        name: DropdownMenuAssociation.equipe,
+        name: associationTitle.equipe,
         link: RouterUrl.association
     },
     {
-        name: DropdownMenuAssociation.adherer,
+        name: associationTitle.adherer,
         link: RouterUrl.association
     }
     ,
     {
-        name: DropdownMenuAssociation.sponsor,
+        name: associationTitle.sponsor,
         link: RouterUrl.association
     }
 ]

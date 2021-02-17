@@ -1,7 +1,7 @@
 import React from "react"
-import Navbar from "../../components/Navbar"
-import {DropdownMenuProgrammation, films} from "../../constants"
+import {programmationTitle, films} from "../../constants"
 import Film from "../../components/Film"
+import Navbar from "../../components/Navbar"
 
 const Programmation: React.FC = () => (
     <div>
@@ -9,8 +9,8 @@ const Programmation: React.FC = () => (
         <div className="flex flex-col z-10 text-my-indigo pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2"
-                id={DropdownMenuProgrammation.films}>
-                {DropdownMenuProgrammation.films}
+                id={programmationTitle.films}>
+                {programmationTitle.films}
             </div>
             <div
                 className="mt-10 flex flex-wrap justify-evenly mx-auto">
@@ -25,13 +25,13 @@ const Programmation: React.FC = () => (
             </div>
             <div
                 className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52"
-                id={DropdownMenuProgrammation.musique}>
-                {DropdownMenuProgrammation.musique}
+                id={programmationTitle.musique}>
+                {programmationTitle.musique}
             </div>
             <div
                 className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52"
-                id={DropdownMenuProgrammation.concours}>
-                {DropdownMenuProgrammation.concours}
+                id={programmationTitle.concours}>
+                {programmationTitle.concours}
             </div>
         </div>
     </div>

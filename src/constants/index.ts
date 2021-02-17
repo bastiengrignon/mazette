@@ -12,20 +12,20 @@ export enum TabName {
     information = "Infos Pratiques"
 }
 
-export enum DropdownMenuProgrammation {
+export enum programmationTitle {
     films = "Courts-métrages",
     musique = "Musique",
     concours = "Concours"
 }
 
-export enum DropdownMenuAssociation {
+export enum associationTitle {
     association = "L'association",
     equipe = "L'équipe",
     adherer = "Adhérer",
     sponsor = "Partenaires"
 }
 
-export enum DropdownMenuInformation {
+export enum informationTitle {
     food = "Boire & Manger",
     festival = "Venir au festival",
     contact = "Nous contacter"
