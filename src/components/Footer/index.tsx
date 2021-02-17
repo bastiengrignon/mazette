@@ -3,7 +3,7 @@ import {FaFacebookF, FaInstagram} from "react-icons/fa"
 import {associationTitle, RouterUrl} from "../../constants"
 
 const links = {
-    instagram: "https://instagram.com/",
+    instagram: "https://www.instagram.com/festivalindigo/?hl=fr",
     facebook: "https://facebook.com/"
 }
 
