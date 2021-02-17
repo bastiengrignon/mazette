@@ -12,9 +12,9 @@ const Association: React.FC = () => (
                 {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
             <div className="flex flex-col xl:flex-row my-10 items-center">
-                <img src={`${staticImgFolder}/mazette_association.png`}
+                <img src={`${staticImgFolder}/logo_mazette.svg`}
                     alt="Association Mazette Image"
-                    className="w-10/12 md:w-9/12 xl:w-1/4 h-full px-5 mx-auto"/>
+                    className="w-9/12 md:w-1/2 xl:w-1/3 h-full px-5 mx-auto"/>
                 <p className="text-sm sm:text-2xl md:text-4xl mx-5 md:mx-10 mt-5 xl:mt-0">
                     Mazette!, c’est avant tout l’histoire d’une bande de copines qui, pour la
                     plupart, ont grandi ensemble sur le territoire Mazéiais. C’est aussi une
