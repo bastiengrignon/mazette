@@ -35,13 +35,13 @@ const Association: React.FC = () => (
                 Mazette! C’est qui ?
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap my-10 items-center">
-                <img src={`${staticImgFolder}/mathilde_trombinoscope.png`} alt="Mathilde"
+                <img src={`${staticImgFolder}/trombi_mathilde.png`} alt="Mathilde"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${staticImgFolder}/lea_trombinoscope.png`} alt="Léa"
+                <img src={`${staticImgFolder}/trombi_lea.png`} alt="Léa"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${staticImgFolder}/lisa_trombinoscope.png`} alt="Lisa"
+                <img src={`${staticImgFolder}/trombi_lisa.png`} alt="Lisa"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
-                <img src={`${staticImgFolder}/marine_trombinoscope.png`} alt="Marine"
+                <img src={`${staticImgFolder}/trombi_marine.png`} alt="Marine"
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
             </div>
             <div
