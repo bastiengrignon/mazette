@@ -48,7 +48,7 @@ const Association: React.FC = () => (
                 {associationTitle.adherer}
             </div>
             <div className="flex flex-col mt-10 items-start">
-                <iframe id="haWidget" allowTransparency={true} scrolling="auto"
+                <iframe id="haWidget" scrolling="auto"
                     src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                     className="w-full px-2 h-screen pr-0 md:pr-10"/>
             </div>
