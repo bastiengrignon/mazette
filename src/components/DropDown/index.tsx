@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import {NavHashLink} from "react-router-hash-link"
 import {activeClass, inactiveClass} from "../Navbar"
 
@@ -17,14 +17,14 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
     const [isParentActive, setIsParentActive] = useState<boolean>(false)
 
-    const isActive = (match) => {
+    /*    const isActive = (match) => {
         if (!match) {
             setIsParentActive(false)
             return false
         }
         setIsParentActive(true)
         return true
-    }
+    }*/
 
     const handleActiveState = (itemLink) => {
         setOpen(false)
