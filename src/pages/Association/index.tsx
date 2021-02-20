@@ -1,10 +1,8 @@
 import React from "react"
 import {associationTitle, staticImgFolder} from "../../constants"
-import Navbar from "../../components/Navbar"
 
 const Association: React.FC = () => (
     <div>
-        <Navbar/>
         <div className="text-my-indigo pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"

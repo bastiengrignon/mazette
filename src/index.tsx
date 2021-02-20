@@ -11,10 +11,12 @@ import Information from "./pages/Information"
 import Home from "./pages/Home"
 import {RouterUrl} from "./constants"
 import Footer from "./components/Footer"
+import Navbar from "./components/Navbar"
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
         <Router>
+            <Navbar/>
             <Switch>
                 <Route path={RouterUrl.programmation} component={Programmation}/>
                 <Route path={RouterUrl.association} component={Association}/>
