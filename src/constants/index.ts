@@ -1,9 +1,11 @@
+import {DropdownItem} from "../components/DropDown"
+
 const filmsImgFolder = `${process.env.PUBLIC_URL}/img/films`
 const filmsImgNBFolder = `${filmsImgFolder}/nb`
 export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
 
 export enum RouterUrl {
-    home = "/",
+    home = "/accueil",
     programmation = "/programmation",
     association = "/association",
     information = "/information"
@@ -34,6 +36,40 @@ export enum informationTitle {
     festival = "Venir au festival",
     contact = "Nous contacter"
 }
+
+export const programmationItems: DropdownItem[] = [
+    {
+        name: programmationTitle.films,
+        link: RouterUrl.programmation
+    },
+    {
+        name: programmationTitle.musique,
+        link: RouterUrl.programmation
+    },
+    {
+        name: programmationTitle.concours,
+        link: RouterUrl.programmation
+    }
+]
+export const associationItems: DropdownItem[] = [
+    {
+        name: associationTitle.association,
+        link: RouterUrl.association
+    },
+    {
+        name: associationTitle.equipe,
+        link: RouterUrl.association
+    },
+    {
+        name: associationTitle.adherer,
+        link: RouterUrl.association
+    }
+    ,
+    {
+        name: associationTitle.sponsor,
+        link: RouterUrl.association
+    }
+]
 
 export const films = [
     {
