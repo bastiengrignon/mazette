@@ -15,28 +15,24 @@ interface DropDownProps {
 
 const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     const [open, setOpen] = useState<boolean>(false)
-    const [isParentActive, setIsParentActive] = useState<boolean>(false)
+    const [isParentActive, setParentActive] = useState<boolean>(false)
 
-    /*    const isActive = (match) => {
+    const isActive = (match) => {
         if (!match) {
-            setIsParentActive(false)
+            setParentActive(false)
             return false
         }
-        setIsParentActive(true)
+        setParentActive(true)
         return true
-    }*/
+    }
 
-    const handleActiveState = (itemLink) => {
+    const handleClick = () => {
         setOpen(false)
-        console.log("pathname", window.location.pathname)
-        if (window.location.pathname === itemLink)
-            setIsParentActive(true)
-        else
-            setIsParentActive(false)
     }
 
     return (
-        <div className={`relative ${className} focus:outline-none cursor-pointer`} onClick={() => setOpen(!open)}
+        <div className={`relative ${className} focus:outline-none cursor-pointer`}
+            onClick={() => setOpen(!open)}
             onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div
                 className={`inline-flex items-center uppercase focus:outline-none ${isParentActive ? activeClass : inactiveClass}`}>
@@ -47,7 +43,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
                 {
                     items.map((item, index) => (
                         <NavHashLink key={index} to={`${item.link}#${item.name}`} role="menuitem"
-                            onClick={() => handleActiveState(item.link)}
+                            onClick={handleClick} isActive={isActive}
                             className="w-full pr-1 py-0.5 hover:bg-yellow-400 hover:text-my-indigo font-light text-sm md:text-base lg:text-xl lg:last:rounded-b lg:pl-5 lg:py-1">
                             {item.name}
                         </NavHashLink>
