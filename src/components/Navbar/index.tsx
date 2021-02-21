@@ -18,7 +18,6 @@ const Navbar: React.FC = () => {
     return (
         <nav
             className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4 mb-10 h-auto">
-            {/*<Wave text={"Cinéma et concerts en plein air"} />*/}
             <Link to={RouterUrl.home} className="flex flex-col text-center text-xl uppercase">
                 Festival
                 <div
