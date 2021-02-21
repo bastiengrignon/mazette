@@ -9,15 +9,20 @@ import {
 import DropDown from "../DropDown"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 
-export const activeClass = "text-yellow-400 hover:font-normal"
-export const inactiveClass = "text-white lg:hover:text-yellow-400"
+export const activeClass = "text-yellow-400"
+export const inactiveClass = "lg:hover:text-white"
 
 const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
     return (
         <nav
-            className={`flex flex-col lg:flex-row lg:items-center text-white bg-my-indigo w-full p-4 mb-10 ${menuOpen ? "h-screen" : "justify-between h-auto"}`}>
+            className="flex flex-col lg:flex-row justify-start lg:justify-between text-my-indigo lg:items-center w-full h-96 p-4"
+            style={{
+                backgroundImage: `url(${process.env.PUBLIC_URL}/img/exported-wave.svg)`,
+                backgroundRepeat: "no-repeat",
+                width: "100%",
+            }}>
             <Link to={RouterUrl.home} className="flex flex-col text-center text-xl uppercase">
                 Festival
                 <div
