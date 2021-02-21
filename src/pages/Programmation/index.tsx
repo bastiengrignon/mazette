@@ -1,11 +1,9 @@
 import React from "react"
 import {programmationTitle, films} from "../../constants"
 import Film from "../../components/Film"
-import Navbar from "../../components/Navbar"
 
 const Programmation: React.FC = () => (
     <div>
-        <Navbar/>
         <div className="flex flex-col z-10 text-my-indigo pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2"

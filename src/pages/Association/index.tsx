@@ -1,10 +1,8 @@
 import React from "react"
 import {associationTitle, staticImgFolder} from "../../constants"
-import Navbar from "../../components/Navbar"
 
 const Association: React.FC = () => (
     <div>
-        <Navbar/>
         <div className="text-my-indigo pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
@@ -50,7 +48,7 @@ const Association: React.FC = () => (
                 {associationTitle.adherer}
             </div>
             <div className="flex flex-col mt-10 items-start">
-                <iframe id="haWidget" allowTransparency={true} scrolling="auto"
+                <iframe id="haWidget" scrolling="auto"
                     src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                     className="w-full px-2 h-screen pr-0 md:pr-10"/>
             </div>

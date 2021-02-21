@@ -1,62 +1,23 @@
 import React, {useState} from "react"
-import {Link, useHistory} from "react-router-dom"
+import {Link, NavLink} from "react-router-dom"
 import {
-    associationTitle,
-    programmationTitle,
+    associationItems,
+    programmationItems,
     RouterUrl,
     TabName
 } from "../../constants"
 import {BiMenu} from "react-icons/bi"
-import DropDown, {DropdownItem} from "../DropDown"
+import DropDown from "../DropDown"
 
-const programmationItems: DropdownItem[] = [
-    {
-        name: programmationTitle.films,
-        link: RouterUrl.programmation
-    },
-    {
-        name: programmationTitle.musique,
-        link: RouterUrl.programmation
-    },
-    {
-        name: programmationTitle.concours,
-        link: RouterUrl.programmation
-    }
-]
-const associationItems: DropdownItem[] = [
-    {
-        name: associationTitle.association,
-        link: RouterUrl.association
-    },
-    {
-        name: associationTitle.equipe,
-        link: RouterUrl.association
-    },
-    {
-        name: associationTitle.adherer,
-        link: RouterUrl.association
-    }
-    ,
-    {
-        name: associationTitle.sponsor,
-        link: RouterUrl.association
-    }
-]
+export const activeClass = "text-yellow-400 hover:font-normal"
+export const inactiveClass = "text-white lg:hover:text-yellow-400"
 
 const Navbar: React.FC = () => {
-    const history = useHistory()
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
-
-    const activeTab = (item: string) => {
-        const activeClass = "text-yellow-400 hover:font-normal"
-        const inactiveClass = "text-white border-b-2 border-my-indigo lg:hover:border-b-2" +
-            " lg:hover:border-yellow-400 lg:hover:text-yellow-400"
-        return history.location.pathname === item ? activeClass : inactiveClass
-    }
 
     return (
         <nav
-            className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4 mb-10">
+            className="flex flex-col lg:flex-row justify-between lg:items-center text-white bg-my-indigo w-full p-4 mb-10 h-auto">
             <Link to={RouterUrl.home} className="flex flex-col text-center text-xl uppercase">
                 Festival
                 <div
@@ -69,18 +30,18 @@ const Navbar: React.FC = () => {
                     onClick={() => setMenuOpen(!menuOpen)}/>
                 <div
                     className={`${menuOpen ? "flex" : "hidden"} lg:flex flex-col items-end lg:flex-row lg:justify-end w-full uppercase text-base md:text-2xl xl:text-3xl`}>
-                    <Link to={RouterUrl.home}
-                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${activeTab(RouterUrl.home)}`}>
+                    <NavLink to={RouterUrl.home} activeClassName={activeClass}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${inactiveClass}`}>
                         {TabName.festival}
-                    </Link>
+                    </NavLink>
                     <DropDown name={TabName.programmation} items={programmationItems}
-                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${activeTab(RouterUrl.programmation)}`}/>
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${inactiveClass}`}/>
                     <DropDown name={TabName.association} items={associationItems}
-                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${activeTab(RouterUrl.association)}`}/>
-                    <Link to={RouterUrl.information}
-                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${activeTab(RouterUrl.information)}`}>
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${inactiveClass}`}/>
+                    <NavLink to={RouterUrl.information} activeClassName={activeClass}
+                        className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${inactiveClass}`}>
                         {TabName.information}
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
         </nav>
