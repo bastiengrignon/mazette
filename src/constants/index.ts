@@ -1,4 +1,5 @@
 const filmsImgFolder = `${process.env.PUBLIC_URL}/img/films`
+const filmsImgNBFolder = `${filmsImgFolder}/nb`
 export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
 
 export enum RouterUrl {
@@ -46,40 +47,31 @@ export const films = [
         date: "2018",
         location: "France",
         duration: "45min",
-        imgThumbnail: `${filmsImgFolder}/malheureuse.jpg`,
-        imgExtended: `${filmsImgFolder}/malheureuse_extended.jpg`
+        imgThumbnail: `${filmsImgNBFolder}/j_suis_pas_malheureuse_nb.png`,
+        imgExtended: `${filmsImgFolder}/j_suis_pas_malheureuse.png`
     },
     {
         filmName: "Le repas dominical",
         author: "Décile Devaux",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi" +
-        " consectetur consequatur dolores excepturi exercitationem in iusto laborum magnam" +
-            " quaerat quos, sint soluta ullam ut",
-        date: "2018",
+        description: "C’est dimanche. Au cours du repas, Jean observe les membres de sa famille." +
+            " On lui pose des questions sans écouter les réponses, on lui donne des conseils sans " +
+            "les suivre, on le caresse et on le gifle, c’est normal, c’est le repas dominical.",
+        date: "2015",
         location: "France",
-        duration: "39min",
-        imgThumbnail: `${filmsImgFolder}/chair.jpg`
-    },
-    {
-        filmName: "L'homme au sourire",
-        author: "Albert Mike",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi" +
-            " consectetur consequatur dolores excepturi exercitationem in iusto laborum magnam" +
-            " quaerat quos, sint soluta ullam ut.",
-        date: "2018",
-        location: "France",
-        duration: "25min",
-        imgThumbnail: `${filmsImgFolder}/portrait.jpg`
+        duration: "13min - Fiction animation",
+        imgThumbnail: `${filmsImgNBFolder}/le_repas_dominical_nb.png`,
+        imgExtended: `${filmsImgFolder}/le_repas_dominical.png`
     },
     {
         filmName: "Anaïs s'en va en guerre",
         author: "Marion Gervais",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi" +
-            " consectetur consequatur dolores excepturi exercitationem in iusto laborum magnam" +
-            " quaerat quos, sint soluta ullam ut",
-        date: "2016",
-        location: "Américain",
-        duration: "1h15min",
-        imgThumbnail: `${filmsImgFolder}/leaf.jpg`
+        description: "Anaïs a 24 ans. Elle vit seule dans une petite maison en Bretagne. Rien ne " +
+            "l’arrête. Ni l’administration, ni les professeurs misogynes, ni le tracteur en panne, " +
+            "ni les caprices du temps, ni demain ne lui font peur. ",
+        date: "2013",
+        location: "...",
+        duration: "43min - Documentaire",
+        imgThumbnail: `${filmsImgNBFolder}/anais_s_en_va_t_en_guerre_nb.png`,
+        imgExtended: `${filmsImgFolder}/anais_s_en_va_t_en_guerre.png`
     }
 ]
