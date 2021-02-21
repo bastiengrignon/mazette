@@ -1,5 +1,4 @@
 import React from "react"
-import Navbar from "../../components/Navbar"
 import {informationTitle} from "../../constants"
 import ContactForm from "../../components/ContactForm"
 import Maps from "../../components/Maps"
