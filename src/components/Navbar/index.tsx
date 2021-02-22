@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
                     onClick={() => setMenuOpen(!menuOpen)}/>
                 <div
                     className={`${menuOpen ? "flex" : "hidden"} lg:flex flex-col items-end lg:flex-row lg:justify-end w-full uppercase text-base md:text-2xl xl:text-3xl`}>
-                    <NavLink to={RouterUrl.home} activeClassName={activeClass}
+                    <NavLink to={RouterUrl.home} activeClassName={activeClass} exact={true}
                         className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-1 lg:my-0 ${inactiveClass}`}>
                         {TabName.festival}
                     </NavLink>

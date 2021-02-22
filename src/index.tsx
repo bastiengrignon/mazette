@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import {
     BrowserRouter as Router,
     Switch,
-    Route, Redirect
+    Route
 } from "react-router-dom"
 import Programmation from "./pages/Programmation"
 import Association from "./pages/Association"
@@ -16,7 +16,6 @@ import Navbar from "./components/Navbar"
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
         <Router>
-            <Redirect from="/" to={RouterUrl.home}/>
             <Navbar/>
             <Switch>
                 <Route path={RouterUrl.programmation} component={Programmation}/>

@@ -5,7 +5,7 @@ const filmsImgNBFolder = `${filmsImgFolder}/nb`
 export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
 
 export enum RouterUrl {
-    home = "/accueil",
+    home = "/",
     programmation = "/programmation",
     association = "/association",
     information = "/information"
