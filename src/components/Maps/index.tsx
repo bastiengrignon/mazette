@@ -19,11 +19,17 @@ const Maps: React.FC<MapProps> = ({className}) => {
     const [waypoints, setWaypoints] = useState<LatLng[]>([L.latLng(coordsPayotte[0], coordsPayotte[1])])
 
     useEffect(() => {
+        let mounted = true
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(position => {
-                setCurrentLocation([position.coords.latitude, position.coords.longitude])
-                setWaypoints([L.latLng(position.coords.latitude, position.coords.longitude), ...waypoints])
+                if (mounted) {
+                    setCurrentLocation([position.coords.latitude, position.coords.longitude])
+                    setWaypoints([L.latLng(position.coords.latitude, position.coords.longitude), ...waypoints])
+                }
             })
+        }
+        return () => {
+            mounted = false
         }
     }, [])
 
