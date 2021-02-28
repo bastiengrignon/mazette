@@ -40,8 +40,8 @@ const Popup: React.FC<PopupProps> = ({
             </div>
             <div className="mx-5 mt-5 text-2xl">{date}, {location}, {duration}</div>
             <div className="flex flex-col sm:flex-row m-5 items-start">
-                <img src={img} alt={img} className="h-1/2 mx-auto rounded"/>
-                <div className="px-5 leading-relaxed text-sm sm:text-lg">{description}</div>
+                <img src={img} alt={img} className="w-56 lg:w-1/3 h-auto mx-auto rounded"/>
+                <div className="px-5 mt-4 sm:mt-0 text-sm sm:text-base md:text-lg lg:text-2xl leading-relaxed">{description}</div>
             </div>
         </div>
     </div>
