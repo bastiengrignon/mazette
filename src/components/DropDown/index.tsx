@@ -11,9 +11,10 @@ interface DropDownProps {
     name: string
     className: string
     items: DropdownItem[]
+    onItemClick: () => void
 }
 
-const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
+const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}) => {
     const [open, setOpen] = useState<boolean>(false)
     const [isParentActive, setParentActive] = useState<boolean>(false)
 
@@ -27,6 +28,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items}) => {
     }
 
     const handleClick = () => {
+        onItemClick()
         setOpen(false)
     }
 
