@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
                     {!menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/>}
                 </div>
                 <div
-                    className={`${menuOpen ? "flex items-center" : "hidden"} lg:flex flex-col border border-red-600 items-end lg:flex-row lg:justify-end w-full uppercase text-2xl xl:text-3xl`}>
+                    className={`${menuOpen ? "flex items-center" : "hidden"} lg:flex flex-col items-end lg:flex-row lg:justify-end w-full uppercase text-2xl xl:text-3xl`}>
                     <NavLink to={RouterUrl.home} activeClassName={activeClass} exact={true}
                         onClick={() => setMenuOpen(false)}
                         className={`${menuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-4 lg:my-0 ${inactiveClass}`}>
