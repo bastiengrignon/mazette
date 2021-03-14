@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {NavHashLink} from "react-router-hash-link"
-import {activeClass, inactiveClass} from "../Navbar"
+import {activeClass, inactiveClass} from "../NavbarTabs"
 
 export interface DropdownItem {
     name: string
