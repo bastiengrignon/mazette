@@ -11,7 +11,7 @@ type NavbarTabsProps = {
     isMenuOpen: boolean,
     setMenuOpen: (isOpen: boolean) => void
 }
-const NavbarTabs = ({ className, style, isMenuOpen, setMenuOpen }: NavbarTabsProps) => {
+const NavbarTabs: React.FC<NavbarTabsProps> = ({ className, style, isMenuOpen, setMenuOpen }: NavbarTabsProps) => {
     return (
         <div className={className} style={style}>
             <NavLink to={RouterUrl.home} activeClassName={activeClass} exact={true} onClick={() => setMenuOpen(false)} className={`${isMenuOpen ? "block" : "hidden"} lg:block lg:mx-4 my-4 lg:my-0 ${inactiveClass}`}>
