@@ -7,6 +7,9 @@ module.exports = {
         extend: {
             colors: {
                 "my-indigo": "#052959"
+            },
+            fontFamily: {
+                cantarell: ["Cantarell", "sans-serif"]
             }
         }
     },
