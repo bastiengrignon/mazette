@@ -2,4 +2,4 @@
 [![GitHub deployments](https://img.shields.io/github/deployments/bastiengrignon/indigo/festival-indigo?label=Deployment&logo=heroku&logoColor=%239E7CC1)](https://festival-indigo.herokuapp.com)
 --- 
 
-# Website of Indigo Festival
+# Website of Mazette! Festival
