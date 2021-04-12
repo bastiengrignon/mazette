@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
                     Festival
                     <div
                         className="md:text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">
-                        Indigo
+                        Mazette!
                     </div>
                 </Link>
 
