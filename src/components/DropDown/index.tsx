@@ -37,7 +37,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}
             onClick={() => setOpen(!open)}
             onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div
-                className={`inline-flex items-center uppercase focus:outline-none ${isParentActive ? activeClass : inactiveClass}`}>
+                className={`inline-flex items-center w-full h-full justify-center uppercase p-2 focus:outline-none ${isParentActive ? activeClass : inactiveClass}`}>
                 {name}
             </div>
             <div
