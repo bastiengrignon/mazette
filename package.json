@@ -1,25 +1,25 @@
 {
-  "name": "indigo",
+  "name": "mazette",
   "version": "0.1.0",
-  "description": "A website for the Indigo Festival",
+  "description": "A website for the festival mazette!",
   "private": true,
   "author": {
     "name": "Bastien Grignon",
     "email": "basgrignon@gmail.com",
     "url": "https://bastiengrignon.github.io/"
   },
-  "bugs": "https://github.com/bastiengrignon/indigo/issues",
+  "bugs": "https://github.com/bastiengrignon/mazette/issues",
   "keywords": [
     "Website festival",
     "Festival",
-    "Indigo",
-    "Festival Indigo",
+    "Mazette!",
+    "Festival Mazette!",
     "git",
     "Association"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bastiengrignon/indigo"
+    "url": "https://github.com/bastiengrignon/mazette"
   },
   "dependencies": {
     "@craco/craco": "^6.1.1",
@@ -51,13 +51,10 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "prestart": "npm run build:tailwind",
-    "prebuild": "npm run build:tailwind",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
-    "build:tailwind": "tailwindcss build public/css/tailwind.css -c tailwind.config.js -o public/css/index.css"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

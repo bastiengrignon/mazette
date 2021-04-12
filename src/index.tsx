@@ -12,6 +12,7 @@ import Home from "./pages/Home"
 import {RouterUrl} from "./constants"
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
+import "./index.css"
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
