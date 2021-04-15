@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { useInterval } from "../../constants/hooks"
 
+const countdownNumberCSS = "flex flex-col items-center justify-center bg-logo-blue p-2 rounded-lg"
+
 interface CountdownProps {
     deadline: string
     text: string
@@ -36,30 +38,30 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text }) => {
     useInterval(() => getTimeUntil(deadline), 1000)
 
     return (
-        <div className="w-full text-gray-50 text-6xl p-5 bg-yellow-400">
+        <div className="w-full text-gray-50 text-6xl p-5 bg-logo-yellow">
             <div className="flex justify-center space-x-10">
                 <div
-                    className="flex flex-col items-center justify-center bg-my-indigo p-2 rounded-lg">
+                    className={countdownNumberCSS}>
                     {leadingZero(days)}
                     <div className="text-2xl">Jours</div>
                 </div>
                 <div
-                    className="flex flex-col items-center justify-center bg-my-indigo p-2 rounded-lg">
+                    className={countdownNumberCSS}>
                     {leadingZero(hours)}
                     <div className="text-2xl">Heures</div>
                 </div>
                 <div
-                    className="flex flex-col items-center justify-center bg-my-indigo p-2 rounded-lg">
+                    className={countdownNumberCSS}>
                     {leadingZero(minutes)}
                     <div className="text-2xl">Minutes</div>
                 </div>
                 <div
-                    className="flex flex-col items-center justify-center bg-my-indigo p-2 rounded-lg">
+                    className={countdownNumberCSS}>
                     {leadingZero(seconds)}
                     <div className="text-2xl">Secondes</div>
                 </div>
             </div>
-            <div className="flex justify-center italic text-7xl mt-4">{text}</div>
+            <div className="flex justify-center italic text-7xl mt-4 text-black">{text}</div>
         </div>
     )
 }

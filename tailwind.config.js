@@ -4,7 +4,9 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "my-indigo": "#052959"
+                "logo-yellow": "#FFDD53",
+                "logo-blue": "#1E1288",
+                "black": "#06041D"
             },
             fontFamily: {
                 cantarell: ["Cantarell", "sans-serif"]

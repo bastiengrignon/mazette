@@ -3,7 +3,7 @@ import Countdown from "../../components/Countdown"
 
 const Home: React.FC = () => (
     <div>
-        <div className="text-my-indigo">
+        <div className="text-black">
             <div className="text-2xl md:text-4xl lg:text-5xl uppercase text-center my-4 lg:my-10">Le festival</div>
             <div className="text-base md:text-2xl lg:text-3xl text-center w-full lg:w-4/6 px-1 sm:px-4 mx-auto">
                 Nous souhaitons organiser un événement festif et culturel, axé sur la diffusion de

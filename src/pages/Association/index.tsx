@@ -3,7 +3,7 @@ import {associationTitle, staticImgFolder} from "../../constants"
 
 const Association: React.FC = () => (
     <div>
-        <div className="text-my-indigo pl-0 lg:pl-24">
+        <div className="text-black pl-0 lg:pl-24">
             <div
                 className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
                 id={associationTitle.association}>
