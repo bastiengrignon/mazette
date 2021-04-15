@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Link} from "react-router-dom"
-import {RouterUrl} from "../../constants"
+import { RouterUrl, staticImgFolder } from "../../constants"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 import NavbarTabs from "../NavbarTabs"
 import Wave from "../Wave"
@@ -12,14 +12,10 @@ const Navbar: React.FC = () => {
         <aside className="relative lg:h-96 md:h-48 h-24">
             <Wave className="lg:-top-10 top-0" text="CINEMA ET CONCERTS EN PLEIN AIR"/>
             <nav
-                className="absolute z-20 flex flex-row justify-start lg:justify-between text-my-indigo lg:items-center w-full lg:p-6 p-2">
+                className="absolute z-20 flex flex-row justify-start lg:justify-between text-logo-blue lg:items-center w-full p-2">
                 <Link id="logo" to={RouterUrl.home}
                     className="flex lg:flex-col flex-row justify-center md:text-xl uppercase">
-                    Festival
-                    <div
-                        className="md:text-4xl italic text-yellow-400 font-medium tracking-widest uppercase">
-                        Mazette!
-                    </div>
+                    <img src={`${staticImgFolder}/logo_mazette_150x150.png`} alt="Logo" className="w-16 sm:w-20 md:w-24 lg:w-36 h-auto"/>
                 </Link>
 
                 <span className="block lg:hidden">
