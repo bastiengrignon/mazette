@@ -38,30 +38,30 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text }) => {
     useInterval(() => getTimeUntil(deadline), 1000)
 
     return (
-        <div className="w-full text-gray-50 text-6xl p-5 bg-logo-yellow">
-            <div className="flex justify-center space-x-10">
+        <div className="w-full text-gray-50 text-lg sm:text-2xl md:text-4xl lg:text-6xl p-5 bg-logo-yellow">
+            <div className="flex justify-center space-x-1 sm:space-x-5 md:space-x-10">
                 <div
                     className={countdownNumberCSS}>
                     {leadingZero(days)}
-                    <div className="text-2xl">Jours</div>
+                    <div className="text-base sm:text-xl md:text-2xl">Jours</div>
                 </div>
                 <div
                     className={countdownNumberCSS}>
                     {leadingZero(hours)}
-                    <div className="text-2xl">Heures</div>
+                    <div className="text-base sm:text-xl md:text-2xl">Heures</div>
                 </div>
                 <div
                     className={countdownNumberCSS}>
                     {leadingZero(minutes)}
-                    <div className="text-2xl">Minutes</div>
+                    <div className="text-base sm:text-xl md:text-2xl">Minutes</div>
                 </div>
                 <div
                     className={countdownNumberCSS}>
                     {leadingZero(seconds)}
-                    <div className="text-2xl">Secondes</div>
+                    <div className="text-base sm:text-xl md:text-2xl">Secondes</div>
                 </div>
             </div>
-            <div className="flex justify-center italic text-7xl mt-4 text-black">{text}</div>
+            <div className="flex justify-center italic text-xl sm:text-4xl md:text-5xl lg:text-7xl mt-4 text-black">{text}</div>
         </div>
     )
 }
