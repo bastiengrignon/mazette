@@ -41,12 +41,12 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}
                 {name}
             </div>
             <div
-                className={`${open ? "flex" : "hidden"} flex-col text-right bg-logo-blue text-white lg:absolute lg:right-0 rounded`}>
+                className={`${open ? "flex" : "hidden"} flex-col text-right bg-logo-blue text-white lg:absolute lg:right-0 last:rounded-b-md`}>
                 {
                     items.map((item, index) => (
                         <NavHashLink key={index} to={`${item.link}#${item.name}`} role="menuitem"
                             onClick={handleClick} isActive={isActive}
-                            className="w-full pr-1 py-2 hover:bg-logo-yellow hover:text-logo-blue font-light text-sm md:text-base lg:text-xl lg:last:rounded-b lg:pl-5 lg:py-1">
+                            className="w-full pr-1 py-2 hover:bg-logo-yellow hover:text-logo-blue border border-transparent hover:border-logo-blue font-light text-sm md:text-base lg:text-xl lg:last:rounded-b-md lg:pl-5 lg:py-1">
                             {item.name}
                         </NavHashLink>
                     ))
