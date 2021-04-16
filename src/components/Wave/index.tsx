@@ -12,8 +12,8 @@ const Wave: React.FC<WaveProps> = ({
     className,
     text,
     textAlignement= "text-after-edge",
-    textColor = "#052959",
-    fillColor = "#fff02a"
+    textColor = "#1E1288",
+    fillColor = "#FFDD53"
 }) => {
     const [cssColor, setCssColor] = useState<boolean>(false)
 

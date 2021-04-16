@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom"
 import { associationItems, programmationItems, RouterUrl, TabName } from "../../constants"
 import DropDown from "../DropDown"
 
-export const activeClass = "text-yellow-400 bg-my-indigo rounded-md h-full"
-export const inactiveClass = "hover:text-white hover:bg-my-indigo rounded-md h-full"
+export const activeClass = "text-logo-yellow bg-logo-blue rounded-md h-full hover:text-white"
+export const inactiveClass = "hover:text-white hover:bg-logo-blue rounded-md h-full"
 type NavbarTabsProps = {
     className: string,
     style?: CSSProperties,
@@ -26,10 +26,10 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({
             </NavLink>
             <DropDown name={TabName.programmation} items={programmationItems}
                 onItemClick={() => setMenuOpen(false)}
-                className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 ${inactiveClass}`}/>
+                className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 hover:rounded-br-none ${inactiveClass}`}/>
             <DropDown name={TabName.association} items={associationItems}
                 onItemClick={() => setMenuOpen(false)}
-                className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 ${inactiveClass}`}/>
+                className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 hover:rounded-br-none ${inactiveClass}`}/>
             <NavLink to={RouterUrl.information} activeClassName={activeClass}
                 onClick={() => setMenuOpen(false)}
                 className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 p-2 ${inactiveClass}`}>
