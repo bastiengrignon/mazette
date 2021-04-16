@@ -14,18 +14,17 @@ const Navbar: React.FC = () => {
             <nav
                 className="absolute z-20 flex flex-row justify-start lg:justify-between text-logo-blue lg:items-center w-full p-2">
                 <Link id="logo" to={RouterUrl.home}
-                    className="flex lg:flex-col flex-row justify-center md:text-xl uppercase">
+                    className="flex lg:flex-col flex-row justify-center md:text-xl uppercase z-20">
                     <img src={`${staticImgFolder}/logo_mazette_150x150.png`} alt="Logo" className="w-16 sm:w-20 md:w-24 lg:w-36 h-auto"/>
                 </Link>
 
                 <span className="block lg:hidden">
-                    <div className="text-2xl md:text-4xl absolute right-2"
+                    <div className="text-2xl md:text-4xl absolute right-2 text-logo-yellow"
                         onClick={() => setMenuOpen(!menuOpen)}>
                         {!menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/>}
                     </div>
                     <NavbarTabs setMenuOpen={setMenuOpen} isMenuOpen={menuOpen}
-                        className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-3xl text-center"
-                        style={{backgroundColor: "#fff02a"}}/>
+                        className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-3xl text-center bg-logo-blue"/>
                 </span>
 
                 <span className="hidden lg:block">
