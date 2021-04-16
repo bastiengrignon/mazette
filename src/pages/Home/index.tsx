@@ -19,7 +19,7 @@ const Home: React.FC = () => (
             </div>
             <img src={`${process.env.PUBLIC_URL}/img/branche_bleu_test.png`} alt="" className=""/>
         </div>
-        {/*<Countdown deadline={"2021-07-31T12:00:00"} text={"Avant la première édition du festival"} invertColor={true}/>*/}
+        <Countdown deadline={"2021-07-31T12:00:00"} text={"Avant la première édition du festival"} invertColor={true}/>
     </div>
 )
 

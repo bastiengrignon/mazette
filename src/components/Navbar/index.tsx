@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Link} from "react-router-dom"
-import { RouterUrl, staticImgFolder } from "../../constants"
+import { RouterUrl } from "../../constants"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 import NavbarTabs from "../NavbarTabs"
 import Wave from "../Wave"
