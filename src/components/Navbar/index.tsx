@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Link} from "react-router-dom"
-import { RouterUrl, staticImgFolder } from "../../constants"
+import { RouterUrl } from "../../constants"
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai"
 import NavbarTabs from "../NavbarTabs"
 import Wave from "../Wave"
@@ -14,11 +14,12 @@ const Navbar: React.FC = () => {
             <nav
                 className="absolute z-20 flex flex-row justify-start lg:justify-between text-logo-blue lg:items-center w-full p-2">
                 <Link id="logo" to={RouterUrl.home}
-                    className="flex lg:flex-col flex-row justify-center md:text-xl uppercase z-20">
-                    <img src={`${staticImgFolder}/logo_mazette_150x150.png`} alt="Logo" className="w-16 sm:w-20 md:w-24 lg:w-36 h-16 sm:h-20 md:h-24 lg:h-36"/>
+                    className="md:text-xl uppercase z-20 w-1/4 ml-10">
+                    <img src={`${process.env.PUBLIC_URL}/img/test_logo9.png`} alt="Logo"
+                        className=""/>
                 </Link>
 
-                <span className="block lg:hidden">
+                <span className="block lg:hidden w-full">
                     <div className="text-2xl md:text-4xl absolute right-2 text-logo-yellow"
                         onClick={() => setMenuOpen(!menuOpen)}>
                         {!menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/>}
@@ -27,7 +28,7 @@ const Navbar: React.FC = () => {
                         className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-3xl text-center bg-logo-blue"/>
                 </span>
 
-                <span className="hidden lg:block">
+                <span className="hidden lg:block w-full flex-nowrap">
                     <NavbarTabs isMenuOpen={menuOpen} setMenuOpen={setMenuOpen}
                         className="lg:uppercase lg:flex lg:flex-row lg:justify-end lg:text-3xl"/>
                 </span>
