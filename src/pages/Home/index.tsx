@@ -16,7 +16,7 @@ const Home: React.FC = () => (
                 consacrée...
             </div>
         </div>
-        <Countdown deadline={"2021-07-31T12:00:00"} text={"Avant la première édition du festival"} invertColor={true}/>
+        {/*<Countdown deadline={"2021-07-31T12:00:00"} text={"Avant la première édition du festival"} invertColor={true}/>*/}
     </div>
 )
 

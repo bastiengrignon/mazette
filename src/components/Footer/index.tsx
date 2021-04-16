@@ -8,7 +8,7 @@ const links = {
 }
 
 const Footer: React.FC = () => (
-    <footer className="text-white bg-logo-blue text-center w-full p-2">
+    <footer className="text-white text-center w-full p-2" style={{backgroundColor: "#55505c"}}>
         <div className="flex justify-center text-3xl">
             <a href={links.instagram} target={"_blank"} rel={"noopener noreferrer"}>
                 <FaInstagram className="mx-2 hover:text-logo-yellow"/>
