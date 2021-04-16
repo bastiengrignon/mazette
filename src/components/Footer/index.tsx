@@ -11,10 +11,10 @@ const Footer: React.FC = () => (
     <footer className="text-white text-center w-full p-2" style={{backgroundColor: "#55505c"}}>
         <div className="flex justify-center text-3xl">
             <a href={links.instagram} target={"_blank"} rel={"noopener noreferrer"}>
-                <FaInstagram className="mx-2 hover:text-logo-yellow"/>
+                <FaInstagram className="mx-2 hover:text-test-red"/>
             </a>
             <a href={links.facebook} target={"_blank"} rel={"noopener noreferrer"}>
-                <FaFacebookF className="mx-2 hover:text-logo-yellow"/>
+                <FaFacebookF className="mx-2 hover:text-test-red"/>
             </a>
         </div>
         <div className="uppercase">

@@ -7,7 +7,10 @@ module.exports = {
                 "logo-yellow": "#FFDD53",
                 "logo-blue": "#1E1288",
                 "secondary-blue": "#6F8AB7",
-                "black": "#06041D"
+                "black": "#06041D",
+                "test-red": "#EC6A69",
+                "test-green": "#098C9A",
+                "test-blue": "#0C57B4"
             },
             fontFamily: {
                 cantarell: ["Cantarell", "sans-serif"]
