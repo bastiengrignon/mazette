@@ -1,18 +1,20 @@
 import React, { useState } from "react"
 import { useInterval } from "../../constants/hooks"
 
-const countdownNumberCSS = "flex flex-col items-center justify-center bg-logo-blue p-2 rounded-lg"
 
 interface CountdownProps {
     deadline: string
     text: string
+    invertColor?: boolean
 }
 
-const Countdown: React.FC<CountdownProps> = ({ deadline, text }) => {
+const Countdown: React.FC<CountdownProps> = ({ deadline, text, invertColor }) => {
     const [days, setDays] = useState<number>(0)
     const [hours, setHours] = useState<number>(0)
     const [minutes, setMinutes] = useState<number>(0)
     const [seconds, setSeconds] = useState<number>(0)
+
+    const countdownNumberCSS = `flex flex-col items-center justify-center p-2 rounded-lg ${invertColor ? "bg-logo-yellow" : "bg-logo-blue"}`
 
     const leadingZero = (number: number): string | number => {
         return number < 10 ? "0" + number : number
@@ -38,7 +40,9 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text }) => {
     useInterval(() => getTimeUntil(deadline), 1000)
 
     return (
-        <div className="w-full text-gray-50 text-lg sm:text-2xl md:text-4xl lg:text-6xl p-5 bg-logo-yellow">
+        <div
+            className={`w-full ${invertColor ? "text-black" : "text-gray-50"} text-lg sm:text-2xl md:text-4xl lg:text-6xl p-5 ${invertColor
+                ? "bg-secondary-blue" : "bg-logo-yellow"}`}>
             <div className="flex justify-center space-x-1 sm:space-x-5 md:space-x-10">
                 <div
                     className={countdownNumberCSS}>
@@ -61,7 +65,10 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text }) => {
                     <div className="text-base sm:text-xl md:text-2xl">Secondes</div>
                 </div>
             </div>
-            <div className="flex justify-center italic text-xl sm:text-4xl md:text-5xl lg:text-7xl mt-4 text-black">{text}</div>
+            <div
+                className={`flex justify-center italic text-xl sm:text-4xl md:text-5xl lg:text-7xl mt-4 ${invertColor ? "text-gray-50" : "text-secondary-blue"}`}>
+                {text}
+            </div>
         </div>
     )
 }

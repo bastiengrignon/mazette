@@ -6,6 +6,7 @@ module.exports = {
             colors: {
                 "logo-yellow": "#FFDD53",
                 "logo-blue": "#1E1288",
+                "secondary-blue": "#6F8AB7",
                 "black": "#06041D"
             },
             fontFamily: {
