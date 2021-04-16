@@ -8,13 +8,13 @@ const links = {
 }
 
 const Footer: React.FC = () => (
-    <footer className="text-white bg-blue-800 text-center w-full p-2">
+    <footer className="text-white bg-logo-blue text-center w-full p-2">
         <div className="flex justify-center text-3xl">
             <a href={links.instagram} target={"_blank"} rel={"noopener noreferrer"}>
-                <FaInstagram className="mx-2"/>
+                <FaInstagram className="mx-2 hover:text-logo-yellow"/>
             </a>
             <a href={links.facebook} target={"_blank"} rel={"noopener noreferrer"}>
-                <FaFacebookF className="mx-2"/>
+                <FaFacebookF className="mx-2 hover:text-logo-yellow"/>
             </a>
         </div>
         <div className="uppercase">
