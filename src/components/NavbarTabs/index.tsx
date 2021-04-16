@@ -20,11 +20,6 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({
 }: NavbarTabsProps) => {
     return (
         <div className={className} style={style}>
-            <NavLink to={RouterUrl.home} activeClassName={activeClass} exact={true}
-                onClick={() => setMenuOpen(false)}
-                className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 p-2 ${inactiveClass}`}>
-                {TabName.festival}
-            </NavLink>
             <DropDown name={TabName.programmation} items={programmationItems}
                 onItemClick={() => setMenuOpen(false)}
                 className={`${isMenuOpen ? "block" : "hidden"} lg:inline-block lg:mx-4 my-4 lg:my-0 hover:rounded-br-none ${inactiveClass}`}/>

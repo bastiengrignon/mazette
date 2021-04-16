@@ -12,7 +12,6 @@ export enum RouterUrl {
 }
 
 export enum TabName {
-    festival = "Festival",
     programmation = "Programmation",
     association = "L'association",
     information = "Infos Pratiques"
