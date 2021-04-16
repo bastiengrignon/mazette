@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
                 className="absolute z-20 flex flex-row justify-start lg:justify-between text-logo-blue lg:items-center w-full p-2">
                 <Link id="logo" to={RouterUrl.home}
                     className="flex lg:flex-col flex-row justify-center md:text-xl uppercase z-20">
-                    <img src={`${staticImgFolder}/logo_mazette_150x150.png`} alt="Logo" className="w-16 sm:w-20 md:w-24 lg:w-36 h-auto"/>
+                    <img src={`${staticImgFolder}/logo_mazette_150x150.png`} alt="Logo" className="w-16 sm:w-20 md:w-24 lg:w-36 h-16 sm:h-20 md:h-24 lg:h-36"/>
                 </Link>
 
                 <span className="block lg:hidden">
