@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
     return (
-        <aside className="relative h-32 sm:h-40 md:h-48 lg:h-64 xl:h-80 2xl:h-96">
+        <aside className="relative h-32 sm:h-40 md:h-48 lg:h-56 xl:h-72 2xl:h-96">
             <Wave className="lg:-top-10 top-0" text="CINEMA ET CONCERTS EN PLEIN AIR"/>
             <nav
                 className="absolute z-20 flex flex-row justify-start lg:justify-between text-logo-blue lg:items-center w-full p-2">

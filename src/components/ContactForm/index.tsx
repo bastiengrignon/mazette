@@ -80,7 +80,7 @@ const ContactForm: React.FC = () => {
                     className="border border-gray-300 rounded focus:border focus:outline-none focus:border-logo-blue px-0.5 mt-1.5 w-full"/></label>
                 <div className="flex items-center">
                     <button onClick={sendEmail}
-                        className="px-6 py-1 rounded bg-logo-blue text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-logo-yellow hover:text-logo-blue hover:font-bold focus:outline-none w-min">
+                        className="px-6 py-1 rounded bg-test-blue text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-test-red focus:outline-none w-min">
                         Envoyer
                     </button>
                     <div

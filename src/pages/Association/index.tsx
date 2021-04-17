@@ -5,7 +5,7 @@ const Association: React.FC = () => (
     <div>
         <div className="text-black pl-0 lg:pl-24">
             <div
-                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0  text-test-red"
                 id={associationTitle.association}>
                 {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
@@ -28,7 +28,7 @@ const Association: React.FC = () => (
                 </p>
             </div>
             <div
-                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 text-test-red"
                 id={associationTitle.equipe}>
                 Mazette! C’est qui ?
             </div>
@@ -43,7 +43,7 @@ const Association: React.FC = () => (
                     className="w-32 sm:w-48 h-full mx-10 my-5 sm:my-0"/>
             </div>
             <div
-                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 text-test-red"
                 id={associationTitle.adherer}>
                 {associationTitle.adherer}
             </div>
@@ -54,7 +54,7 @@ const Association: React.FC = () => (
             </div>
 
             <div
-                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0"
+                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 text-test-red"
                 id={associationTitle.sponsor}>
                 {associationTitle.sponsor}
             </div>
