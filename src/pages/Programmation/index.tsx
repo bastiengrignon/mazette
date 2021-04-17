@@ -6,7 +6,7 @@ const Programmation: React.FC = () => (
     <div>
         <div className="flex flex-col z-10 text-black pl-0 lg:pl-24">
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 text-test-red"
                 id={programmationTitle.films}>
                 {programmationTitle.films}
             </div>
@@ -22,7 +22,7 @@ const Programmation: React.FC = () => (
                 }
             </div>
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-5"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-5 text-test-red"
                 id={programmationTitle.musique}>
                 {programmationTitle.musique}
             </div>
@@ -32,7 +32,7 @@ const Programmation: React.FC = () => (
                 vos oreilles !
             </div>
             <div
-                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52"
+                className="text-left text-2xl sm:text-5xl uppercase font-bold w-full xl:w-1/2 my-52 text-test-red"
                 id={programmationTitle.concours}>
                 {programmationTitle.concours}
             </div>

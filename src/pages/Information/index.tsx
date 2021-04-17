@@ -7,7 +7,7 @@ const Information: React.FC = () => (
     <div>
         <div
             className="flex flex-col z-10 text-black pl-0 lg:pl-24 w-auto">
-            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2">
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 text-test-red">
                 {informationTitle.food}
             </div>
             <div className="px-2 mt-5 text-black text-xl">
@@ -17,7 +17,7 @@ const Information: React.FC = () => (
                 Vous pourrez également profiter du bar-restaurant de La Payotte, situé à deux pas du
                 lieu du festival.
             </div>
-            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10 text-test-red">
                 {informationTitle.festival}
             </div>
             <div className="flex flex-col lg:flex-row items-center">
@@ -39,7 +39,7 @@ const Information: React.FC = () => (
                     </p>
                 </div>
             </div>
-            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10">
+            <div className="text-left text-2xl sm:text-5xl uppercase font-bold px-2 mt-10 text-test-red">
                 {informationTitle.contact}
             </div>
             <ContactForm/>
