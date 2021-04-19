@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
 
                 <span className="hidden lg:block w-full flex-nowrap">
                     <NavbarTabs isMenuOpen={menuOpen} setMenuOpen={setMenuOpen}
-                        className="lg:uppercase lg:flex lg:flex-row lg:justify-end lg:text-2xl xl:text-2xl"/>
+                        className="lg:uppercase lg:flex lg:flex-row lg:justify-end lg:text-2xl xl:text-3xl"/>
                 </span>
             </nav>
         </aside>
