@@ -3,7 +3,7 @@ import Countdown from "../../components/Countdown"
 
 const Home: React.FC = () => (
     <div>
-        <div className="flex flex-col sm:flex-row w-full mt-5 sm:mt-1 md:mt-5 lg:mt-0 text-black">
+        <div className="flex flex-col sm:flex-row w-full mt-5 sm:mt-1 md:mt-5 lg:mt-10 text-black">
             <div className="w-full sm:w-2/3">
                 <div className="text-test-red uppercase text-center text-2xl md:text-4xl lg:text-6xl">Le festival</div>
                 <p className="text-base md:text-2xl lg:text-3xl px-1 sm:px-4">

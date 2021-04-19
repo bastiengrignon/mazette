@@ -66,7 +66,7 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text, invertColor }) =>
                 </div>
             </div>
             <div
-                className={"flex justify-center italic text-xl sm:text-4xl md:text-5xl lg:text-7xl mt-4 text-white"}>
+                className={"flex justify-center italic text-xl sm:text-4xl md:text-5xl mt-4 text-white"}>
                 {text}
             </div>
         </div>
