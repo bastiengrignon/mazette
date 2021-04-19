@@ -1,12 +1,9 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import Popup from "../Popup"
 
 const randomFilmColor = (): string => {
-    const colors: string[] = ["yellow", "green", "pink", "blue"]
-    const opacities: number[] = [400]
-    const randomColor: string = colors[Math.floor(Math.random() * colors.length)]
-    const randomOpacity: number = opacities[Math.floor(Math.random() * opacities.length)]
-    return `text-${randomColor}-${randomOpacity}`
+    const colors: string[] = ["text-yellow-400", "text-green-400", "text-pink-400", "text-blue-400"]
+    return colors[Math.floor(Math.random() * colors.length)]
 }
 
 interface FilmProps {
