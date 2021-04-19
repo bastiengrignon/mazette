@@ -23,7 +23,7 @@
 }
 
 body {
-    @apply font-cantarell
+    @apply font-cantarell;
 }
 
 /*#root * {*/
