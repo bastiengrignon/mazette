@@ -9,7 +9,7 @@ interface WaveProps {
 }
 
 const Wave: React.FC<WaveProps> = ({
-    className,
+    className= "",
     text,
     textAlignement= "text-after-edge",
     textColor = "#ffffff",
