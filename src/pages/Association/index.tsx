@@ -14,15 +14,14 @@ const Association: React.FC = () => (
                     alt="Association Mazette Image"
                     className="w-9/12 md:w-1/2 xl:w-1/3 h-full px-5 mx-auto"/>
                 <p className="text-sm sm:text-2xl md:text-4xl mx-5 md:mx-10 mt-5 xl:mt-0">
-                    Mazette!, c’est avant tout l’histoire d’une bande de copines qui, pour la
-                    plupart, ont grandi ensemble sur le territoire Mazéiais. C’est aussi une
-                    furieuse envie de rassembler nos forces et nos savoir-faire afin de développer
-                    des événements culturels au cœur de ces lieux qui nous ont vu évoluer et de les
-                    partager avec ses habitants. <br/><br/>
-                    Porté en nous depuis longtemps et mûri aux fils de nos années d’amitié, ce désir
-                    fort de projet collectif s’est concrétisé en septembre 2019, avec la création de
-                    l’association Mazette! <br/><br/>
                     L’objectif, proposer des événements culturels en territoire rural.
+                    Mazette!, c’est l’histoire d’une bande de copines qui, pour la plupart, ont grandi ensemble sur le
+                    territoire Mazéiais. C’est une furieuse envie de rassembler nos forces et nos savoir-faire afin de
+                    développer des événements culturels au cœur de ces lieux qui nous ont vu évoluer et de les partager
+                    avec ses habitants.<br/><br/>
+
+                    Porté en nous depuis longtemps et mûri aux fils de nos années d’amitié, ce désir fort de projet
+                    collectif s’est concrétisé en novembre 2019, avec la création de l’association Mazette! <br/><br/>
 
 
                 </p>
@@ -48,15 +47,12 @@ const Association: React.FC = () => (
                 {associationTitle.adherer}
             </div>
             <div className="flex flex-col mt-10 items-start">
+                <p className="text-2xl my-2">
+                    Vous souhaitez rejoindre l’association ou l’aider à développer ses activités ? Adhérez!
+                </p>
                 <iframe id="haWidget" scrolling="auto"
                     src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                     className="w-full px-2 h-screen pr-0 md:pr-10"/>
-            </div>
-
-            <div
-                className="text-left text-2xl sm:text-3xl md:text-5xl uppercase font-bold w-full xl:w-1/2 z-0 text-test-red"
-                id={associationTitle.sponsor}>
-                {associationTitle.sponsor}
             </div>
         </div>
     </div>
