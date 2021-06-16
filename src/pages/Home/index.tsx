@@ -1,5 +1,4 @@
 import React from "react"
-import Countdown from "../../components/Countdown"
 
 const Home: React.FC = () => (
     <div>
@@ -17,7 +16,6 @@ const Home: React.FC = () => (
                 <img src={`${process.env.PUBLIC_URL}/img/branche_bleu_test.png`} alt="Branche Bleu" className="w-44 md:w-60 lg:w-64 2xl:w-72"/>
             </div>
         </div>
-        {/*<Countdown deadline={"2021-07-31T12:00:00"} text={"Avant la première édition du festival"} invertColor={true}/>*/}
     </div>
 )
 

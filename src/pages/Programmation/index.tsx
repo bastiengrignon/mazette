@@ -1,6 +1,5 @@
 import React from "react"
-import {programmationTitle, films} from "../../constants"
-import Film from "../../components/Film"
+import {programmationTitle} from "../../constants"
 
 const titleCSS = "text-2xl sm:text-5xl uppercase font-bold w-full text-test-red my-5"
 const subtitleCSS = "text-black text-base sm:text-lg md:text-2xl normal-case font-normal mr-4"
