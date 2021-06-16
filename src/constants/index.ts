@@ -13,8 +13,8 @@ export enum RouterUrl {
 
 export enum TabName {
     programmation = "Programmation",
-    association = "L'association",
-    information = "Infos Pratiques"
+    association = "Mazette c’est qui ?",
+    information = "Venir au festival"
 }
 
 export enum programmationTitle {
@@ -27,7 +27,6 @@ export enum associationTitle {
     association = "L'association",
     equipe = "L'équipe",
     adherer = "Adhérer",
-    sponsor = "Partenaires"
 }
 
 export enum informationTitle {
@@ -61,11 +60,6 @@ export const associationItems: DropdownItem[] = [
     },
     {
         name: associationTitle.adherer,
-        link: RouterUrl.association
-    }
-    ,
-    {
-        name: associationTitle.sponsor,
         link: RouterUrl.association
     }
 ]
