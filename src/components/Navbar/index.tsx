@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
                         {!menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/>}
                     </div>
                     <NavbarTabs setMenuOpen={setMenuOpen} isMenuOpen={menuOpen}
-                        className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-3xl text-center bg-test-green"/>
+                        className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-2xl text-center bg-test-green"/>
                 </span>
 
                 <span className="hidden lg:block w-full flex-nowrap">
