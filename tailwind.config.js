@@ -10,7 +10,7 @@ module.exports = {
                 "secondary-blue": "#6F8AB7",
                 "black": "#06041D",
                 "test-red": "#EC6A69",
-                "test-green": "#098C9A",
+                "test-green": "#21BD8F",
                 "test-blue": "#0C57B4"
             },
             fontFamily: {

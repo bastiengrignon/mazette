@@ -46,7 +46,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}
                     items.map((item, index) => (
                         <NavHashLink key={index} to={`${item.link}#${item.name}`} role="menuitem"
                             onClick={handleClick} isActive={isActive}
-                            className="w-full pr-1 py-2 hover:bg-white hover:text-test-red border border-transparent hover:border-test-red font-light text-sm md:text-base lg:text-xl lg:pl-5 lg:py-1">
+                            className="w-full pr-1 py-2 hover:bg-white hover:text-test-red border border-transparent hover:border-test-red font-light text-base lg:text-xl lg:pl-5 lg:py-1">
                             {item.name}
                         </NavHashLink>
                     ))
