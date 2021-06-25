@@ -26,6 +26,10 @@ body {
     @apply font-cantarell;
 }
 
+.page-content {
+    @apply text-black px-1 sm:px-2 md:px-8 lg:px-16;
+}
+
 /*#root * {*/
 /*    border: 1px solid red;*/
 /*}*/

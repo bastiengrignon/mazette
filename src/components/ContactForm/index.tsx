@@ -54,7 +54,7 @@ const ContactForm: React.FC = () => {
     }
 
     return (
-        <div className="my-5 flex flex-col px-3 w-full sm:w-2/3 xl:w-2/5">
+        <div className="flex flex-col w-full sm:w-2/3 xl:w-2/5">
             <div className="mt-2">
                 <p>Votre nom <span className="text-2xl text-red-600">*</span></p>
                 <Input required={true} onChange={validName}

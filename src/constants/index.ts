@@ -18,15 +18,15 @@ export enum TabName {
 }
 
 export enum programmationTitle {
-    films = "Courts-métrages",
-    musique = "Musique",
-    concours = "Concours"
+    films = "courts-métrages",
+    musique = "musique",
+    concours = "concours"
 }
 
 export enum associationTitle {
-    association = "L'association",
-    equipe = "L'équipe",
-    adherer = "Adhérer",
+    association = "l'association",
+    equipe = "l'équipe",
+    adherer = "adhérer",
 }
 
 export enum informationTitle {
