@@ -18,8 +18,8 @@ export enum TabName {
 }
 
 export enum programmationTitle {
-    films = "courts-métrages",
     musique = "musique",
+    films = "courts-métrages",
     concours = "concours"
 }
 
@@ -37,11 +37,11 @@ export enum informationTitle {
 
 export const programmationItems: DropdownItem[] = [
     {
-        name: programmationTitle.films,
+        name: programmationTitle.musique,
         link: RouterUrl.programmation
     },
     {
-        name: programmationTitle.musique,
+        name: programmationTitle.films,
         link: RouterUrl.programmation
     },
     {
@@ -49,6 +49,7 @@ export const programmationItems: DropdownItem[] = [
         link: RouterUrl.programmation
     }
 ]
+
 export const associationItems: DropdownItem[] = [
     {
         name: associationTitle.association,
