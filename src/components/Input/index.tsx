@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
     <label>
         <input type={type} required={required} {...others}
             onChange={({target: {value}}) => onChange(value)}
-            className={`border border-gray-300 text-base rounded focus:border focus:outline-none focus:border-logo-blue px-0.5 mt-1.5 w-4/6 lg:w-1/2 ${className}`}/>
+            className={`border border-gray-300 text-base rounded focus:border focus:outline-none focus:border-test-green px-0.5 mt-1.5 w-4/6 lg:w-1/2 ${className}`}/>
     </label>
 )
 

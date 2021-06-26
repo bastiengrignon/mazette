@@ -27,14 +27,14 @@ const Popup: React.FC<PopupProps> = ({
         <div
             className="absolute inset-0 z-20 bg-gray-500 opacity-75 transition-opacity flex items-start justify-center"/>
         <div
-            className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-30 max-w-5xl border-4 border-logo-blue">
+            className="flex flex-col m-auto bg-white shadow-2xl mx-auto z-30 max-w-5xl border-4 border-test-green">
             <div
                 className="flex justify-between items-start lg:items-center border-b p-2 mt-5 sm:mt-0 ml-5 text-xl md:text-5xl bg-white">
                 <div>
                     <span className="font-medium uppercase">{filmName}</span>
                     <span className="text-base md:text-4xl">&nbsp;{` de ${author}`}</span>
                 </div>
-                <div className="flex cursor-pointer text-2xl sm:text-3xl hover:text-logo-yellow">
+                <div className="flex cursor-pointer text-2xl sm:text-3xl hover:text-test-green">
                     <AiFillCloseCircle/>
                 </div>
             </div>
