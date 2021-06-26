@@ -9,7 +9,7 @@ const Association: React.FC = () => (
             <div id={associationTitle.association} className={titleCSS}>
                 {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
-            <div className="lg:flex flex-row">
+            <div className="lg:flex flex-row items-center">
                 <img src={`${staticImgFolder}/logo_mazette.svg`} alt="Association Mazette Image"
                     className="w-1/3 md:w-1/3 xl:w-1/4 h-full float-left"/>
                 <p className="text-sm sm:text-base md:text-2xl">
