@@ -35,9 +35,6 @@ const Information: React.FC = () => (
                 <p><span className="font-extrabold">En vélo : </span>
                     5 minutes depuis le centre-ville de Mazé
                 </p>
-                <p><span className="font-extrabold">En covoiturage : </span>
-                    covoiturez avec Blablacar ou entre amis !
-                </p>
             </div>
         </div>
         <div className={titleCSS}>{informationTitle.contact}</div>
