@@ -2,12 +2,12 @@ import React from "react"
 import {FaFacebookF, FaInstagram} from "react-icons/fa"
 
 const links = {
-    instagram: "https://www.instagram.com/festivalindigo/?hl=fr",
-    facebook: "https://facebook.com/"
+    instagram: "https://www.instagram.com/festivalmazette",
+    facebook: "https://www.facebook.com/festivalmazette"
 }
 
 const Footer: React.FC = () => (
-    <footer className="text-white text-center w-full p-2" style={{backgroundColor: "#55505c"}}>
+    <footer className="text-white text-center w-full p-2 mt-10" style={{backgroundColor: "#55505c"}}>
         <div className="flex justify-between">
             <div className="flex">
                 logo des partenaires
