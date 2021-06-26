@@ -27,7 +27,7 @@ const Association: React.FC = () => (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
                 {
                     trombinoscope.map((trombi, id) => (
-                        <img key={id} src={trombi.src} alt={trombi.alt} className="w-32 sm:w-48 h-full mx-auto"/>
+                        <img key={id} src={trombi.src} alt={trombi.alt} className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"/>
                     ))
                 }
             </div>
