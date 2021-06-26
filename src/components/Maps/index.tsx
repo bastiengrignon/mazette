@@ -81,7 +81,7 @@ const Maps: React.FC<MapProps> = ({className}) => {
                             <GiPartyPopper/>
                         </div>
                         <button onClick={computeRoute}
-                            className="font-semibold text-white bg-logo-blue border border-logo-blue rounded p-2 hover:bg-white hover:text-logo-blue focus:outline-none">
+                            className="font-semibold text-white bg-test-green border border-test-green rounded p-2 hover:bg-white hover:text-test-green focus:outline-none">
                             Itinéraire depuis ma position
                         </button>
                     </div>
