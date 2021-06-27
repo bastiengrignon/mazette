@@ -31,7 +31,7 @@ body {
 }
 
 .link {
-    @apply hover:underline hover:text-test-green;
+    @apply underline hover:text-test-green;
 }
 
 /*
