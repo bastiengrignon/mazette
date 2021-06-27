@@ -67,3 +67,14 @@ export const associationItems: DropdownItem[] = [
         link: RouterUrl.association
     }
 ]
+
+export const externalLinks = {
+    social: {
+        instagram: "https://www.instagram.com/festivalmazette",
+        facebook: "https://www.facebook.com/festivalmazette"
+    },
+    music: {
+        oulitsa: "https://youtu.be/9YVuyx6SoVA",
+        wugo: "https://youtu.be/wc3LAkClt0k"
+    }
+}
