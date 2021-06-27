@@ -13,7 +13,6 @@ const Association: React.FC = () => (
                 <img src={`${staticImgFolder}/logo_mazette.svg`} alt="Association Mazette Image"
                     className="w-1/3 md:w-1/3 xl:w-1/4 h-full float-left"/>
                 <p className="text-sm sm:text-base md:text-2xl">
-                    L’objectif, proposer des événements culturels en territoire rural.
                     Mazette!, c’est l’histoire d’une bande de copines qui, pour la plupart, ont grandi ensemble sur le
                     territoire Mazéiais. C’est une furieuse envie de rassembler nos forces et nos savoir-faire afin de
                     développer des événements culturels au cœur de ces lieux qui nous ont vu évoluer et de les partager
