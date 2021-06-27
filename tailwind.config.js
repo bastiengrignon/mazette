@@ -6,7 +6,8 @@ module.exports = {
             colors: {
                 "black": "#06041D",
                 "test-red": "#EC6A69",
-                "test-green": "#21BD8F"
+                "test-green": "#21BD8F",
+                "footer-gray": "#55505c"
             },
             fontFamily: {
                 cantarell: ["Cantarell", "sans-serif"]
