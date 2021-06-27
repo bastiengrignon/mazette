@@ -2,6 +2,7 @@ import React from "react"
 import { FaFacebookF, FaInstagram } from "react-icons/fa"
 import { partners } from "../../constants/partners"
 import { externalLinks } from "../../constants"
+import Link from "../Link"
 
 
 const Footer: React.FC = () => (
@@ -15,15 +16,15 @@ const Footer: React.FC = () => (
                 }
             </div>
             <div className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
-                <a href={externalLinks.social.instagram} target={"_blank"} rel={"noopener noreferrer"}>
+                <Link src={externalLinks.social.instagram}>
                     <FaInstagram className="hover:text-test-green"/>
-                </a>
-                <a href={externalLinks.social.facebook} target={"_blank"} rel={"noopener noreferrer"}>
+                </Link>
+                <Link src={externalLinks.social.facebook}>
                     <FaFacebookF className="hover:text-test-green"/>
-                </a>
+                </Link>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">
-                Mentions Légales /// crédits
+                Mentions Légales /// Créé par <Link src={externalLinks.social.myLinkedin}>Bastien</Link>
             </div>
         </div>
     </footer>
