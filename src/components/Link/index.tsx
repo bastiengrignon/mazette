@@ -5,11 +5,16 @@ interface LinkProps {
     newTab?: boolean
 }
 
-const Link: React.FC<LinkProps> = ({src, newTab = true, children}) => (
-    <a href={src} target={newTab ? "_blank" : "_self"} className="link"
-       rel={`noopener noreferrer ${newTab ? "external nofollow" : ""}`}>
-        {children}
-    </a>
-)
+const Link: React.FC<LinkProps> = ({src, newTab = true, children}) => {
+    return (newTab ?
+        <a href={src} target={"_blank"} className="link" rel="nofollow external noreferrer noopener">
+            {children}
+        </a>
+        :
+        <a href={src} className="link" rel="internal noreferrer noopener">
+            {children}
+        </a>
+    )
+}
 
 export default Link
