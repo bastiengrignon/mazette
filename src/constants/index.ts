@@ -71,7 +71,8 @@ export const associationItems: DropdownItem[] = [
 export const externalLinks = {
     social: {
         instagram: "https://www.instagram.com/festivalmazette",
-        facebook: "https://www.facebook.com/festivalmazette"
+        facebook: "https://www.facebook.com/festivalmazette",
+        myLinkedin: "https://www.linkedin.com/in/bastien-grignon/"
     },
     music: {
         oulitsa: "https://youtu.be/9YVuyx6SoVA",

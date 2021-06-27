@@ -23,7 +23,7 @@ const Footer: React.FC = () => (
                 </a>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">
-                Mentions Légales /// crédits
+                Mentions Légales /// Créé par <a href={externalLinks.social.myLinkedin} target={"_blank"} rel={"noopener noreferrer"} className="link">Bastien</a>
             </div>
         </div>
     </footer>
