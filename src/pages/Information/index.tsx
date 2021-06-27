@@ -1,5 +1,5 @@
 import React from "react"
-import {informationTitle} from "../../constants"
+import { externalLinks, informationTitle } from "../../constants"
 import ContactForm from "../../components/ContactForm"
 import Maps from "../../components/Maps"
 import {titleCSS} from "../Programmation"
@@ -12,7 +12,9 @@ const Information: React.FC = () => (
             <br/>
             Bière, vin et jus de fruit locaux seront à la carte !
             <br/>
-            Vous pourrez également profiter du bar-restaurant de La Payotte, situé à deux pas du
+            Vous pourrez également profiter du bar-restaurant de <a href={externalLinks.others.payotte} target={"_blank"} rel={"noopener noreferrer"} className="link">
+                La Payotte
+            </a>, situé à deux pas du
             lieu du festival.
         </div>
         <div className={titleCSS}>{informationTitle.festival}</div>

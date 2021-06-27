@@ -76,5 +76,8 @@ export const externalLinks = {
     music: {
         oulitsa: "https://youtu.be/9YVuyx6SoVA",
         wugo: "https://youtu.be/wc3LAkClt0k"
+    },
+    others: {
+        payotte: "https://www.lapayotte.net"
     }
 }
