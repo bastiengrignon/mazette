@@ -22,7 +22,7 @@ export const musics: MusicProps[] = [
                 https://youtu.be/wc3LAkClt0k
             </a>
         </div>,
-        image: `${musicFolder}/oulitsa.jpg`
+        image: `${musicFolder}/oulitsa_compressed.jpg`
     },
     {
         groupName: "54",
@@ -34,7 +34,7 @@ export const musics: MusicProps[] = [
             croisée du hip/hop et de la chanson, le piano est le véritable chef d’orchestre. Un concert unique qui fait
             repenser le monde comme ils veulent le voir…
         </div>,
-        image: `${musicFolder}/54.jpg`
+        image: `${musicFolder}/54_compressed.jpg`
     },
     {
         groupName: "Félix Hardouin Quartet",
@@ -44,7 +44,7 @@ export const musics: MusicProps[] = [
             Levi Harvey (piano) et Alexis Denis Callier (contrebasse). <br/>
             Deux set de compositions énergiques et dynamiques, teintées de jazz et de musique latine !
         </div>,
-        image: `${musicFolder}/felix_hardouin_quartet.jpg`
+        image: `${musicFolder}/felix_hardouin_quartet_compressed.jpg`
     },
     {
         groupName: "Wugo",
@@ -59,6 +59,6 @@ export const musics: MusicProps[] = [
                 https://youtu.be/wc3LAkClt0k
             </a>
         </div>,
-        image: `${musicFolder}/wugo.jpg`
+        image: `${musicFolder}/wugo_compressed.jpg`
     }
 ]
