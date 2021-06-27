@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react"
 import { externalLinks } from "./index"
+import Link from "../components/Link"
 
 const musicFolder = `${process.env.PUBLIC_URL}/img/musics`
 
@@ -18,9 +19,7 @@ export const musics: MusicProps[] = [
             Oulitsa, ce n’est ni plus ni moins que trois musiciens qui vous feront voyager à travers un répertoire
             d’airs populaires des contrées d’Europe de l’Est. <br/>
             Pour les curieux c’est ici 👇🏼 <br/>
-            <a href={externalLinks.music.oulitsa} target={"_blank"} rel={"noopener noreferrer"} className="link">
-                https://youtu.be/wc3LAkClt0k
-            </a>
+            <Link src={externalLinks.music.oulitsa}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
         image: `${musicFolder}/oulitsa_compressed.jpg`
     },
@@ -55,9 +54,7 @@ export const musics: MusicProps[] = [
             Sa pop synthétique sillonne les parois du rêve et nous emmène dans les méandres de l’esprit du jeune
             artiste où tempêtes et rayons de soleil font bon ménage. <br/>
             Pour découvrir sa musique c’est ici 👇🏼 <br/>
-            <a href={externalLinks.music.wugo} target={"_blank"} rel={"noopener noreferrer"} className="link">
-                https://youtu.be/wc3LAkClt0k
-            </a>
+            <Link src={externalLinks.music.wugo}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
         image: `${musicFolder}/wugo_compressed.jpg`
     }

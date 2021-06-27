@@ -3,6 +3,7 @@ import { externalLinks, informationTitle } from "../../constants"
 import ContactForm from "../../components/ContactForm"
 import Maps from "../../components/Maps"
 import {titleCSS} from "../Programmation"
+import Link from "../../components/Link"
 
 const Information: React.FC = () => (
     <div className="flex flex-col z-10 page-content">
@@ -12,9 +13,7 @@ const Information: React.FC = () => (
             <br/>
             Bière, vin et jus de fruit locaux seront à la carte !
             <br/>
-            Vous pourrez également profiter du bar-restaurant de <a href={externalLinks.others.payotte} target={"_blank"} rel={"noopener noreferrer"} className="link">
-                La Payotte
-            </a>, situé à deux pas du
+            Vous pourrez également profiter du bar-restaurant de <Link src={externalLinks.others.payotte}>La Payotte</Link>, situé à deux pas du
             lieu du festival.
         </div>
         <div className={titleCSS}>{informationTitle.festival}</div>
