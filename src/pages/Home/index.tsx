@@ -1,8 +1,9 @@
 import React from "react"
 
 const Home: React.FC = () => (
-    <div className="page-content">
-        <p className="text-base md:text-xl lg:text-2xl text-center mx-24">
+    <div className="page-content flex md:inline-flex flex-col md:flex-row items-center justify-center mt-0 sm:mt-10 2xl:mt-0">
+        <img src={`${process.env.PUBLIC_URL}/img/static/transat.svg`} alt="Transat" className="flex-none h-24 md:h-32 w-auto"/>
+        <p className="text-base md:text-xl lg:text-2xl text-justify w-full md:w-2/3">
             Du cinéma, de la musique et du plein air, le festival Mazette! c’est ce combo chaleureux et festif que
             nous vous proposons de vivre les 30 et 31 juillet 2021, sur les bords de l’Authion à Mazé-Milon (49).
             <br/><br/>
@@ -13,6 +14,7 @@ const Home: React.FC = () => (
             musicale locale. Electro pop, jazz ou encore musique de l’Est seront au rendez-vous, dans un décor
             champêtre et estival !
         </p>
+        <img src={`${process.env.PUBLIC_URL}/img/static/transat.svg`} alt="Transat" className="flex-none h-24 md:h-32 w-auto"/>
     </div>
 )
 
