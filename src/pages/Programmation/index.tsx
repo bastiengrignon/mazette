@@ -3,7 +3,7 @@ import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import Vignette from "../../components/Vignette"
 
-export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-12 mb-4"
+export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-12 mb-4 font-sifonn"
 export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 
 const dateCSS = "text-xl sm:text-2xl mt-4"

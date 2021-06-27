@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
     purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/**/*.html"],
     darkMode: false, // or 'media' or 'class'
@@ -10,7 +12,9 @@ module.exports = {
                 "footer-gray": "#55505c"
             },
             fontFamily: {
-                cantarell: ["Cantarell", "sans-serif"]
+                cantarell: ["Cantarell", "sans-serif"],
+                sifonn: ["Sifonn Pro", ...defaultTheme.fontFamily.sans],
+                avenir: ["Avenir LT Std 55 Roman", ...defaultTheme.fontFamily.sans]
             }
         }
     },
