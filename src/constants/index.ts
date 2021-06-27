@@ -1,4 +1,9 @@
-import {DropdownItem} from "../components/DropDown"
+import { DropdownItem } from "../components/DropDown"
+
+export interface Image {
+    src: string
+    alt: string
+}
 
 export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
 

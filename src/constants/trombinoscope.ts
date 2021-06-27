@@ -1,6 +1,6 @@
-import {staticImgFolder} from "./index"
+import { Image, staticImgFolder } from "./index"
 
-export const trombinoscope = [
+export const trombinoscope: Image[] = [
     {
         src: `${staticImgFolder}/trombi_mathilde.jpg`,
         alt: "Mathilde"
