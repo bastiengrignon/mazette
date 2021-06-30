@@ -13,13 +13,13 @@ import { RouterUrl } from "./constants"
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
 import "./index.css"
-import { FaCircleNotch } from "react-icons/fa"
+import Loading from "./components/Loading"
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
         <Router>
             <Navbar/>
-            <Suspense fallback={<FaCircleNotch className="animate-spin"/>}>
+            <Suspense fallback={<Loading/>}>
                 <Switch>
                     <Route path={RouterUrl.programmation} component={Programmation}/>
                     <Route path={RouterUrl.association} component={Association}/>
