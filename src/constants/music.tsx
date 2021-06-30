@@ -13,7 +13,7 @@ export interface MusicProps {
 
 export const musics: MusicProps[] = [
     {
-        groupName: "oulitsa",
+        groupName: "Oulitsa",
         type: "Chants tsiganes et russes",
         description: <div>
             Oulitsa, ce n’est ni plus ni moins que trois musiciens qui vous feront voyager à travers un répertoire
