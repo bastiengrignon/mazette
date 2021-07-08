@@ -2,12 +2,13 @@ import React from "react"
 import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import Vignette from "../../components/Vignette"
+import { films } from "../../constants/film"
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-0 sm:mt-12 mb-4 font-sifonn"
 export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 
 const dateCSS = "text-xl sm:text-2xl mt-4 mb-1 sm:mb-5"
-const progCSS = "text-2xl sm:text-4xl font-bold my-5 text-center bg-test-green bg-opacity-5 w-full"
+// const progCSS = "text-2xl sm:text-4xl font-bold my-5 text-center bg-test-green bg-opacity-5 w-full"
 
 const Programmation: React.FC = () => (
     <div className="flex flex-col z-10 page-content">
@@ -20,14 +21,14 @@ const Programmation: React.FC = () => (
         <p className={dateCSS}>
             Vendredi 30 juillet
         </p>
-        <div className="grid grid-cols-2 gap-1 sm:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
             <Vignette type="music" properties={musics[0]} />
             <Vignette type="music" properties={musics[1]} />
         </div>
         <p className={dateCSS}>
             Samedi 31 juillet
         </p>
-        <div className="grid grid-cols-2 gap-1 sm:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
             <Vignette type="music" properties={musics[2]} />
             <Vignette type="music" properties={musics[3]} />
         </div>
@@ -36,18 +37,22 @@ const Programmation: React.FC = () => (
         <p className={dateCSS}>
             Vendredi 30 juillet
         </p>
-        <div className="grid grid-cols-1 gap-10">
-            {/*<Vignette type="movie" properties={films[0]} />*/}
-            {/*<Vignette type="movie" properties={films[1]} />*/}
-            <p className={progCSS}>Programmation à venir...</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
+            {
+                films.filter(film => film.publicationDate === "30").map((film, key) => (
+                    <Vignette key={key} type="movie" properties={film} />
+                ))
+            }
         </div>
         <p className={dateCSS}>
             Samedi 31 juillet
         </p>
-        <div className="grid grid-cols-1 gap-10">
-            <p className={progCSS}>Programmation à venir...</p>
-            {/*<Vignette type="movie" properties={films[2]} />*/}
-            {/*<Vignette type="movie" properties={films[2]} />*/}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
+            {
+                films.filter(film => film.publicationDate === "31").map((film, key) => (
+                    <Vignette key={key} type="movie" properties={film} />
+                ))
+            }
         </div>
 
         <div className={titleCSS} id={programmationTitle.concours}>{programmationTitle.concours}</div>
