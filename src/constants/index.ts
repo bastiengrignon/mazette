@@ -78,6 +78,13 @@ export const externalLinks = {
         oulitsa: "https://youtu.be/9YVuyx6SoVA",
         wugo: "https://youtu.be/wc3LAkClt0k"
     },
+    films : {
+        anais: "https://youtu.be/ng2piTp2LCc",
+        repasDominical: "https://youtu.be/zrNmA-uv0JU",
+        bigorneaux: "https://vimeo.com/215049057",
+        lila: "https://youtu.be/7hqDFebavDc",
+        nuisibles: "https://vimeo.com/511031470"
+    },
     others: {
         payotte: "https://www.lapayotte.net"
     }
