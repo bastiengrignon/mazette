@@ -4,10 +4,11 @@ import { musics } from "../../constants/music"
 import Vignette from "../../components/Vignette"
 import { films } from "../../constants/film"
 
-export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-0 sm:mt-12 mb-4 font-sifonn"
+export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-2 sm:mt-12" +
+    " mb-4 font-sifonn"
 export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 
-const dateCSS = "text-xl sm:text-2xl mt-4 mb-1 sm:mb-5"
+const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8"
 // const progCSS = "text-2xl sm:text-4xl font-bold my-5 text-center bg-test-green bg-opacity-5 w-full"
 
 const Programmation: React.FC = () => (

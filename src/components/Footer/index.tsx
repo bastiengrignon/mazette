@@ -6,7 +6,7 @@ import Link from "../Link"
 
 
 const Footer: React.FC = () => (
-    <footer className="text-white text-center w-full p-2 mt-10 bg-footer-gray">
+    <footer className="text-black text-center w-full p-2 mt-10 bg-footer">
         <div className="grid grid-cols-5 xl:grid-cols-6 grid-rows-4">
             <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
                 {
