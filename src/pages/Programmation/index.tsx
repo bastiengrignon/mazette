@@ -8,7 +8,7 @@ export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red 
     " mb-4 font-sifonn pt-5 sm:pt-20 -mt-5 sm:-mt-20"
 export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 
-const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8"
+const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn"
 // const progCSS = "text-2xl sm:text-4xl font-bold my-5 text-center bg-test-green bg-opacity-5 w-full"
 
 const Programmation: React.FC = () => (
