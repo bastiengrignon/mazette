@@ -7,7 +7,8 @@ import Image from "../Image"
 
 
 const Footer: React.FC = () => (
-    <footer className="text-black text-center w-full p-2 mt-10 bg-footer">
+    <footer className="text-black text-center w-full p-2 mt-10">
+        <div className="bg-footer mx-auto w-11/12 rounded py-1 my-5"/>
         <div className="grid grid-cols-5 xl:grid-cols-6 grid-rows-4">
             <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
                 {
