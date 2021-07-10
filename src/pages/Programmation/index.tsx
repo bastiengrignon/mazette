@@ -22,23 +22,29 @@ const Programmation: React.FC = () => (
         <p className={dateCSS}>
             Vendredi 30 juillet
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
-            <Vignette type="music" properties={musics[0]} />
-            <Vignette type="music" properties={musics[1]} />
+        <div className="grid grid-cols-2 gap-2 sm:gap-10">
+            {
+                musics.filter(music => music.publicationDate === "30").map((music, key) => (
+                    <Vignette key={key} type="music" properties={music} />
+                ))
+            }
         </div>
         <p className={dateCSS}>
             Samedi 31 juillet
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
-            <Vignette type="music" properties={musics[2]} />
-            <Vignette type="music" properties={musics[3]} />
+        <div className="grid grid-cols-2 gap-2 sm:gap-10">
+            {
+                musics.filter(music => music.publicationDate === "31").map((music, key) => (
+                    <Vignette key={key} type="music" properties={music} />
+                ))
+            }
         </div>
 
         <div className={titleCSS} id={programmationTitle.films}>{programmationTitle.films}</div>
         <p className={dateCSS}>
             Vendredi 30 juillet
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
+        <div className="grid grid-cols-2 gap-2 sm:gap-10">
             {
                 films.filter(film => film.publicationDate === "30").map((film, key) => (
                     <Vignette key={key} type="movie" properties={film} />
@@ -48,7 +54,7 @@ const Programmation: React.FC = () => (
         <p className={dateCSS}>
             Samedi 31 juillet
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-10">
+        <div className="grid grid-cols-2 gap-2 sm:gap-10">
             {
                 films.filter(film => film.publicationDate === "31").map((film, key) => (
                     <Vignette key={key} type="movie" properties={film} />
