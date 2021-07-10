@@ -1,8 +1,6 @@
 import React, { ReactNode } from "react"
-import { externalLinks } from "./index"
+import { externalLinks, musicFolder } from "./index"
 import Link from "../components/Link"
-
-const musicFolder = `${process.env.PUBLIC_URL}/img/musics`
 
 export interface MusicProps {
     groupName: string
@@ -22,7 +20,7 @@ export const musics: MusicProps[] = [
             Pour les curieux c’est ici 👇🏼 <br/>
             <Link src={externalLinks.music.oulitsa}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
-        image: `${musicFolder}/oulitsa.webp`,
+        image: `${musicFolder}/oulitsa`,
         publicationDate: "30"
     },
     {
@@ -35,7 +33,7 @@ export const musics: MusicProps[] = [
             croisée du hip/hop et de la chanson, le piano est le véritable chef d’orchestre. Un concert unique qui fait
             repenser le monde comme ils veulent le voir…
         </div>,
-        image: `${musicFolder}/54.webp`,
+        image: `${musicFolder}/54`,
         publicationDate: "30"
     },
     {
@@ -46,7 +44,7 @@ export const musics: MusicProps[] = [
             Levi Harvey (piano) et Alexis Denis Callier (contrebasse). <br/>
             Deux set de compositions énergiques et dynamiques, teintées de jazz et de musique latine !
         </div>,
-        image: `${musicFolder}/felix_hardouin_quartet.webp`,
+        image: `${musicFolder}/felix_hardouin_quartet`,
         publicationDate: "31"
     },
     {
@@ -60,7 +58,7 @@ export const musics: MusicProps[] = [
             Pour découvrir sa musique c’est ici 👇🏼 <br/>
             <Link src={externalLinks.music.wugo}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
-        image: `${musicFolder}/wugo.webp`,
+        image: `${musicFolder}/wugo`,
         publicationDate: "31"
     }
 ]

@@ -1,8 +1,6 @@
 import React, { ReactNode } from "react"
-import { externalLinks } from "./index"
+import { externalLinks, filmsImgFolder } from "./index"
 import Link from "../components/Link"
-
-const filmsImgFolder = `${process.env.PUBLIC_URL}/img/films`
 
 export interface FilmProps {
     filmName: string
@@ -33,7 +31,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.anais}>{externalLinks.films.anais}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/anaïs_s_en_va_en_guerre_de_marion_gervais.webp`,
+        imgThumbnail: `${filmsImgFolder}/anaïs_s_en_va_en_guerre_de_marion_gervais`,
         publicationDate: "31"
     },
     {
@@ -47,7 +45,7 @@ export const films: FilmProps[] = [
             tour, les adolescents se révèlent, plus dans la manière que dans l’anecdote, entre le vrai et le faux,
             entre fiction et documentaire.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/jeunesses_francaises_de_stephan_castang.webp`,
+        imgThumbnail: `${filmsImgFolder}/jeunesses_francaises_de_stephan_castang`,
         publicationDate: "30"
     },
     {
@@ -61,7 +59,7 @@ export const films: FilmProps[] = [
             doivent se rendre à Amsterdam. Greg pour un concours de DJing, Valentin pour en ramener des kilos de
             marijuana.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/k-nada_de_hubert_charuel.webp`,
+        imgThumbnail: `${filmsImgFolder}/k-nada_de_hubert_charuel`,
         publicationDate: "31"
     },
     {
@@ -78,7 +76,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.repasDominical}>{externalLinks.films.repasDominical}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/le_repas_dominical_de_céline_devaux.webp`,
+        imgThumbnail: `${filmsImgFolder}/le_repas_dominical_de_céline_devaux`,
         publicationDate: "31",
     },
     {
@@ -96,7 +94,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.bigorneaux}>{externalLinks.films.bigorneaux}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/les_bigorneaux_de_alice_vial.webp`,
+        imgThumbnail: `${filmsImgFolder}/les_bigorneaux_de_alice_vial`,
         publicationDate: "30"
     },
     {
@@ -111,7 +109,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.lila}>{externalLinks.films.lila}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/lila_du_broadcast_club.webp`,
+        imgThumbnail: `${filmsImgFolder}/lila_du_broadcast_club`,
         publicationDate: "31"
     },
     {
@@ -127,7 +125,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.nuisibles}>{externalLinks.films.nuisibles}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/nuisibles_de_juliette_laboria.webp`,
+        imgThumbnail: `${filmsImgFolder}/nuisibles_de_juliette_laboria`,
         publicationDate: "31"
     },
     {
@@ -139,7 +137,7 @@ export const films: FilmProps[] = [
         description: <div>
             Il y a des moments où l’on perd tout contrôle de soi. On souhaite seulement hurler : “Assez !”.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/.webp`,
+        imgThumbnail: `${filmsImgFolder}/`,
         publicationDate: "30"
     },
     {
@@ -152,7 +150,7 @@ export const films: FilmProps[] = [
             Quelques jours avant un concert important, un jeune retraité constate avec désarroi que son cher
             instrument de musique ne produit plus un son.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/.webp`,
+        imgThumbnail: `${filmsImgFolder}/`,
         publicationDate: "30"
     }
     /*,{
@@ -167,7 +165,7 @@ export const films: FilmProps[] = [
             que je présente aujourd’hui en festival. Il a été finalisé sur une période de deux ans, sous la direction de
             Claire Simon.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/four_roads_alice_rohrwacher.webp`,
+        imgThumbnail: `${filmsImgFolder}/four_roads_alice_rohrwacher`,
         publicationDate: "30"
     }*/
 ]
