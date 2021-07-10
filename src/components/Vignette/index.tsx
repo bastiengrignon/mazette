@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Popup from "../Popup"
+import Image from "../Image"
 
 const vignetteCSS = "w-11/12 sm:w-7/8 md:w-3/4 h-auto mx-auto cursor-pointer transform transition duration-300 hover:scale-110"
 
@@ -15,7 +16,7 @@ const Vignette: React.FC<VignetteProps> = (props) => {
     return props.type === "music" ?
         <div>
             <div className={`relative ${vignetteCSS}`} onClick={() => setVisibility(true)}>
-                <img src={props.properties.image} alt={props.properties.groupName}/>
+                <Image src={props.properties.image} alt={props.properties.groupName}/>
                 <div className="fixed top-0 h-full w-full opacity-0 hover:opacity-100">
                     <div className="flex justify-center items-center h-full">
                         <span className="w-full font-medium bg-test-green text-white text-center text-base sm:text-2xl md:text-3xl lg:text-5xl py-2">
@@ -34,7 +35,7 @@ const Vignette: React.FC<VignetteProps> = (props) => {
         :
         <div>
             <div className={`relative ${vignetteCSS}`} onClick={() => setVisibility(true)}>
-                <img src={props.properties.imgThumbnail}
+                <Image src={props.properties.imgThumbnail}
                     alt={`${props.properties.filmName} ${props.properties.author}`} className="w-full h-full"/>
             </div>
             {visibility &&

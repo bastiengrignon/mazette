@@ -3,6 +3,7 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa"
 import { partners } from "../../constants/partners"
 import { externalLinks } from "../../constants"
 import Link from "../Link"
+import Image from "../Image"
 
 
 const Footer: React.FC = () => (
@@ -11,7 +12,7 @@ const Footer: React.FC = () => (
             <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
                 {
                     partners.map((partner, key) => (
-                        <img key={key} src={partner.src} alt={partner.alt} className="w-auto h-16  2xl:h-24 object-contain"/>
+                        <Image key={key} src={partner.src} alt={partner.alt} className="w-auto h-16  2xl:h-24 object-contain" isPng={true}/>
                     ))
                 }
             </div>
