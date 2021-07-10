@@ -4,14 +4,15 @@ interface ImageProps {
     src: string
     alt: string
     className?: string
+    isPng?: boolean
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt, className = "" }) => {
+const Image: React.FC<ImageProps> = ({ src, alt, className = "", isPng = false}) => {
 
     return (
         <picture>
-            <source srcSet={ `${ src }.webp` } type="image/webp"/>
-            <img src={ `${ src }.jpg` } alt={ alt } className={ className }/>
+            <source type="image/webp" srcSet={ `${ src }.webp` } className={ className }/>
+            <img src={ `${ src }.${isPng ? "png" : "jpg"}` } alt={ alt } className={ className }/>
         </picture>
     )
 }
