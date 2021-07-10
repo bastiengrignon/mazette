@@ -2,27 +2,27 @@ import { Image, staticImgFolder } from "./index"
 
 export const trombinoscope: Image[] = [
     {
-        src: `${staticImgFolder}/trombi_mathilde.webp`,
+        src: `${staticImgFolder}/trombi_mathilde`,
         alt: "Mathilde"
     },
     {
-        src: `${staticImgFolder}/trombi_constance.webp`,
+        src: `${staticImgFolder}/trombi_constance`,
         alt: "Constance"
     },
     {
-        src: `${staticImgFolder}/trombi_jeanne.webp`,
+        src: `${staticImgFolder}/trombi_jeanne`,
         alt: "Jeanne"
     },
     {
-        src: `${staticImgFolder}/trombi_marine.webp`,
+        src: `${staticImgFolder}/trombi_marine`,
         alt: "Marine"
     },
     {
-        src: `${staticImgFolder}/trombi_lisa.webp`,
+        src: `${staticImgFolder}/trombi_lisa`,
         alt: "Lisa"
     },
     {
-        src: `${staticImgFolder}/trombi_lea.webp`,
+        src: `${staticImgFolder}/trombi_lea`,
         alt: "lea"
     },
 ]

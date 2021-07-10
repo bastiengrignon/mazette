@@ -5,7 +5,11 @@ export interface Image {
     alt: string
 }
 
-export const staticImgFolder = `${process.env.PUBLIC_URL}/img/static`
+const defaultImgFolder = `${process.env.PUBLIC_URL}/img`
+export const staticImgFolder = `${defaultImgFolder}/static`
+export const musicFolder = `${defaultImgFolder}/musics`
+export const filmsImgFolder = `${defaultImgFolder}/films`
+export const partnersFolder = `${defaultImgFolder}/partners`
 
 export enum RouterUrl {
     home = "/",

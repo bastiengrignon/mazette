@@ -2,6 +2,7 @@ import React from "react"
 import {associationTitle, staticImgFolder} from "../../constants"
 import {subtitleCSS, titleCSS} from "../Programmation"
 import {trombinoscope} from "../../constants/trombinoscope"
+import Image from "../../components/Image"
 
 const Association: React.FC = () => (
     <div>
@@ -9,10 +10,11 @@ const Association: React.FC = () => (
             <div id={associationTitle.association} className={titleCSS}>
                 {associationTitle.association} <span className="italic"> Mazette!</span>
             </div>
-            <div className="lg:flex flex-row items-center">
-                <img src={`${staticImgFolder}/logo_mazette.webp`} alt="Association Mazette Image"
-                    className="w-1/3 md:w-1/3 xl:w-1/4 h-full float-left"/>
-                <p className="text-sm sm:text-base md:text-2xl">
+            <div className="flex flex-col sm:flex-row items-center md:grid grid-cols-3">
+                <div className="w-1/2 sm:w-full h-auto float-left col-span-1">
+                    <Image src={`${staticImgFolder}/logo_mazette`} alt="Association Mazette Image" className=""/>
+                </div>
+                <p className="text-sm sm:text-base md:text-2xl col-span-2">
                     Mazette!, c’est l’histoire d’une bande de copines qui, pour la plupart, ont grandi ensemble sur le
                     territoire Mazéiais. C’est une furieuse envie de rassembler nos forces et nos savoir-faire afin de
                     développer des événements culturels au cœur de ces lieux qui nous ont vu évoluer et de les partager
@@ -26,7 +28,7 @@ const Association: React.FC = () => (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
                 {
                     trombinoscope.map((trombi, id) => (
-                        <img key={id} src={trombi.src} alt={trombi.alt} className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"/>
+                        <Image key={id} src={trombi.src} alt={trombi.alt} className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"/>
                     ))
                 }
             </div>

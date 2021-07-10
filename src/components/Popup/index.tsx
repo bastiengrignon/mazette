@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 import {AiFillCloseCircle} from "react-icons/ai"
+import Image from "../Image"
 
 interface PopupProps {
     filmName: string
@@ -38,7 +39,9 @@ const Popup: React.FC<PopupProps> = ({
                         onClick={() => visibility(false)}/>
                 </div>
                 <div className="col-span-6 text-xl">{ isMusic() ? `${author}` : `${date}, ${location}, ${duration}` }</div>
-                <img className="row-span-6 col-span-6 sm:col-span-2 mx-auto h-full rounded" src={img} alt={img}/>
+                <div className="row-span-6 col-span-6 sm:col-span-2 mx-auto h-full">
+                    <Image src={img} alt={img} className="rounded" />
+                </div>
                 <div className="row-span-4 col-span-6 sm:col-span-4 mx-2 text-base sm:text-lg leading-normal overflow-y-auto">{description}</div>
             </div>
         </div>
