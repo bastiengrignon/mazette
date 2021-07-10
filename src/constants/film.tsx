@@ -33,7 +33,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.anais}>{externalLinks.films.anais}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/anaïs_s_en_va_en_guerre_de_marion_gervais_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/anaïs_s_en_va_en_guerre_de_marion_gervais.webp`,
         publicationDate: "31"
     },
     {
@@ -47,7 +47,7 @@ export const films: FilmProps[] = [
             tour, les adolescents se révèlent, plus dans la manière que dans l’anecdote, entre le vrai et le faux,
             entre fiction et documentaire.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/jeunesses_françaises_de_stéphan_castang.jpg`,
+        imgThumbnail: `${filmsImgFolder}/jeunesses_francaises_de_stephan_castang.webp`,
         publicationDate: "30"
     },
     {
@@ -61,7 +61,7 @@ export const films: FilmProps[] = [
             doivent se rendre à Amsterdam. Greg pour un concours de DJing, Valentin pour en ramener des kilos de
             marijuana.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/k-nada_de_hubert_charuel_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/k-nada_de_hubert_charuel.webp`,
         publicationDate: "31"
     },
     {
@@ -78,7 +78,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.repasDominical}>{externalLinks.films.repasDominical}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/le_repas_dominical_de_céline_devaux_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/le_repas_dominical_de_céline_devaux.webp`,
         publicationDate: "31",
     },
     {
@@ -96,7 +96,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.bigorneaux}>{externalLinks.films.bigorneaux}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/les_bigorneaux_de_alice_vial_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/les_bigorneaux_de_alice_vial.webp`,
         publicationDate: "30"
     },
     {
@@ -111,7 +111,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.lila}>{externalLinks.films.lila}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/lila_du_broadcast_club_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/lila_du_broadcast_club.webp`,
         publicationDate: "31"
     },
     {
@@ -127,7 +127,7 @@ export const films: FilmProps[] = [
             Bande annonce : <br/>
             <Link src={externalLinks.films.nuisibles}>{externalLinks.films.nuisibles}</Link>
         </div>,
-        imgThumbnail: `${filmsImgFolder}/nuisibles_de_juliette_laboria_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/nuisibles_de_juliette_laboria.webp`,
         publicationDate: "31"
     },
     {
@@ -139,7 +139,7 @@ export const films: FilmProps[] = [
         description: <div>
             Il y a des moments où l’on perd tout contrôle de soi. On souhaite seulement hurler : “Assez !”.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/.jpg`,
+        imgThumbnail: `${filmsImgFolder}/.webp`,
         publicationDate: "30"
     },
     {
@@ -152,7 +152,7 @@ export const films: FilmProps[] = [
             Quelques jours avant un concert important, un jeune retraité constate avec désarroi que son cher
             instrument de musique ne produit plus un son.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/.jpg`,
+        imgThumbnail: `${filmsImgFolder}/.webp`,
         publicationDate: "30"
     }
     /*,{
@@ -167,7 +167,7 @@ export const films: FilmProps[] = [
             que je présente aujourd’hui en festival. Il a été finalisé sur une période de deux ans, sous la direction de
             Claire Simon.
         </div>,
-        imgThumbnail: `${filmsImgFolder}/four_roads_alice_rohrwacher_final.jpg`,
+        imgThumbnail: `${filmsImgFolder}/four_roads_alice_rohrwacher.webp`,
         publicationDate: "30"
     }*/
 ]

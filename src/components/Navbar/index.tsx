@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
                 className="absolute z-20 flex flex-row justify-start lg:justify-between lg:items-center w-full p-2 lg:p-0">
                 <Link id="logo" to={RouterUrl.home}
                     className="md:text-xl uppercase z-20 w-1/4 ml-2 sm:ml-5 md:ml-8 lg:ml-10">
-                    <img src={`${process.env.PUBLIC_URL}/img/test_logo11.png`} alt="Logo" className="mt-2 sm:mt-10"/>
+                    <img src={`${process.env.PUBLIC_URL}/img/festival_mazette.webp`} alt="Logo" className="mt-2 sm:mt-10"/>
                 </Link>
 
                 <span className="block lg:hidden w-full">
