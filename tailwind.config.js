@@ -12,7 +12,6 @@ module.exports = {
                 "footer": "#FCE4D9"
             },
             fontFamily: {
-                cantarell: ["Cantarell", "sans-serif"],
                 sifonn: ["Sifonn Pro", ...defaultTheme.fontFamily.sans],
                 avenir: ["Avenir LT Std 55 Roman", ...defaultTheme.fontFamily.sans]
             }
