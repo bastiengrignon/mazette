@@ -15,7 +15,7 @@ const Vignette: React.FC<VignetteProps> = (props) => {
     return props.type === "music" ?
         <div>
             <div className={`relative ${vignetteCSS}`} onClick={() => setVisibility(true)}>
-                <img src={props.properties.image} alt={props.properties.groupName} className=""/>
+                <img src={props.properties.image} alt={props.properties.groupName}/>
                 <div className="fixed top-0 h-full w-full opacity-0 hover:opacity-100">
                     <div className="flex justify-center items-center h-full">
                         <span className="w-full font-medium bg-test-green text-white text-center text-base sm:text-2xl md:text-3xl lg:text-5xl py-2">

@@ -9,6 +9,7 @@ export interface MusicProps {
     type: string
     description: string | ReactNode
     image: string
+    publicationDate: string
 }
 
 export const musics: MusicProps[] = [
@@ -21,7 +22,8 @@ export const musics: MusicProps[] = [
             Pour les curieux c’est ici 👇🏼 <br/>
             <Link src={externalLinks.music.oulitsa}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
-        image: `${musicFolder}/oulitsa_compressed.jpg`
+        image: `${musicFolder}/oulitsa.webp`,
+        publicationDate: "30"
     },
     {
         groupName: "54",
@@ -33,7 +35,8 @@ export const musics: MusicProps[] = [
             croisée du hip/hop et de la chanson, le piano est le véritable chef d’orchestre. Un concert unique qui fait
             repenser le monde comme ils veulent le voir…
         </div>,
-        image: `${musicFolder}/54_compressed.jpg`
+        image: `${musicFolder}/54.webp`,
+        publicationDate: "30"
     },
     {
         groupName: "Félix Hardouin Quartet",
@@ -43,7 +46,8 @@ export const musics: MusicProps[] = [
             Levi Harvey (piano) et Alexis Denis Callier (contrebasse). <br/>
             Deux set de compositions énergiques et dynamiques, teintées de jazz et de musique latine !
         </div>,
-        image: `${musicFolder}/felix_hardouin_quartet_compressed.jpg`
+        image: `${musicFolder}/felix_hardouin_quartet.webp`,
+        publicationDate: "31"
     },
     {
         groupName: "Wugo",
@@ -56,6 +60,7 @@ export const musics: MusicProps[] = [
             Pour découvrir sa musique c’est ici 👇🏼 <br/>
             <Link src={externalLinks.music.wugo}>https://youtu.be/wc3LAkClt0k</Link>
         </div>,
-        image: `${musicFolder}/wugo_compressed.jpg`
+        image: `${musicFolder}/wugo.webp`,
+        publicationDate: "31"
     }
 ]
