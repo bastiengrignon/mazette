@@ -142,7 +142,7 @@ export const films: FilmProps[] = [
             Il y a des moments où l’on perd tout contrôle de soi. On souhaite seulement hurler :
             “Assez !”.
         </div>,
-        imgThumbnail: `${ filmsImgFolder }/`,
+        imgThumbnail: `${ filmsImgFolder }/enough_de_anna_mantzaris`,
         publicationDate: "30"
     },
     {
@@ -155,7 +155,7 @@ export const films: FilmProps[] = [
             Quelques jours avant un concert important, un jeune retraité constate avec désarroi que
             son cher instrument de musique ne produit plus un son.
         </div>,
-        imgThumbnail: `${ filmsImgFolder }/`,
+        imgThumbnail: `${ filmsImgFolder }/sousaphone_flo_linus_baumann`,
         publicationDate: "30"
     }
     /*,{
