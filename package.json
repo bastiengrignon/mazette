@@ -27,7 +27,7 @@
     "url": "https://github.com/bastiengrignon/mazette"
   },
   "dependencies": {
-    "@craco/craco": "^6.1.1",
+    "@craco/craco": "^6.2.0",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
