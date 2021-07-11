@@ -13,6 +13,7 @@ import Information from "./pages/Information"
 import Programmation from "./pages/Programmation"
 import Association from "./pages/Association"
 import Home from "./pages/Home"
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
@@ -35,3 +36,5 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById("root")
 )
+
+serviceWorkerRegistration.register()
