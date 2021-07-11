@@ -1,9 +1,9 @@
 import React from "react"
+import Anchor from "../../components/Anchor"
+import Vignette from "../../components/Vignette"
 import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import { films } from "../../constants/film"
-import Vignette from "../../components/Vignette"
-import Anchor from "../../components/Anchor"
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"

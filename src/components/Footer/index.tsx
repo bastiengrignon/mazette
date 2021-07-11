@@ -5,7 +5,6 @@ import { externalLinks } from "../../constants"
 import Link from "../Link"
 import Image from "../Image"
 
-
 const Footer: React.FC = () => (
     <footer className="text-black text-center w-full p-2 mt-10">
         <div className="bg-footer mx-auto w-11/12 rounded py-1 my-5"/>

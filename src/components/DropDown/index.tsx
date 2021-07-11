@@ -18,7 +18,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}
     const [open, setOpen] = useState<boolean>(false)
     const [isParentActive, setParentActive] = useState<boolean>(false)
 
-    const isActive = (match) => {
+    const isActive = (match): boolean => {
         if (!match) {
             setParentActive(false)
             return false
@@ -27,7 +27,7 @@ const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}
         return true
     }
 
-    const handleClick = () => {
+    const handleClick = (): void => {
         onItemClick()
         setOpen(false)
     }

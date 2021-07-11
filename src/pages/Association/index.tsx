@@ -1,9 +1,9 @@
 import React from "react"
-import { associationTitle, staticImgFolder } from "../../constants"
-import { subtitleCSS, titleCSS } from "../Programmation"
-import { trombinoscope } from "../../constants/trombinoscope"
-import Image from "../../components/Image"
 import Anchor from "../../components/Anchor"
+import Image from "../../components/Image"
+import { associationTitle, staticImgFolder } from "../../constants"
+import { trombinoscope } from "../../constants/trombinoscope"
+import { subtitleCSS, titleCSS } from "../Programmation"
 
 const Association: React.FC = () => (
     <div>

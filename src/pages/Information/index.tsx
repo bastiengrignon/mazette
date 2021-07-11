@@ -1,22 +1,24 @@
 import React from "react"
-import { externalLinks, informationTitle } from "../../constants"
 import ContactForm from "../../components/ContactForm"
-import Maps from "../../components/Maps"
-import {titleCSS} from "../Programmation"
 import Link from "../../components/Link"
+import Maps from "../../components/Maps"
+import { externalLinks, informationTitle } from "../../constants"
+import { titleCSS } from "../Programmation"
 
 const Information: React.FC = () => (
     <div className="flex flex-col z-10 page-content">
-        <div className={titleCSS}>{informationTitle.food}</div>
+        <div className={ titleCSS }>{ informationTitle.food }</div>
         <div className="px-2 mt-5 text-black text-xl">
-            Une buvette sera proposée sur le lieu du festival, dans le respect des règles sanitaires en vigueur.
+            Une buvette sera proposée sur le lieu du festival, dans le respect des règles sanitaires
+            en vigueur.
             <br/>
             Bière, vin et jus de fruit locaux seront à la carte !
             <br/>
-            Vous pourrez également profiter du bar-restaurant de <Link src={externalLinks.others.payotte}>La Payotte</Link>, situé à deux pas du
+            Vous pourrez également profiter du bar-restaurant de
+            <Link src={ externalLinks.others.payotte }>La Payotte</Link>, situé à deux pas du
             lieu du festival.
         </div>
-        <div className={titleCSS}>{informationTitle.festival}</div>
+        <div className={ titleCSS }>{ informationTitle.festival }</div>
         <div className="flex flex-col lg:flex-row items-center">
             <div className="w-full lg:w-1/2">
                 <Maps/>
@@ -26,7 +28,8 @@ const Information: React.FC = () => (
                     Gué de Mazé, 49630 Mazé-Milon (en face de La Payotte)
                 </p>
                 <p><span className="font-extrabold">En voiture : </span>
-                    depuis Angers, en arrivant au premier rond-point de Mazé tourner à droite sur la D55 (direction
+                    depuis Angers, en arrivant au premier rond-point de Mazé tourner à droite sur la
+                    D55 (direction
                     Saint-Mathurin), un parking sera prévu à l’entrée du festival
                 </p>
                 <p>
@@ -38,7 +41,7 @@ const Information: React.FC = () => (
                 </p>
             </div>
         </div>
-        <div className={titleCSS}>{informationTitle.contact}</div>
+        <div className={ titleCSS }>{ informationTitle.contact }</div>
         <ContactForm/>
     </div>
 )

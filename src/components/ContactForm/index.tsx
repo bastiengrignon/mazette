@@ -23,14 +23,14 @@ const ContactForm: React.FC = () => {
         message: message
     }
 
-    const validName = (value: string) => {
+    const validName = (value: string): void => {
         if (value) {
             setNameValid(true)
             setName(value)
         } else setNameValid(false)
     }
 
-    const validEmail = (value: string) => {
+    const validEmail = (value: string): void => {
         const regexpEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         if (regexpEmail.test(value)) {
             setEmailValid(true)
@@ -38,7 +38,7 @@ const ContactForm: React.FC = () => {
         } else setEmailValid(false)
     }
 
-    const sendEmail = () => {
+    const sendEmail = (): void => {
         if (!!name && !!email) {
             if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
                 || process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined

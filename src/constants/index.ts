@@ -5,11 +5,11 @@ export interface Image {
     alt: string
 }
 
-const defaultImgFolder = `${process.env.PUBLIC_URL}/img`
-export const staticImgFolder = `${defaultImgFolder}/static`
-export const musicFolder = `${defaultImgFolder}/musics`
-export const filmsImgFolder = `${defaultImgFolder}/films`
-export const partnersFolder = `${defaultImgFolder}/partners`
+const defaultImgFolder = `${ process.env.PUBLIC_URL }/img`
+export const staticImgFolder = `${ defaultImgFolder }/static`
+export const musicFolder = `${ defaultImgFolder }/musics`
+export const filmsImgFolder = `${ defaultImgFolder }/films`
+export const partnersFolder = `${ defaultImgFolder }/partners`
 
 export enum RouterUrl {
     home = "/",
@@ -82,7 +82,7 @@ export const externalLinks = {
         oulitsa: "https://youtu.be/9YVuyx6SoVA",
         wugo: "https://youtu.be/wc3LAkClt0k"
     },
-    films : {
+    films: {
         anais: "https://youtu.be/ng2piTp2LCc",
         repasDominical: "https://youtu.be/zrNmA-uv0JU",
         bigorneaux: "https://vimeo.com/215049057",
