@@ -14,9 +14,9 @@ const Information: React.FC = () => (
             <br/>
             Bière, vin et jus de fruit locaux seront à la carte !
             <br/>
-            Vous pourrez également profiter du bar-restaurant de
-            <Link src={ externalLinks.others.payotte }>La Payotte</Link>, situé à deux pas du
-            lieu du festival.
+            Vous pourrez également profiter du bar-restaurant de <Link src={ externalLinks.others.payotte }>
+                La Payotte
+            </Link>, situé à deux pas du lieu du festival.
         </div>
         <div className={ titleCSS }>{ informationTitle.festival }</div>
         <div className="flex flex-col lg:flex-row items-center">
@@ -25,7 +25,7 @@ const Information: React.FC = () => (
             </div>
             <div className="text-black text-lg sm:text-xl mx-2 sm:mx-10 space-y-3">
                 <p><span className="font-extrabold">Adresse : </span>
-                    Gué de Mazé, 49630 Mazé-Milon (en face de La Payotte)
+                    Gué de Mazé, 49630 Mazé-Milon (en face du Bar-Restaurant La Payotte)
                 </p>
                 <p><span className="font-extrabold">En voiture : </span>
                     depuis Angers, en arrivant au premier rond-point de Mazé tourner à droite sur la
