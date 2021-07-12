@@ -30,7 +30,7 @@ const Popup: React.FC<PopupProps> = ({
             <div
                 className="absolute inset-0 z-20 bg-gray-500 opacity-75 transition-opacity flex items-start justify-center"/>
             <div
-                className="grid grid-cols-6 grid-rows-6 w-11/12 sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-3/4 sm:h-1/2 shadow-2xl m-auto z-50 bg-white border-4 border-test-green p-1">
+                className="grid grid-cols-6 grid-rows-6 w-11/12 sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-3/4 sm:h-1/2 shadow-2xl m-auto z-50 bg-white border-4 border-test-green p-3">
                 <div className="col-span-5 border-b border-gray-300 flex items-center">
                     <span className="font-semibold uppercase text-xl sm:text-2xl lg:text-3xl">
                         { filmName } { !isMusic() &&
