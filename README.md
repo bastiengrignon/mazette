@@ -5,3 +5,4 @@
 --- 
 
 # Website of festival Mazette!
+![image](https://user-images.githubusercontent.com/41306995/125526976-fa0430f2-b147-4f6e-ba5a-e32f1815e8cc.png)
