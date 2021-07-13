@@ -9,6 +9,7 @@ import Information from "./pages/Information"
 import Programmation from "./pages/Programmation"
 import Association from "./pages/Association"
 import Home from "./pages/Home"
+import LegalMention from "./pages/LegalMention"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 
 const App: React.FC = () => (
@@ -19,10 +20,11 @@ const App: React.FC = () => (
                 <Route path={ RouterUrl.programmation } component={ Programmation }/>
                 <Route path={ RouterUrl.association } component={ Association }/>
                 <Route path={ RouterUrl.information } component={ Information }/>
+                <Route path={ RouterUrl.mention } component={ LegalMention }/>
                 <Route path={ RouterUrl.home } component={ Home }/>
             </Switch>
+            <Footer/>
         </Router>
-        <Footer/>
     </div>
 )
 
