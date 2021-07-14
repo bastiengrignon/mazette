@@ -15,7 +15,8 @@ export enum RouterUrl {
     home = "/",
     programmation = "/programmation",
     association = "/association",
-    information = "/information"
+    information = "/information",
+    mention = "/mention-legales"
 }
 
 export enum TabName {

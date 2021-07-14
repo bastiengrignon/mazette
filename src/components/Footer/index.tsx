@@ -1,8 +1,9 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { FaFacebookF, FaInstagram } from "react-icons/fa"
 import { partners } from "../../constants/partners"
-import { externalLinks } from "../../constants"
-import Link from "../Link"
+import { externalLinks, RouterUrl } from "../../constants"
+import ExternalLink from "../Link"
 import Image from "../Image"
 
 const Footer: React.FC = () => (
@@ -17,15 +18,15 @@ const Footer: React.FC = () => (
                 }
             </div>
             <div className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
-                <Link src={externalLinks.social.instagram}>
+                <ExternalLink src={externalLinks.social.instagram}>
                     <FaInstagram className="hover:text-test-green"/>
-                </Link>
-                <Link src={externalLinks.social.facebook}>
+                </ExternalLink>
+                <ExternalLink src={externalLinks.social.facebook}>
                     <FaFacebookF className="hover:text-test-green"/>
-                </Link>
+                </ExternalLink>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">
-                Mentions Légales /// Créé par <Link src={externalLinks.social.myLinkedin}>Bastien</Link>
+                <Link to={ RouterUrl.mention}>Mentions Légales</Link> - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
             </div>
         </div>
     </footer>
