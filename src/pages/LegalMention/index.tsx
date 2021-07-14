@@ -16,6 +16,13 @@ const LegalMention: React.FC = () => (
             <Link to={ RouterUrl.home } className="inline-flex items-center animate-bounce"><BiChevronLeft/> Retour</Link>
             <div className="text-3xl sm:text-4xl py-5">Mention légales</div>
             <p>
+                Le site festivalmazette.fr est édité par l’association Mazette!, dont le siège
+                social est situé au 48 rue Principale, 49630 Mazé-Milon. <br/>
+                Email : contact@festivalmazette.fr <br/>
+                Numéro de SIRET : 880 530 050 00017 <br/>
+                Directrice de la publication : Léa Germain <br/>
+            </p>
+            <p className="mt-5">
                 <span className="font-avenirBL">Le site web est hébergé sur Vercel : </span> <br/>
                 Vercel Inc. <br/>
                 340 S Lemon Ave #4133 <br/>
