@@ -23,7 +23,7 @@ const Information: React.FC = () => (
             <div className="col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-2">
                 <Maps/>
             </div>
-            <div className="col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-4 text-black text-lg sm:text-xl mx-2 sm:mx-10 space-y-3">
+            <div className="my-auto col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-4 text-black text-lg sm:text-xl mx-2 sm:mx-10 space-y-5">
                 <p><span className="italic">Adresse : </span>
                     Gué de Mazé, 49630 Mazé-Milon (en face du Bar-Restaurant La Payotte)
                 </p>
