@@ -6,6 +6,7 @@
     font-family: 'Sifonn Pro';
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Sifonn Pro'), url(fonts/sifonn.woff) format('woff');
 }
 
@@ -13,6 +14,7 @@
     font-family: Avenir;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 55 Roman'), url(fonts/AvenirLTStd-Roman.woff) format('woff');
 }
 
@@ -21,6 +23,7 @@
     font-family: AvenirO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 55 Oblique'), url(fonts/AvenirLTStd-Oblique.woff) format('woff');
 }
 
@@ -29,6 +32,7 @@
     font-family: AvenirL;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 35 Light'), url(fonts/AvenirLTStd-Light.woff) format('woff');
 }
 
@@ -37,6 +41,7 @@
     font-family: AvenirLO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 35 Light Oblique'), url(fonts/AvenirLTStd-LightOblique.woff) format('woff');
 }
 
@@ -45,6 +50,7 @@
     font-family: AvenirB;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 45 Book'), url(fonts/AvenirLTStd-Book.woff) format('woff');
 }
 
@@ -53,6 +59,7 @@
     font-family: AvenirBO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 45 Book Oblique'), url(fonts/AvenirLTStd-BookOblique.woff) format('woff');
 }
 
@@ -61,6 +68,7 @@
     font-family: AvenirM;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 65 Medium'), url(fonts/AvenirLTStd-Medium.woff) format('woff');
 }
 
@@ -69,6 +77,7 @@
     font-family: AvenirMO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 65 Medium Oblique'), url(fonts/AvenirLTStd-MediumOblique.woff) format('woff');
 }
 
@@ -77,6 +86,7 @@
     font-family: AvenirH;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 85 Heavy'), url(fonts/AvenirLTStd-Heavy.woff) format('woff');
 }
 
@@ -85,6 +95,7 @@
     font-family: AvenirHO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 85 Heavy Oblique'), url(fonts/AvenirLTStd-HeavyOblique.woff) format('woff');
 }
 
@@ -93,6 +104,7 @@
     font-family: AvenirBL;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 95 Black'), url(fonts/AvenirLTStd-Black.woff) format('woff');
 }
 
@@ -101,6 +113,7 @@
     font-family: AvenirBLO;
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
     src: local('Avenir LT Std 95 Black Oblique'), url(fonts/AvenirLTStd-BlackOblique.woff) format('woff');
 }
 
