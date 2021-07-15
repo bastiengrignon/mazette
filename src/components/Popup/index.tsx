@@ -3,7 +3,7 @@ import { AiFillCloseCircle } from "react-icons/ai"
 import Image from "../Image"
 
 interface PopupProps {
-    filmName: string
+    name: string
     author: string
     description: string
     date: string
@@ -14,7 +14,7 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({
-    filmName,
+    name,
     author,
     description,
     date,
@@ -30,25 +30,24 @@ const Popup: React.FC<PopupProps> = ({
             <div
                 className="absolute inset-0 z-20 bg-gray-500 opacity-75 transition-opacity flex items-start justify-center"/>
             <div
-                className="grid grid-cols-6 grid-rows-6 w-11/12 sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-3/4 sm:h-1/2 shadow-2xl m-auto z-50 bg-white border-4 border-test-green p-3">
-                <div className="col-span-5 border-b border-gray-300 flex items-center">
+                className="grid grid-cols-6 grid-rows-6 w-11/12 sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-5/6 sm:h-1/2 shadow-2xl m-auto z-50 bg-white border-4 border-test-green p-3">
+                <div className="col-span-6 row-span-1 inline-flex justify-between items-center">
                     <span className="font-semibold uppercase text-xl sm:text-2xl lg:text-3xl">
-                        { filmName } { !isMusic() &&
-                    <span className="text-base italic">de { author }</span> }
+                        { name } { !isMusic() && <span className="text-base italic">de { author }</span> }
                     </span>
-                </div>
-                <div className="col-span-1 border-b border-gray-300 flex justify-end">
                     <AiFillCloseCircle
-                        className="cursor-pointer text-2xl sm:text-3xl hover:text-test-green"
+                        className="cursor-pointer w-6 h-auto text-2xl sm:text-3xl hover:text-test-green place-items-start"
                         onClick={ () => visibility(false) }/>
                 </div>
-                <div
-                    className="col-span-6 text-xl">{ isMusic() ? `${ author }` : `${ date }, ${ location }, ${ duration }` }</div>
-                <div className="row-span-6 col-span-6 sm:col-span-2 mx-auto h-full">
-                    <Image src={ img } alt={ img } className="rounded"/>
+                <div className="col-span-6 row-span-1 text-xl border-t border-gray-300">
+                    { isMusic() ? `${ author }` : `${ date }, ${ location }, ${ duration }` }
                 </div>
-                <div
-                    className="row-span-4 col-span-6 sm:col-span-4 mx-2 text-base sm:text-lg leading-normal overflow-y-auto">{ description }</div>
+                <div className="col-span-6 sm:col-span-3 md:col-span-2 row-span-2 sm:row-span-4 mx-auto">
+                    <Image src={ img } alt={ img } className="rounded h-full"/>
+                </div>
+                <div className="col-span-6 sm:col-span-3 md:col-span-4 row-span-2 sm:row-span-4 mx-2 text-base sm:text-lg leading-normal overflow-y-auto">
+                    { description }
+                </div>
             </div>
         </div>
     )
