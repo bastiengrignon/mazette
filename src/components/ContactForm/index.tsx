@@ -38,6 +38,14 @@ const ContactForm: React.FC = () => {
         } else setEmailValid(false)
     }
 
+    const clearInput = (): void => {
+        setName("")
+        setEmail("")
+        setSubject("")
+        setMessage("")
+        Array.from(document.querySelectorAll("input, textarea")).forEach(input => input["value"] = "")
+    }
+
     const sendEmail = (): void => {
         if (!!name && !!email) {
             if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
@@ -51,7 +59,10 @@ const ContactForm: React.FC = () => {
                 process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
                 templateParameters,
                 process.env.REACT_APP_EMAILJS_USER_ID)
-                .then(() => setMessageSent(true))
+                .then(() => {
+                    clearInput()
+                    setMessageSent(true)
+                })
                 .catch(() => setMessageSentError(true))
         }
     }
