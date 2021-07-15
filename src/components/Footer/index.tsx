@@ -26,7 +26,7 @@ const Footer: React.FC = () => (
                 </ExternalLink>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">
-                <Link to={ RouterUrl.mention}>Mentions Légales</Link> - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
+                <Link to={ RouterUrl.mention} className="link">Mentions Légales</Link> - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
             </div>
         </div>
     </footer>
