@@ -27,7 +27,7 @@ const Vignette: React.FC<VignetteProps> = (props) => {
                 </div>
             </div>
             { visibility &&
-            <Popup filmName={ props.properties.groupName } author={ props.properties.type }
+            <Popup name={ props.properties.groupName } author={ props.properties.type }
                 description={ props.properties.description } date={ "" } location={ "" }
                 duration={ "" } visibility={ setVisibility } img={ props.properties.image }/>
             }
@@ -41,7 +41,7 @@ const Vignette: React.FC<VignetteProps> = (props) => {
                     className="w-full h-full"/>
             </div>
             { visibility &&
-            <Popup filmName={ props.properties.filmName } author={ props.properties.author }
+            <Popup name={ props.properties.filmName } author={ props.properties.author }
                 description={ props.properties.description } date={ props.properties.date }
                 location={ props.properties.location } duration={ props.properties.duration }
                 visibility={ setVisibility }
