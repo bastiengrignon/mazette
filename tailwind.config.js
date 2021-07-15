@@ -25,7 +25,8 @@ module.exports = {
         extend: {
             fontWeight: ["hover"],
             borderRadius: ["hover", "last"],
-            borderWidth: ["hover"]
+            borderWidth: ["hover"],
+            scale: ['active']
         },
     },
     plugins: [],

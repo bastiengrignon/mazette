@@ -94,7 +94,7 @@ const ContactForm: React.FC = () => {
                 <div className="flex items-center">
                     <button onClick={ sendEmail }
                         className="px-6 py-1 rounded bg-test-green text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-test-red
-                        focus:outline-none w-min">
+                        w-min transform active:scale-110">
                         Envoyer
                     </button>
                     <div
