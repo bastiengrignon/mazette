@@ -6,6 +6,8 @@ import { externalLinks, RouterUrl } from "../../constants"
 import ExternalLink from "../Link"
 import Image from "../Image"
 
+const partnerImageCSS = "w-auto h-10 md:h-16 2xl:h-24 object-contain"
+
 const Footer: React.FC = () => (
     <footer className="text-black text-center w-full p-2 mt-10">
         <div className="bg-footer mx-auto w-11/12 rounded py-1 my-5"/>
@@ -13,7 +15,12 @@ const Footer: React.FC = () => (
             <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
                 {
                     partners.map((partner, key) => (
-                        <Image key={key} src={partner.src} alt={partner.alt} className="w-auto h-16  2xl:h-24 object-contain" isPng={true}/>
+                        partner.link ?
+                            <ExternalLink src={partner.link} key={key}>
+                                <Image src={partner.src} alt={partner.alt} className={partnerImageCSS} isPng={true}/>
+                            </ExternalLink>
+                            :
+                            <Image key={key} src={partner.src} alt={partner.alt} className={partnerImageCSS} isPng={true}/>
                     ))
                 }
             </div>
@@ -26,7 +33,7 @@ const Footer: React.FC = () => (
                 </ExternalLink>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">
-                <Link to={ RouterUrl.mention} className="link">Mentions Légales</Link> - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
+                <Link to={ RouterUrl.mention} className="link font-avenirH">Mentions Légales</Link> - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
             </div>
         </div>
     </footer>
