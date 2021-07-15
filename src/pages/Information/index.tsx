@@ -32,9 +32,8 @@ const Information: React.FC = () => (
                     D55 (direction
                     Saint-Mathurin), un parking sera prévu à l’entrée du festival
                 </p>
-                <p>
-                    <span className="font-extrabold">En bus : </span>
-                    depuis Angers ligne 403, arrêt Mazé-Milon - Carrefour route de Fayet
+                <p><span className="font-extrabold">En bus : </span>
+                    depuis Angers <Link src={externalLinks.others.schedule}>ligne 403</Link>, arrêt Mazé-Milon - Carrefour route de Fayet
                 </p>
                 <p><span className="font-extrabold">En vélo : </span>
                     5 minutes depuis le centre-ville de Mazé
