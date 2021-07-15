@@ -1,14 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import Image from "../../components/Image"
-import { RouterUrl } from "../../constants"
+import { RouterUrl, staticImgFolder } from "../../constants"
 import { BiChevronLeft } from "react-icons/bi"
 
 const LegalMention: React.FC = () => (
     <div>
         <div className="h-52 w-full bg-test-green flex justify-center py-5 px-5 sm:px-0">
             <Link to={ RouterUrl.home } title="Retour à l'accueil">
-                <Image src={`${ process.env.PUBLIC_URL }/img/festival_mazette`} alt="Logo Mazette!"
+                <Image src={`${ staticImgFolder }/festival_mazette`} alt="Logo Mazette!"
                     className="h-full object-contain" isPng={ true }/>
             </Link>
         </div>

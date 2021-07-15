@@ -5,7 +5,7 @@ export interface Image {
     alt: string
 }
 
-const defaultImgFolder = `${ process.env.PUBLIC_URL }/img`
+const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
 export const musicFolder = `${ defaultImgFolder }/musics`
 export const filmsImgFolder = `${ defaultImgFolder }/films`
@@ -91,6 +91,7 @@ export const externalLinks = {
         nuisibles: "https://vimeo.com/511031470"
     },
     others: {
-        payotte: "https://www.lapayotte.net"
+        payotte: "https://www.lapayotte.net",
+        schedule: `${process.env.PUBLIC_URL}/assets/ligne403_schedule.pdf`
     }
 }

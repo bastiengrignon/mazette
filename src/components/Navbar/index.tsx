@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { RouterUrl } from "../../constants"
+import { RouterUrl, staticImgFolder } from "../../constants"
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai"
 import NavbarTabs from "../NavbarTabs"
 import Wave from "../Wave"
@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
                 <nav className="absolute z-20 flex flex-row justify-start lg:justify-between lg:items-center w-full p-2 lg:p-0">
                     <Link id="logo" to={ RouterUrl.home }
                         className="md:text-xl uppercase z-20 w-1/4 ml-2 sm:ml-5 md:ml-8 lg:ml-10">
-                        <Image src={ `${ process.env.PUBLIC_URL }/img/festival_mazette` } alt="Logo"
+                        <Image src={ `${ staticImgFolder }/festival_mazette` } alt="Logo"
                             className="mt-2 sm:mt-10" isPng={ true }/>
                     </Link>
 
