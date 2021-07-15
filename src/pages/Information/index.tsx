@@ -19,23 +19,23 @@ const Information: React.FC = () => (
             </Link>, situé à deux pas du lieu du festival.
         </div>
         <div className={ titleCSS }>{ informationTitle.festival }</div>
-        <div className="flex flex-col lg:flex-row items-center">
-            <div className="w-full lg:w-1/2">
+        <div className="grid grid-rows-1 grid-cols-6">
+            <div className="col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-2">
                 <Maps/>
             </div>
-            <div className="text-black text-lg sm:text-xl mx-2 sm:mx-10 space-y-3">
-                <p><span className="font-extrabold">Adresse : </span>
+            <div className="col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-4 text-black text-lg sm:text-xl mx-2 sm:mx-10 space-y-3">
+                <p><span className="italic">Adresse : </span>
                     Gué de Mazé, 49630 Mazé-Milon (en face du Bar-Restaurant La Payotte)
                 </p>
-                <p><span className="font-extrabold">En voiture : </span>
+                <p><span className="italic">En voiture : </span>
                     depuis Angers, en arrivant au premier rond-point de Mazé tourner à droite sur la
                     D55 (direction
                     Saint-Mathurin), un parking sera prévu à l’entrée du festival
                 </p>
-                <p><span className="font-extrabold">En bus : </span>
+                <p><span className="italic">En bus : </span>
                     depuis Angers <Link src={externalLinks.others.schedule}>ligne 403</Link>, arrêt Mazé-Milon - Carrefour route de Fayet
                 </p>
-                <p><span className="font-extrabold">En vélo : </span>
+                <p><span className="italic">En vélo : </span>
                     5 minutes depuis le centre-ville de Mazé
                 </p>
             </div>
