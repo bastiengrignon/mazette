@@ -14,7 +14,8 @@ const Information: React.FC = () => (
             <br/>
             Bière, vin et jus de fruit locaux seront à la carte !
             <br/>
-            Vous pourrez également profiter du bar-restaurant de <Link src={ externalLinks.others.payotte }>
+            Vous pourrez également profiter du bar-restaurant
+            de <Link src={ externalLinks.others.payotte }>
                 La Payotte
             </Link>, situé à deux pas du lieu du festival.
         </div>
@@ -33,7 +34,8 @@ const Information: React.FC = () => (
                     Saint-Mathurin), un parking sera prévu à l’entrée du festival
                 </p>
                 <p><span className="italic">En bus : </span>
-                    depuis Angers <Link src={externalLinks.others.schedule}>ligne 403</Link>, arrêt Mazé-Milon - Carrefour route de Fayet
+                    depuis Angers <Link src={externalLinks.others.schedule}>ligne 403</Link>,
+                    arrêt Mazé-Milon - Carrefour route de Fayet
                 </p>
                 <p><span className="italic">En vélo : </span>
                     5 minutes depuis le centre-ville de Mazé
