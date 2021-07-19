@@ -37,6 +37,10 @@ const Programmation: React.FC = () => (
         </div>
 
         <Anchor id={ programmationTitle.films } className={ titleCSS }/>
+        <p>A la tombée de la nuit à partir de 21h30, une programmation éclectique pour découvrir
+            le court-métrage sur grand écran et sous toutes ses formes, de la fiction à
+            l’animation, de la comédie au documentaire.
+        </p>
         <p className={ dateCSS }>Vendredi 30 juillet</p>
         <div className="grid grid-cols-2 gap-2 sm:gap-10">
             {
