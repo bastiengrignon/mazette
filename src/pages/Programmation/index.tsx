@@ -60,9 +60,10 @@ const Programmation: React.FC = () => (
             entre les centres d’animation des quatre communes de l’Entente-Vallée. À travers la
             réalisation de courts-métrages sur le thème « C’est arrivé près de chez vous ! »,
             nous souhaitons encourager les jeunes du territoire à découvrir le tournage et le
-            montage d’un film. Tous les films participants au concours seront projetés en première
-            partie des deux soirées de projection, et l’équipe Mazette! remettra le prix du
-            Meilleur film à son court-métrage favori !
+            montage d’un film. <span className="font-avenirBL">Tous les films participants au
+            concours seront projetés à 21h30 le vendredi 30 juillet en première partie des
+            projections</span>, et l’équipe Mazette! remettra le prix du Meilleur film à son
+            court-métrage favori !
         </p>
     </div>
 )
