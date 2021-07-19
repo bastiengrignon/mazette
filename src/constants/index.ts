@@ -85,6 +85,7 @@ export const externalLinks = {
     },
     films: {
         anais: "https://youtu.be/ng2piTp2LCc",
+        jeunesses: "https://www.dailymotion.com/video/x7tk541",
         repasDominical: "https://youtu.be/zrNmA-uv0JU",
         bigorneaux: "https://vimeo.com/215049057",
         lila: "https://youtu.be/7hqDFebavDc",

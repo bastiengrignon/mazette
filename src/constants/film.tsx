@@ -45,6 +45,9 @@ export const films: FilmProps[] = [
             Des lycéens, cadre serré, répondent aux questions d’un conseiller d’orientation un peu
             agressif. Tour à tour, les adolescents se révèlent, plus dans la manière que dans
             l’anecdote, entre le vrai et le faux, entre fiction et documentaire.
+            <br/>
+            Bande annonce : <br/>
+            <Link src={ externalLinks.films.jeunesses }>{ externalLinks.films.jeunesses }</Link>
         </div>,
         imgThumbnail: `${ filmsImgFolder }/jeunesses_francaises_de_stephan_castang`,
         publicationDate: "30"
