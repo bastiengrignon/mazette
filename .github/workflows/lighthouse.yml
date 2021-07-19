@@ -1,7 +1,7 @@
 name: Vercel Preview URL Lighthouse Audit
 
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [edited]
 
 jobs:
