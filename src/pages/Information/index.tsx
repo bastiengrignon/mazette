@@ -20,11 +20,6 @@ const Information: React.FC = () => (
             </Link>, situé à deux pas du lieu du festival.
         </div>
         <div className={ titleCSS }>{ informationTitle.festival }</div>
-        <p className="text-base sm:text-xl mb-2">
-            L’entrée au festival sera soumise aux réglementations en vigueur, à savoir l’obligation
-            de présenter un pass sanitaire ou un test covid négatif daté de moins de 48h ou d’une
-            attestation de rétablissement du Covid-19
-        </p>
         <div className="grid grid-rows-1 grid-cols-6">
             <div className="col-span-6 md:col-span-3 lg:col-span-3 xl:col-span-2">
                 <Maps/>
