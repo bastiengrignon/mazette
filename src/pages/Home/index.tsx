@@ -7,7 +7,7 @@ const Home: React.FC = () => (
         className="page-content mt-0 sm:mt-10 2xl:mt-0">
         <div className="text-center font-avenirBL">
             <p className="text-3xl sm:text-5xl text-red my-1 font-avenirBLO">&#9888; Infos pass sanitaire &#9888;</p>
-            <p className="text-base sm:text-xl md:text-3xl border-1 border-red font-avenir-BL">
+            <p className="text-base sm:text-xl md:text-2xl border-1 border-red font-avenir-BL">
                 L’entrée au festival sera soumise aux réglementations en vigueur, à savoir
                 l’obligation de présenter un pass sanitaire valide, un test covid négatif daté de
                 moins de 48h ou d’une attestation de rétablissement du Covid-19.
