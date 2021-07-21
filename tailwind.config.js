@@ -7,8 +7,8 @@ module.exports = {
         extend: {
             colors: {
                 "black": "#06041D",
-                "test-red": "#EC6A69",
-                "test-green": "#21BD8F",
+                "red": "#EC6A69",
+                "green": "#21BD8F",
                 "footer": "#FCE4D9"
             },
             fontFamily: {

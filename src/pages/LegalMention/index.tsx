@@ -6,7 +6,7 @@ import { BiChevronLeft } from "react-icons/bi"
 
 const LegalMention: React.FC = () => (
     <div>
-        <div className="h-52 w-full bg-test-green flex justify-center py-5 px-5 sm:px-0">
+        <div className="h-52 w-full bg-green flex justify-center py-5 px-5 sm:px-0">
             <Link to={ RouterUrl.home } title="Retour à l'accueil">
                 <Image src={`${ staticImgFolder }/festival_mazette`} alt="Logo Mazette!"
                     className="h-full object-contain" isPng={ true }/>

@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom"
 import { associationItems, programmationItems, RouterUrl, TabName } from "../../constants"
 import DropDown from "../DropDown"
 
-export const activeClass = "text-white bg-test-red h-full"
-export const inactiveClass = "text-white hover:text-white hover:bg-test-red h-full"
+export const activeClass = "text-white bg-red h-full"
+export const inactiveClass = "text-white hover:text-white hover:bg-red h-full"
 
 type NavbarTabsProps = {
     className: string,

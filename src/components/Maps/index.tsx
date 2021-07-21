@@ -23,7 +23,7 @@ const Maps: React.FC<MapProps> = ({ className = "" }) => (
         />
         <Marker position={ coordsMazette } draggable={ false }>
             <Popup>
-                <span className={`${popupCSS} md:text-2xl text-test-green`}>Festival Mazette!</span>
+                <span className={`${popupCSS} md:text-2xl text-green`}>Festival Mazette!</span>
             </Popup>
         </Marker>
         <Marker position={ coordsPayotte } draggable={ false }>

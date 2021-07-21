@@ -19,10 +19,10 @@ const Footer: React.FC = () => (
             </div>
             <div className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
                 <ExternalLink src={externalLinks.social.instagram}>
-                    <FaInstagram className="hover:text-test-green" title="Instagram logo"/>
+                    <FaInstagram className="hover:text-green" title="Instagram logo"/>
                 </ExternalLink>
                 <ExternalLink src={externalLinks.social.facebook}>
-                    <FaFacebookF className="hover:text-test-green"  title="Facebook logo"/>
+                    <FaFacebookF className="hover:text-green"  title="Facebook logo"/>
                 </ExternalLink>
             </div>
             <div className="col-span-6 row-span-1 italic mt-4">

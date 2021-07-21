@@ -5,7 +5,7 @@ import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import { films } from "../../constants/film"
 
-export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-test-red mt-2 sm:mt-12" +
+export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"
 export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 

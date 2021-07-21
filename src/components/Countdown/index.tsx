@@ -14,7 +14,7 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text, invertColor }) =>
     const [minutes, setMinutes] = useState<number>(0)
     const [seconds, setSeconds] = useState<number>(0)
 
-    const countdownNumberCSS = `flex flex-col items-center justify-center p-1 sm:p-2 rounded-lg ${invertColor ? "bg-test-red" : "bg-test-green"}`
+    const countdownNumberCSS = `flex flex-col items-center justify-center p-1 sm:p-2 rounded-lg ${invertColor ? "bg-red" : "bg-green"}`
 
     const leadingZero = (number: number): string | number => {
         return number < 10 ? "0" + number : number
@@ -42,7 +42,7 @@ const Countdown: React.FC<CountdownProps> = ({ deadline, text, invertColor }) =>
     return (
         <div
             className={`w-full ${invertColor ? "text-white" : "text-white"} text-lg sm:text-2xl md:text-4xl lg:text-6xl p-2 ${invertColor
-                ? "bg-test-green" : "bg-test-red"}`}>
+                ? "bg-green" : "bg-red"}`}>
             <div className="flex justify-center space-x-1 sm:space-x-5 md:space-x-10">
                 <div
                     className={countdownNumberCSS}>

@@ -90,10 +90,10 @@ const ContactForm: React.FC = () => {
             <div className="flex flex-col mt-2">
                 <p>Message</p>
                 <label><textarea rows={ 5 } onChange={ ({ target: { value } }) => setMessage(value) }
-                    className="border border-gray-300 rounded focus:border focus:outline-none focus:border-test-green px-0.5 mt-1.5 w-full"/></label>
+                    className="border border-gray-300 rounded focus:border focus:outline-none focus:border-green px-0.5 mt-1.5 w-full"/></label>
                 <div className="flex items-center">
                     <button onClick={ sendEmail }
-                        className="px-6 py-1 rounded bg-test-green text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-test-red
+                        className="px-6 py-1 rounded bg-green text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-red
                         w-min transform active:scale-110">
                         Envoyer
                     </button>
