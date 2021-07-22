@@ -1,6 +1,8 @@
 import React from "react"
-import Anchor from "../../components/Anchor"
-import Image from "../../components/Image"
+import loadable from "@loadable/component"
+
+const Anchor = loadable(() => import("../../components/Anchor"))
+const Image = loadable(() => import("../../components/Image"))
 import { associationTitle, staticImgFolder } from "../../constants"
 import { trombinoscope } from "../../constants/trombinoscope"
 import { subtitleCSS, titleCSS } from "../Programmation"

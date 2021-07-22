@@ -1,6 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Image from "../../components/Image"
+import loadable from "@loadable/component"
+
+const Image = loadable(() => import("../../components/Image"))
 import { RouterUrl, staticImgFolder } from "../../constants"
 import { BiChevronLeft } from "react-icons/bi"
 
