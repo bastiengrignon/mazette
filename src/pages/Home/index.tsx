@@ -1,5 +1,7 @@
 import React from "react"
-import Image from "../../components/Image"
+import loadable from "@loadable/component"
+
+const Image = loadable(() => import("../../components/Image"))
 import { staticImgFolder } from "../../constants"
 
 const Home: React.FC = () => (

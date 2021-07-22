@@ -1,7 +1,9 @@
 import React from "react"
-import ContactForm from "../../components/ContactForm"
-import Link from "../../components/Link"
-import Maps from "../../components/Maps"
+import loadable from "@loadable/component"
+
+const ContactForm = loadable(() => import("../../components/ContactForm"))
+const Link = loadable(() => import("../../components/Link"))
+const Maps = loadable(() => import("../../components/Maps"))
 import { externalLinks, informationTitle } from "../../constants"
 import { titleCSS } from "../Programmation"
 

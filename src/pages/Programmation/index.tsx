@@ -1,6 +1,8 @@
 import React from "react"
-import Anchor from "../../components/Anchor"
-import Vignette from "../../components/Vignette"
+import loadable from "@loadable/component"
+
+const Anchor = loadable(() => import("../../components/Anchor"))
+const Vignette = loadable(() => import("../../components/Vignette"))
 import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import { films } from "../../constants/film"
