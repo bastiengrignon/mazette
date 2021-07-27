@@ -8,9 +8,19 @@ import { RouterUrl, staticImgFolder } from "../../constants"
 const Home: React.FC = () => (
     <div
         className="page-content mt-0 sm:mt-10 2xl:mt-0">
-        <div className="text-center font-avenirBL">
-            <p className="text-3xl sm:text-5xl text-red my-1 font-avenirBLO">&#9888; Infos pass sanitaire &#9888;</p>
-            <p><Link to={ RouterUrl.passSanitaire } className="link">Cliquer ici pour en savoir plus</Link></p>
+        <div className="font-avenirBL">
+            <p className="text-3xl sm:text-5xl text-red my-1 font-avenirBLO text-center">&#9888; Infos pass sanitaire &#9888;</p>
+            <p className="flex justify-center">
+                Pour la sécurité de tous.tes et dans le respect des nouvelles mesures
+                gouvernementales, il vous sera demandé à l’entrée du site un pass sanitaire valide,
+                c’est-à-dire soit : <br/>
+                &nbsp;&nbsp; - un certificat de vaccination <br/>
+                &nbsp;&nbsp; - un test PCR ou antigène négatif datant de moins de 48h <br/>
+                &nbsp;&nbsp; - une attestation de rétablissement du covid-19 de moins de 6 mois <br/>
+            </p>
+            <div className="flex justify-center">
+                <Link to={ RouterUrl.passSanitaire } className="link">Cliquer ici pour en savoir plus</Link>
+            </div>
         </div>
         <hr className="my-3 sm:my-10"/>
         <div className="flex md:inline-flex flex-col md:flex-row items-center justify-center">
