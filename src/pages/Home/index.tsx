@@ -1,19 +1,16 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import loadable from "@loadable/component"
 
 const Image = loadable(() => import("../../components/Image"))
-import { staticImgFolder } from "../../constants"
+import { RouterUrl, staticImgFolder } from "../../constants"
 
 const Home: React.FC = () => (
     <div
         className="page-content mt-0 sm:mt-10 2xl:mt-0">
         <div className="text-center font-avenirBL">
             <p className="text-3xl sm:text-5xl text-red my-1 font-avenirBLO">&#9888; Infos pass sanitaire &#9888;</p>
-            <p className="text-base sm:text-xl md:text-2xl border-1 border-red font-avenir-BL">
-                L’entrée au festival sera soumise aux réglementations en vigueur, à savoir
-                l’obligation de présenter un pass sanitaire valide, un test covid négatif daté de
-                moins de 48h ou d’une attestation de rétablissement du Covid-19.
-            </p>
+            <p><Link to={ RouterUrl.passSanitaire } className="link">Cliquer ici pour en savoir plus</Link></p>
         </div>
         <hr className="my-3 sm:my-10"/>
         <div className="flex md:inline-flex flex-col md:flex-row items-center justify-center">
