@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
                 className="relative h-32 sm:h-40 md:h-48 lg:h-56 xl:h-72 2xl:h-96 mb-0 md:mb-4 lg:mb-12 2xl:mb-16">
                 <Wave text="CINEMA ET CONCERTS EN PLEIN AIR"/>
                 <nav className="absolute z-20 flex flex-row justify-start lg:justify-between lg:items-center w-full p-2 lg:p-0">
-                    <Link id="logo" to={ RouterUrl.home }
+                    <Link id="logo" to={ RouterUrl.home } title="Accueil Mazette!"
                         className="md:text-xl uppercase z-20 w-1/4 ml-2 sm:ml-5 md:ml-8 lg:ml-10">
                         <Image src={ `${ staticImgFolder }/festival_mazette` } alt="Logo"
                             className="mt-2 sm:mt-10" isPng={ true }/>

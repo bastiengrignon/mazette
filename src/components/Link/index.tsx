@@ -3,16 +3,17 @@ import React from "react"
 interface LinkProps {
     src: string
     newTab?: boolean
+    className?: string
 }
 
-const Link: React.FC<LinkProps> = ({ src, newTab = true, children }) => {
+const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", children }) => {
     return (newTab ?
-        <a href={ src } target="_blank" className="link" rel="nofollow external noreferrer noopener">
-            { children }
+        <a href={ src } target="_blank" className={`link ${className}`} rel="nofollow external noreferrer noopener">
+            { children || src }
         </a>
         :
-        <a href={ src } className="link" rel="internal noreferrer noopener">
-            { children }
+        <a href={ src } className={`link ${className}`} rel="internal noreferrer noopener">
+            { children || src }
         </a>
     )
 }
