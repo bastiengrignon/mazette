@@ -12,6 +12,7 @@ const Information = loadable(() => import("./pages/Information"))
 const Programmation = loadable(() => import("./pages/Programmation"))
 const Association = loadable(() => import("./pages/Association"))
 const LegalMention = loadable(() => import("./pages/LegalMention"))
+const SanitaryPass = loadable(() => import("./pages/SanitaryPass"))
 import Home from "./pages/Home"
 
 const App: React.FC = () => (
@@ -23,6 +24,7 @@ const App: React.FC = () => (
                 <Route path={ RouterUrl.association } component={ Association }/>
                 <Route path={ RouterUrl.information } component={ Information }/>
                 <Route path={ RouterUrl.mention } component={ LegalMention }/>
+                <Route path={ RouterUrl.passSanitaire } component={ SanitaryPass }/>
                 <Route path={ RouterUrl.home } component={ Home }/>
             </Switch>
             <Footer/>
