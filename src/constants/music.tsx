@@ -27,7 +27,7 @@ export const musics: MusicProps[] = [
         groupName: "Elayiis",
         type: "Rap soul et pop urbaine",
         description: <div>
-            <Link src={externalLinks.music.elayiis_ig}>@elayiis</Link>  chanteuse, interprète et compositrice angevine nous rejoindra demain soir
+            <Link src={externalLinks.music.elayiisIG}>@elayiis</Link>  chanteuse, interprète et compositrice angevine nous rejoindra demain soir
             pour nous porter dans son univers entre rap, soul et pop urbaine. Toutes les chansons
             de son EP nommé Cumulus sont associées à une couleur différente, illustrant une émotion
             qu’un souvenir de sa vie sur Terre lui a fait ressentir.
