@@ -82,6 +82,8 @@ export const externalLinks = {
     },
     music: {
         oulitsa: "https://youtu.be/9YVuyx6SoVA",
+        elayiis: "https://www.youtube.com/channel/UCtKeqrDiSDL9pH5lsOZuYWw",
+        elayiis_ig: "https://www.instagram.com/elayiis/",
         wugo: "https://youtu.be/wc3LAkClt0k"
     },
     films: {
