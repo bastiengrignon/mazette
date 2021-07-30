@@ -24,16 +24,18 @@ export const musics: MusicProps[] = [
         publicationDate: "30"
     },
     {
-        groupName: "54",
-        type: "Rap, trap, jazz, pop",
+        groupName: "Elayiis",
+        type: "Rap soul et pop urbaine",
         description: <div>
-            54 c’est un duo choletais qui promet de nous offrir un retour aux sources au travers de
-            mélodies saisissantes et de textes qui marquent les esprits. <br/><br/>
-            Une courte pause dans le temps pour contempler la divinité de la nature, mais aussi sa
-            cruauté. A la croisée du hip/hop et de la chanson, le piano est le véritable chef
-            d’orchestre. Un concert unique qui fait repenser le monde comme ils veulent le voir…
+            <Link src={externalLinks.music.elayiisIG}>@elayiis</Link>  chanteuse, interprète et compositrice angevine nous rejoindra demain soir
+            pour nous porter dans son univers entre rap, soul et pop urbaine. Toutes les chansons
+            de son EP nommé Cumulus sont associées à une couleur différente, illustrant une émotion
+            qu’un souvenir de sa vie sur Terre lui a fait ressentir.
+            Laissez vous porter par sa voix douce et envoûtante… <br/>
+            Pour les curieux 👉
+            <Link src={ externalLinks.music.elayiis }/>
         </div>,
-        image: `${ musicFolder }/54`,
+        image: `${ musicFolder }/elayiis`,
         publicationDate: "30"
     },
     {
