@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import loadable from "@loadable/component"
-import { RouterUrl } from "./constants"
+import { adminSubdomain, RouterUrl } from "./constants"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import "./index.css"
 
@@ -13,6 +13,7 @@ const Programmation = loadable(() => import("./pages/Programmation"))
 const Association = loadable(() => import("./pages/Association"))
 const LegalMention = loadable(() => import("./pages/LegalMention"))
 const SanitaryPass = loadable(() => import("./pages/SanitaryPass"))
+const Admin = loadable(() => import("./pages/admin"))
 import Home from "./pages/Home"
 
 const App: React.FC = () => (
@@ -32,9 +33,10 @@ const App: React.FC = () => (
     </div>
 )
 
+const subDomain = window.location.host.split(".")[0]
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        { subDomain === adminSubdomain ? <Admin/> : <App/>}
     </React.StrictMode>,
     document.getElementById("root")
 )
