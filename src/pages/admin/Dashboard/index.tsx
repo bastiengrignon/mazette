@@ -3,11 +3,13 @@ import Navigation from "../Navigation"
 import { Button, Form, Input, message, Modal } from "antd"
 import { useForm } from "antd/es/form/Form"
 import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
+import { authToken, Storage } from "../../../services/admin/storage/storage.services"
 
 
 const Dashboard: React.FC = () => {
-    const [isModalVisible, setIsModalVisible] = useState(true)
-    // const [isConnected, setConnected] = useState(false)
+    const connectedUserCookie = (): boolean => Storage.get(authToken) === "true"
+
+    const [isModalVisible, setIsModalVisible] = useState(!connectedUserCookie())
     const [form] = useForm()
 
     const handleLogin = () => {
@@ -15,12 +17,12 @@ const Dashboard: React.FC = () => {
             .then(values => {
                 AuthenticationService
                     .logInAsync(values)
-                    .then(res => console.log(res))
-                    // .finally(() => setConnected(true))
-                form.resetFields()
+                    .then(() => Storage.set(authToken, "true"))
+                    .catch(() => Storage.delete(authToken))
+                    .finally(() => form.resetFields())
+                setIsModalVisible(false)
             })
             .catch(info => message.warn("Validation failed: ", info))
-        setIsModalVisible(false)
     }
 
     return (
