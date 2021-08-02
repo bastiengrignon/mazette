@@ -1,9 +1,11 @@
+import axios from "axios"
 import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import loadable from "@loadable/component"
 import { adminSubdomain, RouterUrl } from "./constants"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
+import "antd/dist/antd.css"
 import "./index.css"
 
 import Home from "./pages/Home"
@@ -56,7 +58,10 @@ const App: React.FC = () => {
 
 const isAdminRoutes = (): boolean => subDomain === adminSubdomain;
 
-const subDomain = window.location.host.split(".")[0]
+(() => {
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL
+})()
+
 ReactDOM.render(
     <React.StrictMode>
         <App/>
