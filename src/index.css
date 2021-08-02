@@ -133,3 +133,5 @@ body {
 #root * {
     border: 1px solid red;
 }*/
+
+svg { vertical-align: baseline; }
