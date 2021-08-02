@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
         form.validateFields()
             .then(values => {
                 AuthenticationService
-                    .signInAsync(values)
+                    .logInAsync(values)
                     .then(res => console.log(res))
                     // .finally(() => setConnected(true))
                 form.resetFields()
