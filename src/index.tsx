@@ -5,11 +5,12 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import loadable from "@loadable/component"
+import { Cloudinary } from "@cloudinary/base"
+
 import { adminSubdomain, RouterUrl } from "./constants"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import "antd/dist/antd.css"
 import "./index.css"
-
 import Home from "./pages/Home"
 
 const Footer = loadable(() => import("./components/Footer"))
@@ -52,6 +53,7 @@ const App: React.FC = () => (
         </Router>
     </div>
 )
+export const cloudinary = new Cloudinary({ cloud: { cloudName: "mazette" } })
 
 const isAdminRoutes = (): boolean => window.location.host.split(".")[0] === adminSubdomain;
 
