@@ -13,6 +13,8 @@ import {
     Upload
 } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
+import { AdvancedImage } from "@cloudinary/react"
+
 import Navigation from "../Navigation"
 import { IMovie } from "../../../services/admin/movie/movie.interface"
 import { MovieService } from "../../../services/admin/movie/movie.service"
@@ -20,6 +22,7 @@ import EditableCell from "../EditableCell"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
 import { UploadService } from "../../../services/admin/upload/upload.service"
+import { cloudinary } from "../../../index"
 
 const DashboardMovie: React.FC = () => {
     const [movies, setMovies] = useState<IMovie[]>([])
@@ -29,7 +32,7 @@ const DashboardMovie: React.FC = () => {
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [formRowAddition] = Form.useForm()
-    const [imageUrl, setImageUrl] = useState<string>("")
+    const [file, setFile] = useState<File>()
 
     useEffect(() => {
         MovieService.getAll().then(movies => setMovies(movies))
@@ -122,9 +125,9 @@ const DashboardMovie: React.FC = () => {
             title: "Image",
             key: "imgThumbnail",
             dataIndex: "imgThumbnail",
-            render: function renderImage(imageSrc) {
+            render: function renderImage(imageId) {
                 return <div className="flex justify-center items-center">
-                    <img className="w-24 h-auto" src={ imageSrc } alt={ imageSrc }/>
+                    <AdvancedImage className="w-24 h-auto" cldImg={cloudinary.image(`/${ imageId }`)}/>
                 </div>
             },
             editable: false
@@ -171,7 +174,7 @@ const DashboardMovie: React.FC = () => {
     const handleOkModal = () => {
         formRowAddition.validateFields()
             .then(values => {
-                MovieService.create(values, imageUrl)
+                MovieService.create(values, file)
                     .then(movie => setMovies([...movies, movie]))
                     .catch(err => console.log(err))
                     .finally(() => formRowAddition.resetFields())
@@ -189,7 +192,7 @@ const DashboardMovie: React.FC = () => {
             message.success(`${ info.file.name } uploadé avec succès`)
         else if (info.file.status === "error")
             message.error(`${ info.file.name } ne s'est pas uploadé!`)
-        setImageUrl(URL.createObjectURL(info.file.originFileObj))
+        setFile(info.file.originFileObj)
     }
 
     return (
