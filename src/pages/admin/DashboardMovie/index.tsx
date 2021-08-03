@@ -211,13 +211,13 @@ const DashboardMovie: React.FC = () => {
                 onCancel={ handleCancelModal } onOk={ handleOkModal } cancelText="Annuler">
                 <Form form={ formRowAddition }>
                     <Form.Item label="Titre" name="title" rules={ [{ required: true, message: "Entrez le titre du court-métrage" }] }>
-                        <Input className="capitalize"/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item label="Auteur" name="author" rules={ [{ required: true, message: "Entrez l'auteur " }] }>
                         <Input className="capitalize"/>
                     </Form.Item>
                     <Form.Item label="Description" name="description" rules={ [{ required: true, message: "Entrez une description" }] }>
-                        <Input.TextArea className="capitalize"/>
+                        <Input.TextArea/>
                     </Form.Item>
                     <div className="inline-flex space-x-2">
                         <Form.Item label="Date" name="date" rules={ [{ type: "object", required: true, message: "Entrez la date de création" }] }>
