@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react"
-import { Button, Form, Input, message, Modal, Popconfirm, Table, Typography, Upload } from "antd"
+import {
+    Button,
+    DatePicker,
+    Form,
+    Input,
+    message,
+    Modal,
+    Popconfirm,
+    Table,
+    TimePicker,
+    Typography,
+    Upload
+} from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import Navigation from "../Navigation"
 import { IMovie } from "../../../services/admin/movie/movie.interface"
 import { MovieService } from "../../../services/admin/movie/movie.service"
 import EditableCell from "../EditableCell"
+import { UploadChangeParam } from "antd/es/upload"
+import { UploadFile } from "antd/es/upload/interface"
+import { UploadService } from "../../../services/admin/upload/upload.service"
 
 const DashboardMovie: React.FC = () => {
     const [movies, setMovies] = useState<IMovie[]>([])
@@ -14,6 +29,7 @@ const DashboardMovie: React.FC = () => {
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [formRowAddition] = Form.useForm()
+    const [imageUrl, setImageUrl] = useState<string>("")
 
     useEffect(() => {
         MovieService.getAll().then(movies => setMovies(movies))
@@ -61,6 +77,9 @@ const DashboardMovie: React.FC = () => {
             key: "title",
             dataIndex: "title",
             editable: true,
+            render: function renderTitle(title: string) {
+                return <div className="font-avenirBL">{ title }</div>
+            },
             sorter: (a, b) => a.title.localeCompare(b.title)
         },
         {
@@ -104,7 +123,9 @@ const DashboardMovie: React.FC = () => {
             key: "imgThumbnail",
             dataIndex: "imgThumbnail",
             render: function renderImage(imageSrc) {
-                return <img src={ imageSrc } alt={ imageSrc }/>
+                return <div className="flex justify-center items-center">
+                    <img className="w-24 h-auto" src={ imageSrc } alt={ imageSrc }/>
+                </div>
             },
             editable: false
         },
@@ -147,15 +168,10 @@ const DashboardMovie: React.FC = () => {
         }
     })
 
-    // Modal functions
-    const addRow = () => {
-        setAddRowModalVisible(true)
-    }
-
     const handleOkModal = () => {
         formRowAddition.validateFields()
             .then(values => {
-                MovieService.create(values)
+                MovieService.create(values, imageUrl)
                     .then(movie => setMovies([...movies, movie]))
                     .catch(err => console.log(err))
                     .finally(() => formRowAddition.resetFields())
@@ -168,61 +184,56 @@ const DashboardMovie: React.FC = () => {
         setAddRowModalVisible(false)
     }
 
-    const handleChange = (info) => {
+    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
         if (info.file.status === "done")
             message.success(`${ info.file.name } uploadé avec succès`)
         else if (info.file.status === "error")
             message.error(`${ info.file.name } ne s'est pas uploadé!`)
-    }
-
-    const fakeUploadFileSuccess = (options): void => {
-        if (!options.onSuccess) return
-
-        options.onSuccess({ status: 200 }, new XMLHttpRequest())
+        setImageUrl(URL.createObjectURL(info.file.originFileObj))
     }
 
     return (
         <Navigation>
             <p className="text-xl mb-2">Liste des courts-métrages : </p>
-            <Button type="primary" className="my-2" onClick={ addRow }>
+            <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un court-métrage
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    pagination={{ onChange: cancel, position: [ "bottomCenter"] }} bordered
-                    dataSource={ movies } columns={ mergedColumns }>
+                    rowKey="id" pagination={{ onChange: cancel, position: [ "bottomCenter"] }}
+                    bordered dataSource={ movies } columns={ mergedColumns }>
                 </Table>
             </Form>
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ handleCancelModal } onOk={ handleOkModal } cancelText="Annuler">
                 <Form form={ formRowAddition }>
-                    <Form.Item label="Titre" name="title" rules={ [{ required: true, message: "Veuillez entrer un titre !" }] }>
-                        <Input/>
+                    <Form.Item label="Titre" name="title" rules={ [{ required: true, message: "Entrez le titre du court-métrage" }] }>
+                        <Input className="capitalize"/>
                     </Form.Item>
-                    <Form.Item label="Auteur" name="author" rules={ [{ required: true, message: "Veuillez entrer un auteur !" }] }>
-                        <Input/>
+                    <Form.Item label="Auteur" name="author" rules={ [{ required: true, message: "Entrez l'auteur " }] }>
+                        <Input className="capitalize"/>
                     </Form.Item>
-                    <Form.Item label="Description" name="description" rules={ [{ required: true, message: "Veuillez entrer une description !" }] }>
-                        <Input.TextArea/>
+                    <Form.Item label="Description" name="description" rules={ [{ required: true, message: "Entrez une description" }] }>
+                        <Input.TextArea className="capitalize"/>
                     </Form.Item>
                     <div className="inline-flex space-x-2">
-                        <Form.Item label="Date" name="date" rules={ [{ required: true, message: "Veuillez entrer une date !" }] }>
-                            <Input/>
+                        <Form.Item label="Date" name="date" rules={ [{ type: "object", required: true, message: "Entrez la date de création" }] }>
+                            <DatePicker picker="year"/>
                         </Form.Item>
-                        <Form.Item label="Provenance" name="location" rules={ [{ required: true, message: "Veuillez entrer une provenance !" }] }>
-                            <Input/>
+                        <Form.Item label="Provenance" name="location" rules={ [{ required: true, message: "Entrez une provenance" }] }>
+                            <Input className="capitalize"/>
                         </Form.Item>
                     </div>
                     <div className="inline-flex space-x-2">
-                        <Form.Item label="Durée" name="duration" rules={ [{ required: true, message: "Veuillez entrer une durée !" }] }>
-                            <Input/>
+                        <Form.Item label="Durée" name="duration" rules={ [{ type: "object", required: true, message: "Entrez la durée " }] }>
+                            <TimePicker showHour={ false } format="mm:ss"/>
                         </Form.Item>
-                        <Form.Item label="Date de publication" name="publicationDate" rules={ [{ required: true, message: "Veuillez entrer une date de publication !" }] }>
-                            <Input/>
+                        <Form.Item label="Date de publication" name="publicationDate" rules={ [{ type: "date", required: true, message: "Entrez la date de publication au festival" }] }>
+                            <DatePicker/>
                         </Form.Item>
                     </div>
-                    <Form.Item label="Fichier" name="imgThumbnail" rules={ [{ required: true, message: "Veuillez entrer un titre !" }] }>
-                        <Upload name="imgThumbnail" onChange={ handleChange } customRequest={ fakeUploadFileSuccess }>
+                    <Form.Item label="Fichier" name="imgThumbnail" rules={ [{ required: true, message: "Ajouter une image !" }] }>
+                        <Upload name="imgThumbnail" onChange={ handleChange } customRequest={ UploadService.dummyUploadRequest }>
                             <Button icon={ <UploadOutlined /> }>Ajouter un fichier</Button>
                         </Upload>
                     </Form.Item>
