@@ -1,4 +1,6 @@
 import axios from "axios"
+import { ConfigProvider } from "antd"
+import frFR from "antd/lib/locale/fr_FR"
 import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
@@ -59,7 +61,9 @@ const isAdminRoutes = (): boolean => window.location.host.split(".")[0] === admi
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <ConfigProvider locale={frFR}>
+            <App/>
+        </ConfigProvider>
     </React.StrictMode>,
     document.getElementById("root")
 )
