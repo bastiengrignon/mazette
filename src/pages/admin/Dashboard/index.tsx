@@ -17,23 +17,22 @@ import { authToken, Storage } from "../../../services/admin/storage/storage.serv
 import { IText } from "../../../services/admin/text/text.interface"
 import { TextService } from "../../../services/admin/text/text.service"
 
-
 const Dashboard: React.FC = () => {
     const connectedUserCookie = (): boolean => Storage.get(authToken) === "true"
 
     const [isModalVisible, setIsModalVisible] = useState(!connectedUserCookie())
-    const [form] = useForm()
     const [isTextLoading, setIsTextLoading] = useState<boolean>(false)
+    const [loginForm] = useForm()
     const [texts, setTexts] = useState<IText[]>([])
 
     const handleLogin = () => {
-        form.validateFields()
+        loginForm.validateFields()
             .then(values => {
                 AuthenticationService
                     .logInAsync(values)
                     .then(() => Storage.set(authToken, "true"))
                     .catch(() => Storage.delete(authToken))
-                    .finally(() => form.resetFields())
+                    .finally(() => loginForm.resetFields())
                 setIsModalVisible(false)
             })
             .catch(info => message.warn("Validation failed: ", info))
@@ -67,7 +66,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <Modal title="Admin Login" visible={ isModalVisible } footer={ null } closable={ false }>
-                <Form name="login_form" form={ form } onFinish={ handleLogin } initialValues={ { remember: true } }>
+                <Form name="login_form" form={ loginForm } onFinish={ handleLogin } initialValues={ { remember: true } }>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: "Veuillez entrer votre nom d'utilisateur!" }] }>
                         <Input/>
                     </Form.Item>
