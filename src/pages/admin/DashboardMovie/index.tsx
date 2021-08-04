@@ -122,7 +122,9 @@ const DashboardMovie: React.FC = () => {
             title: "Date de publication",
             key: "publicationDate",
             dataIndex: "publicationDate",
-            editable: true
+            editable: true,
+            sorter: (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate)
+
         },
         {
             title: "Image",

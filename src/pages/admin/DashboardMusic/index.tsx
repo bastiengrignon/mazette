@@ -98,7 +98,9 @@ const DashboardMusic:React.FC = () => {
             title: "Date de publication",
             key: "publicationDate",
             dataIndex: "publicationDate",
-            editable: true
+            editable: true,
+            sorter: (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
+
         },
         {
             title: "Image",
