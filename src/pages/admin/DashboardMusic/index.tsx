@@ -20,6 +20,8 @@ import { UploadOutlined } from "@ant-design/icons"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
 
+//TODO: add optional link for auto-promo
+
 const DashboardMusic:React.FC = () => {
     const [musics, setMusics] = useState<IMusic[]>([])
     const [newMusics, setNewMusics] = useState<IMusic[]>(musics)

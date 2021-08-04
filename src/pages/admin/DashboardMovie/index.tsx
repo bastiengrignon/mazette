@@ -24,6 +24,8 @@ import { UploadFile } from "antd/es/upload/interface"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { cloudinary } from "../../../index"
 
+//TODO: add optional link for trailer
+
 const DashboardMovie: React.FC = () => {
     const [movies, setMovies] = useState<IMovie[]>([])
     const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
