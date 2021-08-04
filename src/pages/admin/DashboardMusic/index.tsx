@@ -77,10 +77,10 @@ const DashboardMusic:React.FC = () => {
             key: "name",
             dataIndex: "name",
             editable: true,
-            render: function renderTitle(title: string) {
-                return <div className="font-avenirBL">{ title }</div>
+            render: function renderTitle(name: string) {
+                return <div className="font-avenirBL">{ name }</div>
             },
-            sorter: (a, b) => a.title.localeCompare(b.title)
+            sorter: (a: IMusic, b: IMusic) => a.name.localeCompare(b.name)
         },
         {
             title: "Style",
