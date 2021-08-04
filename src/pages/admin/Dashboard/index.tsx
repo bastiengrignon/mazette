@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(!connectedUserCookie())
     const [form] = useForm()
-    const [isTextLoading, setIsTextLoading] = useState<boolean>()
+    const [isTextLoading, setIsTextLoading] = useState<boolean>(false)
     const [texts, setTexts] = useState<IText[]>([])
 
     const handleLogin = () => {

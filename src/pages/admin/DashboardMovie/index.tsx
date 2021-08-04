@@ -31,6 +31,7 @@ const DashboardMovie: React.FC = () => {
     const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
+    const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [formRowAddition] = Form.useForm()
@@ -40,7 +41,10 @@ const DashboardMovie: React.FC = () => {
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
-        MovieService.getAll().then(movies => setMovies(movies))
+        setIsMovieLoading(true)
+        MovieService.getAll()
+            .then(movies => setMovies(movies))
+            .finally(() => setIsMovieLoading(false))
     }, [newMovies])
 
     const isEditing = (record: IMovie) => record.id === editingId
@@ -222,7 +226,7 @@ const DashboardMovie: React.FC = () => {
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
                     rowKey="id" pagination={{ onChange: cancel, position: [ "bottomCenter"] }}
-                    bordered dataSource={ movies } columns={ mergedColumns }>
+                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
                 </Table>
             </Form>
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"

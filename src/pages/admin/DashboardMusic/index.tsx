@@ -26,6 +26,7 @@ const DashboardMusic:React.FC = () => {
     const [musics, setMusics] = useState<IMusic[]>([])
     const [newMusics, setNewMusics] = useState<IMusic[]>(musics)
     const [editingId, setEditingId] = useState(0)
+    const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
 
     const [formRowEdition] = Form.useForm()
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
@@ -36,7 +37,10 @@ const DashboardMusic:React.FC = () => {
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
-        MusicService.getAll().then(musics => setMusics(musics))
+        setIsMusicLoading(true)
+        MusicService.getAll()
+            .then(musics => setMusics(musics))
+            .finally(() => setIsMusicLoading(false))
     }, [newMusics])
 
     const isEditing = (record: IMusic) => record.id === editingId
@@ -198,7 +202,7 @@ const DashboardMusic:React.FC = () => {
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
                     rowKey="id" pagination={{ onChange: cancel, position: [ "bottomCenter"] }}
-                    bordered dataSource={ musics } columns={ mergedColumns }>
+                    bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
                 </Table>
             </Form>
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
