@@ -34,6 +34,9 @@ const DashboardMovie: React.FC = () => {
     const [formRowAddition] = Form.useForm()
     const [file, setFile] = useState<File>()
 
+    const [previewModalVisible, setPreviewModalVisible] = useState<boolean>(false)
+    const [previewURL, setPreviewURL] = useState<string>("")
+
     useEffect(() => {
         MovieService.getAll().then(movies => setMovies(movies))
     }, [newMovies])
@@ -126,8 +129,10 @@ const DashboardMovie: React.FC = () => {
             key: "imgThumbnail",
             dataIndex: "imgThumbnail",
             render: function renderImage(imageId) {
-                return <div className="flex justify-center items-center">
-                    <AdvancedImage className="w-24 h-auto" cldImg={cloudinary.image(`/${ imageId }`)}/>
+                return <div className="flex justify-center items-center cursor-pointer"
+                    title="Visualiser l'image"
+                    onClick={ () => openModalPreview(imageId) }>
+                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(`/${ imageId }`) }/>
                 </div>
             },
             editable: false
@@ -195,6 +200,15 @@ const DashboardMovie: React.FC = () => {
         setFile(info.file.originFileObj)
     }
 
+    const handleCancelModalPreview = () => {
+        setPreviewModalVisible(false)
+    }
+
+    const openModalPreview = (imageId: string) => {
+        setPreviewModalVisible(true)
+        setPreviewURL(imageId)
+    }
+
     return (
         <Navigation>
             <p className="text-xl mb-2">Liste des courts-métrages : </p>
@@ -241,6 +255,9 @@ const DashboardMovie: React.FC = () => {
                         </Upload>
                     </Form.Item>
                 </Form>
+            </Modal>
+            <Modal visible={ previewModalVisible } footer={ null } onCancel={ handleCancelModalPreview }>
+                <AdvancedImage className="w-full h-auto my-5" cldImg={ cloudinary.image(`/${ previewURL }`) }/>
             </Modal>
         </Navigation>
     )
