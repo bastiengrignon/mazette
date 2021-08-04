@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
     }, [])
 
     const renderListTextItem = (item: IText, key: number) => (
-        <List.Item key={ key } className="inline-flex items-center justify-between">
+        <List.Item key={ key } className="inline-flex items-center justify-between w-full">
             <div>{ item.text }</div>
             <Typography.Link className="ml-5" href="" onClick={() => console.log("")}>
                 Modifier
