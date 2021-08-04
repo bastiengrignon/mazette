@@ -86,7 +86,7 @@ const DashboardMovie: React.FC = () => {
             render: function renderTitle(title: string) {
                 return <div className="font-avenirBL">{ title }</div>
             },
-            sorter: (a, b) => a.title.localeCompare(b.title)
+            sorter: (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
         },
         {
             title: "Auteur",
