@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 import { AiFillCloseCircle } from "react-icons/ai"
-import Image from "../Image"
+import { AdvancedImage } from "@cloudinary/react"
+import { cloudinary } from "../../index"
 
 interface PopupProps {
     name: string
@@ -43,7 +44,7 @@ const Popup: React.FC<PopupProps> = ({
                     { isMusic() ? `${ author }` : `${ date }, ${ location }, ${ duration }` }
                 </div>
                 <div className="col-span-6 sm:col-span-3 md:col-span-2 row-span-2 sm:row-span-4 mx-auto">
-                    <Image src={ img } alt={ img } className="rounded h-full"/>
+                    <AdvancedImage cldImg={ cloudinary.image(`${img}`) } alt={ img } className="rounded h-full"/>
                 </div>
                 <div className="col-span-6 sm:col-span-3 md:col-span-4 row-span-2 sm:row-span-4 mx-2 text-base sm:text-lg leading-normal overflow-y-auto">
                     { description }
