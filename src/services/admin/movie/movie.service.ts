@@ -19,7 +19,7 @@ export class MovieService {
             ...movie,
             date: new Date(movie.date).getUTCFullYear().toString(),
             publicationDate: new Date(movie.publicationDate).getUTCDate().toString(),
-            duration: `${ new Date(movie.duration).getUTCMinutes() }min ${ new Date(movie.duration).getUTCSeconds() }s`
+            duration: `${ new Date(movie.duration).getUTCMinutes() }min ${ new Date(movie.duration).getUTCSeconds() !== 0 ? `${ new Date(movie.duration).getUTCSeconds()}s` : "" }`
         }
     }
 }
