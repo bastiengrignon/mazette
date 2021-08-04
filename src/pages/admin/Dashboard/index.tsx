@@ -1,9 +1,21 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Navigation from "../Navigation"
-import { Button, Form, Input, message, Modal } from "antd"
+import {
+    Button,
+    Card,
+    Form,
+    Input,
+    List,
+    message,
+    Modal,
+    Skeleton,
+    Typography
+} from "antd"
 import { useForm } from "antd/es/form/Form"
 import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
 import { authToken, Storage } from "../../../services/admin/storage/storage.services"
+import { IText } from "../../../services/admin/text/text.interface"
+import { TextService } from "../../../services/admin/text/text.service"
 
 
 const Dashboard: React.FC = () => {
@@ -11,6 +23,8 @@ const Dashboard: React.FC = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(!connectedUserCookie())
     const [form] = useForm()
+    const [isTextLoading, setIsTextLoading] = useState<boolean>()
+    const [texts, setTexts] = useState<IText[]>([])
 
     const handleLogin = () => {
         form.validateFields()
@@ -25,8 +39,33 @@ const Dashboard: React.FC = () => {
             .catch(info => message.warn("Validation failed: ", info))
     }
 
+    useEffect(() => {
+        setIsTextLoading(true)
+        TextService.getAll()
+            .then(texts => setTexts(texts))
+            .finally(() => setIsTextLoading(false))
+    }, [])
+
+    const renderListTextItem = (item: IText, key: number) => (
+        <List.Item key={ key } className="inline-flex items-center justify-between">
+            <div>{ item.text }</div>
+            <Typography.Link href="" onClick={() => console.log("")}>
+                Modifier
+            </Typography.Link>
+        </List.Item>
+    )
+
     return (
         <Navigation>
+            <div className="grid grid-cols-6">
+                <Card bordered={ false } className="rounded-lg col-span-3">
+                    <p className="text-xl mb-2">Textes d’introduction : </p>
+                    <Skeleton avatar={ true } active={ true } loading={ isTextLoading } >
+                        <List dataSource={ texts } renderItem={ renderListTextItem }/>
+                    </Skeleton>
+                </Card>
+            </div>
+
             <Modal title="Admin Login" visible={ isModalVisible } footer={ null } closable={ false }>
                 <Form name="login_form" form={ form } onFinish={ handleLogin } initialValues={ { remember: true } }>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: "Veuillez entrer votre nom d'utilisateur!" }] }>
