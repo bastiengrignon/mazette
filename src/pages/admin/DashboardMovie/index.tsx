@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react"
 import {
     Button,
-    DatePicker,
     Form,
-    Input,
     message,
     Modal,
     Popconfirm,
     Table,
-    TimePicker,
     Typography,
-    Upload
 } from "antd"
-import { UploadOutlined } from "@ant-design/icons"
 import { AdvancedImage } from "@cloudinary/react"
 
 import Navigation from "../Navigation"
@@ -23,21 +18,28 @@ import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { cloudinary } from "../../../index"
+import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
+import PreviewModal from "../PreviewModal"
+import useModal from "../../../services/admin/common/modal.service"
+import AdminFormAddMovie from "../AdminFormAddMovie"
 
 //TODO: add optional link for trailer
 
 const DashboardMovie: React.FC = () => {
-    const [movies, setMovies] = useState<IMovie[]>([])
-    const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
-    const [editingId, setEditingId] = useState(0)
-    const [formRowEdition] = Form.useForm()
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
+    const [movies, setMovies] = useState<IMovie[]>([])
+    // Row edition
+    const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
+    const [editingId, setEditingId] = useState<number>(0)
+    const [formRowEdition] = Form.useForm()
 
+    // Add row modal
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [formRowAddition] = Form.useForm()
     const [file, setFile] = useState<File>()
 
-    const [previewModalVisible, setPreviewModalVisible] = useState<boolean>(false)
+    // Preview modal
+    const { isOpen, toggle } = useModal()
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
@@ -47,41 +49,9 @@ const DashboardMovie: React.FC = () => {
             .finally(() => setIsMovieLoading(false))
     }, [newMovies])
 
-    const isEditing = (record: IMovie) => record.id === editingId
-
-    const cancel = () => setEditingId(0)
-
-    const edit = (record: Partial<IMovie>) => {
-        formRowEdition.setFieldsValue({
-            title: "",
-            author: "",
-            description: "",
-            date: "",
-            publicationDate: "",
-            location: "",
-            duration: "",
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const save = async (e: React.MouseEvent<HTMLAnchorElement>, id: number) => {
-        e.preventDefault()
-        try {
-            const row = (await formRowEdition.validateFields()) as IMovie
-
-            MovieService.update(id, row).then(res => {
-                const index = movies.findIndex(movie => movie.id === id)
-                setNewMovies(movies.splice(index, 1, {
-                    ...movies[index],
-                    ...res
-                }))
-            })
-            setEditingId(0)
-        } catch (err) {
-            console.log("Validate Failed: ", err)
-        }
-    }
+    useEffect(() => {
+        EditableCellService.init<IMovie>(formRowEdition, movies, setNewMovies)
+    }, [])
 
     const columns = [
         {
@@ -151,38 +121,24 @@ const DashboardMovie: React.FC = () => {
             dataIndex: "action",
 
             render: function renderAction(_, record: IMovie) {
-                const editable = isEditing(record)
+                const editable = EditableCellService.isEditing<IMovie>(record, editingId)
                 return editable
                     ?
                     <span>
-                        <Typography.Link href="" onClick={ (e) => save(e, record.id) } className="mr-6">
+                        <Typography.Link href="" onClick={ (e) => EditableCellService.save<IMovie>(e, record.id, setEditingId) } className="mr-6">
                             Sauvegarder
                         </Typography.Link>
-                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ cancel }>
+                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ () => EditableCellService.cancel(setEditingId) }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => edit(record) }>
+                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => EditableCellService.edit<IMovie>(record, setEditingId) }>
                         Modifier
                     </Typography.Link>
             }
         },
     ]
-
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: IMovie) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record),
-            }),
-        }
-    })
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
@@ -196,25 +152,13 @@ const DashboardMovie: React.FC = () => {
             .catch(err => message.warn("Validation failed: ", err))
     }
 
-    const handleCancelModal = () => {
-        setAddRowModalVisible(false)
+    const openModalPreview = (imageId: string) => {
+        setPreviewURL(imageId)
+        toggle()
     }
 
     const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        if (info.file.status === "done")
-            message.success(`${ info.file.name } uploadé avec succès`)
-        else if (info.file.status === "error")
-            message.error(`${ info.file.name } ne s'est pas uploadé!`)
-        setFile(info.file.originFileObj)
-    }
-
-    const handleCancelModalPreview = () => {
-        setPreviewModalVisible(false)
-    }
-
-    const openModalPreview = (imageId: string) => {
-        setPreviewModalVisible(true)
-        setPreviewURL(imageId)
+        setFile(UploadService.handleChange(info))
     }
 
     return (
@@ -225,48 +169,16 @@ const DashboardMovie: React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: cancel, position: [ "bottomCenter"] }}
-                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
+                    rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
+                    bordered dataSource={ movies } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isMovieLoading }>
                 </Table>
             </Form>
+
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ handleCancelModal } onOk={ handleOkModal } cancelText="Annuler">
-                <Form form={ formRowAddition }>
-                    <Form.Item label="Titre" name="title" rules={ [{ required: true, message: "Entrez le titre du court-métrage" }] }>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item label="Auteur" name="author" rules={ [{ required: true, message: "Entrez l'auteur " }] }>
-                        <Input className="capitalize"/>
-                    </Form.Item>
-                    <Form.Item label="Description" name="description" rules={ [{ required: true, message: "Entrez une description" }] }>
-                        <Input.TextArea/>
-                    </Form.Item>
-                    <div className="inline-flex space-x-2">
-                        <Form.Item label="Date" name="date" rules={ [{ type: "object", required: true, message: "Entrez la date de création" }] }>
-                            <DatePicker picker="year"/>
-                        </Form.Item>
-                        <Form.Item label="Provenance" name="location" rules={ [{ required: true, message: "Entrez une provenance" }] }>
-                            <Input className="capitalize"/>
-                        </Form.Item>
-                    </div>
-                    <div className="inline-flex space-x-2">
-                        <Form.Item label="Durée" name="duration" rules={ [{ type: "object", required: true, message: "Entrez la durée " }] }>
-                            <TimePicker showHour={ false } format="mm:ss"/>
-                        </Form.Item>
-                        <Form.Item label="Date de publication" name="publicationDate" rules={ [{ type: "date", required: true, message: "Entrez la date de publication au festival" }] }>
-                            <DatePicker/>
-                        </Form.Item>
-                    </div>
-                    <Form.Item label="Fichier" name="imgThumbnail" rules={ [{ required: true, message: "Ajouter une image !" }] }>
-                        <Upload name="imgThumbnail" onChange={ handleChange } customRequest={ UploadService.dummyUploadRequest }>
-                            <Button icon={ <UploadOutlined /> }>Ajouter un fichier</Button>
-                        </Upload>
-                    </Form.Item>
-                </Form>
+                onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
+                <AdminFormAddMovie form={formRowAddition} onUploadChange={ handleChange }/>
             </Modal>
-            <Modal visible={ previewModalVisible } footer={ null } onCancel={ handleCancelModalPreview }>
-                <AdvancedImage className="w-full h-auto my-5" cldImg={ cloudinary.image(`/${ previewURL }`) }/>
-            </Modal>
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
         </Navigation>
     )
 }

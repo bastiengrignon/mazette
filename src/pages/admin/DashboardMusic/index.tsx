@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react"
 import Navigation from "../Navigation"
 import {
     Button,
-    DatePicker,
-    Form,
-    Input, message,
+    Form, message,
     Modal,
     Popconfirm,
     Table,
-    Typography, Upload
+    Typography
 } from "antd"
 import EditableCell from "../EditableCell"
 import { AdvancedImage } from "@cloudinary/react"
@@ -16,24 +14,31 @@ import { cloudinary } from "../../../index"
 import { IMusic } from "../../../services/admin/music/music.interface"
 import { MusicService } from "../../../services/admin/music/music.service"
 import { UploadService } from "../../../services/admin/upload/upload.service"
-import { UploadOutlined } from "@ant-design/icons"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
+import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
+import PreviewModal from "../PreviewModal"
+import useModal from "../../../services/admin/common/modal.service"
+import AdminFormAddArtist from "../AdminFormAddArtist"
 
 //TODO: add optional link for auto-promo
 
 const DashboardMusic:React.FC = () => {
+    const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
     const [musics, setMusics] = useState<IMusic[]>([])
+
+    // Row edition
     const [newMusics, setNewMusics] = useState<IMusic[]>(musics)
     const [editingId, setEditingId] = useState(0)
-    const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
-
     const [formRowEdition] = Form.useForm()
+
+    // Add row modal
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [formRowAddition] = Form.useForm()
     const [file, setFile] = useState<File>()
 
-    const [previewModalVisible, setPreviewModalVisible] = useState<boolean>(false)
+    // Preview modal
+    const { isOpen, toggle } = useModal()
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
@@ -43,39 +48,9 @@ const DashboardMusic:React.FC = () => {
             .finally(() => setIsMusicLoading(false))
     }, [newMusics])
 
-    const isEditing = (record: IMusic) => record.id === editingId
-
-    const cancel = () => setEditingId(0)
-
-    const edit = (record: Partial<IMusic>) => {
-        formRowEdition.setFieldsValue({
-            name: "",
-            type: "",
-            description: "",
-            publicationDate: "",
-            image: "",
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const save = async (e: React.MouseEvent<HTMLAnchorElement>, id: number) => {
-        e.preventDefault()
-        try {
-            const row = (await formRowEdition.validateFields()) as IMusic
-
-            MusicService.update(id, row).then(res => {
-                const index = musics.findIndex(movie => movie.id === id)
-                setNewMusics(musics.splice(index, 1, {
-                    ...musics[index],
-                    ...res
-                }))
-            })
-            setEditingId(0)
-        } catch (err) {
-            console.log("Validate Failed: ", err)
-        }
-    }
+    useEffect(() => {
+        EditableCellService.init<IMusic>(formRowEdition, musics, setNewMusics)
+    }, [])
 
     const columns = [
         {
@@ -127,38 +102,24 @@ const DashboardMusic:React.FC = () => {
             dataIndex: "action",
 
             render: function renderAction(_, record: IMusic) {
-                const editable = isEditing(record)
+                const editable = EditableCellService.isEditing<IMusic>(record, editingId)
                 return editable
                     ?
                     <span>
-                        <Typography.Link href="" onClick={ (e) => save(e, record.id) } className="mr-6">
+                        <Typography.Link href="" onClick={ (e) => EditableCellService.save<IMusic>(e, record.id, setEditingId) } className="mr-6">
                             Sauvegarder
                         </Typography.Link>
-                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ cancel }>
+                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ () => EditableCellService.cancel(setEditingId) }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => edit(record) }>
+                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => EditableCellService.edit<IMusic>(record, setEditingId) }>
                         Modifier
                     </Typography.Link>
             }
         },
     ]
-
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: IMusic) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record),
-            }),
-        }
-    })
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
@@ -173,24 +134,12 @@ const DashboardMusic:React.FC = () => {
     }
 
     const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        if (info.file.status === "done")
-            message.success(`${ info.file.name } uploadé avec succès`)
-        else if (info.file.status === "error")
-            message.error(`${ info.file.name } ne s'est pas uploadé!`)
-        setFile(info.file.originFileObj)
-    }
-
-    const handleCancelModal = () => {
-        setAddRowModalVisible(false)
-    }
-
-    const handleCancelModalPreview = () => {
-        setPreviewModalVisible(false)
+        setFile(UploadService.handleChange(info))
     }
 
     const openModalPreview = (imageId: string) => {
-        setPreviewModalVisible(true)
         setPreviewURL(imageId)
+        toggle()
     }
 
     return (
@@ -201,35 +150,16 @@ const DashboardMusic:React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: cancel, position: [ "bottomCenter"] }}
-                    bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
+                    rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
+                    bordered dataSource={ musics } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isMusicLoading }>
                 </Table>
             </Form>
+
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ handleCancelModal } onOk={ handleOkModal } cancelText="Annuler">
-                <Form form={ formRowAddition }>
-                    <Form.Item label="Nom" name="name" rules={ [{ required: true, message: "Entrez le nom de l'artiste" }] }>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item label="Style" name="type" rules={ [{ required: true, message: "Entrez le style artistique " }] }>
-                        <Input className="capitalize"/>
-                    </Form.Item>
-                    <Form.Item label="Description" name="description" rules={ [{ required: true, message: "Entrez une description" }] }>
-                        <Input.TextArea/>
-                    </Form.Item>
-                    <Form.Item label="Date de publication" name="publicationDate" rules={ [{ type: "date", required: true, message: "Entrez la date de publication au festival" }] }>
-                        <DatePicker/>
-                    </Form.Item>
-                    <Form.Item label="Image" name="image" rules={ [{ required: true, message: "Ajouter une image !" }] }>
-                        <Upload name="image" onChange={ handleChange } customRequest={ UploadService.dummyUploadRequest }>
-                            <Button icon={ <UploadOutlined /> }>Ajouter une image</Button>
-                        </Upload>
-                    </Form.Item>
-                </Form>
+                onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
+                <AdminFormAddArtist form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
-            <Modal visible={ previewModalVisible } footer={ null } onCancel={ handleCancelModalPreview }>
-                <AdvancedImage className="w-full h-auto my-5" cldImg={ cloudinary.image(`/${ previewURL }`) }/>
-            </Modal>
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
         </Navigation>
     )
 }
