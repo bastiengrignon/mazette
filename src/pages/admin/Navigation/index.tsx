@@ -3,8 +3,8 @@ import {
     DashboardOutlined,
     FireFilled,
     PlayCircleOutlined,
-    VideoCameraOutlined,
-    TeamOutlined
+    TeamOutlined,
+    VideoCameraOutlined
 } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
@@ -15,12 +15,18 @@ const deactivatedClassCSS = "flex items-center mt-4 py-2 px-6 text-gray-500 hove
 const Navigation: React.FC = ({ children }) => {
     const location = useLocation()
 
-    const adminTitleFromPathname = (): string => {
-        if (location.pathname === RouterUrl.home) return "Dashboard"
-        else if (location.pathname === RouterUrl.adminMovie) return programmationTitle.films
-        else if (location.pathname === RouterUrl.adminMusic) return programmationTitle.musique
-        else if (location.pathname === RouterUrl.adminPartner) return "Partenaires"
+    const adminTitleFromPathname = (url: string): string => {
+        if (url === RouterUrl.adminMovie) return programmationTitle.films
+        else if (url === RouterUrl.adminMusic) return programmationTitle.musique
+        else if (url === RouterUrl.adminPartner) return "Partenaires"
         else return "Dashboard"
+    }
+
+    const adminTabIcon = (url: string): React.ReactNode => {
+        if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
+        if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
+        if (url === RouterUrl.adminPartner) return <TeamOutlined />
+        else return <DashboardOutlined />
     }
 
     return (
@@ -37,23 +43,22 @@ const Navigation: React.FC = ({ children }) => {
                         <DashboardOutlined />
                         <span className="mx-3 capitalize">Dashboard</span>
                     </Link>
-                    <Link to={ RouterUrl.adminMovie } className={ location.pathname === RouterUrl.adminMovie ? activatedClassCSS : deactivatedClassCSS }>
-                        <VideoCameraOutlined />
-                        <span className="mx-3 capitalize">{ programmationTitle.films }</span>
-                    </Link>
-                    <Link to={ RouterUrl.adminMusic } className={ location.pathname === RouterUrl.adminMusic ? activatedClassCSS : deactivatedClassCSS }>
-                        <PlayCircleOutlined />
-                        <span className="mx-3 capitalize">{ programmationTitle.musique }</span>
-                    </Link>
-                    <Link to={ RouterUrl.adminPartner } className={ location.pathname === RouterUrl.adminPartner ? activatedClassCSS : deactivatedClassCSS }>
-                        <TeamOutlined />
-                        <span className="mx-3 capitalize">Partenaires</span>
-                    </Link>
+                    {
+                        Object.keys(RouterUrl).filter(key => key.match(/^admin.*$/g)).map((url, key) => {
+                            const modifiedUrl = `/${ url.split("admin")[1].toString().toLowerCase() }`
+                            return (
+                                <Link key={ key } to={ modifiedUrl } className={ location.pathname === modifiedUrl ? activatedClassCSS : deactivatedClassCSS }>
+                                    { adminTabIcon(modifiedUrl) }
+                                    <span className="mx-3 capitalize"> { adminTitleFromPathname(modifiedUrl) }</span>
+                                </Link>
+                            )
+                        })
+                    }
                 </nav>
             </div>
             <div className="col-span-4 md:col-span-5 bg-gray-200">
                 <header className="flex justify-center text-xl py-1 bg-white border-b-4 border-green font-avenir capitalize">
-                    { adminTitleFromPathname() }
+                    { adminTitleFromPathname(location.pathname) }
                 </header>
                 <main className="overflow-x-hidden overflow-y-auto px-4 mt-4">
                     { children }
