@@ -11,7 +11,7 @@ interface PreviewModalProps {
 
 const PreviewModal: React.FC<PreviewModalProps> = ({ open, hide, previewURL }) => (
     <Modal visible={ open } footer={ null } onCancel={ hide }>
-        <AdvancedImage cldImg={ cloudinary.image(`/${ previewURL }`) }
+        <AdvancedImage cldImg={ cloudinary.image(previewURL) }
             className="w-full h-auto my-5"/>
     </Modal>
 )

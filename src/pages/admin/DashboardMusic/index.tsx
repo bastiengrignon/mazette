@@ -97,7 +97,7 @@ const DashboardMusic:React.FC = () => {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image"
                     onClick={ () => openModalPreview(imageId) }>
-                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(`/${ imageId }`) }/>
+                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(imageId) }/>
                 </div>
             },
             editable: false

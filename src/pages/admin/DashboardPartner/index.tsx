@@ -68,7 +68,7 @@ const DashboardPartner:React.FC = () => {
                     title="Visualiser l'image"
                     onClick={ () => openModalPreview(imageId) }>
                     <AdvancedImage className="w-24 h-auto"
-                        cldImg={ cloudinary.image(`/${ imageId }`) }/>
+                        cldImg={ cloudinary.image(imageId) }/>
                 </div>
             },
             editable: false
