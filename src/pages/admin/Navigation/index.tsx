@@ -5,7 +5,8 @@ import {
     PlayCircleOutlined,
     TeamOutlined,
     VideoCameraOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    AppstoreOutlined
 } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
@@ -27,6 +28,7 @@ const Navigation: React.FC = ({ children }) => {
         if (url === RouterUrl.adminMovie) return programmationTitle.films
         else if (url === RouterUrl.adminMusic) return programmationTitle.musique
         else if (url === RouterUrl.adminPartner) return "Partenaires"
+        else if (url === RouterUrl.adminTrombinoscope) return "Trombinoscope"
         else return "Dashboard"
     }
 
@@ -34,6 +36,7 @@ const Navigation: React.FC = ({ children }) => {
         if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
         if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
         if (url === RouterUrl.adminPartner) return <TeamOutlined />
+        if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />
         else return <DashboardOutlined />
     }
 

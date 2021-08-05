@@ -24,6 +24,7 @@ const Dashboard = loadable(() => import("./pages/admin/Dashboard"))
 const DashboardMovie = loadable(() => import("./pages/admin/DashboardMovie"))
 const DashboardMusic = loadable(() => import("./pages/admin/DashboardMusic"))
 const DashboardPartner = loadable(() => import("./pages/admin/DashboardPartner"))
+const DashboardTrombinoscope = loadable(() => import("./pages/admin/DashboardTrombinoscope"))
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
@@ -36,6 +37,7 @@ const App: React.FC = () => (
                         <Route path={ RouterUrl.adminMovie } component={ DashboardMovie }/>
                         <Route path={ RouterUrl.adminMusic } component={ DashboardMusic }/>
                         <Route path={ RouterUrl.adminPartner } component={ DashboardPartner }/>
+                        <Route path={ RouterUrl.adminTrombinoscope } component={ DashboardTrombinoscope }/>
 
                         <Route path={ RouterUrl.home } component={ Dashboard }/>
                     </Switch>

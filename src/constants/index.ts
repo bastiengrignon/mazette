@@ -22,7 +22,8 @@ export enum RouterUrl {
     passSanitaire = "/pass-sanitaire",
     adminMovie = "/movie",
     adminMusic = "/music",
-    adminPartner = "/partner"
+    adminPartner = "/partner",
+    adminTrombinoscope = "/trombinoscope"
 }
 
 export enum TabName {

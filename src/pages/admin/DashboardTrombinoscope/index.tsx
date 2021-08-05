@@ -17,16 +17,16 @@ import { UploadFile } from "antd/es/upload/interface"
 import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
-import { IPartner } from "../../../services/admin/partner/partner.interface"
-import { PartnerService } from "../../../services/admin/partner/partner.service"
 import AdminFormAddImages from "../AdminFormAddImages"
+import { TrombinoscopeService } from "../../../services/admin/trombinoscope/trombinoscope.service"
+import { ITrombinoscope } from "../../../services/admin/trombinoscope/trombinoscope.interface"
 
-const DashboardPartner:React.FC = () => {
-    const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
-    const [partners, setPartners] = useState<IPartner[]>([])
+const DashboardTrombinoscope: React.FC = () => {
+    const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false)
+    const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
 
     // Row edition
-    const [newPartners, setNewPartners] = useState<IPartner[]>(partners)
+    const [newTrombinoscope, setNewTrombinoscope] = useState<ITrombinoscope[]>(trombinoscopes)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -40,24 +40,24 @@ const DashboardPartner:React.FC = () => {
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
-        setIsPartnerLoading(true)
-        PartnerService.getAll()
-            .then(partners => setPartners(partners))
-            .finally(() => setIsPartnerLoading(false))
-    }, [newPartners])
+        setIsTrombinoscopeLoading(true)
+        TrombinoscopeService.getAll()
+            .then(trombinoscopes => setTrombinoscopes(trombinoscopes))
+            .finally(() => setIsTrombinoscopeLoading(false))
+    }, [newTrombinoscope])
 
     useEffect(() => {
-        EditableCellService.init<IPartner>(formRowEdition, partners, setNewPartners)
+        EditableCellService.init<ITrombinoscope>(formRowEdition, trombinoscopes, setNewTrombinoscope)
     }, [])
 
     const columns = [
         {
-            title: "Nom du partenaire",
+            title: "Prénom",
             key: "name",
             dataIndex: "name",
             editable: true,
             render(name: string) { return <div className="font-avenirBL">{ name }</div> },
-            sorter: (a: IPartner, b: IPartner) => a.name.localeCompare(b.name)
+            sorter: (a: ITrombinoscope, b: ITrombinoscope) => a.name.localeCompare(b.name)
         },
         {
             title: "Image",
@@ -78,13 +78,13 @@ const DashboardPartner:React.FC = () => {
             key: "action",
             dataIndex: "action",
 
-            render(_, record: IPartner) {
-                const editable = EditableCellService.isEditing<IPartner>(record, editingId)
+            render(_, record: ITrombinoscope) {
+                const editable = EditableCellService.isEditing<ITrombinoscope>(record, editingId)
                 return editable
                     ?
                     <span>
                         <Typography.Link href=""
-                            onClick={ (e) => EditableCellService.save<IPartner>(e, record.id, setEditingId) }
+                            onClick={ (e) => EditableCellService.save<ITrombinoscope>(e, record.id, setEditingId) }
                             className="mr-6">
                             Sauvegarder
                         </Typography.Link>
@@ -95,7 +95,7 @@ const DashboardPartner:React.FC = () => {
                     </span>
                     :
                     <Typography.Link disabled={ editingId !== 0 }
-                        onClick={ () => EditableCellService.edit<IPartner>(record, setEditingId) }>
+                        onClick={ () => EditableCellService.edit<ITrombinoscope>(record, setEditingId) }>
                         Modifier
                     </Typography.Link>
             }
@@ -105,8 +105,8 @@ const DashboardPartner:React.FC = () => {
     const handleOkModal = () => {
         formRowAddition.validateFields()
             .then(values => {
-                PartnerService.create(values, file)
-                    .then(partner => setPartners([...partners, partner]))
+                TrombinoscopeService.create(values, file)
+                    .then(trombinoscope => setTrombinoscopes([...trombinoscopes, trombinoscope]))
                     .catch(err => console.log(err))
                     .finally(() => formRowAddition.resetFields())
                 setAddRowModalVisible(false)
@@ -125,18 +125,18 @@ const DashboardPartner:React.FC = () => {
 
     return (
         <Navigation>
-            <p className="text-xl mb-2">Liste des Partenaires : </p>
+            <p className="text-xl mb-2">Liste des Trombinoscope : </p>
             <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
-                Ajouter un partenaire
+                Ajouter un trombinoscope
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
                     rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
-                    bordered dataSource={ partners } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isPartnerLoading }>
+                    bordered dataSource={ trombinoscopes } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isTrombinoscopeLoading }>
                 </Table>
             </Form>
 
-            <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
@@ -144,4 +144,4 @@ const DashboardPartner:React.FC = () => {
         </Navigation>
     )
 }
-export default DashboardPartner
+export default DashboardTrombinoscope
