@@ -11,7 +11,6 @@ import {
 import EditableCell from "../EditableCell"
 import { AdvancedImage } from "@cloudinary/react"
 import { cloudinary } from "../../../index"
-import { IMusic } from "../../../services/admin/music/music.interface"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
@@ -79,13 +78,13 @@ const DashboardPartner:React.FC = () => {
             key: "action",
             dataIndex: "action",
 
-            render(_, record: IMusic) {
-                const editable = EditableCellService.isEditing<IMusic>(record, editingId)
+            render(_, record: IPartner) {
+                const editable = EditableCellService.isEditing<IPartner>(record, editingId)
                 return editable
                     ?
                     <span>
                         <Typography.Link href=""
-                            onClick={ (e) => EditableCellService.save<IMusic>(e, record.id, setEditingId) }
+                            onClick={ (e) => EditableCellService.save<IPartner>(e, record.id, setEditingId) }
                             className="mr-6">
                             Sauvegarder
                         </Typography.Link>
@@ -96,7 +95,7 @@ const DashboardPartner:React.FC = () => {
                     </span>
                     :
                     <Typography.Link disabled={ editingId !== 0 }
-                        onClick={ () => EditableCellService.edit<IMusic>(record, setEditingId) }>
+                        onClick={ () => EditableCellService.edit<IPartner>(record, setEditingId) }>
                         Modifier
                     </Typography.Link>
             }
