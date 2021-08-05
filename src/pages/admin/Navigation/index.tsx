@@ -11,15 +11,16 @@ import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
 import { authToken, Storage } from "../../../services/admin/storage/storage.services"
 import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
-import { Button, Form, Input, message, Modal } from "antd"
-import { useForm } from "antd/es/form/Form"
+import { Form, Input, message, Modal } from "antd"
+import { AxiosError } from "axios"
 
 const activatedClassCSS = "flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100"
 const deactivatedClassCSS = "flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
 
 const Navigation: React.FC = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState(!AuthenticationService.connectedUserCookie())
-    const [loginForm] = useForm()
+    const [confirmLoginLoading, setConfirmLoginLoading] = useState(false)
+    const [loginForm] = Form.useForm()
     const location = useLocation()
 
     const adminTitleFromPathname = (url: string): string => {
@@ -43,16 +44,23 @@ const Navigation: React.FC = ({ children }) => {
     }
 
     const handleLogin = () => {
-        loginForm.validateFields()
-            .then(values => {
-                AuthenticationService
-                    .logInAsync(values)
-                    .then(() => Storage.set(authToken, "true"))
-                    .catch(() => Storage.delete(authToken))
-                    .finally(() => loginForm.resetFields())
-                setIsModalVisible(false)
-            })
-            .catch(info => message.warn("Validation failed: ", info))
+        setConfirmLoginLoading(true)
+        loginForm.validateFields().then(values => {
+            AuthenticationService
+                .logInAsync(values)
+                .then((result) => {
+                    setConfirmLoginLoading(false)
+                    setIsModalVisible(false)
+                    Storage.set(authToken, "true")
+                    message.success(`${ result.username } connecté`)
+                })
+                .catch(async (error: AxiosError) => {
+                    await message.error(error.response?.data)
+                    setConfirmLoginLoading(false)
+                    Storage.set(authToken, "false")
+                })
+                .finally(() => loginForm.resetFields())
+        }).catch(info => message.warning("Validation failed: ", info))
     }
 
 
@@ -98,20 +106,14 @@ const Navigation: React.FC = ({ children }) => {
                     { !isModalVisible && children }
                 </main>
             </div>
-            <Modal title="Admin Login" visible={ isModalVisible } footer={ null } closable={ false }>
-                <Form name="login_form" form={ loginForm } onFinish={ handleLogin } initialValues={ { remember: true } }>
+            <Modal title="Admin Login" visible={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: "none" } }}
+                confirmLoading={ confirmLoginLoading } onOk={ handleLogin } okText="Connexion">
+                <Form name="login_form" form={ loginForm } initialValues={{ remember: true }}>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: "Veuillez entrer votre nom d'utilisateur!" }] }>
-                        <Input/>
+                        <Input autoFocus={ true }/>
                     </Form.Item>
-
                     <Form.Item label="Mot de passe" name="password" rules={ [{ required: true, message: "Veuillez entrer votre mot de passe !" }] }>
                         <Input.Password/>
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="w-full">
-                            Connexion
-                        </Button>
                     </Form.Item>
                 </Form>
             </Modal>
