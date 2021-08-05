@@ -3,7 +3,8 @@ import {
     DashboardOutlined,
     FireFilled,
     PlayCircleOutlined,
-    VideoCameraOutlined
+    VideoCameraOutlined,
+    TeamOutlined
 } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
@@ -13,6 +14,14 @@ const deactivatedClassCSS = "flex items-center mt-4 py-2 px-6 text-gray-500 hove
 
 const Navigation: React.FC = ({ children }) => {
     const location = useLocation()
+
+    const adminTitleFromPathname = (): string => {
+        if (location.pathname === RouterUrl.home) return "Dashboard"
+        else if (location.pathname === RouterUrl.adminMovie) return programmationTitle.films
+        else if (location.pathname === RouterUrl.adminMusic) return programmationTitle.musique
+        else if (location.pathname === RouterUrl.adminPartner) return "Partenaires"
+        else return "Dashboard"
+    }
 
     return (
         <div className="grid grid-cols-6 h-screen">
@@ -36,16 +45,15 @@ const Navigation: React.FC = ({ children }) => {
                         <PlayCircleOutlined />
                         <span className="mx-3 capitalize">{ programmationTitle.musique }</span>
                     </Link>
+                    <Link to={ RouterUrl.adminPartner } className={ location.pathname === RouterUrl.adminPartner ? activatedClassCSS : deactivatedClassCSS }>
+                        <TeamOutlined />
+                        <span className="mx-3 capitalize">Partenaires</span>
+                    </Link>
                 </nav>
             </div>
             <div className="col-span-4 md:col-span-5 bg-gray-200">
                 <header className="flex justify-center text-xl py-1 bg-white border-b-4 border-green font-avenir capitalize">
-                    { location.pathname === RouterUrl.home
-                        ? "Dashboard"
-                        : location.pathname === RouterUrl.adminMovie
-                            ? programmationTitle.films
-                            : programmationTitle.musique
-                    }
+                    { adminTitleFromPathname() }
                 </header>
                 <main className="overflow-x-hidden overflow-y-auto px-4 mt-4">
                     { children }

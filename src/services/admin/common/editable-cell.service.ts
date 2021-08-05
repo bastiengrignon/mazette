@@ -4,8 +4,10 @@ import { FormInstance } from "antd"
 import React from "react"
 import { MovieService } from "../movie/movie.service"
 import { MusicService } from "../music/music.service"
+import { IPartner } from "../partner/partner.interface"
+import { PartnerService } from "../partner/partner.service"
 
-type Media = IMovie | IMusic
+type Media = IMovie | IMusic | IPartner
 
 export class EditableCellService {
     static formToEdit: FormInstance
@@ -60,8 +62,16 @@ export class EditableCellService {
                         ...res
                     }))
                 })
-            } else {
+            } else if (EditableCellService.isMusicType(row)) {
                 MusicService.update(id, row).then(res => {
+                    const index = EditableCellService.objectToModify.findIndex(movie => movie.id === id)
+                    EditableCellService.newObjectSetter(EditableCellService.objectToModify.splice(index, 1, {
+                        ...EditableCellService.objectToModify[index],
+                        ...res
+                    }))
+                })
+            } else {
+                PartnerService.update(id, row).then(res => {
                     const index = EditableCellService.objectToModify.findIndex(movie => movie.id === id)
                     EditableCellService.newObjectSetter(EditableCellService.objectToModify.splice(index, 1, {
                         ...EditableCellService.objectToModify[index],
@@ -95,5 +105,9 @@ export class EditableCellService {
 
     private static isMovieType = (type: Media): type is IMovie => {
         return (type as IMovie).title !== undefined
+    }
+
+    private static isMusicType = (type: Media): type is IMusic => {
+        return (type as IMusic).name !== undefined
     }
 }
