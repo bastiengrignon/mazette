@@ -5,7 +5,7 @@ import {
     Form, message,
     Modal,
     Popconfirm,
-    Table,
+    Table, Tooltip,
     Typography
 } from "antd"
 import EditableCell from "../EditableCell"
@@ -16,13 +16,13 @@ import { MusicService } from "../../../services/admin/music/music.service"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
-import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddArtist from "../AdminFormAddArtist"
 import Link from "../../../components/Link"
+import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
 
-const DashboardMusic:React.FC = () => {
+const DashboardMusic: React.FC = () => {
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
     const [musics, setMusics] = useState<IMusic[]>([])
 
@@ -47,9 +47,42 @@ const DashboardMusic:React.FC = () => {
             .finally(() => setIsMusicLoading(false))
     }, [newMusics])
 
-    useEffect(() => {
-        EditableCellService.init<IMusic>(formRowEdition, musics, setNewMusics)
-    }, [])
+    const isEditing = (record: IMusic): boolean => record.id === editingId
+
+    const editRow = (record: Partial<IMusic>): void => {
+        formRowEdition.setFieldsValue({
+            name: "",
+            type: "",
+            description: "",
+            publicationDate: "",
+            image: "",
+            ...record
+        })
+        setEditingId(record.id || 0)
+    }
+
+    const saveRow = async (id: number) => {
+        try {
+            const row = (await formRowEdition.validateFields()) as IMusic
+            MusicService.update(id, row).then(res => {
+                const index = musics.findIndex(movie => movie.id === id)
+                setNewMusics(musics.splice(index, 1, {
+                    ...musics[index],
+                    ...res
+                }))
+            })
+            setEditingId(0)
+        } catch (err) {
+            console.log("Validate Failed: ", err)
+        }
+    }
+
+    const cancel = (): void => setEditingId(0)
+
+    const deleteRow = async (id: number): Promise<void> => {
+        await MusicService.delete(id).then(() => message.success("Ligne supprimée"))
+        setNewMusics(musics)
+    }
 
     const columns = [
         {
@@ -93,10 +126,9 @@ const DashboardMusic:React.FC = () => {
             title: "Image",
             key: "image",
             dataIndex: "image",
-            render: function renderImage(imageId) {
+            render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
-                    title="Visualiser l'image"
-                    onClick={ () => openModalPreview(imageId) }>
+                    title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
                     <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(imageId) }/>
                 </div>
             },
@@ -106,26 +138,49 @@ const DashboardMusic:React.FC = () => {
             title: "Action",
             key: "action",
             dataIndex: "action",
-
-            render: function renderAction(_, record: IMusic) {
-                const editable = EditableCellService.isEditing<IMusic>(record, editingId)
+            render(_, record: IMusic) {
+                const editable = isEditing(record)
                 return editable
                     ?
-                    <span>
-                        <Typography.Link href="" onClick={ (e) => EditableCellService.save<IMusic>(e, record.id, setEditingId) } className="mr-6">
-                            Sauvegarder
-                        </Typography.Link>
-                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ () => EditableCellService.cancel(setEditingId) }>
+                    <span className="inline-flex">
+                        <Tooltip title="Sauvegarder">
+                            <div className="mr-6 text-blue-500 cursor-pointer"
+                                onClick={ () => saveRow(record.id) }>
+                                <SaveOutlined/>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="Supprimer">
+                            <div className="mr-6 text-red cursor-pointer"
+                                onClick={ () => deleteRow(record.id) }>
+                                <DeleteOutlined/>
+                            </div>
+                        </Tooltip>
+                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ () => cancel() }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => EditableCellService.edit<IMusic>(record, setEditingId) }>
-                        Modifier
-                    </Typography.Link>
+                    <Tooltip title="Modifier">
+                        <Typography.Link disabled={ editingId !== 0 } onClick={ () => editRow(record) }>
+                            <EditOutlined/>
+                        </Typography.Link>
+                    </Tooltip>
             }
         },
     ]
+
+    const mergedColumns = columns.map(col => {
+        if (!col.editable) return col
+        return {
+            ...col,
+            onCell: (record: IMusic) => ({
+                record,
+                inputType: "text",
+                dataIndex: col.dataIndex,
+                title: col.title,
+                editing: isEditing(record), }),
+        }
+    })
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
@@ -156,8 +211,8 @@ const DashboardMusic:React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
-                    bordered dataSource={ musics } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isMusicLoading }>
+                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
+                    bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
                 </Table>
             </Form>
 

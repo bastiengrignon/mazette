@@ -5,7 +5,7 @@ import {
     Form, message,
     Modal,
     Popconfirm,
-    Table,
+    Table, Tooltip,
     Typography
 } from "antd"
 import EditableCell from "../EditableCell"
@@ -14,14 +14,14 @@ import { cloudinary } from "../../../index"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
-import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import { IPartner } from "../../../services/admin/partner/partner.interface"
 import { PartnerService } from "../../../services/admin/partner/partner.service"
 import AdminFormAddImages from "../AdminFormAddImages"
+import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
 
-const DashboardPartner:React.FC = () => {
+const DashboardPartner: React.FC = () => {
     const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
     const [partners, setPartners] = useState<IPartner[]>([])
 
@@ -46,9 +46,39 @@ const DashboardPartner:React.FC = () => {
             .finally(() => setIsPartnerLoading(false))
     }, [newPartners])
 
-    useEffect(() => {
-        EditableCellService.init<IPartner>(formRowEdition, partners, setNewPartners)
-    }, [])
+    const isEditing = (record: IPartner): boolean => record.id === editingId
+
+    const editRow = (record: Partial<IPartner>): void => {
+        formRowEdition.setFieldsValue({
+            name: "",
+            image: "",
+            ...record
+        })
+        setEditingId(record.id || 0)
+    }
+
+    const saveRow = async (id: number) => {
+        try {
+            const row = (await formRowEdition.validateFields()) as IPartner
+            PartnerService.update(id, row).then(res => {
+                const index = partners.findIndex(movie => movie.id === id)
+                setNewPartners(partners.splice(index, 1, {
+                    ...partners[index],
+                    ...res
+                }))
+            })
+            setEditingId(0)
+        } catch (err) {
+            console.log("Validate Failed: ", err)
+        }
+    }
+
+    const cancel = (): void => setEditingId(0)
+
+    const deleteRow = async (id: number): Promise<void> => {
+        await PartnerService.delete(id).then(() => message.success("Ligne supprimée"))
+        setNewPartners(partners)
+    }
 
     const columns = [
         {
@@ -63,12 +93,10 @@ const DashboardPartner:React.FC = () => {
             title: "Image",
             key: "image",
             dataIndex: "image",
-            render(imageId) {
+            render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
-                    title="Visualiser l'image"
-                    onClick={ () => openModalPreview(imageId) }>
-                    <AdvancedImage className="w-24 h-auto"
-                        cldImg={ cloudinary.image(imageId) }/>
+                    title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
+                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(imageId) }/>
                 </div>
             },
             editable: false
@@ -77,30 +105,51 @@ const DashboardPartner:React.FC = () => {
             title: "Action",
             key: "action",
             dataIndex: "action",
-
             render(_, record: IPartner) {
-                const editable = EditableCellService.isEditing<IPartner>(record, editingId)
+                const editable = isEditing(record)
                 return editable
                     ?
-                    <span>
-                        <Typography.Link href=""
-                            onClick={ (e) => EditableCellService.save<IPartner>(e, record.id, setEditingId) }
-                            className="mr-6">
-                            Sauvegarder
-                        </Typography.Link>
+                    <span className="inline-flex">
+                        <Tooltip title="Sauvegarder">
+                            <div className="mr-6 text-blue-500 cursor-pointer"
+                                onClick={ () => saveRow(record.id) }>
+                                <SaveOutlined />
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="Supprimer">
+                            <div className="mr-6 text-red cursor-pointer"
+                                onClick={ () => deleteRow(record.id) }>
+                                <DeleteOutlined />
+                            </div>
+                        </Tooltip>
                         <Popconfirm title="Veux-tu vraiment annuler ?"
-                            onConfirm={ () => EditableCellService.cancel(setEditingId) }>
+                            onConfirm={ () => cancel() }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 }
-                        onClick={ () => EditableCellService.edit<IPartner>(record, setEditingId) }>
-                        Modifier
-                    </Typography.Link>
+                    <Tooltip title="Modifier">
+                        <Typography.Link disabled={ editingId !== 0 }
+                            onClick={ () => editRow(record) }>
+                            <EditOutlined />
+                        </Typography.Link>
+                    </Tooltip>
             }
         },
     ]
+
+    const mergedColumns = columns.map(col => {
+        if (!col.editable) return col
+        return {
+            ...col,
+            onCell: (record: IPartner) => ({
+                record,
+                inputType: "text",
+                dataIndex: col.dataIndex,
+                title: col.title,
+                editing: isEditing(record), }),
+        }
+    })
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
@@ -131,8 +180,8 @@ const DashboardPartner:React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
-                    bordered dataSource={ partners } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isPartnerLoading }>
+                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
+                    bordered dataSource={ partners } columns={ mergedColumns } loading={ isPartnerLoading }>
                 </Table>
             </Form>
 

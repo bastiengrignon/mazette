@@ -5,10 +5,11 @@ import {
     message,
     Modal,
     Popconfirm,
-    Table,
+    Table, Tooltip,
     Typography,
 } from "antd"
 import { AdvancedImage } from "@cloudinary/react"
+import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
 
 import Navigation from "../Navigation"
 import { IMovie } from "../../../services/admin/movie/movie.interface"
@@ -18,7 +19,6 @@ import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
 import { UploadService } from "../../../services/admin/upload/upload.service"
 import { cloudinary } from "../../../index"
-import { EditableCellService } from "../../../services/admin/common/editable-cell.service"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddMovie from "../AdminFormAddMovie"
@@ -48,9 +48,47 @@ const DashboardMovie: React.FC = () => {
             .finally(() => setIsMovieLoading(false))
     }, [newMovies])
 
-    useEffect(() => {
-        EditableCellService.init<IMovie>(formRowEdition, movies, setNewMovies)
-    }, [])
+    const isEditing = (record: IMovie): boolean => record.id === editingId
+
+    const editRow = (record: Partial<IMovie>): void => {
+        formRowEdition.setFieldsValue({
+            title: "",
+            author: "",
+            description: "",
+            date: "",
+            publicationDate: "",
+            location: "",
+            duration: "",
+            ...record
+        })
+        setEditingId(record.id || 0)
+    }
+
+    const saveRow = async (id: number) => {
+        try {
+            const row = (await formRowEdition.validateFields()) as IMovie
+            MovieService.update(id, row).then(res => {
+                const index = movies.findIndex(movie => movie.id === id)
+                setNewMovies(movies.splice(index, 1, {
+                    ...movies[index],
+                    ...res
+                }))
+            })
+            setEditingId(0)
+        } catch (err) {
+            console.log("Validate Failed: ", err)
+        }
+    }
+
+    const cancel = (): void => setEditingId(0)
+
+    const deleteRow = async (id: number): Promise<void> => {
+        await MovieService.delete(id).then(() => {
+            message.success("Ligne supprimée")
+            setEditingId(0)
+        })
+        setNewMovies(movies)
+    }
 
     const columns = [
         {
@@ -111,12 +149,10 @@ const DashboardMovie: React.FC = () => {
             key: "imgThumbnail",
             dataIndex: "imgThumbnail",
             editable: false,
-            render(imageId) {
+            render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
-                    title="Visualiser l'image"
-                    onClick={ () => openModalPreview(imageId) }>
-                    <AdvancedImage className="w-24 h-auto"
-                        cldImg={ cloudinary.image(imageId) }/>
+                    title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
+                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(imageId) }/>
                 </div>
             }
         },
@@ -125,27 +161,50 @@ const DashboardMovie: React.FC = () => {
             key: "action",
             dataIndex: "action",
             render(_, record: IMovie) {
-                const editable = EditableCellService.isEditing<IMovie>(record, editingId)
+                const editable = isEditing(record)
                 return editable
                     ?
-                    <span>
-                        <Typography.Link href="" className="mr-6"
-                            onClick={ (e) => EditableCellService.save<IMovie>(e, record.id, setEditingId) }>
-                            Sauvegarder
-                        </Typography.Link>
+                    <span className="inline-flex">
+                        <Tooltip title="Sauvegarder">
+                            <div className="mr-6 text-blue-500 cursor-pointer"
+                                onClick={ () => saveRow(record.id) }>
+                                <SaveOutlined />
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="Supprimer">
+                            <div className="mr-6 text-red cursor-pointer"
+                                onClick={ () => deleteRow(record.id) }>
+                                <DeleteOutlined />
+                            </div>
+                        </Tooltip>
                         <Popconfirm title="Veux-tu vraiment annuler ?"
-                            onConfirm={ () => EditableCellService.cancel(setEditingId) }>
+                            onConfirm={ () => cancel() }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 }
-                        onClick={ () => EditableCellService.edit<IMovie>(record, setEditingId) }>
-                        Modifier
-                    </Typography.Link>
+                    <Tooltip title="Modifier">
+                        <Typography.Link disabled={ editingId !== 0 }
+                            onClick={ () => editRow(record) }>
+                            <EditOutlined />
+                        </Typography.Link>
+                    </Tooltip>
             }
         },
     ]
+
+    const mergedColumns = columns.map(col => {
+        if (!col.editable) return col
+        return {
+            ...col,
+            onCell: (record: IMovie) => ({
+                record,
+                inputType: "text",
+                dataIndex: col.dataIndex,
+                title: col.title,
+                editing: isEditing(record), }),
+        }
+    })
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
@@ -176,8 +235,8 @@ const DashboardMovie: React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => EditableCellService.cancel(setEditingId), position: [ "bottomCenter"] }}
-                    bordered dataSource={ movies } columns={ EditableCellService.mergedColumns(columns, editingId) } loading={ isMovieLoading }>
+                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
+                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
                 </Table>
             </Form>
 
