@@ -24,10 +24,15 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
             rules={ [{ required: true, message: "Entrez une description" }] }>
             <Input.TextArea/>
         </Form.Item>
-        <Form.Item label="Date de publication" name="publicationDate"
-            rules={ [{ type: "date", required: true, message: "Entrez la date de publication au festival" }] }>
-            <DatePicker/>
-        </Form.Item>
+        <div className="inline-flex justify-between w-full space-x-2">
+            <Form.Item label="Date de publication" name="publicationDate"
+                rules={ [{ type: "date", required: true, message: "Entrez la date de publication au festival" }] }>
+                <DatePicker/>
+            </Form.Item>
+            <Form.Item label="Lien bande annonce">
+                <Input type="url" placeholder="https://youtu.be/example" allowClear={ true }/>
+            </Form.Item>
+        </div>
         <Form.Item label="Image" name="image" rules={ [{ required: true, message: "Ajouter une image !" }] }>
             <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
                 <Button icon={ <UploadOutlined/> }>Ajouter une image</Button>
