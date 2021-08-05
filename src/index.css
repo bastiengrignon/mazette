@@ -137,5 +137,5 @@ body {
 svg { vertical-align: baseline; }
 
 .ant-modal {
-    @apply w-11/12 sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 !important;
+    @apply w-11/12 sm:w-5/6 lg:w-2/3 xl:w-1/2 !important;
 }
