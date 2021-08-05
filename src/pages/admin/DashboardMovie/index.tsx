@@ -22,8 +22,7 @@ import { EditableCellService } from "../../../services/admin/common/editable-cel
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddMovie from "../AdminFormAddMovie"
-
-//TODO: add optional link for trailer
+import Link from "../../../components/Link"
 
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
@@ -59,9 +58,7 @@ const DashboardMovie: React.FC = () => {
             key: "title",
             dataIndex: "title",
             editable: true,
-            render: function renderTitle(title: string) {
-                return <div className="font-avenirBL">{ title }</div>
-            },
+            render(title: string) { return <div className="font-avenirBL">{ title }</div> },
             sorter: (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
         },
         {
@@ -103,37 +100,47 @@ const DashboardMovie: React.FC = () => {
 
         },
         {
+            title: "Lien Vidéo",
+            key: "videoLink",
+            dataIndex: "videoLink",
+            editable: true,
+            render(link: string) { return <Link src={ link }/> }
+        },
+        {
             title: "Image",
             key: "imgThumbnail",
             dataIndex: "imgThumbnail",
-            render: function renderImage(imageId) {
+            editable: false,
+            render(imageId) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image"
                     onClick={ () => openModalPreview(imageId) }>
-                    <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(`/${ imageId }`) }/>
+                    <AdvancedImage className="w-24 h-auto"
+                        cldImg={ cloudinary.image(`/${ imageId }`) }/>
                 </div>
-            },
-            editable: false
+            }
         },
         {
             title: "Action",
             key: "action",
             dataIndex: "action",
-
-            render: function renderAction(_, record: IMovie) {
+            render(_, record: IMovie) {
                 const editable = EditableCellService.isEditing<IMovie>(record, editingId)
                 return editable
                     ?
                     <span>
-                        <Typography.Link href="" onClick={ (e) => EditableCellService.save<IMovie>(e, record.id, setEditingId) } className="mr-6">
+                        <Typography.Link href="" className="mr-6"
+                            onClick={ (e) => EditableCellService.save<IMovie>(e, record.id, setEditingId) }>
                             Sauvegarder
                         </Typography.Link>
-                        <Popconfirm title="Veux-tu vraiment annuler ?" onConfirm={ () => EditableCellService.cancel(setEditingId) }>
+                        <Popconfirm title="Veux-tu vraiment annuler ?"
+                            onConfirm={ () => EditableCellService.cancel(setEditingId) }>
                             <a>Annuler</a>
                         </Popconfirm>
                     </span>
                     :
-                    <Typography.Link disabled={ editingId !== 0 } onClick={ () => EditableCellService.edit<IMovie>(record, setEditingId) }>
+                    <Typography.Link disabled={ editingId !== 0 }
+                        onClick={ () => EditableCellService.edit<IMovie>(record, setEditingId) }>
                         Modifier
                     </Typography.Link>
             }

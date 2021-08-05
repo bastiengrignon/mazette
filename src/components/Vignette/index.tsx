@@ -5,6 +5,7 @@ import { Modal, Skeleton } from "antd"
 import { IMusic } from "../../services/admin/music/music.interface"
 import { IMovie } from "../../services/admin/movie/movie.interface"
 import { fill } from "@cloudinary/base/actions/resize"
+import Link from "../Link"
 
 const vignetteCSS = "w-11/12 sm:w-7/8 md:w-3/4 h-auto mx-auto cursor-pointer transform transition duration-300 hover:scale-110"
 
@@ -63,12 +64,18 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
                 <div className="text-xl">
                     { isMusic() ? `${ properties.type }` : `${ properties.location }, ${ properties.duration } (${ properties.date })` }
                 </div>
-                <div className="grid grid-cols-6 grid-rows-1">
+                <div className="grid grid-cols-6">
                     <div className="col-span-6 sm:col-span-6 md:col-span-2 flex justify-center my-2 md:my-0">
                         <AdvancedImage cldImg={ cloudinary.image(publicImgId()).resize(fill().width(250).height(250)) } alt={ altImgName() } className="rounded"/>
                     </div>
                     <div className="col-span-6 sm:col-span-6 md:col-span-4 mx-2 text-base sm:text-lg overflow-y-auto">
                         { properties.description }
+                        { properties.videoLink &&
+                        <span><br/><br/>
+                            { isMusic()
+                                ? "Pour les curieux c’est ici 👇🏼"
+                                : "Bande annonce" } : <br/><Link src={ properties.videoLink }/>
+                        </span> }
                     </div>
                 </div>
             </Modal>

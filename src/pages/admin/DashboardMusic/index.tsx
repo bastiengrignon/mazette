@@ -20,8 +20,7 @@ import { EditableCellService } from "../../../services/admin/common/editable-cel
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddArtist from "../AdminFormAddArtist"
-
-//TODO: add optional link for auto-promo
+import Link from "../../../components/Link"
 
 const DashboardMusic:React.FC = () => {
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
@@ -82,6 +81,13 @@ const DashboardMusic:React.FC = () => {
             editable: true,
             sorter: (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
 
+        },
+        {
+            title: "Lien Vidéo",
+            key: "videoLink",
+            dataIndex: "videoLink",
+            editable: true,
+            render(link: string) { return <Link src={ link }/> }
         },
         {
             title: "Image",
