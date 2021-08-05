@@ -5,4 +5,5 @@ export interface IMusic {
     description: string
     publicationDate: string
     image: string
+    videoLink?: string
 }

@@ -8,4 +8,5 @@ export interface IMovie {
     location: string
     duration: string
     imgThumbnail: string
+    videoLink?: string
 }
