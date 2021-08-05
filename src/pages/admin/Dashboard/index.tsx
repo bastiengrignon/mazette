@@ -56,15 +56,17 @@ const Dashboard: React.FC = () => {
 
     return (
         <Navigation>
-            <div className="grid grid-cols-6">
-                <Card bordered={ false } className="rounded-lg col-span-3">
-                    <p className="text-xl mb-2">Textes d’introduction : </p>
-                    <Skeleton avatar={ true } active={ true } loading={ isTextLoading } >
-                        <List dataSource={ texts } renderItem={ renderListTextItem }/>
-                    </Skeleton>
-                </Card>
-            </div>
-
+            {
+                !isModalVisible &&
+                    <div className="grid grid-cols-6">
+                        <Card bordered={ false } className="rounded-lg col-span-3">
+                            <p className="text-xl mb-2">Textes d’introduction : </p>
+                            <Skeleton avatar={ true } active={ true } loading={ isTextLoading } >
+                                <List dataSource={ texts } renderItem={ renderListTextItem }/>
+                            </Skeleton>
+                        </Card>
+                    </div>
+            }
             <Modal title="Admin Login" visible={ isModalVisible } footer={ null } closable={ false }>
                 <Form name="login_form" form={ loginForm } onFinish={ handleLogin } initialValues={ { remember: true } }>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: "Veuillez entrer votre nom d'utilisateur!" }] }>
