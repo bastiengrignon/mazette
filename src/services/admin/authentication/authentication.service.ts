@@ -11,8 +11,10 @@ interface IUser {
     username: string
 }
 
+const authUrl = "/auth"
+
 export class AuthenticationService {
-    static logInAsync = async (signInForm: ISignInForm): Promise<IUser> => await axios.post("/auth", signInForm).then(r => r.data)
+    static logInAsync = async (signInForm: ISignInForm): Promise<IUser> => await axios.post(authUrl, signInForm).then(r => r.data)
 
     static connectedUserCookie = (): boolean => Storage.get(authToken) === "true"
 }

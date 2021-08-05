@@ -2,17 +2,21 @@ import axios from "axios"
 import { IMovie } from "./movie.interface"
 import { UploadService } from "../upload/upload.service"
 
+const movieUrl = "/movie"
+
 export class MovieService {
-    static getAll = async (): Promise<IMovie[]> => await axios.get("/movie").then(r => r.data)
+    static getAll = async (): Promise<IMovie[]> => await axios.get(movieUrl).then(r => r.data)
 
     static create = async (movie: IMovie, file?: File): Promise<IMovie> => {
         let tmpFile
         if (file) await UploadService.getBase64(file).then(base64Url => tmpFile = base64Url)
         const tmpMovie = { ...MovieService.formatMovieDates(movie), imgThumbnail: tmpFile }
-        return await axios.post("/movie", tmpMovie).then(r => r.data)
+        return await axios.post(movieUrl, tmpMovie).then(r => r.data)
     }
 
-    static update = async (id: number, updatedMovie: IMovie): Promise<IMovie> => await axios.put(`/movie/${ id }`, updatedMovie).then(r => r.data)
+    static update = async (id: number, updatedMovie: IMovie): Promise<IMovie> => await axios.put(`${ movieUrl }/${ id }`, updatedMovie).then(r => r.data)
+
+    static delete = async (id: number): Promise<void> => await axios.delete(`${ movieUrl }/${ id }`).then(r => r.data)
 
     private static formatMovieDates = (movie: IMovie): IMovie => {
         return {
