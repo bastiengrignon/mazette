@@ -117,31 +117,31 @@ const DashboardTrombinoscope: React.FC = () => {
                 const editable = isEditing(record)
                 return editable
                     ?
-                    <span className="inline-flex">
+                    <span className="inline-flex justify-around w-full">
                         <Tooltip title="Sauvegarder">
-                            <div className="mr-6 text-blue-500 cursor-pointer"
+                            <div className="text-blue-500 cursor-pointer"
                                 onClick={ () => saveRow(record.id) }>
-                                <SaveOutlined />
+                                <SaveOutlined/>
                             </div>
                         </Tooltip>
-                        <Tooltip title="Supprimer">
-                            <div className="mr-6 text-red cursor-pointer"
-                                onClick={ () => deleteRow(record.id) }>
-                                <DeleteOutlined />
-                            </div>
-                        </Tooltip>
-                        <Popconfirm title="Veux-tu vraiment annuler ?"
-                            onConfirm={ () => cancel() }>
-                            <a>Annuler</a>
-                        </Popconfirm>
+                        <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
                     </span>
                     :
-                    <Tooltip title="Modifier">
-                        <Typography.Link disabled={ editingId !== 0 }
-                            onClick={ () => editRow(record) }>
-                            <EditOutlined />
-                        </Typography.Link>
-                    </Tooltip>
+                    <span className="inline-flex justify-around w-full">
+                        <Tooltip title="Modifier">
+                            <Typography.Link disabled={ editingId !== 0 }
+                                onClick={ () => editRow(record) }>
+                                <EditOutlined/>
+                            </Typography.Link>
+                        </Tooltip>
+                        <Tooltip title="Supprimer" placement="bottom">
+                            <Popconfirm placement="left" className="text-red cursor-pointer"
+                                title="Veux-tu vraiment supprimer ?"
+                                onConfirm={ () => deleteRow(record.id) }>
+                                <a><DeleteOutlined/></a>
+                            </Popconfirm>
+                        </Tooltip>
+                    </span>
             }
         },
     ]
