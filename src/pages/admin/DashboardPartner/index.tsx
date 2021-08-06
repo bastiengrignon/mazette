@@ -149,12 +149,17 @@ const DashboardPartner: React.FC = () => {
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
+        const hideLoadingMessage = message.loading("Ajout en cours", 0)
         formRowAddition.validateFields()
             .then(values => {
                 PartnerService.create(values, file)
                     .then(partner => setPartners([...partners, partner]))
                     .catch(err => console.log(err))
-                    .finally(() => formRowAddition.resetFields())
+                    .finally(() => {
+                        hideLoadingMessage()
+                        message.success("Partenaire ajouté", 2.5)
+                        formRowAddition.resetFields()
+                    })
                 setAddRowModalVisible(false)
             })
             .catch(err => message.warn("Validation failed: ", err))

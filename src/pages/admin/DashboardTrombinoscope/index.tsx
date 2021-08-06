@@ -149,12 +149,17 @@ const DashboardTrombinoscope: React.FC = () => {
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
+        const hideLoadingMessage = message.loading("Ajout en cours", 0)
         formRowAddition.validateFields()
             .then(values => {
                 TrombinoscopeService.create(values, file)
                     .then(trombinoscope => setTrombinoscopes([...trombinoscopes, trombinoscope]))
                     .catch(err => console.log(err))
-                    .finally(() => formRowAddition.resetFields())
+                    .finally(() => {
+                        hideLoadingMessage()
+                        message.success("Trombinoscope ajouté", 2.5)
+                        formRowAddition.resetFields()
+                    })
                 setAddRowModalVisible(false)
             })
             .catch(err => message.warn("Validation failed: ", err))

@@ -211,12 +211,17 @@ const DashboardMovie: React.FC = () => {
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
+        const hideLoadingMessage = message.loading("Ajout en cours", 0)
         formRowAddition.validateFields()
             .then(values => {
                 MovieService.create(values, file)
                     .then(movie => setMovies([...movies, movie]))
                     .catch(err => console.log(err))
-                    .finally(() => formRowAddition.resetFields())
+                    .finally(() => {
+                        hideLoadingMessage()
+                        message.success("Court-métrage ajouté", 2.5)
+                        formRowAddition.resetFields()
+                    })
                 setAddRowModalVisible(false)
             })
             .catch(err => message.warn("Validation failed: ", err))
