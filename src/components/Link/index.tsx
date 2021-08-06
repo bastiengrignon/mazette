@@ -4,15 +4,16 @@ interface LinkProps {
     src: string
     newTab?: boolean
     className?: string
+    title?: string
 }
 
-const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", children }) => {
+const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", title, children }) => {
     return (newTab ?
-        <a href={ src } target="_blank" className={`link ${className}`} rel="nofollow external noreferrer noopener">
+        <a href={ src } target="_blank" className={`link ${className}`} title={ title } rel="nofollow external noreferrer noopener">
             { children || src }
         </a>
         :
-        <a href={ src } className={`link ${className}`} rel="internal noreferrer noopener">
+        <a href={ src } className={`link ${className}`} title={ title } rel="internal noreferrer noopener">
             { children || src }
         </a>
     )
