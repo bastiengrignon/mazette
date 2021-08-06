@@ -5,8 +5,9 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean
     dataIndex: string
     title: string
-    inputType: "text" | "textarea";
+    inputType: "text" | "textarea"
     children: React.ReactNode
+    required: boolean
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -15,6 +16,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     title,
     inputType,
     children,
+    required,
     ...restProps
 }) => {
     const inputNode = inputType === "textarea" ? <Input.TextArea /> : <Input />
@@ -27,8 +29,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
                     style={ { margin: 0 } }
                     rules={ [
                         {
-                            required: true,
-                            message: `Please Input ${ title }!`,
+                            required: required,
+                            message: `Entrer un ${ title } !`,
                         },
                     ] }
                 >
