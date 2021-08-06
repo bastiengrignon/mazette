@@ -20,6 +20,7 @@ import AdminFormAddImages from "../AdminFormAddImages"
 import { TrombinoscopeService } from "../../../services/admin/trombinoscope/trombinoscope.service"
 import { ITrombinoscope } from "../../../services/admin/trombinoscope/trombinoscope.interface"
 import { EditOutlined, SaveOutlined, DeleteOutlined } from "@ant-design/icons"
+import { CommonService } from "../../../services/admin/common/common.service"
 
 const DashboardTrombinoscope: React.FC = () => {
     const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false)
@@ -138,18 +139,7 @@ const DashboardTrombinoscope: React.FC = () => {
         },
     ]
 
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: ITrombinoscope) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record), }),
-        }
-    })
+    const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
         formRowAddition.validateFields()

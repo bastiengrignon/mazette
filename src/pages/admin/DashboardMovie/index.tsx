@@ -23,6 +23,7 @@ import PreviewModal from "../PreviewModal"
 import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddMovie from "../AdminFormAddMovie"
 import Link from "../../../components/Link"
+import { CommonService } from "../../../services/admin/common/common.service"
 
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
@@ -193,18 +194,7 @@ const DashboardMovie: React.FC = () => {
         },
     ]
 
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: IMovie) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record), }),
-        }
-    })
+    const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
         formRowAddition.validateFields()

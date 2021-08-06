@@ -21,6 +21,7 @@ import useModal from "../../../services/admin/common/modal.service"
 import AdminFormAddArtist from "../AdminFormAddArtist"
 import Link from "../../../components/Link"
 import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
+import { CommonService } from "../../../services/admin/common/common.service"
 
 const DashboardMusic: React.FC = () => {
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
@@ -169,18 +170,7 @@ const DashboardMusic: React.FC = () => {
         },
     ]
 
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: IMusic) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record), }),
-        }
-    })
+    const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
         formRowAddition.validateFields()

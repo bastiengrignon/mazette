@@ -20,6 +20,7 @@ import { IPartner } from "../../../services/admin/partner/partner.interface"
 import { PartnerService } from "../../../services/admin/partner/partner.service"
 import AdminFormAddImages from "../AdminFormAddImages"
 import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
+import { CommonService } from "../../../services/admin/common/common.service"
 
 const DashboardPartner: React.FC = () => {
     const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
@@ -138,18 +139,7 @@ const DashboardPartner: React.FC = () => {
         },
     ]
 
-    const mergedColumns = columns.map(col => {
-        if (!col.editable) return col
-        return {
-            ...col,
-            onCell: (record: IPartner) => ({
-                record,
-                inputType: "text",
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record), }),
-        }
-    })
+    const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
         formRowAddition.validateFields()
