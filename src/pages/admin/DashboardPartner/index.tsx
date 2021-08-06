@@ -80,7 +80,11 @@ const DashboardPartner: React.FC = () => {
     const cancel = (): void => setEditingId(0)
 
     const deleteRow = async (id: number): Promise<void> => {
-        await PartnerService.delete(id).then(() => message.success("Ligne supprimée"))
+        const hideLoadingMessage = message.loading("Suppression en cours", 0)
+        await PartnerService.delete(id).then(() => {
+            hideLoadingMessage()
+            message.success("Ligne supprimée")
+        })
         setNewPartners(partners)
     }
 

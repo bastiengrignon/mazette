@@ -84,7 +84,11 @@ const DashboardMusic: React.FC = () => {
     const cancel = (): void => setEditingId(0)
 
     const deleteRow = async (id: number): Promise<void> => {
-        await MusicService.delete(id).then(() => message.success("Ligne supprimée"))
+        const hideLoadingMessage = message.loading("Suppression en cours", 0)
+        await MusicService.delete(id).then(() => {
+            hideLoadingMessage()
+            message.success("Ligne supprimée")
+        })
         setNewMusics(musics)
     }
 
