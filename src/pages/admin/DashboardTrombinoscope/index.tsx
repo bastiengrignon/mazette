@@ -59,6 +59,7 @@ const DashboardTrombinoscope: React.FC = () => {
     }
 
     const saveRow = async (id: number) => {
+        const hideLoadingMessage = message.loading("Modification en cours", 0)
         try {
             const row = (await formRowEdition.validateFields()) as ITrombinoscope
             TrombinoscopeService.update(id, row).then(res => {
@@ -71,6 +72,9 @@ const DashboardTrombinoscope: React.FC = () => {
             setEditingId(0)
         } catch (err) {
             console.log("Validate Failed: ", err)
+        } finally {
+            hideLoadingMessage()
+            message.success("Modification effectuée", 2.5)
         }
     }
 

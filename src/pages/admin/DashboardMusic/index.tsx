@@ -63,6 +63,7 @@ const DashboardMusic: React.FC = () => {
     }
 
     const saveRow = async (id: number) => {
+        const hideLoadingMessage = message.loading("Modification en cours", 0)
         try {
             const row = (await formRowEdition.validateFields()) as IMusic
             MusicService.update(id, row).then(res => {
@@ -75,6 +76,9 @@ const DashboardMusic: React.FC = () => {
             setEditingId(0)
         } catch (err) {
             console.log("Validate Failed: ", err)
+        } finally {
+            hideLoadingMessage()
+            message.success("Modification effectuée", 2.5)
         }
     }
 
