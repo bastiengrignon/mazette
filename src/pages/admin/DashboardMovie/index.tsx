@@ -110,7 +110,15 @@ const DashboardMovie: React.FC = () => {
             title: "Description",
             key: "description",
             dataIndex: "description",
-            editable: true
+            editable: true,
+            ellipsis: { showTitle: false },
+            render(description: string) {
+                return (
+                    <Tooltip placement="top" title={ description } color="blue">
+                        { description }
+                    </Tooltip>
+                )
+            }
         },
         {
             title: "Date",
@@ -143,7 +151,8 @@ const DashboardMovie: React.FC = () => {
             key: "videoLink",
             dataIndex: "videoLink",
             editable: true,
-            render(link: string) { return <Link src={ link }/> }
+            ellipsis: { showTitle: false },
+            render(link: string) { return <Link src={ link } title={ link }/> }
         },
         {
             title: "Image",
@@ -161,6 +170,7 @@ const DashboardMovie: React.FC = () => {
             title: "Action",
             key: "action",
             dataIndex: "action",
+            fixed: "right",
             render(_, record: IMovie) {
                 const editable = isEditing(record)
                 return editable

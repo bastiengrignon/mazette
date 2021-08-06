@@ -106,7 +106,15 @@ const DashboardMusic: React.FC = () => {
             title: "Description",
             key: "description",
             dataIndex: "description",
-            editable: true
+            editable: true,
+            ellipsis: { showTitle: false },
+            render(description: string) {
+                return (
+                    <Tooltip placement="top" title={ description } color="blue">
+                        { description }
+                    </Tooltip>
+                )
+            }
         },
         {
             title: "Date de publication",
@@ -121,12 +129,14 @@ const DashboardMusic: React.FC = () => {
             key: "videoLink",
             dataIndex: "videoLink",
             editable: true,
-            render(link: string) { return <Link src={ link }/> }
+            ellipsis: { showTitle: false },
+            render(link: string) { return <Link src={ link } title={ link }/> }
         },
         {
             title: "Image",
             key: "image",
             dataIndex: "image",
+            fixed: "right",
             render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
