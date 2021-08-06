@@ -67,22 +67,21 @@ const DashboardMovie: React.FC = () => {
 
     const saveRow = async (id: number) => {
         const hideLoadingMessage = message.loading("Modification en cours", 0)
-        try {
-            const row = (await formRowEdition.validateFields()) as IMovie
-            MovieService.update(id, row).then(res => {
-                const index = movies.findIndex(movie => movie.id === id)
-                setNewMovies(movies.splice(index, 1, {
-                    ...movies[index],
-                    ...res
-                }))
+        formRowEdition.validateFields()
+            .then(row => {
+                MovieService.update(id, row).then(res => {
+                    const index = movies.findIndex(movie => movie.id === id)
+                    setNewMovies(movies.splice(index, 1, {
+                        ...movies[index],
+                        ...res
+                    }))
+                }).finally(() => {
+                    hideLoadingMessage()
+                    message.success("Modification effectuée", 2.5)
+                })
             })
-            setEditingId(0)
-        } catch (err) {
-            console.log("Validate Failed: ", err)
-        } finally {
-            hideLoadingMessage()
-            message.success("Modification effectuée", 2.5)
-        }
+            .catch(err => console.log("Validate Failed: ", err))
+            .finally(() => setEditingId(0))
     }
 
     const cancel = (): void => setEditingId(0)
