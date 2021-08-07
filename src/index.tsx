@@ -12,6 +12,7 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import "antd/dist/antd.css"
 import "./index.css"
 import Home from "./pages/Home"
+import { useGATracker } from "./constants/hooks"
 
 const Footer = loadable(() => import("./components/Footer"))
 const Navbar = loadable(() => import("./components/Navbar"))
@@ -26,37 +27,41 @@ const DashboardMusic = loadable(() => import("./pages/admin/DashboardMusic"))
 const DashboardPartner = loadable(() => import("./pages/admin/DashboardPartner"))
 const DashboardTrombinoscope = loadable(() => import("./pages/admin/DashboardTrombinoscope"))
 
-const App: React.FC = () => (
-    <div className="min-h-full flex flex-col justify-between">
-        <Router>
-            { isAdminRoutes() ? null : <Navbar/> }
-            {
-                isAdminRoutes()
-                    ?
-                    <Switch>
-                        <Route path={ RouterUrl.adminMovie } component={ DashboardMovie }/>
-                        <Route path={ RouterUrl.adminMusic } component={ DashboardMusic }/>
-                        <Route path={ RouterUrl.adminPartner } component={ DashboardPartner }/>
-                        <Route path={ RouterUrl.adminTrombinoscope } component={ DashboardTrombinoscope }/>
+const App: React.FC = () => {
+    useGATracker()
 
-                        <Route path={ RouterUrl.home } component={ Dashboard }/>
-                    </Switch>
-                    :
-                    <Switch>
+    return (
+        <div className="min-h-full flex flex-col justify-between">
+            <Router>
+                { isAdminRoutes() ? null : <Navbar/> }
+                {
+                    isAdminRoutes()
+                        ?
+                        <Switch>
+                            <Route path={ RouterUrl.adminMovie } component={ DashboardMovie }/>
+                            <Route path={ RouterUrl.adminMusic } component={ DashboardMusic }/>
+                            <Route path={ RouterUrl.adminPartner } component={ DashboardPartner }/>
+                            <Route path={ RouterUrl.adminTrombinoscope } component={ DashboardTrombinoscope }/>
 
-                        <Route path={ RouterUrl.programmation } component={ Programmation }/>
-                        <Route path={ RouterUrl.association } component={ Association }/>
-                        <Route path={ RouterUrl.information } component={ Information }/>
-                        <Route path={ RouterUrl.mention } component={ LegalMention }/>
-                        <Route path={ RouterUrl.passSanitaire } component={ SanitaryPass }/>
+                            <Route path={ RouterUrl.home } component={ Dashboard }/>
+                        </Switch>
+                        :
+                        <Switch>
 
-                        <Route path={ RouterUrl.home } component={ Home }/>
-                    </Switch>
-            }
-            { isAdminRoutes() ? null : <Footer/> }
-        </Router>
-    </div>
-)
+                            <Route path={ RouterUrl.programmation } component={ Programmation }/>
+                            <Route path={ RouterUrl.association } component={ Association }/>
+                            <Route path={ RouterUrl.information } component={ Information }/>
+                            <Route path={ RouterUrl.mention } component={ LegalMention }/>
+                            <Route path={ RouterUrl.passSanitaire } component={ SanitaryPass }/>
+
+                            <Route path={ RouterUrl.home } component={ Home }/>
+                        </Switch>
+                }
+                { isAdminRoutes() ? null : <Footer/> }
+            </Router>
+        </div>
+    )
+}
 export const cloudinary = new Cloudinary({ cloud: { cloudName: "mazette" } })
 
 const isAdminRoutes = (): boolean => window.location.host.split(".")[0] === adminSubdomain;
