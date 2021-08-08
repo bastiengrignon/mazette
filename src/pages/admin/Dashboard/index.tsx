@@ -149,7 +149,7 @@ const Dashboard: React.FC = () => {
                     <Collapse accordion={ true } onChange={ cancel } defaultActiveKey={ 0 }>
                         {
                             Object.values(TextType).map((textType, key) => (
-                                <Panel key={ key } header={ collapseTitle(textType) }>
+                                <Panel key={ key } header={ collapseTitle(textType) } className="whitespace-pre-wrap">
                                     <Skeleton avatar={ true } active={ true } loading={ isTextLoading }>
                                         <Form form={ formRowEdition } component={ false }>
                                             <List dataSource={ texts.filter(value => value.type === textType) }
