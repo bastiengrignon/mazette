@@ -18,4 +18,6 @@ export class CommonService {
             }
         })
     }
+
+    static capitalize = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1)
 }
