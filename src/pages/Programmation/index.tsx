@@ -8,7 +8,9 @@ import { IMusic } from "../../services/admin/music/music.interface"
 import { MusicService } from "../../services/admin/music/music.service"
 import { MovieService } from "../../services/admin/movie/movie.service"
 import { IMovie } from "../../services/admin/movie/movie.interface"
-import Link from "../../components/Link"
+import { IText, TextType } from "../../services/admin/text/text.interface"
+import { TextService } from "../../services/admin/text/text.service"
+import { Skeleton } from "antd"
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"
@@ -17,27 +19,45 @@ export const subtitleCSS = "text-base sm:text-lg md:text-xl"
 const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn"
 
 const Programmation: React.FC = () => {
-
     const [musics, setMusics] = useState<IMusic[]>([])
     const [movies, setMovies] = useState<IMovie[]>([])
+    const [texts, setTexts] = useState<IText[]>([])
+
+    const [isTextsLoading, setTextsLoading] = useState<boolean>(false)
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setIsMusicLoading(true)
         setIsMovieLoading(true)
+        setTextsLoading(true)
         MusicService.getAll().then(musics => setMusics(musics)).finally(() => setIsMusicLoading(false))
         MovieService.getAll().then(movies => setMovies(movies)).finally(() => setIsMovieLoading(false))
+        TextService.getAll().then(texts => setTexts(texts)).finally(() => setTextsLoading(false))
     }, [])
+
+    // Todo: use parseText for global link usage
+    // eslint-disable-next-line
+    const parseText = (text: IText[]) => {
+        return text.filter(value => value.type === TextType.music).map((text, key) => (
+            <Skeleton key={ key } loading={ isTextsLoading }>
+                <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={{
+                    __html: text.text.replace(/link:/g, "$'")}}/>
+            </Skeleton>
+        ))
+    }
 
     return (
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                Chaque soirée débutera à 19h par deux concerts, avec une sélection de talents
-                émergents
-                de la scène musicale locale. Electro pop, jazz ou encore musique de l’Est seront au
-                rendez-vous, dans un décor champêtre et estival !
+                {
+                    texts.filter(value => value.type === TextType.music).map((text, key) =>
+                        <Skeleton key={ key } loading={ isTextsLoading }>
+                            <p className="whitespace-pre-wrap">{ text.text }</p>
+                        </Skeleton>
+                    )
+                }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -57,9 +77,14 @@ const Programmation: React.FC = () => {
             </div>
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
-            <p>A la tombée de la nuit à partir de 21h30, une programmation éclectique pour découvrir
-                le court-métrage sur grand écran et sous toutes ses formes, de la fiction à
-                l’animation, de la comédie au documentaire.
+            <p className={ subtitleCSS }>
+                {
+                    texts.filter(value => value.type === TextType.movie).map((text, key) =>
+                        <Skeleton key={ key } loading={ isTextsLoading }>
+                            <p className="whitespace-pre-wrap">{ text.text }</p>
+                        </Skeleton>
+                    )
+                }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -80,14 +105,13 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                En amont du festival, l’association Mazette! organise un concours de courts-métrages
-                entre les centres d’animation des quatre communes de l’Entente-Vallée. À travers la
-                réalisation de courts-métrages sur le thème « C’est arrivé près de chez vous ! »,
-                nous souhaitons encourager les jeunes du territoire à découvrir le tournage et le
-                montage d’un film. <span className="font-avenirBL">Tous les films participants au
-                concours seront projetés à 21h30 le vendredi 30 juillet en première partie des
-                projections</span>, et l’équipe Mazette! remettra le prix du Meilleur film à son
-                court-métrage favori !
+                {
+                    texts.filter(value => value.type === TextType.contest).map((text, key) =>
+                        <Skeleton key={ key } loading={ isTextsLoading }>
+                            <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={ { __html: text.text } }/>
+                        </Skeleton>
+                    )
+                }
             </p>
         </div>
     )
