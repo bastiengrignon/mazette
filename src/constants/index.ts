@@ -1,10 +1,5 @@
 import { DropdownItem } from "../components/DropDown"
 
-export interface Image {
-    src: string
-    alt: string
-}
-
 const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
 export const musicFolder = `${ defaultImgFolder }/musics`
