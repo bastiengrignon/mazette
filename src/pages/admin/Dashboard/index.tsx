@@ -88,7 +88,7 @@ const Dashboard: React.FC = () => {
                     editable ?
                         <Form.Item className="w-full" name="text"
                             rules={ [{ required: true, message: "Entrez le texte" }] }>
-                            <Input.TextArea rows={ 3 } defaultValue={ item.text }/>
+                            <Input.TextArea rows={ 4 } defaultValue={ item.text }/>
                         </Form.Item>
                         :
                         <div>{ item.text }</div>
