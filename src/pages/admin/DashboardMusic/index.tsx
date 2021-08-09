@@ -143,7 +143,6 @@ const DashboardMusic: React.FC = () => {
             title: "Image",
             key: "image",
             dataIndex: "image",
-            fixed: "right",
             render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
@@ -156,6 +155,7 @@ const DashboardMusic: React.FC = () => {
             title: "Action",
             key: "action",
             dataIndex: "action",
+            fixed: "right",
             render(_, record: IMusic) {
                 const editable = isEditing(record)
                 return editable
