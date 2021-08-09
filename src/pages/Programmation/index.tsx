@@ -6,6 +6,7 @@ const Vignette = loadable(() => import("../../components/Vignette"))
 import { programmationTitle } from "../../constants"
 import { musics } from "../../constants/music"
 import { films } from "../../constants/film"
+import Link from "../../components/Link"
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"
@@ -62,6 +63,10 @@ const Programmation: React.FC = () => (
 
         <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
         <p className={ subtitleCSS }>
+            Le grand gagnant du concours est les centre de loisirs du Cap’ados. Un grand bravo à eux
+            pour leur super court-métrage (<Link src="https://www.youtube.com/watch?v=SJ_JGDxUZZw">Court-métrage</Link>).
+            Bravo également aux trois autres participants : Les bois d’anjou, Mazé-Milon et l’accueil de loisirs de Brion.
+            <br/><br/>
             En amont du festival, l’association Mazette! organise un concours de courts-métrages
             entre les centres d’animation des quatre communes de l’Entente-Vallée. À travers la
             réalisation de courts-métrages sur le thème « C’est arrivé près de chez vous ! »,
