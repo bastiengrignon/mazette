@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
 
     const isEditing = (item: IText): boolean => item.id === editingId
 
-    const saveRow = (id: number): void => {
+    const saveRow = async (id: number): Promise<void> => {
         const hideLoadingMessage = message.loading("Modification en cours", 0)
         formRowEdition.validateFields()
             .then(row => {
@@ -86,9 +86,9 @@ const Dashboard: React.FC = () => {
             <List.Item key={ key } className="inline-flex items-center justify-between w-full">
                 {
                     editable ?
-                        <Form.Item className="w-full" name="text"
+                        <Form.Item className="w-full" name="text" initialValue={ item.text }
                             rules={ [{ required: true, message: "Entrez le texte" }] }>
-                            <Input.TextArea rows={ 4 } defaultValue={ item.text }/>
+                            <Input.TextArea rows={ 4 }/>
                         </Form.Item>
                         :
                         <div>{ item.text }</div>
