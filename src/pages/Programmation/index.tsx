@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react"
 import loadable from "@loadable/component"
-
-const Anchor = loadable(() => import("../../components/Anchor"))
-const Vignette = loadable(() => import("../../components/Vignette"))
 import { programmationTitle } from "../../constants"
 import { IMusic } from "../../services/admin/music/music.interface"
 import { MusicService } from "../../services/admin/music/music.service"
@@ -10,7 +7,10 @@ import { MovieService } from "../../services/admin/movie/movie.service"
 import { IMovie } from "../../services/admin/movie/movie.interface"
 import { IText, TextType } from "../../services/admin/text/text.interface"
 import { TextService } from "../../services/admin/text/text.service"
-import { Skeleton } from "antd"
+import { fetchedText } from "../../services/common/common.service"
+
+const Anchor = loadable(() => import("../../components/Anchor"))
+const Vignette = loadable(() => import("../../components/Vignette"))
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"
@@ -36,28 +36,11 @@ const Programmation: React.FC = () => {
         TextService.getAll().then(texts => setTexts(texts)).finally(() => setTextsLoading(false))
     }, [])
 
-    // Todo: use parseText for global link usage
-    // eslint-disable-next-line
-    const parseText = (text: IText[]) => {
-        return text.filter(value => value.type === TextType.music).map((text, key) => (
-            <Skeleton key={ key } loading={ isTextsLoading }>
-                <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={{
-                    __html: text.text.replace(/link:/g, "$'")}}/>
-            </Skeleton>
-        ))
-    }
-
     return (
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                {
-                    texts.filter(value => value.type === TextType.music).map((text, key) =>
-                        <Skeleton key={ key } loading={ isTextsLoading }>
-                            <p className="whitespace-pre-wrap">{ text.text }</p>
-                        </Skeleton>
-                    )
-                }
+                { fetchedText(texts, TextType.music, isTextsLoading) }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -78,13 +61,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                {
-                    texts.filter(value => value.type === TextType.movie).map((text, key) =>
-                        <Skeleton key={ key } loading={ isTextsLoading }>
-                            <p className="whitespace-pre-wrap">{ text.text }</p>
-                        </Skeleton>
-                    )
-                }
+                { fetchedText(texts, TextType.movie, isTextsLoading) }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -105,13 +82,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                {
-                    texts.filter(value => value.type === TextType.contest).map((text, key) =>
-                        <Skeleton key={ key } loading={ isTextsLoading }>
-                            <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={ { __html: text.text } }/>
-                        </Skeleton>
-                    )
-                }
+                { fetchedText(texts, TextType.contest, isTextsLoading) }
             </p>
         </div>
     )
