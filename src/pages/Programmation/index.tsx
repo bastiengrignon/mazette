@@ -7,7 +7,7 @@ import { MovieService } from "../../services/admin/movie/movie.service"
 import { IMovie } from "../../services/admin/movie/movie.interface"
 import { IText, TextType } from "../../services/admin/text/text.interface"
 import { TextService } from "../../services/admin/text/text.service"
-import { fetchedText } from "../../services/common/common.service"
+import { formattedFetchedText } from "../../services/common/common.service"
 
 const Anchor = loadable(() => import("../../components/Anchor"))
 const Vignette = loadable(() => import("../../components/Vignette"))
@@ -40,7 +40,7 @@ const Programmation: React.FC = () => {
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                { fetchedText(texts, TextType.music, isTextsLoading) }
+                { formattedFetchedText(texts, TextType.music, isTextsLoading) }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -61,7 +61,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                { fetchedText(texts, TextType.movie, isTextsLoading) }
+                { formattedFetchedText(texts, TextType.movie, isTextsLoading) }
             </p>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -82,7 +82,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <p className={ subtitleCSS }>
-                { fetchedText(texts, TextType.contest, isTextsLoading) }
+                { formattedFetchedText(texts, TextType.contest, isTextsLoading) }
             </p>
         </div>
     )

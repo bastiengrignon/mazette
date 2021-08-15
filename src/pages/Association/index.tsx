@@ -9,7 +9,7 @@ import { cloudinary } from "../../index"
 import { Skeleton } from "antd"
 import { IText, TextType } from "../../services/admin/text/text.interface"
 import { TextService } from "../../services/admin/text/text.service"
-import { fetchedText } from "../../services/common/common.service"
+import { formattedFetchedText } from "../../services/common/common.service"
 
 const Anchor = loadable(() => import("../../components/Anchor"))
 const Image = loadable(() => import("../../components/Image"))
@@ -43,7 +43,7 @@ const Association: React.FC = () => {
                             alt="Association Mazette Image"/>
                     </div>
                     <p className="text-sm sm:text-base md:text-2xl col-span-2">
-                        { fetchedText(texts, TextType.association, isTextsLoading) }
+                        { formattedFetchedText(texts, TextType.association, isTextsLoading) }
                     </p>
                 </div>
                 <Anchor id={ associationTitle.equipe } className={ titleCSS }>
@@ -63,7 +63,7 @@ const Association: React.FC = () => {
                 <Anchor id={ associationTitle.adherer } className={ titleCSS }/>
                 <div className="flex flex-col items-start">
                     <p className={ `${ subtitleCSS } my-0 sm:my-2` }>
-                        { fetchedText(texts, TextType.adhere, isTextsLoading) }
+                        { formattedFetchedText(texts, TextType.adhere, isTextsLoading) }
                     </p>
                     <iframe id="haWidget" scrolling="auto"
                         src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
