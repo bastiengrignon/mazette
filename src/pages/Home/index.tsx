@@ -36,13 +36,13 @@ const Home: React.FC = () => {
             </div>
             <hr className="my-3 sm:my-10"/>
             <div className="flex md:inline-flex flex-col md:flex-row items-center justify-center">
-                { !isTextsLoading && <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
-                    className="flex-none h-24 md:h-32 w-auto"/> }
+                <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
+                    className="flex-none h-24 md:h-32 w-auto" loading={ isTextsLoading } />
                 <p className="text-base md:text-xl lg:text-2xl text-justify w-full md:w-2/3">
                     { formattedFetchedText(texts, TextType.home, isTextsLoading) }
                 </p>
-                { !isTextsLoading && <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
-                    className="flex-none h-24 md:h-32 w-auto"/> }
+                <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
+                    className="flex-none h-24 md:h-32 w-auto" loading={ isTextsLoading }/>
             </div>
         </div>
     )
