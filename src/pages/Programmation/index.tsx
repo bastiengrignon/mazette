@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import loadable from "@loadable/component"
+
 import { programmationTitle } from "../../constants"
 import { IMusic } from "../../services/admin/music/music.interface"
 import { MusicService } from "../../services/admin/music/music.service"
@@ -8,9 +8,9 @@ import { IMovie } from "../../services/admin/movie/movie.interface"
 import { IText, TextType } from "../../services/admin/text/text.interface"
 import { TextService } from "../../services/admin/text/text.service"
 import { formattedFetchedText } from "../../services/common/common.service"
+import Vignette from "../../components/Vignette"
+import Anchor from "../../components/Anchor"
 
-const Anchor = loadable(() => import("../../components/Anchor"))
-const Vignette = loadable(() => import("../../components/Vignette"))
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
     " mb-4 font-sifonn"
