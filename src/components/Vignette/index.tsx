@@ -37,8 +37,9 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
     return (
         <>
             {
-                props.type === "music" ?
-                    <Skeleton avatar={ true } active={ true } paragraph={{ rows: 6 }} loading={ props.loading }>
+                props.loading ? <Skeleton.Avatar active={ true } size="large" className="mx-auto" />
+                    : props.type === "music"
+                        ?
                         <div className={ `relative ${ vignetteCSS }` } onClick={ () => setVisibility(true) }>
                             <AdvancedImage cldImg={ cloudinary.image(properties.image) } alt={ properties.name }/>
                             <div className="fixed top-0 h-full w-full opacity-0 hover:opacity-100">
@@ -49,15 +50,12 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
                                 </div>
                             </div>
                         </div>
-                    </Skeleton>
-                    :
-                    <Skeleton avatar={ true } active={ true } paragraph={{ rows: 6 }} loading={ props.loading }>
+                        :
                         <div className={ `relative ${ vignetteCSS }` } onClick={ () => setVisibility(true) }>
                             <AdvancedImage cldImg={ cloudinary.image(properties.imgThumbnail) }
                                 alt={ `${ properties.title } ${ properties.author }` }
                                 className="w-full h-full"/>
                         </div>
-                    </Skeleton>
             }
             <Modal visible={ visibility } onCancel={ () => setVisibility(false)} footer={ null }
                 title={ formattedModalTitle() } centered={ true }>
