@@ -24,6 +24,7 @@ export const formattedFetchedText = (texts: IText[], textType: TextType, loading
                         class: "link"
                     }
                 }),
+                "ul": sanitizeHtml.simpleTransform("ul", { class: "list-disc"}),
                 "iframe": (tagName, attribs) => ({
                     tagName: "iframe",
                     attribs: {
@@ -33,6 +34,7 @@ export const formattedFetchedText = (texts: IText[], textType: TextType, loading
                 })
             },
             allowedAttributes: {
+                "ul": [ "class" ],
                 "a": [ "href", "target", "alt", "class" ],
                 "iframe": [ "src", "class", "allow", "allowfullscreen" ]
             },
