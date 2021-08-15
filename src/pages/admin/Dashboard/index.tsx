@@ -5,7 +5,6 @@ import {
     Card,
     Collapse,
     Form,
-    Input,
     List,
     message,
     Modal,
@@ -18,6 +17,7 @@ import { TextService } from "../../../services/admin/text/text.service"
 import { associationTitle, informationTitle, programmationTitle } from "../../../constants"
 import { CommonService } from "../../../services/admin/common/common.service"
 import { EditOutlined, SaveOutlined } from "@ant-design/icons"
+import { TinyMceEditor } from "../../../services/common/common.service"
 
 const { Panel } = Collapse
 const { Option } = Select
@@ -88,10 +88,10 @@ const Dashboard: React.FC = () => {
                     editable ?
                         <Form.Item className="w-full" name="text" initialValue={ item.text }
                             rules={ [{ required: true, message: "Entrez le texte" }] }>
-                            <Input.TextArea rows={ 4 }/>
+                            <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
-                        <div>{ item.text }</div>
+                        <div className="whitespace-pre-wrap">{ item.text }</div>
                 }
                 {
                     editable ?
@@ -141,8 +141,8 @@ const Dashboard: React.FC = () => {
 
     return (
         <Navigation>
-            <div className="grid grid-cols-6 gap-5">
-                <Card bordered={ false } className="rounded-lg col-span-3">
+            <div className="grid grid-cols-6 gap-2 md:gap-5">
+                <Card bordered={ false } className="rounded-lg col-span-6 lg:col-span-4">
                     <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
                         Ajouter un texte
                     </Button>
@@ -167,7 +167,7 @@ const Dashboard: React.FC = () => {
                 onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
                     <Form.Item label="Texte" name="text" rules={ [{ required: true, message: "Entrez du texte" }] }>
-                        <Input.TextArea rows={ 5 }/>
+                        <TinyMceEditor textareaName="text" form={ formRowAddition }/>
                     </Form.Item>
                     <Form.Item label="Type" name="type" rules={ [{ required: true, message: "Entrez le type de texte" }] }>
                         <Select>
