@@ -14,5 +14,7 @@ export enum TextType {
     team = "team",
     adhere = "adhere",
     food = "food",
-    journey = "journey"
+    journey = "journey",
+    home = "home",
+    covid = "covid"
 }

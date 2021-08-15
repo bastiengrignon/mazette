@@ -30,7 +30,9 @@ const selectTextType = [
     { text: "Mazette c'est qui", value: TextType.team },
     { text: "Adhérer", value: TextType.adhere },
     { text: "Boire et manger", value: TextType.food },
-    { text: "Venir au festival", value: TextType.journey }
+    { text: "Venir au festival", value: TextType.journey },
+    { text: "Accueil", value: TextType.home },
+    { text: "Pass sanitaire", value: TextType.covid }
 ]
 
 const Dashboard: React.FC = () => {
@@ -136,6 +138,8 @@ const Dashboard: React.FC = () => {
         if (textType === TextType.adhere) tmpTextType = associationTitle.adherer
         if (textType === TextType.food) tmpTextType = informationTitle.food
         if (textType === TextType.journey) tmpTextType = informationTitle.festival
+        if (textType === TextType.home) tmpTextType = "Accueil"
+        if (textType === TextType.covid) tmpTextType = "Pass sanitaire"
         return CommonService.capitalize(tmpTextType)
     }
 
