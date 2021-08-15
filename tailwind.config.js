@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
     purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/**/*.html"],
@@ -26,10 +26,10 @@ module.exports = {
             fontWeight: ["hover"],
             borderRadius: ["hover", "last"],
             borderWidth: ["hover"],
-            scale: ['active']
+            scale: ["active"]
         },
     },
     plugins: [
-        require('@tailwindcss/aspect-ratio')
+        require("@tailwindcss/aspect-ratio")
     ]
 }
