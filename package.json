@@ -36,6 +36,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
+    "@tinymce/tinymce-react": "^3.12.6",
     "@types/jest": "^26.0.20",
     "@types/leaflet": "^1.5.21",
     "@types/leaflet-routing-machine": "^3.2.2",
@@ -47,7 +48,6 @@
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
     "emailjs-com": "^3.2.0",
-    "interweave": "^12.8.0",
     "leaflet": "^1.7.1",
     "leaflet-routing-machine": "^3.2.12",
     "postcss": "^7.0.36",
@@ -58,6 +58,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "^4.0.3",
+    "sanitize-html": "^2.4.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2",
     "typescript": "^4.3.5",
     "web-vitals": "^2.1.0"
@@ -87,6 +88,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/sanitize-html": "^2.3.2"
   }
 }
