@@ -11,10 +11,12 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import "antd/dist/antd.css"
 import "./index.css"
 import Routes from "./components/Routes"
+import CookieNotice from "./components/CookieNotice"
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
         <Router>
+            <CookieNotice/>
             <Routes isAdmin={ isAdminRoutes() }/>
         </Router>
     </div>
