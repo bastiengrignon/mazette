@@ -19,7 +19,7 @@ const CookieNotice: React.FC<CookieNoticeProps> = ({
     onDeny,
     cookieName = CookieService.cookieName
 }) => {
-    const [isVisible, setVisibility] = useState<boolean>(!CookieService.cookieExists())
+    const [isVisible, setVisibility] = useState<boolean>(CookieService.cookieNeedsToBeDisplayed())
 
     const onClickAccept = () => {
         setVisibility(false)
