@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { setInterval } from "timers"
 import { useLocation } from "react-router-dom"
 import ReactGA from "react-ga"
-import { adminSubdomain } from "./index"
+
 import { CookieService } from "../services/common/cookie.service"
 
 export const useInterval = (callback: () => void, delay: number): void => {
@@ -21,18 +21,15 @@ export const useInterval = (callback: () => void, delay: number): void => {
 
 export const useGATracker = (): void => {
     const location = useLocation()
-    const [initialized, setInitialized] = useState<boolean>(false)
+    const initialized = CookieService.isCookiesAllowed()
 
     useEffect(() => {
-        if ((!window.location.href.includes("localhost") ||
-                window.location.host.split(".")[0].includes(adminSubdomain)) &&
-            CookieService.isCookiesAllowed()) {
-            ReactGA.initialize(String(process.env.REACT_APP_GA_TRACKING_ID))
-            setInitialized(true)
-        }
+        ReactGA.initialize(String(process.env.REACT_APP_GA_TRACKING_ID))
     }, [])
 
     useEffect(() => {
-        if (initialized) ReactGA.pageview(location.pathname + location.search)
+        if (initialized) {
+            ReactGA.pageview(location.pathname + location.search)
+        }
     }, [initialized, location])
 }
