@@ -25,9 +25,9 @@ const Home: React.FC = () => {
             <div className="font-avenirBL">
                 <p className="text-3xl sm:text-5xl text-red my-1 font-avenirBLO text-center">&#9888; Infos
                     pass sanitaire &#9888;</p>
-                <p className="flex justify-center">
+                <div className="flex justify-center">
                     { formattedFetchedText(texts, TextType.covid, isTextsLoading) }
-                </p>
+                </div>
                 <div className="flex justify-center">
                     <Link to={ RouterUrl.passSanitaire } className="link">
                         Cliquer ici pour en savoir plus
@@ -38,9 +38,9 @@ const Home: React.FC = () => {
             <div className="flex md:inline-flex flex-col md:flex-row items-center justify-center">
                 <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
                     className="flex-none h-24 md:h-32 w-auto" loading={ isTextsLoading } />
-                <p className="text-base md:text-xl lg:text-2xl text-justify w-full md:w-2/3">
+                <div className="text-base md:text-xl lg:text-2xl text-justify w-full md:w-2/3">
                     { formattedFetchedText(texts, TextType.home, isTextsLoading) }
-                </p>
+                </div>
                 <Image src={ `${ staticImgFolder }/transat` } alt="Transat"
                     className="flex-none h-24 md:h-32 w-auto" loading={ isTextsLoading }/>
             </div>
