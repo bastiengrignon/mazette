@@ -11,7 +11,7 @@ export class CookieService {
         const isLocalhost = window.location.href.includes("localhost")
         const isAdminPanel = window.location.host.split(".")[0].includes(adminSubdomain)
         const isCookieExists = CookieService.cookieExists()
-        return isLocalhost && !isAdminPanel && !isCookieExists
+        return !isLocalhost && !isAdminPanel && !isCookieExists
     }
 
     static get = (key: string): string => {
