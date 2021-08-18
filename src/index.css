@@ -124,6 +124,10 @@ svg { vertical-align: baseline; }
     @apply w-11/12 sm:w-5/6 lg:w-2/3 xl:w-1/2 !important;
 }
 
+.ant-dropdown-menu {
+    @apply bg-transparent p-0;
+}
+
 strong {
     @apply font-avenirBL;
 }
