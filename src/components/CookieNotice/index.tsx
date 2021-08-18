@@ -34,7 +34,7 @@ const CookieNotice: React.FC<CookieNoticeProps> = ({
     }
 
     return (
-        <div className={`${ isVisible ? "flex" : "hidden" } fixed grid grid-cols-6 gap-y-3 items-center bottom-0 left-0 right-0 rounded-3xl md:rounded-full m-5 p-4 w-full sm:w-1/2 text-white mx-auto bg-darker`}>
+        <div className={`${ isVisible ? "flex" : "hidden" } z-40 fixed grid grid-cols-6 gap-y-3 items-center bottom-0 left-0 right-0 rounded-3xl md:rounded-full m-5 p-4 w-full sm:w-1/2 text-white mx-auto bg-darker`}>
             <p className="col-span-6 md:col-span-3 lg:col-span-4 xl:col-span-3 2xl:col-span-4 text-xs inline-flex items-center">
                 <span className="text-3xl sm:text-4xl mr-2">🍪</span>
                 <p>
