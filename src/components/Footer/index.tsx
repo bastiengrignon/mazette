@@ -1,13 +1,15 @@
+import { AdvancedImage } from "@cloudinary/react"
+import { Skeleton } from "antd"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import ReactGA from "react-ga"
+
 import { FaFacebookF, FaInstagram } from "react-icons/fa"
 import { externalLinks, RouterUrl } from "../../constants"
 import ExternalLink from "../Link"
 import { IPartner } from "../../services/admin/partner/partner.interface"
 import { PartnerService } from "../../services/admin/partner/partner.service"
-import { AdvancedImage } from "@cloudinary/react"
 import { cloudinary } from "../../index"
-import { Skeleton } from "antd"
 
 const Footer: React.FC = () => {
     const [partners, setPartners] = useState<IPartner[]>([])
@@ -19,6 +21,12 @@ const Footer: React.FC = () => {
             .then(partners => setPartners(partners))
             .finally(() => setIsPartnerLoading(false))
     }, [])
+    
+    const trackSocialMediaGA = (title: string): void =>
+        ReactGA.event({
+            category: "Social Media",
+            action: `Go to ${ title }`
+        })
 
     return (
         <footer className="text-black text-center w-full p-2 mt-10">
@@ -37,10 +45,10 @@ const Footer: React.FC = () => {
                 </div>
                 <div
                     className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
-                    <ExternalLink src={ externalLinks.social.instagram }>
+                    <ExternalLink src={ externalLinks.social.instagram } onClick={ () => trackSocialMediaGA("instagram")}>
                         <FaInstagram className="hover:text-green" title="Instagram logo"/>
                     </ExternalLink>
-                    <ExternalLink src={ externalLinks.social.facebook }>
+                    <ExternalLink src={ externalLinks.social.facebook } onClick={ () => trackSocialMediaGA("facebook")}>
                         <FaFacebookF className="hover:text-green" title="Facebook logo"/>
                     </ExternalLink>
                 </div>
