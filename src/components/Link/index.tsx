@@ -5,15 +5,20 @@ interface LinkProps {
     newTab?: boolean
     className?: string
     title?: string
+    onClick?: () => void
 }
 
-const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", title, children }) => {
+const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", title, onClick, children }) => {
     return (newTab ?
-        <a href={ src } target="_blank" className={`link ${className}`} title={ title } rel="nofollow external noreferrer noopener">
+        <a href={ src } target="_blank" className={`link ${className}`}
+            title={ title } onClick={ onClick }
+            rel="nofollow external noreferrer noopener">
             { children || src }
         </a>
         :
-        <a href={ src } className={`link ${className}`} title={ title } rel="internal noreferrer noopener">
+        <a href={ src } className={`link ${className}`}
+            title={ title } onClick={ onClick }
+            rel="internal noreferrer noopener">
             { children || src }
         </a>
     )
