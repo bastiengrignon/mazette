@@ -1,6 +1,8 @@
 import React from "react"
-import { staticImgFolder } from "../../constants"
-import Link from "../../components/Link"
+import { RouterUrl, staticImgFolder } from "../../constants"
+import ExternalLink from "../../components/Link"
+import { BiChevronLeft } from "react-icons/bi"
+import { Link } from "react-router-dom"
 
 const titleCSS = "font-avenirBL text-2xl sm:text-4xl mt-5"
 const testTypeCSS = "text-green my-8"
@@ -9,6 +11,7 @@ const listTestCSS = "font-avenirBL mt-5"
 const SanitaryPass: React.FC = () => {
     return (
         <div className="p-2">
+            <Link to={ RouterUrl.home } className="inline-flex items-center animate-bounce"><BiChevronLeft/> Retour</Link>
             <div className="grid grid-cols-6">
                 <div className="col-span-6 sm:col-span-3 text-center">
                     <p className={ titleCSS }>
@@ -65,10 +68,10 @@ const SanitaryPass: React.FC = () => {
             <div className={ listTestCSS }>
                 Liste des centres de dépistage Maine-et-Loire : <br/>
             </div>
-            <Link
+            <ExternalLink
                 src="https://www.cascoronavirus.fr/centre-laboratoire-test-depistage/ville/maze-milon/49140?fbclid=IwAR3_fomhPHjT94xXpnqdo-rMSPh4rNefX0FfDbf8y_eFjUT85-1ILZ1uP28">
                 https://www.cascoronavirus.fr/centre-laboratoire-test-depistage/ville/maze-milon/
-            </Link>
+            </ExternalLink>
 
             <div className={ testTypeCSS }>
                 TESTS ANTIGÉNIQUES <br/>
@@ -80,7 +83,7 @@ const SanitaryPass: React.FC = () => {
             <div className={ listTestCSS }>
                 Liste des centres de dépistage Maine-et-Loire : <br/>
             </div>
-            <Link
+            <ExternalLink
                 src="https://www.sante.fr/cf/centres-depistage-covid/departement-49-maine-et-loire.html"/>
 
             <div className="mt-5">
