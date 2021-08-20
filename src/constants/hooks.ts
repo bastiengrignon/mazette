@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { setInterval } from "timers"
 import { useLocation } from "react-router-dom"
 import ReactGA from "react-ga"
@@ -33,3 +33,16 @@ export const useGATracker = (): void => {
         }
     }, [initialized, location])
 }
+
+interface useModalProps {
+    isOpen: boolean
+    toggle: () => void
+}
+
+const useModal = (): useModalProps  => {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const toggle = (): void => setIsOpen(!isOpen)
+    return { isOpen, toggle }
+}
+
+export default useModal
