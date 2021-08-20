@@ -17,7 +17,7 @@ import { TextService } from "../../../services/admin/text/text.service"
 import { associationTitle, informationTitle, programmationTitle } from "../../../constants"
 import { CommonService } from "../../../services/admin/common/common.service"
 import { EditOutlined, SaveOutlined } from "@ant-design/icons"
-import { TinyMceEditor } from "../../../services/common/common.service"
+import TinyMceEditor from "../TinyMceEditor"
 
 const { Panel } = Collapse
 const { Option } = Select

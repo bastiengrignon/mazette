@@ -7,9 +7,9 @@ import { MovieService } from "../../services/admin/movie/movie.service"
 import { IMovie } from "../../services/admin/movie/movie.interface"
 import { IText, TextType } from "../../services/admin/text/text.interface"
 import { TextService } from "../../services/admin/text/text.service"
-import { formattedFetchedText } from "../../services/common/common.service"
 import Vignette from "../../components/Vignette"
 import Anchor from "../../components/Anchor"
+import FormattedText from "../admin/FormattedText"
 
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
@@ -40,7 +40,7 @@ const Programmation: React.FC = () => {
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                { formattedFetchedText(texts, TextType.music, isTextsLoading) }
+                <FormattedText texts={ texts } textType={ TextType.music } loading={ isTextsLoading }/>
             </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -61,7 +61,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                { formattedFetchedText(texts, TextType.movie, isTextsLoading) }
+                <FormattedText texts={ texts } textType={ TextType.movie } loading={ isTextsLoading }/>
             </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -82,7 +82,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                { formattedFetchedText(texts, TextType.contest, isTextsLoading) }
+                <FormattedText texts={ texts } textType={ TextType.contest } loading={ isTextsLoading }/>
             </div>
         </div>
     )
