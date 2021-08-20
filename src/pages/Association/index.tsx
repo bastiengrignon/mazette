@@ -42,9 +42,9 @@ const Association: React.FC = () => {
                         <Image src={ `${ staticImgFolder }/logo_mazette` }
                             alt="Association Mazette Image"/>
                     </div>
-                    <p className="text-sm sm:text-base md:text-2xl col-span-2">
+                    <div className="text-sm sm:text-base md:text-2xl col-span-2">
                         { formattedFetchedText(texts, TextType.association, isTextsLoading) }
-                    </p>
+                    </div>
                 </div>
                 <Anchor id={ associationTitle.equipe } className={ titleCSS }>
                     Mazette! C’est qui ?
@@ -62,9 +62,9 @@ const Association: React.FC = () => {
                 </div>
                 <Anchor id={ associationTitle.adherer } className={ titleCSS }/>
                 <div className="flex flex-col items-start">
-                    <p className={ `${ subtitleCSS } my-0 sm:my-2` }>
+                    <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
                         { formattedFetchedText(texts, TextType.adhere, isTextsLoading) }
-                    </p>
+                    </div>
                     <iframe id="haWidget" scrolling="auto"
                         src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                         className="w-full px-2 h-screen pr-0 md:pr-10"/>

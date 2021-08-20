@@ -39,9 +39,9 @@ const Programmation: React.FC = () => {
     return (
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
-            <p className={ subtitleCSS }>
+            <div className={ subtitleCSS }>
                 { formattedFetchedText(texts, TextType.music, isTextsLoading) }
-            </p>
+            </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
@@ -60,9 +60,9 @@ const Programmation: React.FC = () => {
             </div>
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
-            <p className={ subtitleCSS }>
+            <div className={ subtitleCSS }>
                 { formattedFetchedText(texts, TextType.movie, isTextsLoading) }
-            </p>
+            </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
@@ -81,9 +81,9 @@ const Programmation: React.FC = () => {
             </div>
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
-            <p className={ subtitleCSS }>
+            <div className={ subtitleCSS }>
                 { formattedFetchedText(texts, TextType.contest, isTextsLoading) }
-            </p>
+            </div>
         </div>
     )
 }

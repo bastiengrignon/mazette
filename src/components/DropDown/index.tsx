@@ -1,6 +1,6 @@
-import React, {useState} from "react"
-import {NavHashLink} from "react-router-hash-link"
-import {activeClass} from "../NavbarTabs"
+import React from "react"
+import { NavHashLink } from "react-router-hash-link"
+import { Dropdown, Menu } from "antd"
 
 export interface DropdownItem {
     name: string
@@ -8,51 +8,47 @@ export interface DropdownItem {
 }
 
 interface DropDownProps {
-    name: string
     className: string
+    activeClassName: string
     items: DropdownItem[]
-    onItemClick: () => void
+    onItemClick?: () => void,
+    isMobile?: boolean
 }
 
-const DropDown: React.FC<DropDownProps> = ({name, className, items, onItemClick}) => {
-    const [open, setOpen] = useState<boolean>(false)
-    const [isParentActive, setParentActive] = useState<boolean>(false)
-
-    const isActive = (match): boolean => {
-        if (!match) {
-            setParentActive(false)
-            return false
-        }
-        setParentActive(true)
-        return true
-    }
+const DropDown: React.FC<DropDownProps> = ({
+    children,
+    className,
+    activeClassName,
+    items,
+    onItemClick,
+    isMobile = false
+}) => {
 
     const handleClick = (): void => {
-        onItemClick()
-        setOpen(false)
+        onItemClick && onItemClick()
     }
 
-    return (
-        <div className={`relative ${className} focus:outline-none cursor-pointer`}
-            onClick={() => setOpen(!open)} onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}>
-            <div
-                className={`inline-flex items-center w-full h-full justify-center uppercase p-2 focus:outline-none ${isParentActive ? activeClass : ""}`}>
-                {name}
-            </div>
-            <div
-                className={`${open ? "flex" : "hidden"} flex-col text-right bg-red text-white lg:absolute lg:right-0 w-full`}>
-                {
-                    items.map((item, index) => (
-                        <NavHashLink key={index} to={`${item.link}#${item.name}`} role="menuitem"
-                            onClick={handleClick} isActive={isActive}
-                            className="w-full pr-1 py-2 hover:bg-white hover:text-red border border-transparent hover:border-red font-light text-base lg:text-xl lg:pl-5 lg:py-1">
-                            {item.name}
+    const dropdownMenu = () => (
+        <Menu>
+            {
+                items.map((item, key) => (
+                    <Menu.Item key={ key } onClick={ handleClick }
+                        className="pr-2 py-2 bg-red hover:bg-white uppercase font-light text-right text-white hover:text-red text-base lg:text-xl border border-transparent hover:border-red">
+                        <NavHashLink to={ `${ item.link }#${ item.name }` }>
+                            { item.name }
                         </NavHashLink>
-                    ))
-                }
+                    </Menu.Item>
+                ))
+            }
+        </Menu>
+    )
+
+    return (
+        <Dropdown overlay={ dropdownMenu } overlayClassName="bg-red" placement="bottomCenter" trigger={ [ isMobile ? "click" : "hover" ] }>
+            <div className={ `inline-flex items-center w-full justify-center h-full cursor-pointer ${ className } ${ activeClassName }` }>
+                { children }
             </div>
-        </div>
+        </Dropdown>
     )
 }
 

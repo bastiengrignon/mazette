@@ -22,20 +22,18 @@ const Navbar: React.FC = () => {
                     <Link id="logo" to={ RouterUrl.home } title="Accueil Mazette!"
                         className="md:text-xl uppercase z-20 w-1/4 ml-2 sm:ml-5 md:ml-8 lg:ml-10">
                         <Image src={ `${ staticImgFolder }/festival_mazette` } alt="Logo"
-                            className="mt-2 sm:mt-10" isPng={ true }/>
+                            className="mt-2 sm:mt-1 md:mt-2" isPng={ true }/>
                     </Link>
-
                     <span className="block lg:hidden w-full">
-                        <div className="text-2xl md:text-4xl absolute right-2 text-white" onClick={ () => setMenuOpen(!menuOpen) }>
+                        <div className="absolute top-4 right-4 text-2xl md:text-4xl text-white cursor-pointer" onClick={ () => setMenuOpen(!menuOpen) }>
                             { !menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/> }
                         </div>
-                        <NavbarTabs setMenuOpen={ setMenuOpen } isMenuOpen={ menuOpen }
-                            className="absolute w-full uppercase px-2 mt-5 top-8 left-0 md:top-12 text-2xl text-center bg-green"/>
+                        <NavbarTabs isMenuOpen={ menuOpen } setMenuOpen={ setMenuOpen } isMobile={ true }
+                            className={`${ menuOpen ? "py-5" : "py-0" } absolute w-full left-0 px-2 top-10 sm:top-16 md:top-20 text-2xl text-center bg-green`}/>
                     </span>
 
-                    <span className="hidden lg:block w-full flex-nowrap">
-                        <NavbarTabs isMenuOpen={ menuOpen } setMenuOpen={ setMenuOpen }
-                            className="lg:uppercase lg:flex lg:flex-row lg:justify-end lg:text-2xl xl:text-3xl"/>
+                    <span className="hidden lg:block whitespace-nowrap">
+                        <NavbarTabs isMenuOpen={ menuOpen } setMenuOpen={ setMenuOpen } className="flex justify-end lg:text-2xl xl:text-3xl"/>
                     </span>
                 </nav>
             </aside>

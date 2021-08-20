@@ -9,7 +9,9 @@ module.exports = {
                 "black": "#06041D",
                 "red": "#EC6A69",
                 "green": "#21BD8F",
-                "footer": "#FCE4D9"
+                "footer": "#FCE4D9",
+                "darker": "#3A3A3A",
+                "ghost-white": "#B5B5B5"
             },
             fontFamily: {
                 sifonn: ["Sifonn Pro", ...defaultTheme.fontFamily.sans],
