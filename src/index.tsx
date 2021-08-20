@@ -29,7 +29,7 @@ const isAdminRoutes = (): boolean => window.location.host.split(".")[0] === admi
     axios.defaults.baseURL = process.env.REACT_APP_API_URL
 })()
 
-ReactDOM.render(
+ReactDOM.hydrate(
     <React.StrictMode>
         <ConfigProvider locale={frFR}>
             <App/>
