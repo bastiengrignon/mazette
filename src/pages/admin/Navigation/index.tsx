@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
-import { authToken, Storage } from "../../../services/admin/storage/storage.services"
+import { authToken, Storage } from "../../../services/common/storage.services"
 import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
 import { Form, Input, message, Modal } from "antd"
 import { AxiosError } from "axios"

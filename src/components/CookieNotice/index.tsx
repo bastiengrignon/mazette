@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Button } from "antd"
 import { Link } from "react-router-dom"
 import { RouterUrl } from "../../constants"
-import { CookieService } from "../../services/common/cookie.service"
+import { CookieService } from "../../services/common/cookie.services"
 
 interface CookieNoticeProps {
     textAccept?: string

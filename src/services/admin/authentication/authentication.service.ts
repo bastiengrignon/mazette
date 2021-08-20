@@ -1,5 +1,5 @@
 import axios from "axios"
-import { authToken, Storage } from "../storage/storage.services"
+import { authToken, Storage } from "../../common/storage.services"
 
 export interface ISignInForm {
     username: string

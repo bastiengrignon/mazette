@@ -3,7 +3,7 @@ import { setInterval } from "timers"
 import { useLocation } from "react-router-dom"
 import ReactGA from "react-ga"
 
-import { CookieService } from "../services/common/cookie.service"
+import { CookieService } from "../services/common/cookie.services"
 
 export const useInterval = (callback: () => void, delay: number): void => {
     const savedCallback = useRef(callback)
