@@ -9,16 +9,40 @@ const listTestCSS = "font-avenirBL mt-5"
 const SanitaryPass: React.FC = () => {
     return (
         <div className="p-2">
-            <div className="text-center">
-                <p className={ titleCSS }>
-                    ⚠ Infos pass sanitaire ⚠
-                </p>
-                <p>
-                    (nécessaire pour les +18 ans)
-                </p>
-                <div className="flex items-center justify-center ">
-                    <img src={ `${ staticImgFolder }/pass_sanitaire.png` } alt="Pass sanitaire"
-                        className="w-full sm:w-2/3 lg:w-1/3 h-auto"/>
+            <div className="grid grid-cols-6">
+                <div className="col-span-6 sm:col-span-3 text-center">
+                    <p className={ titleCSS }>
+                        ⚠ Infos pass sanitaire ⚠
+                    </p>
+                    <p>
+                        (nécessaire pour les +18 ans)
+                    </p>
+                    <div className="flex items-center justify-center ">
+                        <img src={ `${ staticImgFolder }/pass_sanitaire.png` } alt="Pass sanitaire"
+                            className="w-full sm:w-2/3 lg:w-1/3 h-auto"/>
+                    </div>
+                </div>
+                <div className="col-span-6 sm:col-span-3">
+                    <div>
+                        <div className={ titleCSS }>
+                            Attestation de vaccination
+                        </div>
+                        <div>
+                            L’attestation de vaccination est valide : <br/>
+                            &nbsp;&nbsp; - 1 semaine après la 2e injection pour les vaccins à double injection (Pfizer, Moderna, AstraZeneca). <br/>
+                            &nbsp;&nbsp; - 4 semaines après l’injection pour les vaccins à une seule injection (Janssen/Johnson & Johnson). <br/>
+                            &nbsp;&nbsp; - 1 semaine après l’injection du vaccin chez les personnes ayant eu le Covid (1 seule injection). <br/>
+                        </div>
+                    </div>
+                    <div>
+                        <div className={ titleCSS }>
+                            Attestation de rétablissement du Covid-19
+                        </div>
+                        <div>
+                            Il s’agit du résultat d’un test RT-PCR positif attestant du rétablissement du Covid,
+                            datant d’au moins 11 jours et de moins de 6 mois.
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className={ titleCSS }>
@@ -140,22 +164,6 @@ const SanitaryPass: React.FC = () => {
                 Poiroux Aude Marie - Infirmier <br/>
                 1 Rue de la Mairie <br/>
                 49160 LONGUE-JUMELLES <br/>
-            </div>
-            <div className={ titleCSS }>
-                Attestation de vaccination
-            </div>
-            <div>
-                L’attestation de vaccination est valide : <br/>
-                &nbsp;&nbsp; - 1 semaine après la 2e injection pour les vaccins à double injection (Pfizer, Moderna, AstraZeneca). <br/>
-                &nbsp;&nbsp; - 4 semaines après l’injection pour les vaccins à une seule injection (Janssen/Johnson & Johnson). <br/>
-                &nbsp;&nbsp; - 1 semaine après l’injection du vaccin chez les personnes ayant eu le Covid (1 seule injection). <br/>
-            </div>
-            <div className={ titleCSS }>
-                Attestation de rétablissement du Covid-19
-            </div>
-            <div>
-                Il s’agit du résultat d’un test RT-PCR positif attestant du rétablissement du Covid,
-                datant d’au moins 11 jours et de moins de 6 mois.
             </div>
         </div>
     )
