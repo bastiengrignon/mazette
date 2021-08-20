@@ -18,7 +18,6 @@
     src: local('Avenir LT Std 55 Roman'), url(fonts/AvenirLTStd-Roman.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirO;
     font-style: normal;
@@ -26,7 +25,6 @@
     font-display: swap;
     src: local('Avenir LT Std 55 Oblique'), url(fonts/AvenirLTStd-Oblique.woff) format('woff');
 }
-
 
 @font-face {
     font-family: AvenirL;
@@ -36,7 +34,6 @@
     src: local('Avenir LT Std 35 Light'), url(fonts/AvenirLTStd-Light.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirLO;
     font-style: normal;
@@ -44,7 +41,6 @@
     font-display: swap;
     src: local('Avenir LT Std 35 Light Oblique'), url(fonts/AvenirLTStd-LightOblique.woff) format('woff');
 }
-
 
 @font-face {
     font-family: AvenirB;
@@ -54,7 +50,6 @@
     src: local('Avenir LT Std 45 Book'), url(fonts/AvenirLTStd-Book.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirBO;
     font-style: normal;
@@ -62,7 +57,6 @@
     font-display: swap;
     src: local('Avenir LT Std 45 Book Oblique'), url(fonts/AvenirLTStd-BookOblique.woff) format('woff');
 }
-
 
 @font-face {
     font-family: AvenirM;
@@ -72,7 +66,6 @@
     src: local('Avenir LT Std 65 Medium'), url(fonts/AvenirLTStd-Medium.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirMO;
     font-style: normal;
@@ -80,7 +73,6 @@
     font-display: swap;
     src: local('Avenir LT Std 65 Medium Oblique'), url(fonts/AvenirLTStd-MediumOblique.woff) format('woff');
 }
-
 
 @font-face {
     font-family: AvenirH;
@@ -90,7 +82,6 @@
     src: local('Avenir LT Std 85 Heavy'), url(fonts/AvenirLTStd-Heavy.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirHO;
     font-style: normal;
@@ -99,7 +90,6 @@
     src: local('Avenir LT Std 85 Heavy Oblique'), url(fonts/AvenirLTStd-HeavyOblique.woff) format('woff');
 }
 
-
 @font-face {
     font-family: AvenirBL;
     font-style: normal;
@@ -107,7 +97,6 @@
     font-display: swap;
     src: local('Avenir LT Std 95 Black'), url(fonts/AvenirLTStd-Black.woff) format('woff');
 }
-
 
 @font-face {
     font-family: AvenirBLO;
@@ -129,7 +118,16 @@ body {
     @apply underline hover:text-green;
 }
 
-/*
-#root * {
-    border: 1px solid red;
-}*/
+svg { vertical-align: baseline; }
+
+.ant-modal {
+    @apply w-11/12 sm:w-5/6 lg:w-2/3 xl:w-1/2 !important;
+}
+
+.ant-dropdown-menu {
+    @apply bg-transparent p-0;
+}
+
+strong {
+    @apply font-avenirBL;
+}

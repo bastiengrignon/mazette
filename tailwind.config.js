@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
     purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/**/*.html"],
@@ -9,7 +9,9 @@ module.exports = {
                 "black": "#06041D",
                 "red": "#EC6A69",
                 "green": "#21BD8F",
-                "footer": "#FCE4D9"
+                "footer": "#FCE4D9",
+                "darker": "#3A3A3A",
+                "ghost-white": "#B5B5B5"
             },
             fontFamily: {
                 sifonn: ["Sifonn Pro", ...defaultTheme.fontFamily.sans],
@@ -26,8 +28,10 @@ module.exports = {
             fontWeight: ["hover"],
             borderRadius: ["hover", "last"],
             borderWidth: ["hover"],
-            scale: ['active']
+            scale: ["active"]
         },
     },
-    plugins: [],
+    plugins: [
+        require("@tailwindcss/aspect-ratio")
+    ]
 }

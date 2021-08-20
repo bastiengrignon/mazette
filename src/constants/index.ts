@@ -1,15 +1,12 @@
 import { DropdownItem } from "../components/DropDown"
 
-export interface Image {
-    src: string
-    alt: string
-}
-
 const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
 export const musicFolder = `${ defaultImgFolder }/musics`
 export const filmsImgFolder = `${ defaultImgFolder }/films`
 export const partnersFolder = `${ defaultImgFolder }/partners`
+
+export const adminSubdomain = "admin"
 
 export enum RouterUrl {
     home = "/",
@@ -17,7 +14,11 @@ export enum RouterUrl {
     association = "/association",
     information = "/information",
     mention = "/mention-legales",
-    passSanitaire = "/pass-sanitaire"
+    passSanitaire = "/pass-sanitaire",
+    adminMovie = "/movie",
+    adminMusic = "/music",
+    adminPartner = "/partner",
+    adminTrombinoscope = "/trombinoscope"
 }
 
 export enum TabName {
