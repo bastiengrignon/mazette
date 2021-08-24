@@ -1,16 +1,23 @@
 import { IText, TextType } from "../../../services/admin/text/text.interface"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import sanitizeHtml from "sanitize-html"
 import { Skeleton } from "antd"
+import { TextService } from "../../../services/admin/text/text.service"
 
 interface FormattedTextProps {
-    texts: IText[]
     textType: TextType
-    loading: boolean
     skeletonRows?: number
 }
 
-const FormattedText: React.FC<FormattedTextProps> = ({ texts, textType, loading, skeletonRows = 3}) => {
+const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 3 }) => {
+    const [texts, setTexts] = useState<IText[]>([])
+    const [isTextsLoading, setTextsLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        setTextsLoading(true)
+        TextService.getAll().then(texts => setTexts(texts)).finally(() => setTextsLoading(false))
+    }, [])
+
     return (
         <>
             {
@@ -44,7 +51,7 @@ const FormattedText: React.FC<FormattedTextProps> = ({ texts, textType, loading,
                     }).replaceAll(/<iframe(.+)<\/iframe>/g,
                         "<div class='aspect-w-16 aspect-h-9 relative'>$&</div>")
                     return (
-                        <Skeleton key={ key } loading={ loading } active={ true } paragraph={ { rows: skeletonRows } }>
+                        <Skeleton key={ key } loading={ isTextsLoading } active={ true } paragraph={ { rows: skeletonRows } }>
                             <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={ { __html: sanitizedHTML } }/>
                         </Skeleton>
                     )
