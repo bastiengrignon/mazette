@@ -7,8 +7,7 @@ import { TrombinoscopeService } from "../../services/admin/trombinoscope/trombin
 import { AdvancedImage } from "@cloudinary/react"
 import { cloudinary } from "../../index"
 import { Skeleton } from "antd"
-import { IText, TextType } from "../../services/admin/text/text.interface"
-import { TextService } from "../../services/admin/text/text.service"
+import { TextType } from "../../services/admin/text/text.interface"
 import FormattedText from "../admin/FormattedText"
 
 const Anchor = loadable(() => import("../../components/Anchor"))
@@ -17,18 +16,12 @@ const Image = loadable(() => import("../../components/Image"))
 const Association: React.FC = () => {
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
     const [isTrombinoscopeLoading, setTrombinoscopeLoading] = useState<boolean>(false)
-    const [texts, setTexts] = useState<IText[]>([])
-    const [isTextsLoading, setTextsLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setTrombinoscopeLoading(true)
-        setTextsLoading(true)
         TrombinoscopeService.getAll()
             .then(trombinoscopes => setTrombinoscopes(trombinoscopes))
             .finally(() => setTrombinoscopeLoading(false))
-        TextService.getAll()
-            .then(texts => setTexts(texts))
-            .finally(() => setTextsLoading(false))
     }, [])
 
     return (
@@ -43,7 +36,7 @@ const Association: React.FC = () => {
                             alt="Association Mazette Image"/>
                     </div>
                     <div className="text-sm sm:text-base md:text-2xl col-span-2">
-                        <FormattedText texts={ texts } textType={ TextType.association } loading={ isTextsLoading }/>
+                        <FormattedText textType={ TextType.association }/>
                     </div>
                 </div>
                 <Anchor id={ associationTitle.equipe } className={ titleCSS }>
@@ -63,7 +56,7 @@ const Association: React.FC = () => {
                 <Anchor id={ associationTitle.adherer } className={ titleCSS }/>
                 <div className="flex flex-col items-start">
                     <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
-                        <FormattedText texts={ texts } textType={ TextType.adhere } loading={ isTextsLoading }/>
+                        <FormattedText textType={ TextType.adhere }/>
                     </div>
                     <iframe id="haWidget" scrolling="auto"
                         src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"

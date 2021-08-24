@@ -5,8 +5,7 @@ import { IMusic } from "../../services/admin/music/music.interface"
 import { MusicService } from "../../services/admin/music/music.service"
 import { MovieService } from "../../services/admin/movie/movie.service"
 import { IMovie } from "../../services/admin/movie/movie.interface"
-import { IText, TextType } from "../../services/admin/text/text.interface"
-import { TextService } from "../../services/admin/text/text.service"
+import { TextType } from "../../services/admin/text/text.interface"
 import Vignette from "../../components/Vignette"
 import Anchor from "../../components/Anchor"
 import FormattedText from "../admin/FormattedText"
@@ -21,26 +20,22 @@ const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn"
 const Programmation: React.FC = () => {
     const [musics, setMusics] = useState<IMusic[]>([])
     const [movies, setMovies] = useState<IMovie[]>([])
-    const [texts, setTexts] = useState<IText[]>([])
 
-    const [isTextsLoading, setTextsLoading] = useState<boolean>(false)
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setIsMusicLoading(true)
         setIsMovieLoading(true)
-        setTextsLoading(true)
         MusicService.getAll().then(musics => setMusics(musics)).finally(() => setIsMusicLoading(false))
         MovieService.getAll().then(movies => setMovies(movies)).finally(() => setIsMovieLoading(false))
-        TextService.getAll().then(texts => setTexts(texts)).finally(() => setTextsLoading(false))
     }, [])
 
     return (
         <div className="flex flex-col z-10 page-content">
             <Anchor id={ programmationTitle.musique } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                <FormattedText texts={ texts } textType={ TextType.music } loading={ isTextsLoading }/>
+                <FormattedText textType={ TextType.music }/>
             </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -61,7 +56,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                <FormattedText texts={ texts } textType={ TextType.movie } loading={ isTextsLoading }/>
+                <FormattedText textType={ TextType.movie }/>
             </div>
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
@@ -82,7 +77,7 @@ const Programmation: React.FC = () => {
 
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <div className={ subtitleCSS }>
-                <FormattedText texts={ texts } textType={ TextType.contest } loading={ isTextsLoading }/>
+                <FormattedText textType={ TextType.contest }/>
             </div>
         </div>
     )
