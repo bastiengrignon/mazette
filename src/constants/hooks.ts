@@ -24,15 +24,12 @@ export const useGATracker = (): void => {
     const initialized = CookieService.isCookiesAllowed()
 
     useEffect(() => {
-        console.log("Google id: ", String(process.env.REACT_APP_GA_TRACKING_ID))
         ReactGA.initialize(String(process.env.REACT_APP_GA_TRACKING_ID))
     }, [])
 
     useEffect(() => {
-        console.log("useEffect() -> location or initialized changed")
         if (initialized) {
-            console.log("pageView: ", location.pathname + location.search)
-            ReactGA.pageview(location.pathname + location.search)
+            ReactGA.pageview(location.pathname + location.hash)
         }
     }, [initialized, location])
 }
