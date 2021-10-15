@@ -29,7 +29,7 @@ export const useGATracker = (): void => {
 
     useEffect(() => {
         if (initialized) {
-            ReactGA.pageview(location.pathname + location.search)
+            ReactGA.pageview(location.pathname + location.hash)
         }
     }, [initialized, location])
 }
