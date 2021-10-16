@@ -131,3 +131,7 @@ svg { vertical-align: baseline; }
 strong {
     @apply font-avenirBL;
 }
+
+.button {
+    @apply bg-blueGray-700 hover:text-blueGray-700 hover:bg-blueGray-200 border border-transparent hover:border-blueGray-700;
+}
