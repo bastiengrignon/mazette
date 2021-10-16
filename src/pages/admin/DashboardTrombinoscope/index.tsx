@@ -177,7 +177,7 @@ const DashboardTrombinoscope: React.FC = () => {
     return (
         <Navigation>
             <p className="text-xl mb-2">Liste des Trombinoscope : </p>
-            <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
+            <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un trombinoscope
             </Button>
             <Form form={ formRowEdition } component={ false }>
@@ -188,7 +188,8 @@ const DashboardTrombinoscope: React.FC = () => {
             </Form>
 
             <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
+                onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />

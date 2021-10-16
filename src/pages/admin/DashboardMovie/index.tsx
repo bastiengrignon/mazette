@@ -239,7 +239,7 @@ const DashboardMovie: React.FC = () => {
     return (
         <Navigation>
             <p className="text-xl mb-2">Liste des courts-métrages : </p>
-            <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
+            <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un court-métrage
             </Button>
             <Form form={ formRowEdition } component={ false }>
@@ -250,7 +250,8 @@ const DashboardMovie: React.FC = () => {
             </Form>
 
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
+                onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddMovie form={formRowAddition} onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />

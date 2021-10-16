@@ -147,7 +147,7 @@ const Dashboard: React.FC = () => {
         <Navigation>
             <div className="grid grid-cols-6 gap-2 md:gap-5">
                 <Card bordered={ false } className="rounded-lg col-span-6 lg:col-span-4">
-                    <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
+                    <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                         Ajouter un texte
                     </Button>
                     <Collapse accordion={ true } onChange={ cancel } defaultActiveKey={ 0 }>
@@ -168,7 +168,7 @@ const Dashboard: React.FC = () => {
             </div>
             <Modal title="Nouveau texte" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } cancelText="Annuler"
-                onOk={ handleOkModal }>
+                okButtonProps={{ className: "button" }} onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
                     <Form.Item label="Texte" name="text" rules={ [{ required: true, message: "Entrez du texte" }] }>
                         <TinyMceEditor textareaName="text" form={ formRowAddition }/>

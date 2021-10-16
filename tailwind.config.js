@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
+const colors = require("tailwindcss/colors")
 
 module.exports = {
     purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/**/*.html"],
@@ -11,7 +12,8 @@ module.exports = {
                 "green": "#21BD8F",
                 "footer": "#FCE4D9",
                 "darker": "#3A3A3A",
-                "ghost-white": "#B5B5B5"
+                "ghost-white": "#B5B5B5",
+                blueGray: colors.blueGray
             },
             fontFamily: {
                 sifonn: ["Sifonn Pro", ...defaultTheme.fontFamily.sans],

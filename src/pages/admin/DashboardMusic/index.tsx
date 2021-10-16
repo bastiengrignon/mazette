@@ -220,7 +220,7 @@ const DashboardMusic: React.FC = () => {
     return (
         <Navigation>
             <p className="text-xl mb-2">Liste des artistes : </p>
-            <Button type="primary" className="my-4" onClick={ () => setAddRowModalVisible(true) }>
+            <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un artiste
             </Button>
             <Form form={ formRowEdition } component={ false }>
@@ -231,7 +231,8 @@ const DashboardMusic: React.FC = () => {
             </Form>
 
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } onOk={ handleOkModal } cancelText="Annuler">
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
+                onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddArtist form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />

@@ -15,8 +15,8 @@ import { AuthenticationService } from "../../../services/admin/authentication/au
 import { Form, Input, message, Modal } from "antd"
 import { AxiosError } from "axios"
 
-const activatedClassCSS = "flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100"
-const deactivatedClassCSS = "flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+const activatedClassCSS = "flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full"
+const deactivatedClassCSS = "flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
 
 const Navigation: React.FC = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState(!AuthenticationService.connectedUserCookie())
@@ -66,30 +66,28 @@ const Navigation: React.FC = ({ children }) => {
         }).catch(info => message.warning("Validation failed: ", info))
     }
 
-
-
     return (
         <div className="grid grid-cols-6 h-screen">
             <div className="col-span-2 md:col-span-1 bg-gray-900">
                 <div className="flex items-center justify-center mt-8">
                     <Link to={ RouterUrl.home } className="inline-flex justify-center items-center text-2xl">
                         <FireFilled className="text-green"/>
-                        <span className="text-white mx-2 font-semibold">Dashboard</span>
+                        <span className="text-white mx-2 font-semibold">Mazette! Dashboard</span>
                     </Link>
                 </div>
-                <nav className="mt-10">
+                <nav className="my-10 capitalize">
                     <Link to={ RouterUrl.home } className={ location.pathname === RouterUrl.home ? activatedClassCSS : deactivatedClassCSS }>
                         <DashboardOutlined />
-                        <span className="mx-3 capitalize">Dashboard</span>
+                        <span className="mx-3">Dashboard</span>
                     </Link>
-                    <div>
+                    <div className="mt-2.5 space-y-2.5">
                         {
                             Object.keys(RouterUrl).filter(key => key.match(/^admin.*$/g)).map((url, key) => {
                                 const modifiedUrl = `/${ url.split("admin")[1].toString().toLowerCase() }`
                                 return (
                                     <Link key={ key } to={ modifiedUrl } className={ location.pathname === modifiedUrl ? activatedClassCSS : deactivatedClassCSS }>
                                         { adminTabIcon(modifiedUrl) }
-                                        <span className="mx-3 capitalize"> { adminTitleFromPathname(modifiedUrl) }</span>
+                                        <span className="mx-3"> { adminTitleFromPathname(modifiedUrl) }</span>
                                     </Link>
                                 )
                             })
@@ -97,7 +95,7 @@ const Navigation: React.FC = ({ children }) => {
                     </div>
                     <Link to={ RouterUrl.home } onClick={ logout } className={ `${deactivatedClassCSS} mt-24` }>
                         <LogoutOutlined />
-                        <span className="mx-3 capitalize">Déconnexion</span>
+                        <span className="mx-3">Déconnexion</span>
                     </Link>
                 </nav>
             </div>
