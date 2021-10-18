@@ -19,8 +19,8 @@ const activatedClassCSS = "flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 
 const deactivatedClassCSS = "flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
 
 const Navigation: React.FC = ({ children }) => {
-    const [isModalVisible, setIsModalVisible] = useState(!AuthenticationService.connectedUserCookie())
-    const [confirmLoginLoading, setConfirmLoginLoading] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(!AuthenticationService.connectedUserCookie())
+    const [confirmLoginLoading, setConfirmLoginLoading] = useState<boolean>(false)
     const [loginForm] = Form.useForm()
     const location = useLocation()
 
