@@ -10,10 +10,10 @@ import {
 } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import { programmationTitle, RouterUrl } from "../../../constants"
-import { authToken, Storage } from "../../../services/admin/storage/storage.services"
 import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
 import { Form, Input, message, Modal } from "antd"
 import { AxiosError } from "axios"
+import { CookieService } from "../../../services/common/cookie.service"
 
 const activatedClassCSS = "flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full"
 const deactivatedClassCSS = "flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
@@ -40,12 +40,6 @@ const Navigation: React.FC = ({ children }) => {
         else return <DashboardOutlined />
     }
 
-    const logout = () => {
-        window.location.href.replace("admin.", "")
-        Storage.delete(authToken)
-        window.location.reload()
-    }
-
     const handleLogin = () => {
         setConfirmLoginLoading(true)
         loginForm.validateFields().then(values => {
@@ -54,13 +48,13 @@ const Navigation: React.FC = ({ children }) => {
                 .then((result) => {
                     setConfirmLoginLoading(false)
                     setIsModalVisible(false)
-                    Storage.set(authToken, "true")
+                    CookieService.set(CookieService.authToken, "true", 60 * 60 * 2) // 2 hours
                     message.success(`${ result.username } connecté`)
                 })
                 .catch(async (error: AxiosError) => {
                     await message.error(error.response?.data)
                     setConfirmLoginLoading(false)
-                    Storage.set(authToken, "false")
+                    CookieService.set(CookieService.authToken, "false")
                 })
                 .finally(() => loginForm.resetFields())
         }).catch(info => message.warning("Validation failed: ", info))
@@ -93,7 +87,7 @@ const Navigation: React.FC = ({ children }) => {
                             })
                         }
                     </div>
-                    <Link to={ RouterUrl.home } onClick={ logout } className={ `${deactivatedClassCSS} mt-24` }>
+                    <Link to={ RouterUrl.home } onClick={ AuthenticationService.logout } className={ `${deactivatedClassCSS} mt-24` }>
                         <LogoutOutlined />
                         <span className="mx-3">Déconnexion</span>
                     </Link>
