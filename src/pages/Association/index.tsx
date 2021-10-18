@@ -8,7 +8,7 @@ import { AdvancedImage } from "@cloudinary/react"
 import { cloudinary } from "../../index"
 import { Skeleton } from "antd"
 import { TextType } from "../../services/admin/text/text.interface"
-import FormattedText from "../admin/FormattedText"
+import FormattedText from "../../components/Admin/FormattedText"
 
 const Anchor = loadable(() => import("../../components/Anchor"))
 const Image = loadable(() => import("../../components/Image"))

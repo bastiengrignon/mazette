@@ -8,7 +8,7 @@ import { IMovie } from "../../services/admin/movie/movie.interface"
 import { TextType } from "../../services/admin/text/text.interface"
 import Vignette from "../../components/Vignette"
 import Anchor from "../../components/Anchor"
-import FormattedText from "../admin/FormattedText"
+import FormattedText from "../../components/Admin/FormattedText"
 
 
 export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +

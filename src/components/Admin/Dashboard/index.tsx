@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
+import Navigation from "../../../pages/admin/Navigation"
 import {
     Button,
     Card,

@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
 import {
     Button,
-    Form, message,
+    Form,
+    message,
     Modal,
     Popconfirm,
     Table, Tooltip,
-    Typography
+    Typography,
 } from "antd"
-import EditableCell from "../EditableCell"
 import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../../index"
-import { UploadService } from "../../../services/admin/upload/upload.service"
+import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
+
+import Navigation from "../../../pages/admin/Navigation"
+import { IMovie } from "../../../services/admin/movie/movie.interface"
+import { MovieService } from "../../../services/admin/movie/movie.service"
+import EditableCell from "../EditableCell"
 import { UploadChangeParam } from "antd/es/upload"
 import { UploadFile } from "antd/es/upload/interface"
+import { UploadService } from "../../../services/admin/upload/upload.service"
+import { cloudinary } from "../../../index"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../constants/hooks"
-import { IPartner } from "../../../services/admin/partner/partner.interface"
-import { PartnerService } from "../../../services/admin/partner/partner.service"
-import AdminFormAddImages from "../AdminFormAddImages"
-import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
+import AdminFormAddMovie from "../AdminFormAddMovie"
+import Link from "../../Link"
 import { CommonService } from "../../../services/admin/common/common.service"
 
-const DashboardPartner: React.FC = () => {
-    const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
-    const [partners, setPartners] = useState<IPartner[]>([])
-
+const DashboardMovie: React.FC = () => {
+    const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
+    const [movies, setMovies] = useState<IMovie[]>([])
     // Row edition
-    const [newPartners, setNewPartners] = useState<IPartner[]>(partners)
-    const [editingId, setEditingId] = useState(0)
+    const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
+    const [editingId, setEditingId] = useState<number>(0)
     const [formRowEdition] = Form.useForm()
 
     // Add row modal
@@ -41,18 +43,23 @@ const DashboardPartner: React.FC = () => {
     const [previewURL, setPreviewURL] = useState<string>("")
 
     useEffect(() => {
-        setIsPartnerLoading(true)
-        PartnerService.getAll()
-            .then(partners => setPartners(partners))
-            .finally(() => setIsPartnerLoading(false))
-    }, [newPartners])
+        setIsMovieLoading(true)
+        MovieService.getAll()
+            .then(movies => setMovies(movies))
+            .finally(() => setIsMovieLoading(false))
+    }, [newMovies])
 
-    const isEditing = (record: IPartner): boolean => record.id === editingId
+    const isEditing = (record: IMovie): boolean => record.id === editingId
 
-    const editRow = (record: Partial<IPartner>): void => {
+    const editRow = (record: Partial<IMovie>): void => {
         formRowEdition.setFieldsValue({
-            name: "",
-            image: "",
+            title: "",
+            author: "",
+            description: "",
+            date: "",
+            publicationDate: "",
+            location: "",
+            duration: "",
             ...record
         })
         setEditingId(record.id || 0)
@@ -62,10 +69,10 @@ const DashboardPartner: React.FC = () => {
         const hideLoadingMessage = message.loading("Modification en cours", 0)
         formRowEdition.validateFields()
             .then(row => {
-                PartnerService.update(id, row).then(res => {
-                    const index = partners.findIndex(movie => movie.id === id)
-                    setNewPartners(partners.splice(index, 1, {
-                        ...partners[index],
+                MovieService.update(id, row).then(res => {
+                    const index = movies.findIndex(movie => movie.id === id)
+                    setNewMovies(movies.splice(index, 1, {
+                        ...movies[index],
                         ...res
                     }))
                 }).finally(() => {
@@ -81,39 +88,94 @@ const DashboardPartner: React.FC = () => {
 
     const deleteRow = async (id: number): Promise<void> => {
         const hideLoadingMessage = message.loading("Suppression en cours", 0)
-        await PartnerService.delete(id).then(() => {
+        await MovieService.delete(id).then(() => {
             hideLoadingMessage()
             message.success("Ligne supprimée")
         })
-        setNewPartners(partners)
+        setNewMovies(movies)
     }
 
     const columns = [
         {
-            title: "Nom du partenaire",
-            key: "name",
-            dataIndex: "name",
+            title: "Titre",
+            key: "title",
+            dataIndex: "title",
             editable: true,
-            render(name: string) { return <div className="font-avenirBL">{ name }</div> },
-            sorter: (a: IPartner, b: IPartner) => a.name.localeCompare(b.name)
+            render(title: string) { return <div className="font-avenirBL">{ title }</div> },
+            sorter: (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
+        },
+        {
+            title: "Auteur",
+            key: "author",
+            dataIndex: "author",
+            editable: true
+        },
+        {
+            title: "Description",
+            key: "description",
+            dataIndex: "description",
+            editable: true,
+            ellipsis: { showTitle: false },
+            render(description: string) {
+                return (
+                    <Tooltip placement="top" title={ description } color="blue">
+                        { description }
+                    </Tooltip>
+                )
+            }
+        },
+        {
+            title: "Date",
+            key: "date",
+            dataIndex: "date",
+            editable: true
+        },
+        {
+            title: "Provenance",
+            key: "location",
+            dataIndex: "location",
+            editable: true
+        },
+        {
+            title: "Durée",
+            key: "duration",
+            dataIndex: "duration",
+            editable: true
+        },
+        {
+            title: "Date de publication",
+            key: "publicationDate",
+            dataIndex: "publicationDate",
+            editable: true,
+            sorter: (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate)
+
+        },
+        {
+            title: "Lien Vidéo",
+            key: "videoLink",
+            dataIndex: "videoLink",
+            editable: true,
+            ellipsis: { showTitle: false },
+            render(link: string) { return <Link src={ link } title={ link }/> }
         },
         {
             title: "Image",
-            key: "image",
-            dataIndex: "image",
+            key: "imgThumbnail",
+            dataIndex: "imgThumbnail",
+            editable: false,
             render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
                     <AdvancedImage className="w-24 h-auto" cldImg={ cloudinary.image(imageId) }/>
                 </div>
-            },
-            editable: false
+            }
         },
         {
             title: "Action",
             key: "action",
             dataIndex: "action",
-            render(_, record: IPartner) {
+            fixed: "right",
+            render(_, record: IMovie) {
                 const editable = isEditing(record)
                 return editable
                     ?
@@ -152,12 +214,12 @@ const DashboardPartner: React.FC = () => {
         const hideLoadingMessage = message.loading("Ajout en cours", 0)
         formRowAddition.validateFields()
             .then(values => {
-                PartnerService.create(values, file)
-                    .then(partner => setPartners([...partners, partner]))
+                MovieService.create(values, file)
+                    .then(movie => setMovies([...movies, movie]))
                     .catch(err => console.log(err))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success("Partenaire ajouté", 2.5)
+                        message.success("Court-métrage ajouté", 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)
@@ -165,35 +227,35 @@ const DashboardPartner: React.FC = () => {
             .catch(err => message.warn("Validation failed: ", err))
     }
 
-    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        setFile(UploadService.handleChange(info))
-    }
-
     const openModalPreview = (imageId: string) => {
         setPreviewURL(imageId)
         toggle()
     }
 
+    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
+        setFile(UploadService.handleChange(info))
+    }
+
     return (
         <Navigation>
-            <p className="text-xl mb-2">Liste des Partenaires : </p>
+            <p className="text-xl mb-2">Liste des courts-métrages : </p>
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
-                Ajouter un partenaire
+                Ajouter un court-métrage
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
                     rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
-                    bordered dataSource={ partners } columns={ mergedColumns } loading={ isPartnerLoading }>
+                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
                 </Table>
             </Form>
 
-            <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
+                <AdminFormAddMovie form={formRowAddition} onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
         </Navigation>
     )
 }
-export default DashboardPartner
+export default DashboardMovie

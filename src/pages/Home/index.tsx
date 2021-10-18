@@ -4,7 +4,7 @@ import loadable from "@loadable/component"
 
 import { RouterUrl, staticImgFolder } from "../../constants"
 import { TextType } from "../../services/admin/text/text.interface"
-import FormattedText from "../admin/FormattedText"
+import FormattedText from "../../components/Admin/FormattedText"
 
 const Image = loadable(() => import("../../components/Image"))
 

@@ -3,7 +3,7 @@ import loadable from "@loadable/component"
 import { informationTitle } from "../../constants"
 import { titleCSS } from "../Programmation"
 import { TextType } from "../../services/admin/text/text.interface"
-import FormattedText from "../admin/FormattedText"
+import FormattedText from "../../components/Admin/FormattedText"
 
 const ContactForm = loadable(() => import("../../components/ContactForm"))
 const Maps = loadable(() => import("../../components/Maps"))

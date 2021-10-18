@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
+import Navigation from "../../../pages/admin/Navigation"
 import {
     Button,
     Form, message,
@@ -19,7 +19,7 @@ import { UploadFile } from "antd/es/upload/interface"
 import PreviewModal from "../PreviewModal"
 import useModal from "../../../constants/hooks"
 import AdminFormAddArtist from "../AdminFormAddArtist"
-import Link from "../../../components/Link"
+import Link from "../../Link"
 import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
 import { CommonService } from "../../../services/admin/common/common.service"
 
