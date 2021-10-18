@@ -19,10 +19,10 @@ export class CookieService {
         return match ? match[2] : ""
     }
 
-    static set = (key: string, value: string): void => {
+    static set = (key: string, value: string, age = 60 * 60 * 24 * 30): void => {
         if (CookieService.get(key)) CookieService.delete(key)
 
-        document.cookie = `${ key }=${ value }; max-age=${ 60 * 60 * 24 * 30 }; path=/` // 30 days
+        document.cookie = `${ key }=${ value }; max-age=${ age }; path=/` // default 30 days
     }
 
     static delete = (key: string): void => {
