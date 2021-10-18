@@ -1,5 +1,5 @@
 import axios from "axios"
-import { authToken, Storage } from "../storage/storage.services"
+import { CookieService } from "../../common/cookie.service"
 
 export interface ISignInForm {
     username: string
@@ -14,5 +14,9 @@ interface IUser {
 export class AuthenticationService {
     static logInAsync = async (signInForm: ISignInForm): Promise<ISignInForm | IUser> => await axios.post("/auth", signInForm).then(r => r.data)
 
-    static connectedUserCookie = (): boolean => Storage.get(authToken) === "true"
+    static connectedUserCookie = (): boolean => CookieService.get(CookieService.authToken) === "true"
+
+    static logout = (): void => {
+        CookieService.delete(CookieService.authToken)
+    }
 }
