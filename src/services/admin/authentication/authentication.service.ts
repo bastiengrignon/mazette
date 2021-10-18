@@ -18,7 +18,5 @@ export class AuthenticationService {
 
     static logout = (): void => {
         CookieService.delete(CookieService.authToken)
-        window.location.reload()
-        window.location.href.replace("admin.", "")
     }
 }

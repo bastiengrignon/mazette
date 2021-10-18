@@ -40,6 +40,8 @@ const Navigation: React.FC = ({ children }) => {
         else return <DashboardOutlined />
     }
 
+    const logout = () => AuthenticationService.logout()
+
     const handleLogin = () => {
         setConfirmLoginLoading(true)
         loginForm.validateFields().then(values => {
@@ -87,7 +89,7 @@ const Navigation: React.FC = ({ children }) => {
                             })
                         }
                     </div>
-                    <Link to={ RouterUrl.home } onClick={ AuthenticationService.logout } className={ `${deactivatedClassCSS} mt-24` }>
+                    <Link to={ RouterUrl.home } onClick={ logout } className={ `${deactivatedClassCSS} mt-24` }>
                         <LogoutOutlined />
                         <span className="mx-3">Déconnexion</span>
                     </Link>
