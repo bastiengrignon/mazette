@@ -27,12 +27,12 @@
   ],
   "rules": {
     "react/prop-types": "off",
+    "no-unused-vars": "off",
     "arrow-spacing": "error",
     "prefer-const": "error",
 
     "prefer-arrow-callback": "warn",
     "no-var": "warn",
-    "no-unused-vars": "warn",
     "camelcase": "warn",
     "indent": ["error", 4],
     "semi": ["error", "never"],
@@ -44,7 +44,7 @@
       "ignoreCase": false,
       "ignoreDeclarationSort": false,
       "ignoreMemberSort": false,
-      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+      "memberSyntaxSortOrder": ["all", "single", "multiple", "none"],
       "allowSeparatedGroups": true
     }],
     "key-spacing": ["error",{
