@@ -1,6 +1,6 @@
-import { RcFile, UploadChangeParam } from "antd/es/upload"
-import { UploadFile } from "antd/es/upload/interface"
-import { message } from "antd"
+import { UploadFile } from 'antd/es/upload/interface'
+import { message } from 'antd'
+import { RcFile, UploadChangeParam } from 'antd/es/upload'
 
 export class UploadService {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -20,15 +20,15 @@ export class UploadService {
                     return
                 }
 
-                reject("Cannot convert file to base64.")
+                reject('Cannot convert file to base64.')
             }
         })
     }
 
     static handleChange = (info: UploadChangeParam<UploadFile<File>>): RcFile | undefined => {
-        if (info.file.status === "done")
+        if (info.file.status === 'done')
             message.success(`${ info.file.name } uploadé avec succès`)
-        else if (info.file.status === "error")
+        else if (info.file.status === 'error')
             message.error(`${ info.file.name } ne s'est pas uploadé!`)
         return info.file.originFileObj
     }

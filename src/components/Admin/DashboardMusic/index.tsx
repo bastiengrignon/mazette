@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
+import loadable from '@loadable/component'
 import {
     Button,
-    Form, message,
-    Modal,
+    Form, Modal,
     Popconfirm,
-    Table, Tooltip,
-    Typography
-} from "antd"
-import EditableCell from "../EditableCell"
-import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../../index"
-import { IMusic } from "../../../services/admin/music/music.interface"
-import { MusicService } from "../../../services/admin/music/music.service"
-import { UploadService } from "../../../services/admin/upload/upload.service"
-import { UploadChangeParam } from "antd/es/upload"
-import { UploadFile } from "antd/es/upload/interface"
-import PreviewModal from "../PreviewModal"
-import useModal from "../../../constants/hooks"
-import AdminFormAddArtist from "../AdminFormAddArtist"
-import Link from "../../../components/Link"
-import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
-import { CommonService } from "../../../services/admin/common/common.service"
+    Table,
+    Tooltip, Typography,
+    message
+} from 'antd'
+import React, { useEffect, useState } from 'react'
+
+import { AdvancedImage } from '@cloudinary/react'
+import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
+
+import { UploadChangeParam } from 'antd/es/upload'
+import { UploadFile } from 'antd/es/upload/interface'
+import { cloudinary } from '../../../index'
+import useModal from '../../../constants/hooks'
+import { CommonService, IMusic, MusicService, UploadService } from '../../../services'
+
+const AdminFormAddArtist = loadable(() => import('../AdminFormAddArtist'))
+const EditableCell = loadable(() => import('../EditableCell'))
+const Link = loadable(() => import('../../Link'))
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardMusic: React.FC = () => {
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
@@ -39,7 +40,7 @@ const DashboardMusic: React.FC = () => {
 
     // Preview modal
     const { isOpen, toggle } = useModal()
-    const [previewURL, setPreviewURL] = useState<string>("")
+    const [previewURL, setPreviewURL] = useState<string>('')
 
     useEffect(() => {
         setIsMusicLoading(true)
@@ -52,18 +53,18 @@ const DashboardMusic: React.FC = () => {
 
     const editRow = (record: Partial<IMusic>): void => {
         formRowEdition.setFieldsValue({
-            name: "",
-            type: "",
-            description: "",
-            publicationDate: "",
-            image: "",
+            name           : '',
+            type           : '',
+            description    : '',
+            publicationDate: '',
+            image          : '',
             ...record
         })
         setEditingId(record.id || 0)
     }
 
     const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading("Modification en cours", 0)
+        const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
                 MusicService.update(id, row).then(res => {
@@ -74,47 +75,47 @@ const DashboardMusic: React.FC = () => {
                     }))
                 }).finally(() => {
                     hideLoadingMessage()
-                    message.success("Modification effectuée", 2.5)
+                    message.success('Modification effectuée', 2.5)
                 })
             })
-            .catch(err => console.log("Validate Failed: ", err))
+            .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
     }
 
     const cancel = (): void => setEditingId(0)
 
     const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading("Suppression en cours", 0)
+        const hideLoadingMessage = message.loading('Suppression en cours', 0)
         await MusicService.delete(id).then(() => {
             hideLoadingMessage()
-            message.success("Ligne supprimée")
+            message.success('Ligne supprimée')
         })
         setNewMusics(musics)
     }
 
     const columns = [
         {
-            title: "Nom d'artiste",
-            key: "name",
-            dataIndex: "name",
-            editable: true,
-            render: function renderTitle(name: string) {
+            title    : 'Nom d\'artiste',
+            key      : 'name',
+            dataIndex: 'name',
+            editable : true,
+            render   : function renderTitle(name: string) {
                 return <div className="font-avenirBL">{ name }</div>
             },
             sorter: (a: IMusic, b: IMusic) => a.name.localeCompare(b.name)
         },
         {
-            title: "Style",
-            key: "type",
-            dataIndex: "type",
-            editable: true
+            title    : 'Style',
+            key      : 'type',
+            dataIndex: 'type',
+            editable : true
         },
         {
-            title: "Description",
-            key: "description",
-            dataIndex: "description",
-            editable: true,
-            ellipsis: { showTitle: false },
+            title    : 'Description',
+            key      : 'description',
+            dataIndex: 'description',
+            editable : true,
+            ellipsis : { showTitle: false },
             render(description: string) {
                 return (
                     <Tooltip placement="top" title={ description } color="blue">
@@ -124,25 +125,25 @@ const DashboardMusic: React.FC = () => {
             }
         },
         {
-            title: "Date de publication",
-            key: "publicationDate",
-            dataIndex: "publicationDate",
-            editable: true,
-            sorter: (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
+            title    : 'Date de publication',
+            key      : 'publicationDate',
+            dataIndex: 'publicationDate',
+            editable : true,
+            sorter   : (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
 
         },
         {
-            title: "Lien Vidéo",
-            key: "videoLink",
-            dataIndex: "videoLink",
-            editable: true,
-            ellipsis: { showTitle: false },
+            title    : 'Lien Vidéo',
+            key      : 'videoLink',
+            dataIndex: 'videoLink',
+            editable : true,
+            ellipsis : { showTitle: false },
             render(link: string) { return <Link src={ link } title={ link }/> }
         },
         {
-            title: "Image",
-            key: "image",
-            dataIndex: "image",
+            title    : 'Image',
+            key      : 'image',
+            dataIndex: 'image',
             render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
@@ -152,10 +153,10 @@ const DashboardMusic: React.FC = () => {
             editable: false
         },
         {
-            title: "Action",
-            key: "action",
-            dataIndex: "action",
-            fixed: "right",
+            title    : 'Action',
+            key      : 'action',
+            dataIndex: 'action',
+            fixed    : 'right',
             render(_, record: IMusic) {
                 const editable = isEditing(record)
                 return editable
@@ -192,7 +193,7 @@ const DashboardMusic: React.FC = () => {
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
-        const hideLoadingMessage = message.loading("Ajout en cours", 0)
+        const hideLoadingMessage = message.loading('Ajout en cours', 0)
         formRowAddition.validateFields()
             .then(values => {
                 MusicService.create(values, file)
@@ -200,12 +201,12 @@ const DashboardMusic: React.FC = () => {
                     .catch(err => console.log(err))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success("Musique ajoutée", 2.5)
+                        message.success('Musique ajoutée', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)
             })
-            .catch(err => message.warn("Validation failed: ", err))
+            .catch(err => message.warn('Validation failed: ', err))
     }
 
     const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
@@ -225,13 +226,13 @@ const DashboardMusic: React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
+                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
                     bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
                 </Table>
             </Form>
 
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddArtist form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>

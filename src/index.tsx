@@ -1,17 +1,18 @@
-import axios from "axios"
-import { ConfigProvider } from "antd"
-import frFR from "antd/lib/locale/fr_FR"
-import React from "react"
-import ReactDOM from "react-dom"
-import { BrowserRouter as Router } from "react-router-dom"
-import { Cloudinary } from "@cloudinary/base"
+import { ConfigProvider } from 'antd'
+import axios from 'axios'
+import frFR from 'antd/lib/locale/fr_FR'
 
-import { adminSubdomain } from "./constants"
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
-import "antd/dist/antd.css"
-import "./index.css"
-import Routes from "./components/Routes"
-import CookieNotice from "./components/CookieNotice"
+import { Cloudinary } from '@cloudinary/base'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import CookieNotice from './components/CookieNotice'
+import Routes from './components/Routes'
+import { adminSubdomain } from './constants'
+import 'antd/dist/antd.css'
+import './index.css'
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">
@@ -21,9 +22,9 @@ const App: React.FC = () => (
         </Router>
     </div>
 )
-export const cloudinary = new Cloudinary({ cloud: { cloudName: "mazette" } })
+export const cloudinary = new Cloudinary({ cloud: { cloudName: 'mazette' } })
 
-const isAdminRoutes = (): boolean => window.location.host.split(".")[0] === adminSubdomain;
+const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === adminSubdomain;
 
 (() => {
     axios.defaults.baseURL = process.env.REACT_APP_API_URL
@@ -35,7 +36,7 @@ ReactDOM.hydrate(
             <App/>
         </ConfigProvider>
     </React.StrictMode>,
-    document.getElementById("root")
+    document.getElementById('root')
 )
 
 serviceWorkerRegistration.register()

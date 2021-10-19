@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 interface LinkProps {
     src: string
@@ -8,7 +8,7 @@ interface LinkProps {
     onClick?: () => void
 }
 
-const Link: React.FC<LinkProps> = ({ src, newTab = true, className = "", title, onClick, children }) => {
+const Link: React.FC<LinkProps> = ({ src, newTab = true, className = '', title, onClick, children }) => {
     return (newTab ?
         <a href={ src } target="_blank" className={`link ${className}`}
             title={ title } onClick={ onClick }

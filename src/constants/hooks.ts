@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react"
-import { setInterval } from "timers"
-import { useLocation } from "react-router-dom"
-import ReactGA from "react-ga"
+import ReactGA from 'react-ga'
+import { setInterval } from 'timers'
+import { useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
 
-import { CookieService } from "../services/common/cookie.service"
+import { CookieService } from '../services'
 
 export const useInterval = (callback: () => void, delay: number): void => {
     const savedCallback = useRef(callback)

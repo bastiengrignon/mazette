@@ -1,4 +1,4 @@
-import { IPartner } from "../partner/partner.interface"
+import { IPartner } from '../partner'
 
 export class CommonService {
     // eslint-disable-next-line
@@ -9,11 +9,11 @@ export class CommonService {
                 ...col,
                 onCell: (record: IPartner) => ({
                     record,
-                    inputType: "text",
+                    inputType: 'text',
                     dataIndex: col.dataIndex,
-                    title: col.title,
-                    required: col.dataIndex !== "videoLink",
-                    editing: isEditing(record)
+                    title    : col.title,
+                    required : col.dataIndex !== 'videoLink',
+                    editing  : isEditing(record)
                 }),
             }
         })

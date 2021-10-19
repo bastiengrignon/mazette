@@ -1,6 +1,7 @@
-import React from "react"
-import { NavHashLink } from "react-router-hash-link"
-import { Dropdown, Menu } from "antd"
+import React from 'react'
+import { Dropdown, Menu } from 'antd'
+
+import { NavHashLink } from 'react-router-hash-link'
 
 export interface DropdownItem {
     name: string
@@ -44,7 +45,7 @@ const DropDown: React.FC<DropDownProps> = ({
     )
 
     return (
-        <Dropdown overlay={ dropdownMenu } overlayClassName="bg-red" placement="bottomCenter" trigger={ [ isMobile ? "click" : "hover" ] }>
+        <Dropdown overlay={ dropdownMenu } overlayClassName="bg-red" placement="bottomCenter" trigger={ [ isMobile ? 'click' : 'hover' ] }>
             <div className={ `inline-flex items-center w-full justify-center h-full cursor-pointer ${ className } ${ activeClassName }` }>
                 { children }
             </div>

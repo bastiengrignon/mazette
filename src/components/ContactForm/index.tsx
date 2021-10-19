@@ -1,26 +1,28 @@
-import React, { useState } from "react"
-import Input from "../Input"
-import emailJs from "emailjs-com"
-import Notification from "../Notification"
+import Input from '../Input'
+import emailJs from 'emailjs-com'
+import loadable from '@loadable/component'
+import React, { useState } from 'react'
 
-const successMessage = "Votre message à bien été envoyé"
-const errorMessage = "Une erreur est survenue ! Ré-essayer plus tard"
+const Notification = loadable(() => import('../Notification'))
+
+const successMessage = 'Votre message à bien été envoyé'
+const errorMessage = 'Une erreur est survenue ! Ré-essayer plus tard'
 
 const ContactForm: React.FC = () => {
-    const [name, setName] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-    const [subject, setSubject] = useState<string>("")
-    const [message, setMessage] = useState<string>("")
+    const [name, setName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [subject, setSubject] = useState<string>('')
+    const [message, setMessage] = useState<string>('')
     const [messageSent, setMessageSent] = useState<boolean>(false)
     const [messageSentError, setMessageSentError] = useState<boolean>(false)
     const [emailValid, setEmailValid] = useState<boolean>(true)
     const [nameValid, setNameValid] = useState<boolean>(true)
 
     const templateParameters = {
-        fromName: name,
+        fromName : name,
         userEmail: email,
-        subject: subject,
-        message: message
+        subject  : subject,
+        message  : message
     }
 
     const validName = (value: string): void => {
@@ -39,11 +41,11 @@ const ContactForm: React.FC = () => {
     }
 
     const clearInput = (): void => {
-        setName("")
-        setEmail("")
-        setSubject("")
-        setMessage("")
-        Array.from(document.querySelectorAll("input, textarea")).forEach(input => input["value"] = "")
+        setName('')
+        setEmail('')
+        setSubject('')
+        setMessage('')
+        Array.from(document.querySelectorAll('input, textarea')).forEach(input => input['value'] = '')
     }
 
     const sendEmail = (): void => {
@@ -51,7 +53,7 @@ const ContactForm: React.FC = () => {
             if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
                 || process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined
                 || process.env.REACT_APP_EMAILJS_USER_ID === undefined) {
-                console.warn("Not variable env found")
+                console.warn('Not variable env found')
                 return
             }
 
@@ -72,13 +74,13 @@ const ContactForm: React.FC = () => {
             <div className="mt-2">
                 <p>Votre nom <span className="text-2xl text-red-600">*</span></p>
                 <Input required={ true } onChange={ validName }
-                    className={ `capitalize ${ nameValid ? "" : "border-red-600 bg-red-200 focus:border-red-600" }` }/>
+                    className={ `capitalize ${ nameValid ? '' : 'border-red-600 bg-red-200 focus:border-red-600' }` }/>
             </div>
 
             <div className="mt-2">
                 <p>Votre e-mail <span className="text-2xl text-red-600">*</span></p>
-                <Input required={ true } type="email" title={ emailValid ? "" : "Email not valid" }
-                    className={ emailValid ? "" : "border-red-600 bg-red-200 focus:border-red-600" }
+                <Input required={ true } type="email" title={ emailValid ? '' : 'Email not valid' }
+                    className={ emailValid ? '' : 'border-red-600 bg-red-200 focus:border-red-600' }
                     onChange={ validEmail }/>
             </div>
 
@@ -98,7 +100,7 @@ const ContactForm: React.FC = () => {
                         Envoyer
                     </button>
                     <div
-                        className={ `flex w-full ml-5 ${ messageSent ? "text-green-700" : "text-red-500" } font-bold` }>
+                        className={ `flex w-full ml-5 ${ messageSent ? 'text-green-700' : 'text-red-500' } font-bold` }>
                         { messageSent && <Notification text={ successMessage }/> }
                         { !messageSent && messageSentError &&
                         <Notification text={ errorMessage }/> }

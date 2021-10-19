@@ -1,38 +1,37 @@
-import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
+import loadable from '@loadable/component'
 import {
     Button,
     Card,
     Collapse,
     Form,
     List,
-    message,
     Modal,
     Select,
     Skeleton,
-    Typography
-} from "antd"
-import { IText, TextType } from "../../../services/admin/text/text.interface"
-import { TextService } from "../../../services/admin/text/text.service"
-import { associationTitle, informationTitle, programmationTitle } from "../../../constants"
-import { CommonService } from "../../../services/admin/common/common.service"
-import { EditOutlined, SaveOutlined } from "@ant-design/icons"
-import TinyMceEditor from "../TinyMceEditor"
+    Typography,
+    message
+} from 'antd'
+import { CommonService, IText, TextService, TextType } from '../../../services'
+import { EditOutlined, SaveOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
+import { associationTitle, informationTitle, programmationTitle } from '../../../constants'
 
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
 const { Panel } = Collapse
 const { Option } = Select
 
 const selectTextType = [
-    { text: "Musique", value: TextType.music },
-    { text: "Court-métrage", value: TextType.movie },
-    { text: "Concours", value: TextType.contest },
-    { text: "Association", value: TextType.association },
-    { text: "Mazette c'est qui", value: TextType.team },
-    { text: "Adhérer", value: TextType.adhere },
-    { text: "Boire et manger", value: TextType.food },
-    { text: "Venir au festival", value: TextType.journey },
-    { text: "Accueil", value: TextType.home },
-    { text: "Pass sanitaire", value: TextType.covid }
+    { text: 'Musique', value: TextType.music },
+    { text: 'Court-métrage', value: TextType.movie },
+    { text: 'Concours', value: TextType.contest },
+    { text: 'Association', value: TextType.association },
+    { text: 'Mazette c\'est qui', value: TextType.team },
+    { text: 'Adhérer', value: TextType.adhere },
+    { text: 'Boire et manger', value: TextType.food },
+    { text: 'Venir au festival', value: TextType.journey },
+    { text: 'Accueil', value: TextType.home },
+    { text: 'Pass sanitaire', value: TextType.covid }
 ]
 
 const Dashboard: React.FC = () => {
@@ -55,7 +54,7 @@ const Dashboard: React.FC = () => {
     const isEditing = (item: IText): boolean => item.id === editingId
 
     const saveRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading("Modification en cours", 0)
+        const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
                 TextService.update(id, row).then(res => {
@@ -66,15 +65,15 @@ const Dashboard: React.FC = () => {
                     }))
                 }).finally(() => {
                     hideLoadingMessage()
-                    message.success("Modification effectuée", 2.5)
+                    message.success('Modification effectuée', 2.5)
                 })
-            }).catch(err => console.log("Validate Failed: ", err))
+            }).catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
     }
 
     const editRow = (item: Partial<IText>): void => {
         formRowEdition.setFieldsValue({
-            text: "",
+            text: '',
             ...item
         })
         setEditingId(item.id || 0)
@@ -89,7 +88,7 @@ const Dashboard: React.FC = () => {
                 {
                     editable ?
                         <Form.Item className="w-full" name="text" initialValue={ item.text }
-                            rules={ [{ required: true, message: "Entrez le texte" }] }>
+                            rules={ [{ required: true, message: 'Entrez le texte' }] }>
                             <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
@@ -114,18 +113,18 @@ const Dashboard: React.FC = () => {
     }
 
     const handleOkModal = async (): Promise<void> => {
-        const hideLoadingMessage = message.loading("Ajout en cours", 0)
+        const hideLoadingMessage = message.loading('Ajout en cours', 0)
         formRowAddition.validateFields().then(values => {
             TextService.create(values)
                 .then(text => setTexts([...texts, text]))
                 .catch(err => console.log(err))
                 .finally(() => {
                     hideLoadingMessage()
-                    message.success("Texte ajouté", 2.5)
+                    message.success('Texte ajouté', 2.5)
                     formRowAddition.resetFields()
                 })
             setAddRowModalVisible(false)
-        }).catch(err => message.warn("Validation failed: ", err))
+        }).catch(err => message.warn('Validation failed: ', err))
     }
 
     const collapseTitle = (textType: string): string => {
@@ -138,8 +137,8 @@ const Dashboard: React.FC = () => {
         if (textType === TextType.adhere) tmpTextType = associationTitle.adherer
         if (textType === TextType.food) tmpTextType = informationTitle.food
         if (textType === TextType.journey) tmpTextType = informationTitle.festival
-        if (textType === TextType.home) tmpTextType = "Accueil"
-        if (textType === TextType.covid) tmpTextType = "Pass sanitaire"
+        if (textType === TextType.home) tmpTextType = 'Accueil'
+        if (textType === TextType.covid) tmpTextType = 'Pass sanitaire'
         return CommonService.capitalize(tmpTextType)
     }
 
@@ -168,12 +167,12 @@ const Dashboard: React.FC = () => {
             </div>
             <Modal title="Nouveau texte" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } cancelText="Annuler"
-                okButtonProps={{ className: "button" }} onOk={ handleOkModal }>
+                okButtonProps={{ className: 'button' }} onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
-                    <Form.Item label="Texte" name="text" rules={ [{ required: true, message: "Entrez du texte" }] }>
+                    <Form.Item label="Texte" name="text" rules={ [{ required: true, message: 'Entrez du texte' }] }>
                         <TinyMceEditor textareaName="text" form={ formRowAddition }/>
                     </Form.Item>
-                    <Form.Item label="Type" name="type" rules={ [{ required: true, message: "Entrez le type de texte" }] }>
+                    <Form.Item label="Type" name="type" rules={ [{ required: true, message: 'Entrez le type de texte' }] }>
                         <Select>
                             {
                                 selectTextType.map((type, key) =>

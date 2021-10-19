@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react"
-import loadable from "@loadable/component"
-import { associationTitle, staticImgFolder } from "../../constants"
-import { subtitleCSS, titleCSS } from "../Programmation"
-import { ITrombinoscope } from "../../services/admin/trombinoscope/trombinoscope.interface"
-import { TrombinoscopeService } from "../../services/admin/trombinoscope/trombinoscope.service"
-import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../index"
-import { Skeleton } from "antd"
-import { TextType } from "../../services/admin/text/text.interface"
-import FormattedText from "../admin/FormattedText"
+import loadable from '@loadable/component'
+import React, { useEffect, useState } from 'react'
 
-const Anchor = loadable(() => import("../../components/Anchor"))
-const Image = loadable(() => import("../../components/Image"))
+import { AdvancedImage } from '@cloudinary/react'
+import { Skeleton } from 'antd'
+import { cloudinary } from '../../index'
+import { ITrombinoscope, TextType, TrombinoscopeService } from '../../services'
+import { associationTitle, staticImgFolder } from '../../constants'
+import { subtitleCSS, titleCSS } from '../Programmation'
+
+const Anchor = loadable(() => import('../../components/Anchor'))
+const Image = loadable(() => import('../../components/Image'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Association: React.FC = () => {
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])

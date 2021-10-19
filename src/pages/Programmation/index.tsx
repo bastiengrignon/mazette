@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react"
+import loadable from '@loadable/component'
+import React, { useEffect, useState } from 'react'
 
-import { programmationTitle } from "../../constants"
-import { IMusic } from "../../services/admin/music/music.interface"
-import { MusicService } from "../../services/admin/music/music.service"
-import { MovieService } from "../../services/admin/movie/movie.service"
-import { IMovie } from "../../services/admin/movie/movie.interface"
-import { TextType } from "../../services/admin/text/text.interface"
-import Vignette from "../../components/Vignette"
-import Anchor from "../../components/Anchor"
-import FormattedText from "../admin/FormattedText"
+import { programmationTitle } from '../../constants'
+import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
 
+const Anchor = loadable(() => import('../../components/Anchor'))
+const Vignette = loadable(() => import('../../components/Vignette'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
-export const titleCSS = "text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12" +
-    " mb-4 font-sifonn"
-export const subtitleCSS = "text-base sm:text-lg md:text-xl"
+export const titleCSS = 'text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12' +
+    ' mb-4 font-sifonn'
+export const subtitleCSS = 'text-base sm:text-lg md:text-xl'
 
-const dateCSS = "text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn"
+const dateCSS = 'text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn'
 
 const Programmation: React.FC = () => {
     const [musics, setMusics] = useState<IMusic[]>([])
@@ -40,7 +37,7 @@ const Programmation: React.FC = () => {
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
-                    musics.filter(music => music.publicationDate === "30").map((music, key) => (
+                    musics.filter(music => music.publicationDate === '30').map((music, key) => (
                         <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
                     ))
                 }
@@ -48,7 +45,7 @@ const Programmation: React.FC = () => {
             <p className={ dateCSS }>Samedi 31 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
-                    musics.filter(music => music.publicationDate === "31").map((music, key) => (
+                    musics.filter(music => music.publicationDate === '31').map((music, key) => (
                         <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
                     ))
                 }
@@ -61,7 +58,7 @@ const Programmation: React.FC = () => {
             <p className={ dateCSS }>Vendredi 30 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
-                    movies.filter(film => film.publicationDate === "30").map((film, key) => (
+                    movies.filter(film => film.publicationDate === '30').map((film, key) => (
                         <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
                     ))
                 }
@@ -69,7 +66,7 @@ const Programmation: React.FC = () => {
             <p className={ dateCSS }>Samedi 31 juillet</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                 {
-                    movies.filter(film => film.publicationDate === "31").map((film, key) => (
+                    movies.filter(film => film.publicationDate === '31').map((film, key) => (
                         <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
                     ))
                 }

@@ -1,21 +1,23 @@
-import React, { useState } from "react"
-import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../index"
-import { Modal, Skeleton } from "antd"
-import { IMusic } from "../../services/admin/music/music.interface"
-import { IMovie } from "../../services/admin/movie/movie.interface"
-import { fill } from "@cloudinary/base/actions/resize"
-import Link from "../Link"
+import loadable from '@loadable/component'
+import { Modal, Skeleton } from 'antd'
+import React, { useState } from 'react'
 
-const vignetteCSS = "w-11/12 sm:w-7/8 md:w-3/4 h-auto mx-auto cursor-pointer transform transition duration-300 hover:scale-110"
+import { AdvancedImage } from '@cloudinary/react'
+import { cloudinary } from '../../index'
+import { fill } from '@cloudinary/base/actions/resize'
+import { IMovie, IMusic } from '../../services'
+
+const Link = loadable(() => import('../Link'))
+
+const vignetteCSS = 'w-11/12 sm:w-7/8 md:w-3/4 h-auto mx-auto cursor-pointer transform transition duration-300 hover:scale-110'
 
 interface VignetteProps<MediaType extends IMovie | IMusic> {
-    type: "music" | "movie"
+    type: 'music' | 'movie'
     properties: MediaType
     loading: boolean
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
+const Vignette: React.FC<VignetteProps<any>> = ({ properties, ...props }) => {
     const [visibility, setVisibility] = useState<boolean>(false)
 
     const isMusic = (): boolean => (properties as IMusic).name !== undefined
@@ -38,7 +40,7 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
         <>
             {
                 props.loading ? <Skeleton.Avatar active={ true } size="large" className="mx-auto" />
-                    : props.type === "music"
+                    : props.type === 'music'
                         ?
                         <div className={ `relative ${ vignetteCSS }` } onClick={ () => setVisibility(true) }>
                             <AdvancedImage cldImg={ cloudinary.image(properties.image) } alt={ properties.name }/>
@@ -71,8 +73,8 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties , ...props}) => {
                         { properties.videoLink &&
                         <span><br/><br/>
                             { isMusic()
-                                ? "Pour les curieux c’est ici 👇🏼"
-                                : "Bande annonce" } : <br/><Link src={ properties.videoLink }/>
+                                ? 'Pour les curieux c’est ici 👇🏼'
+                                : 'Bande annonce' } : <br/><Link src={ properties.videoLink }/>
                         </span> }
                     </div>
                 </div>

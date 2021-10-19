@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react"
-import Navigation from "../Navigation"
+import loadable from '@loadable/component'
 import {
     Button,
-    Form, message,
-    Modal,
+    Form, Modal,
     Popconfirm,
-    Table, Tooltip,
-    Typography
-} from "antd"
-import EditableCell from "../EditableCell"
-import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../../index"
-import { UploadService } from "../../../services/admin/upload/upload.service"
-import { UploadChangeParam } from "antd/es/upload"
-import { UploadFile } from "antd/es/upload/interface"
-import PreviewModal from "../PreviewModal"
-import useModal from "../../../constants/hooks"
-import { IPartner } from "../../../services/admin/partner/partner.interface"
-import { PartnerService } from "../../../services/admin/partner/partner.service"
-import AdminFormAddImages from "../AdminFormAddImages"
-import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons"
-import { CommonService } from "../../../services/admin/common/common.service"
+    Table,
+    Tooltip, Typography,
+    message
+} from 'antd'
+import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
 
-const DashboardPartner: React.FC = () => {
-    const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
-    const [partners, setPartners] = useState<IPartner[]>([])
+import { AdvancedImage } from '@cloudinary/react'
+import { UploadChangeParam } from 'antd/es/upload'
+import { UploadFile } from 'antd/es/upload/interface'
+import { cloudinary } from '../../../index'
+import useModal from '../../../constants/hooks'
+import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services'
+
+const AdminFormAddImages = loadable(() => import('../AdminFormAddImages'))
+const EditableCell = loadable(() => import('../EditableCell'))
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const PreviewModal = loadable(() => import('../PreviewModal'))
+
+const DashboardTrombinoscope: React.FC = () => {
+    const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false)
+    const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
 
     // Row edition
-    const [newPartners, setNewPartners] = useState<IPartner[]>(partners)
+    const [newTrombinoscope, setNewTrombinoscope] = useState<ITrombinoscope[]>(trombinoscopes)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -38,69 +38,69 @@ const DashboardPartner: React.FC = () => {
 
     // Preview modal
     const { isOpen, toggle } = useModal()
-    const [previewURL, setPreviewURL] = useState<string>("")
+    const [previewURL, setPreviewURL] = useState<string>('')
 
     useEffect(() => {
-        setIsPartnerLoading(true)
-        PartnerService.getAll()
-            .then(partners => setPartners(partners))
-            .finally(() => setIsPartnerLoading(false))
-    }, [newPartners])
+        setIsTrombinoscopeLoading(true)
+        TrombinoscopeService.getAll()
+            .then(trombinoscopes => setTrombinoscopes(trombinoscopes))
+            .finally(() => setIsTrombinoscopeLoading(false))
+    }, [newTrombinoscope])
 
-    const isEditing = (record: IPartner): boolean => record.id === editingId
+    const isEditing = (record: ITrombinoscope): boolean => record.id === editingId
 
-    const editRow = (record: Partial<IPartner>): void => {
+    const editRow = (record: Partial<ITrombinoscope>): void => {
         formRowEdition.setFieldsValue({
-            name: "",
-            image: "",
+            name : '',
+            image: '',
             ...record
         })
         setEditingId(record.id || 0)
     }
 
     const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading("Modification en cours", 0)
+        const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
-                PartnerService.update(id, row).then(res => {
-                    const index = partners.findIndex(movie => movie.id === id)
-                    setNewPartners(partners.splice(index, 1, {
-                        ...partners[index],
+                TrombinoscopeService.update(id, row).then(res => {
+                    const index = trombinoscopes.findIndex(movie => movie.id === id)
+                    setNewTrombinoscope(trombinoscopes.splice(index, 1, {
+                        ...trombinoscopes[index],
                         ...res
                     }))
                 }).finally(() => {
                     hideLoadingMessage()
-                    message.success("Modification effectuée", 2.5)
+                    message.success('Modification effectuée', 2.5)
                 })
             })
-            .catch(err => console.log("Validate Failed: ", err))
+            .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
     }
 
     const cancel = (): void => setEditingId(0)
 
     const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading("Suppression en cours", 0)
-        await PartnerService.delete(id).then(() => {
+        const hideLoadingMessage = message.loading('Suppression en cours', 0)
+        await TrombinoscopeService.delete(id).then(() => {
             hideLoadingMessage()
-            message.success("Ligne supprimée")
+            message.success('Ligne supprimée')
         })
-        setNewPartners(partners)
+        setNewTrombinoscope(trombinoscopes)
     }
 
     const columns = [
         {
-            title: "Nom du partenaire",
-            key: "name",
-            dataIndex: "name",
-            editable: true,
+            title    : 'Prénom',
+            key      : 'name',
+            dataIndex: 'name',
+            editable : true,
             render(name: string) { return <div className="font-avenirBL">{ name }</div> },
-            sorter: (a: IPartner, b: IPartner) => a.name.localeCompare(b.name)
+            sorter   : (a: ITrombinoscope, b: ITrombinoscope) => a.name.localeCompare(b.name)
         },
         {
-            title: "Image",
-            key: "image",
-            dataIndex: "image",
+            title    : 'Image',
+            key      : 'image',
+            dataIndex: 'image',
             render(imageId: string) {
                 return <div className="flex justify-center items-center cursor-pointer"
                     title="Visualiser l'image" onClick={ () => openModalPreview(imageId) }>
@@ -110,10 +110,10 @@ const DashboardPartner: React.FC = () => {
             editable: false
         },
         {
-            title: "Action",
-            key: "action",
-            dataIndex: "action",
-            render(_, record: IPartner) {
+            title    : 'Action',
+            key      : 'action',
+            dataIndex: 'action',
+            render(_, record: ITrombinoscope) {
                 const editable = isEditing(record)
                 return editable
                     ?
@@ -149,20 +149,20 @@ const DashboardPartner: React.FC = () => {
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
 
     const handleOkModal = () => {
-        const hideLoadingMessage = message.loading("Ajout en cours", 0)
+        const hideLoadingMessage = message.loading('Ajout en cours', 0)
         formRowAddition.validateFields()
             .then(values => {
-                PartnerService.create(values, file)
-                    .then(partner => setPartners([...partners, partner]))
+                TrombinoscopeService.create(values, file)
+                    .then(trombinoscope => setTrombinoscopes([...trombinoscopes, trombinoscope]))
                     .catch(err => console.log(err))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success("Partenaire ajouté", 2.5)
+                        message.success('Trombinoscope ajouté', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)
             })
-            .catch(err => message.warn("Validation failed: ", err))
+            .catch(err => message.warn('Validation failed: ', err))
     }
 
     const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
@@ -176,19 +176,19 @@ const DashboardPartner: React.FC = () => {
 
     return (
         <Navigation>
-            <p className="text-xl mb-2">Liste des Partenaires : </p>
+            <p className="text-xl mb-2">Liste des Trombinoscope : </p>
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
-                Ajouter un partenaire
+                Ajouter un trombinoscope
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ "bottomCenter"] }}
-                    bordered dataSource={ partners } columns={ mergedColumns } loading={ isPartnerLoading }>
+                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
+                    bordered dataSource={ trombinoscopes } columns={ mergedColumns } loading={ isTrombinoscopeLoading }>
                 </Table>
             </Form>
 
-            <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: "button" }}
+            <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
@@ -196,4 +196,4 @@ const DashboardPartner: React.FC = () => {
         </Navigation>
     )
 }
-export default DashboardPartner
+export default DashboardTrombinoscope

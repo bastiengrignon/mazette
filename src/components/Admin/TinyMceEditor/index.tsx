@@ -1,10 +1,11 @@
-import React from "react"
-import { FormInstance } from "antd"
-import { Editor } from "@tinymce/tinymce-react"
+import { FormInstance } from 'antd'
+import React from 'react'
 
-const editorPluginsConfig = "advlist autolink lists link media wordcount emoticons"
-const editorToolbarConfig = "undo redo | formatselect | bold italic underline strikethrough link " +
-    "media emoticons | outdent indent bullist numlist"
+import { Editor } from '@tinymce/tinymce-react'
+
+const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons'
+const editorToolbarConfig = 'undo redo | formatselect | bold italic underline strikethrough link ' +
+    'media emoticons | outdent indent bullist numlist'
 
 interface TinyMceEditorProps {
     textareaName: string
@@ -27,13 +28,13 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
         onInit={(event, editor) => editorRef ? editorRef.current = editor : null }
         onEditorChange={(value) => form.setFields([{ name: textareaName, value: value }]) }
         init={{
-            menubar: false,
+            menubar            : false,
             /* eslint-disable */
             forced_root_block: false,
             no_newline_selector: "",
             entity_encoding: "raw",
             /* eslint-enable */
-            language: "fr_FR"
+            language           : 'fr_FR'
         }}
     />
 )

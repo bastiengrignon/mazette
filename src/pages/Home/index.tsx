@@ -1,12 +1,12 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import loadable from "@loadable/component"
+import { Link } from 'react-router-dom'
+import React from 'react'
+import loadable from '@loadable/component'
 
-import { RouterUrl, staticImgFolder } from "../../constants"
-import { TextType } from "../../services/admin/text/text.interface"
-import FormattedText from "../admin/FormattedText"
+import { TextType } from '../../services'
+import { RouterUrl, staticImgFolder } from '../../constants'
 
-const Image = loadable(() => import("../../components/Image"))
+const Image = loadable(() => import('../../components/Image'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Home: React.FC = () => (
     <div

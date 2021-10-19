@@ -1,11 +1,11 @@
-import React from "react"
-import { Form, Input } from "antd"
+import React from 'react'
+import { Form, Input } from 'antd'
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean
     dataIndex: string
     title: string
-    inputType: "text" | "textarea"
+    inputType: 'text' | 'textarea'
     children: React.ReactNode
     required: boolean
 }
@@ -19,7 +19,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     required,
     ...restProps
 }) => {
-    const inputNode = inputType === "textarea" ? <Input.TextArea /> : <Input />
+    const inputNode = inputType === 'textarea' ? <Input.TextArea /> : <Input />
 
     return (
         <td { ...restProps }>
@@ -30,7 +30,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
                     rules={ [
                         {
                             required: required,
-                            message: `Entrer un ${ title } !`,
+                            message : `Entrer un ${ title } !`,
                         },
                     ] }
                 >

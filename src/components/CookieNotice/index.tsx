@@ -1,8 +1,9 @@
-import React, { useState } from "react"
-import { Button } from "antd"
-import { Link } from "react-router-dom"
-import { RouterUrl } from "../../constants"
-import { CookieService } from "../../services/common/cookie.service"
+import { Button } from 'antd'
+import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+
+import { CookieService } from '../../services'
+import { RouterUrl } from '../../constants'
 
 interface CookieNoticeProps {
     textAccept?: string
@@ -13,8 +14,8 @@ interface CookieNoticeProps {
 }
 
 const CookieNotice: React.FC<CookieNoticeProps> = ({
-    textAccept = "Acceptez",
-    textDeny = "Refuser",
+    textAccept = 'Acceptez',
+    textDeny = 'Refuser',
     onAccept,
     onDeny,
     cookieName = CookieService.cookieName
@@ -23,18 +24,18 @@ const CookieNotice: React.FC<CookieNoticeProps> = ({
 
     const onClickAccept = () => {
         setVisibility(false)
-        CookieService.set(cookieName, "true")
+        CookieService.set(cookieName, 'true')
         onAccept && onAccept()
     }
 
     const onClickDeny = () => {
         setVisibility(false)
-        CookieService.set(cookieName, "false")
+        CookieService.set(cookieName, 'false')
         onDeny && onDeny()
     }
 
     return (
-        <div className={`${ isVisible ? "flex" : "hidden" } z-40 fixed grid grid-cols-6 gap-y-3 items-center bottom-0 left-0 right-0 rounded-3xl md:rounded-full m-5 p-4 w-full sm:w-2/3 lg:w-2/3 xl:w-1/2 text-white mx-auto bg-darker`}>
+        <div className={`${ isVisible ? 'flex' : 'hidden' } z-40 fixed grid grid-cols-6 gap-y-3 items-center bottom-0 left-0 right-0 rounded-3xl md:rounded-full m-5 p-4 w-full sm:w-2/3 lg:w-2/3 xl:w-1/2 text-white mx-auto bg-darker`}>
             <div className="col-span-6 md:col-span-3 2xl:col-span-4 text-xs inline-flex items-center">
                 <span className="text-3xl sm:text-4xl mr-2">🍪</span>
                 <p>

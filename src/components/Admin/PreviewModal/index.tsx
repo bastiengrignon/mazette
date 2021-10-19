@@ -1,7 +1,8 @@
-import { Modal } from "antd"
-import React from "react"
-import { AdvancedImage } from "@cloudinary/react"
-import { cloudinary } from "../../../index"
+import { Modal } from 'antd'
+import React from 'react'
+
+import { AdvancedImage } from '@cloudinary/react'
+import { cloudinary } from '../../../index'
 
 interface PreviewModalProps {
     open: boolean
