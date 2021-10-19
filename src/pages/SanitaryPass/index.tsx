@@ -1,12 +1,13 @@
-import React from "react"
-import { RouterUrl, staticImgFolder } from "../../constants"
-import ExternalLink from "../../components/Link"
-import { BiChevronLeft } from "react-icons/bi"
-import { Link } from "react-router-dom"
+import React from 'react'
 
-const titleCSS = "font-avenirBL text-2xl sm:text-4xl mt-5"
-const testTypeCSS = "text-green my-8"
-const listTestCSS = "font-avenirBL mt-5"
+import { BiChevronLeft } from 'react-icons/bi'
+import ExternalLink from '../../components/Link'
+import { Link } from 'react-router-dom'
+import { RouterUrl, staticImgFolder } from '../../constants'
+
+const titleCSS = 'font-avenirBL text-2xl sm:text-4xl mt-5'
+const testTypeCSS = 'text-green my-8'
+const listTestCSS = 'font-avenirBL mt-5'
 
 const SanitaryPass: React.FC = () => {
     return (

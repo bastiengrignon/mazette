@@ -7,14 +7,14 @@ export interface IText {
 }
 
 export enum TextType {
-    music = "music",
-    movie = "movie",
-    contest = "contest",
-    association = "association",
-    team = "team",
-    adhere = "adhere",
-    food = "food",
-    journey = "journey",
-    home = "home",
-    covid = "covid"
+    music = 'music',
+    movie = 'movie',
+    contest = 'contest',
+    association = 'association',
+    team = 'team',
+    adhere = 'adhere',
+    food = 'food',
+    journey = 'journey',
+    home = 'home',
+    covid = 'covid'
 }

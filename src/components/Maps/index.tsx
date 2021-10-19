@@ -1,7 +1,7 @@
-import React from "react"
-import { TileLayer, Marker, Popup, MapContainer } from "react-leaflet"
-import { CRS, LatLngExpression } from "leaflet"
-import "leaflet-routing-machine"
+import React from 'react'
+import { CRS, LatLngExpression } from 'leaflet'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import 'leaflet-routing-machine'
 
 interface MapProps {
     className?: string
@@ -10,9 +10,9 @@ interface MapProps {
 const coordsMazette: LatLngExpression = [47.45028067952297, -0.2838168034840449]
 const coordsPayotte: LatLngExpression = [47.449973, -0.283195]
 const defaultZoom = 14
-const popupCSS = "font-bold text-lg sm:text-xl m-2"
+const popupCSS = 'font-bold text-lg sm:text-xl m-2'
 
-const Maps: React.FC<MapProps> = ({ className = "" }) => (
+const Maps: React.FC<MapProps> = ({ className = '' }) => (
     <MapContainer crs={ CRS.EPSG900913 } center={ coordsMazette } zoom={ defaultZoom }
         scrollWheelZoom={ true } dragging={ true } markerZoomAnimation={ true }
         zoomAnimation={ true } fadeAnimation={ true } attributionControl={ true }

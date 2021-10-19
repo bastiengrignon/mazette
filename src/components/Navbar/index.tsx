@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { RouterUrl, staticImgFolder } from "../../constants"
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai"
-import NavbarTabs from "../NavbarTabs"
-import Wave from "../Wave"
-import Image from "../Image"
+import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+
+import Image from '../Image'
+import NavbarTabs from '../NavbarTabs'
+import Wave from '../Wave'
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
+import { RouterUrl, staticImgFolder } from '../../constants'
 
 const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
@@ -29,7 +30,7 @@ const Navbar: React.FC = () => {
                             { !menuOpen ? <AiOutlineMenu/> : <AiOutlineClose/> }
                         </div>
                         <NavbarTabs isMenuOpen={ menuOpen } setMenuOpen={ setMenuOpen } isMobile={ true }
-                            className={`${ menuOpen ? "py-5" : "py-0" } absolute w-full left-0 px-2 top-10 sm:top-16 md:top-20 text-2xl text-center bg-green`}/>
+                            className={`${ menuOpen ? 'py-5' : 'py-0' } absolute w-full left-0 px-2 top-10 sm:top-16 md:top-20 text-2xl text-center bg-green`}/>
                     </span>
 
                     <span className="hidden lg:block whitespace-nowrap">

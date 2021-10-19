@@ -1,10 +1,10 @@
-import React, { CSSProperties, useEffect, useState } from "react"
-import { NavLink, useLocation } from "react-router-dom"
-import { associationItems, programmationItems, RouterUrl, TabName } from "../../constants"
-import DropDown from "../DropDown"
+import DropDown from '../DropDown'
+import { NavLink, useLocation } from 'react-router-dom'
+import React, { CSSProperties, useEffect, useState } from 'react'
+import { RouterUrl, TabName, associationItems, programmationItems } from '../../constants'
 
-const activeClass = "bg-red"
-const tabClass = "p-2 text-white hover:text-white hover:bg-red lg:inline-block"
+const activeClass = 'bg-red'
+const tabClass = 'p-2 text-white hover:text-white hover:bg-red lg:inline-block'
 
 type NavbarTabsProps = {
     className: string,
@@ -35,18 +35,18 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({
         <div className={ `space-x-0 lg:space-x-5 space-y-5 lg:space-y-0 mr-5 uppercase ${ className }` } style={ style }>
             <DropDown items={ programmationItems } isMobile={ isMobile }
                 onItemClick={ () => setMenuOpen(false) }
-                className={ `${ tabClass } ${ isMenuOpen ? "block" : "hidden" }` } activeClassName={ isProgramURL ? activeClass : "" }>
+                className={ `${ tabClass } ${ isMenuOpen ? 'block' : 'hidden' }` } activeClassName={ isProgramURL ? activeClass : '' }>
                 { TabName.programmation }
             </DropDown>
             <DropDown items={ associationItems } isMobile={ isMobile }
                 onItemClick={ () => setMenuOpen(false) }
-                className={ `${ tabClass } ${ isMenuOpen ? "block" : "hidden" }` }
-                activeClassName={ isAssociationURL ? activeClass : "" }>
+                className={ `${ tabClass } ${ isMenuOpen ? 'block' : 'hidden' }` }
+                activeClassName={ isAssociationURL ? activeClass : '' }>
                 { TabName.association }
             </DropDown>
             <NavLink to={ RouterUrl.information } onClick={ () => setMenuOpen(false) }
-                className={ `${ tabClass } ${ isMenuOpen ? "block" : "hidden" }` }
-                activeClassName={ isInformationURL ? activeClass : "" }>
+                className={ `${ tabClass } ${ isMenuOpen ? 'block' : 'hidden' }` }
+                activeClassName={ isInformationURL ? activeClass : '' }>
                 { TabName.information }
             </NavLink>
         </div>

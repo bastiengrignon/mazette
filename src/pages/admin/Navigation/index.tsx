@@ -1,22 +1,22 @@
-import React, { useState } from "react"
 import {
+    AppstoreOutlined,
     DashboardOutlined,
     FireFilled,
+    LogoutOutlined,
     PlayCircleOutlined,
     TeamOutlined,
-    VideoCameraOutlined,
-    LogoutOutlined,
-    AppstoreOutlined
-} from "@ant-design/icons"
-import { Link, useLocation } from "react-router-dom"
-import { programmationTitle, RouterUrl } from "../../../constants"
-import { AuthenticationService } from "../../../services/admin/authentication/authentication.service"
-import { Form, Input, message, Modal } from "antd"
-import { AxiosError } from "axios"
-import { CookieService } from "../../../services/common/cookie.service"
+    VideoCameraOutlined
+} from '@ant-design/icons'
+import { Form, Input, Modal, message } from 'antd'
+import { Link, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
 
-const activatedClassCSS = "flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full"
-const deactivatedClassCSS = "flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+import { AxiosError } from 'axios'
+import { AuthenticationService, CookieService } from '../../../services'
+import { RouterUrl, programmationTitle } from '../../../constants'
+
+const activatedClassCSS = 'flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full'
+const deactivatedClassCSS = 'flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100'
 
 const Navigation: React.FC = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(!AuthenticationService.connectedUserCookie())
@@ -27,9 +27,9 @@ const Navigation: React.FC = ({ children }) => {
     const adminTitleFromPathname = (url: string): string => {
         if (url === RouterUrl.adminMovie) return programmationTitle.films
         else if (url === RouterUrl.adminMusic) return programmationTitle.musique
-        else if (url === RouterUrl.adminPartner) return "Partenaires"
-        else if (url === RouterUrl.adminTrombinoscope) return "Trombinoscope"
-        else return "Dashboard"
+        else if (url === RouterUrl.adminPartner) return 'Partenaires'
+        else if (url === RouterUrl.adminTrombinoscope) return 'Trombinoscope'
+        else return 'Dashboard'
     }
 
     const adminTabIcon = (url: string): React.ReactNode => {
@@ -50,16 +50,16 @@ const Navigation: React.FC = ({ children }) => {
                 .then((result) => {
                     setConfirmLoginLoading(false)
                     setIsModalVisible(false)
-                    CookieService.set(CookieService.authToken, "true", 60 * 60 * 2) // 2 hours
+                    CookieService.set(CookieService.authToken, 'true', 60 * 60 * 2) // 2 hours
                     message.success(`${ result.username } connecté`)
                 })
                 .catch(async (error: AxiosError) => {
                     await message.error(error.response?.data)
                     setConfirmLoginLoading(false)
-                    CookieService.set(CookieService.authToken, "false")
+                    CookieService.set(CookieService.authToken, 'false')
                 })
                 .finally(() => loginForm.resetFields())
-        }).catch(info => message.warning("Validation failed: ", info))
+        }).catch(info => message.warning('Validation failed: ', info))
     }
 
     return (
@@ -79,7 +79,7 @@ const Navigation: React.FC = ({ children }) => {
                     <div className="mt-2.5 space-y-2.5">
                         {
                             Object.keys(RouterUrl).filter(key => key.match(/^admin.*$/g)).map((url, key) => {
-                                const modifiedUrl = `/${ url.split("admin")[1].toString().toLowerCase() }`
+                                const modifiedUrl = `/${ url.split('admin')[1].toString().toLowerCase() }`
                                 return (
                                     <Link key={ key } to={ modifiedUrl } className={ location.pathname === modifiedUrl ? activatedClassCSS : deactivatedClassCSS }>
                                         { adminTabIcon(modifiedUrl) }
@@ -103,13 +103,13 @@ const Navigation: React.FC = ({ children }) => {
                     { !isModalVisible && children }
                 </main>
             </div>
-            <Modal title="Admin Login" visible={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: "none" } }}
+            <Modal title="Admin Login" visible={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: 'none' } }}
                 confirmLoading={ confirmLoginLoading } onOk={ handleLogin } okText="Connexion">
                 <Form name="login_form" form={ loginForm } initialValues={{ remember: true }}>
-                    <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: "Veuillez entrer votre nom d'utilisateur!" }] }>
+                    <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: 'Veuillez entrer votre nom d\'utilisateur!' }] }>
                         <Input autoFocus={ true }/>
                     </Form.Item>
-                    <Form.Item label="Mot de passe" name="password" rules={ [{ required: true, message: "Veuillez entrer votre mot de passe !" }] }>
+                    <Form.Item label="Mot de passe" name="password" rules={ [{ required: true, message: 'Veuillez entrer votre mot de passe !' }] }>
                         <Input.Password/>
                     </Form.Item>
                 </Form>

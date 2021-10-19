@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 
 interface NotificationProps {
     text: string
@@ -13,7 +13,7 @@ const Notification: React.FC<NotificationProps> = ({ text, timeout = 5000 }) => 
         return () => clearTimeout(timer)
     }, [visibility, timeout])
 
-    return <div className={ `${ visibility ? "flex" : "hidden" }` }>{ text }</div>
+    return <div className={ `${ visibility ? 'flex' : 'hidden' }` }>{ text }</div>
 }
 
 export default Notification

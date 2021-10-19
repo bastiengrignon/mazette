@@ -1,23 +1,23 @@
-import React from "react"
-import { Route, Switch } from "react-router-dom"
-import loadable from "@loadable/component"
+import React from 'react'
+import loadable from '@loadable/component'
+import { Route, Switch } from 'react-router-dom'
 
-import { useGATracker } from "../../constants/hooks"
-import { RouterUrl } from "../../constants"
-import Home from "../../pages/Home"
+import Home from '../../pages/Home'
+import { RouterUrl } from '../../constants'
+import { useGATracker } from '../../constants/hooks'
 
-const Information = loadable(() => import("../../pages/Information"))
-const Programmation = loadable(() => import("../../pages/Programmation"))
-const Association = loadable(() => import("../../pages/Association"))
-const LegalMention = loadable(() => import("../../pages/LegalMention"))
-const SanitaryPass = loadable(() => import("../../pages/SanitaryPass"))
-const Dashboard = loadable(() => import("../Admin/Dashboard"))
-const DashboardMovie = loadable(() => import("../Admin/DashboardMovie"))
-const DashboardMusic = loadable(() => import("../Admin/DashboardMusic"))
-const DashboardPartner = loadable(() => import("../Admin/DashboardPartner"))
-const DashboardTrombinoscope = loadable(() => import("../Admin/DashboardTrombinoscope"))
-const Footer = loadable(() => import("../../components/Footer"))
-const Navbar = loadable(() => import("../../components/Navbar"))
+const Information = loadable(() => import('../../pages/Information'))
+const Programmation = loadable(() => import('../../pages/Programmation'))
+const Association = loadable(() => import('../../pages/Association'))
+const LegalMention = loadable(() => import('../../pages/LegalMention'))
+const SanitaryPass = loadable(() => import('../../pages/SanitaryPass'))
+const Dashboard = loadable(() => import('../Admin/Dashboard'))
+const DashboardMovie = loadable(() => import('../Admin/DashboardMovie'))
+const DashboardMusic = loadable(() => import('../Admin/DashboardMusic'))
+const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'))
+const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'))
+const Footer = loadable(() => import('../../components/Footer'))
+const Navbar = loadable(() => import('../../components/Navbar'))
 
 interface RoutesProps {
     isAdmin: boolean
