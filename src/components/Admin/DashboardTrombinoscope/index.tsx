@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import {
     Button,
     Form, Modal,
@@ -10,16 +11,16 @@ import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-
-import AdminFormAddImages from '../AdminFormAddImages'
-import EditableCell from '../EditableCell'
-import Navigation from '../../../pages/admin/Navigation'
-import PreviewModal from '../PreviewModal'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services'
+
+const AdminFormAddImages = loadable(() => import('../AdminFormAddImages'))
+const EditableCell = loadable(() => import('../EditableCell'))
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardTrombinoscope: React.FC = () => {
     const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false)

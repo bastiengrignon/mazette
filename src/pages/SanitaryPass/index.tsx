@@ -1,9 +1,11 @@
 import React from 'react'
+import loadable from '@loadable/component'
 
 import { BiChevronLeft } from 'react-icons/bi'
-import ExternalLink from '../../components/Link'
 import { Link } from 'react-router-dom'
 import { RouterUrl, staticImgFolder } from '../../constants'
+
+const ExternalLink = loadable(() => import('../../components/Link'))
 
 const titleCSS = 'font-avenirBL text-2xl sm:text-4xl mt-5'
 const testTypeCSS = 'text-green my-8'

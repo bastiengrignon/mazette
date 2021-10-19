@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import loadable from '@loadable/component'
 
-import FormattedText from '../../components/Admin/FormattedText'
 import { TextType } from '../../services'
 import { RouterUrl, staticImgFolder } from '../../constants'
 
 const Image = loadable(() => import('../../components/Image'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Home: React.FC = () => (
     <div

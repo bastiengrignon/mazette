@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import {
     Button,
     Form,
@@ -13,16 +14,17 @@ import React, { useEffect, useState } from 'react'
 import { AdvancedImage } from '@cloudinary/react'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 
-import AdminFormAddMovie from '../AdminFormAddMovie'
-import EditableCell from '../EditableCell'
-import Link from '../../Link'
-import Navigation from '../../../pages/admin/Navigation'
-import PreviewModal from '../PreviewModal'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMovie, MovieService, UploadService } from '../../../services'
+
+const AdminFormAddMovie = loadable(() => import('../AdminFormAddMovie'))
+const EditableCell = loadable(() => import('../EditableCell'))
+const Link = loadable(() => import('../../Link'))
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)

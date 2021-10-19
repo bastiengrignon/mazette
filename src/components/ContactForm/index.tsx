@@ -1,8 +1,9 @@
 import Input from '../Input'
 import emailJs from 'emailjs-com'
+import loadable from '@loadable/component'
 import React, { useState } from 'react'
 
-import Notification from '../Notification'
+const Notification = loadable(() => import('../Notification'))
 
 const successMessage = 'Votre message à bien été envoyé'
 const errorMessage = 'Une erreur est survenue ! Ré-essayer plus tard'

@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import {
     Button,
     Card,
@@ -10,14 +11,13 @@ import {
     Typography,
     message
 } from 'antd'
+import { CommonService, IText, TextService, TextType } from '../../../services'
 import { EditOutlined, SaveOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
-
-import Navigation from '../../../pages/admin/Navigation'
-import TinyMceEditor from '../TinyMceEditor'
-import { CommonService, IText, TextService, TextType } from '../../../services'
 import { associationTitle, informationTitle, programmationTitle } from '../../../constants'
 
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
 const { Panel } = Collapse
 const { Option } = Select
 

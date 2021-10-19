@@ -1,11 +1,13 @@
+import loadable from '@loadable/component'
 import { Link, useLocation } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 
-import Image from '../Image'
-import NavbarTabs from '../NavbarTabs'
-import Wave from '../Wave'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { RouterUrl, staticImgFolder } from '../../constants'
+
+const Image = loadable(() => import('../Image'))
+const NavbarTabs = loadable(() => import('../NavbarTabs'))
+const Wave = loadable(() => import('../Wave'))
 
 const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)

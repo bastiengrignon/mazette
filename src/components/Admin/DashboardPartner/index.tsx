@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import {
     Button,
     Form, Modal,
@@ -11,15 +12,16 @@ import React, { useEffect, useState } from 'react'
 import { AdvancedImage } from '@cloudinary/react'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 
-import AdminFormAddImages from '../AdminFormAddImages'
-import EditableCell from '../EditableCell'
-import Navigation from '../../../pages/admin/Navigation'
-import PreviewModal from '../PreviewModal'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IPartner, PartnerService, UploadService } from '../../../services'
+
+const AdminFormAddImages = loadable(() => import('../AdminFormAddImages'))
+const EditableCell = loadable(() => import('../EditableCell'))
+const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
+const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardPartner: React.FC = () => {
     const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)

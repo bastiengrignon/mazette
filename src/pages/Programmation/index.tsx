@@ -1,11 +1,12 @@
+import loadable from '@loadable/component'
 import React, { useEffect, useState } from 'react'
 
-import Anchor from '../../components/Anchor'
-import FormattedText from '../../components/Admin/FormattedText'
-import Vignette from '../../components/Vignette'
 import { programmationTitle } from '../../constants'
 import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
 
+const Anchor = loadable(() => import('../../components/Anchor'))
+const Vignette = loadable(() => import('../../components/Vignette'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 export const titleCSS = 'text-2xl sm:text-3xl uppercase font-bold text-red mt-2 sm:mt-12' +
     ' mb-4 font-sifonn'

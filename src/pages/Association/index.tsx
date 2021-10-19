@@ -2,7 +2,6 @@ import loadable from '@loadable/component'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-import FormattedText from '../../components/Admin/FormattedText'
 import { Skeleton } from 'antd'
 import { cloudinary } from '../../index'
 import { ITrombinoscope, TextType, TrombinoscopeService } from '../../services'
@@ -11,6 +10,7 @@ import { subtitleCSS, titleCSS } from '../Programmation'
 
 const Anchor = loadable(() => import('../../components/Anchor'))
 const Image = loadable(() => import('../../components/Image'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Association: React.FC = () => {
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])

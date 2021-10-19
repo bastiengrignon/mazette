@@ -1,13 +1,13 @@
 import React from 'react'
 import loadable from '@loadable/component'
 
-import FormattedText from '../../components/Admin/FormattedText'
 import { TextType } from '../../services'
 import { informationTitle } from '../../constants'
 import { titleCSS } from '../Programmation'
 
 const ContactForm = loadable(() => import('../../components/ContactForm'))
 const Maps = loadable(() => import('../../components/Maps'))
+const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Information: React.FC = () => (
     <div className="flex flex-col z-10 page-content">

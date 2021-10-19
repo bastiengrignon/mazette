@@ -1,11 +1,13 @@
+import loadable from '@loadable/component'
 import { Modal, Skeleton } from 'antd'
 import React, { useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-import Link from '../Link'
 import { cloudinary } from '../../index'
 import { fill } from '@cloudinary/base/actions/resize'
 import { IMovie, IMusic } from '../../services'
+
+const Link = loadable(() => import('../Link'))
 
 const vignetteCSS = 'w-11/12 sm:w-7/8 md:w-3/4 h-auto mx-auto cursor-pointer transform transition duration-300 hover:scale-110'
 

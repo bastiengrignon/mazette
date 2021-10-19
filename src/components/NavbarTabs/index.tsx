@@ -1,7 +1,9 @@
-import DropDown from '../DropDown'
+import loadable from '@loadable/component'
 import { NavLink, useLocation } from 'react-router-dom'
 import React, { CSSProperties, useEffect, useState } from 'react'
 import { RouterUrl, TabName, associationItems, programmationItems } from '../../constants'
+
+const DropDown = loadable(() => import('../DropDown'))
 
 const activeClass = 'bg-red'
 const tabClass = 'p-2 text-white hover:text-white hover:bg-red lg:inline-block'
