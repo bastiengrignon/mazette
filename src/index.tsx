@@ -17,8 +17,8 @@ import 'antd/dist/antd.css'
 import './index.css'
 
 Sentry.init({
-    dsn         : process.env.REACT_APP_SENTRY_DSN,
-    integrations: [new Integrations.BrowserTracing()],
+    dsn             : process.env.REACT_APP_SENTRY_DSN,
+    integrations    : [new Integrations.BrowserTracing()],
     // We recommend adjusting this value in production, or using tracesSampler for finer control
     tracesSampleRate: 0.5
 })
