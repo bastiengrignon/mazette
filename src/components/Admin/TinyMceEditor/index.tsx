@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { FormInstance } from 'antd'
 import React from 'react'
 
@@ -29,11 +30,9 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
         onEditorChange={(value) => form.setFields([{ name: textareaName, value: value }]) }
         init={{
             menubar            : false,
-            /* eslint-disable */
-            forced_root_block: false,
-            no_newline_selector: "",
-            entity_encoding: "raw",
-            /* eslint-enable */
+            forced_root_block  : false,
+            no_newline_selector: '',
+            entity_encoding    : 'raw',
             language           : 'fr_FR'
         }}
     />
