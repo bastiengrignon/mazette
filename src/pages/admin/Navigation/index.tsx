@@ -8,7 +8,7 @@ import {
     VideoCameraOutlined
 } from '@ant-design/icons'
 import { Form, Input, Modal, message } from 'antd'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 
 import { AxiosError } from 'axios'
@@ -23,6 +23,7 @@ const Navigation: React.FC = ({ children }) => {
     const [confirmLoginLoading, setConfirmLoginLoading] = useState<boolean>(false)
     const [loginForm] = Form.useForm()
     const location = useLocation()
+    const history = useHistory()
 
     const adminTitleFromPathname = (url: string): string => {
         if (url === RouterUrl.adminMovie) return programmationTitle.films
@@ -40,7 +41,11 @@ const Navigation: React.FC = ({ children }) => {
         else return <DashboardOutlined />
     }
 
-    const logout = () => AuthenticationService.logout()
+    const logout = () => {
+        AuthenticationService.logout()
+        history.push(RouterUrl.home)
+        if (location.pathname === RouterUrl.home) history.go(0)
+    }
 
     const handleLogin = () => {
         setConfirmLoginLoading(true)

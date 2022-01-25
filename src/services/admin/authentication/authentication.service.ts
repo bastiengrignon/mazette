@@ -17,7 +17,5 @@ export class AuthenticationService {
 
     static connectedUserCookie = (): boolean => CookieService.get(CookieService.authToken) === 'true'
 
-    static logout = (): void => {
-        CookieService.delete(CookieService.authToken)
-    }
+    static logout = (): void => CookieService.delete(CookieService.authToken)
 }
