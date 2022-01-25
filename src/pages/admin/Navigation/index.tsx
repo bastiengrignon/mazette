@@ -18,28 +18,28 @@ import { RouterUrl, programmationTitle } from '../../../constants'
 const activatedClassCSS = 'flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full'
 const deactivatedClassCSS = 'flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100'
 
+const adminTabIcon = (url: string): React.ReactNode => {
+    if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
+    if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
+    if (url === RouterUrl.adminPartner) return <TeamOutlined />
+    if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />
+    else return <DashboardOutlined />
+}
+
+const adminTitleFromPathname = (url: string): string => {
+    if (url === RouterUrl.adminMovie) return programmationTitle.films
+    else if (url === RouterUrl.adminMusic) return programmationTitle.musique
+    else if (url === RouterUrl.adminPartner) return 'Partenaires'
+    else if (url === RouterUrl.adminTrombinoscope) return 'Trombinoscope'
+    else return 'Dashboard'
+}
+
 const Navigation: React.FC = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(!AuthenticationService.connectedUserCookie())
     const [confirmLoginLoading, setConfirmLoginLoading] = useState<boolean>(false)
     const [loginForm] = Form.useForm()
     const location = useLocation()
     const history = useHistory()
-
-    const adminTitleFromPathname = (url: string): string => {
-        if (url === RouterUrl.adminMovie) return programmationTitle.films
-        else if (url === RouterUrl.adminMusic) return programmationTitle.musique
-        else if (url === RouterUrl.adminPartner) return 'Partenaires'
-        else if (url === RouterUrl.adminTrombinoscope) return 'Trombinoscope'
-        else return 'Dashboard'
-    }
-
-    const adminTabIcon = (url: string): React.ReactNode => {
-        if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
-        if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
-        if (url === RouterUrl.adminPartner) return <TeamOutlined />
-        if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />
-        else return <DashboardOutlined />
-    }
 
     const logout = () => {
         AuthenticationService.logout()
