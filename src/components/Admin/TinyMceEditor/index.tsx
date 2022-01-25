@@ -4,9 +4,9 @@ import React from 'react'
 
 import { Editor } from '@tinymce/tinymce-react'
 
-const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons'
-const editorToolbarConfig = 'undo redo | formatselect | bold italic underline strikethrough link ' +
-    'media emoticons | outdent indent bullist numlist'
+const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons preview'
+const editorToolbarConfig = 'undo redo | formatselect | bold italic underline strikethrough | link ' +
+    'media emoticons | bullist numlist | alignleft aligncenter alignright alignjustify | preview'
 
 interface TinyMceEditorProps {
     textareaName: string
