@@ -46,7 +46,8 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
                             'ul'    : ['class'],
                             'a'     : ['href', 'target', 'alt', 'class'],
                             'iframe': ['src', 'class', 'allow', 'allowfullscreen'],
-                            'img'   : ['src', 'alt', 'class', 'width', 'height', 'style']
+                            'img'   : ['src', 'alt', 'class', 'width', 'height', 'style'],
+                            'span'  : ['style']
                         },
                         allowedIframeHostnames: ['www.youtube.com', 'player.vimeo.com'],
                         allowedSchemes        : ['http', 'https', 'data']
