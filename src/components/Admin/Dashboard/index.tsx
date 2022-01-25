@@ -92,7 +92,7 @@ const Dashboard: React.FC = () => {
                             <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
-                        <div className="whitespace-pre-wrap">{ item.text }</div>
+                        <div className="w-full whitespace-pre-line">{ item.text }</div>
                 }
                 {
                     editable ?
