@@ -11,17 +11,21 @@ interface AdminFormAddPartnerProps {
     onUploadChange: (info: UploadChangeParam<UploadFile<File>>) => void
 }
 
-const AdminFormAddImages: React.FC<AdminFormAddPartnerProps> = ({ form, onUploadChange }) => (
+const AdminFormAddPartners: React.FC<AdminFormAddPartnerProps> = ({ form, onUploadChange }) => (
     <Form form={ form }>
         <Form.Item label="Nom" name="name"
             rules={ [{ required: true, message: 'Entrez un nom' }] }>
-            <Input/>
+            <Input placeholder="Nom du partenaire"/>
         </Form.Item>
         <Form.Item label="Image" name="image" rules={ [{ required: true, message: 'Ajouter une image !' }] }>
             <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
                 <Button icon={ <UploadOutlined/> }>Ajouter une image</Button>
             </Upload>
         </Form.Item>
+        <Form.Item label="Lien" name="link"
+            rules={ [{ required: false, message: 'Entrez un lien' }] }>
+            <Input placeholder="Lien du partenaire"/>
+        </Form.Item>
     </Form>
 )
-export default AdminFormAddImages
+export default AdminFormAddPartners
