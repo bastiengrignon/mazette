@@ -40,14 +40,18 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
                                     ...attribs,
                                     class: 'absolute inset-0 w-full h-full'
                                 }
-                            })
+                            }),
+                            'h1': sanitizeHtml.simpleTransform('div', { class: 'text-3xl w-full' }),
+                            'h2': sanitizeHtml.simpleTransform('div', { class: 'text-2xl w-full' }),
+                            'h3': sanitizeHtml.simpleTransform('div', { class: 'text-xl w-full' }),
                         },
                         allowedAttributes: {
                             'ul'    : ['class'],
                             'a'     : ['href', 'target', 'alt', 'class'],
                             'iframe': ['src', 'class', 'allow', 'allowfullscreen'],
                             'img'   : ['src', 'alt', 'class', 'width', 'height', 'style'],
-                            'span'  : ['style']
+                            'span'  : ['style'],
+                            'div'   : ['class']
                         },
                         allowedIframeHostnames: ['www.youtube.com', 'player.vimeo.com'],
                         allowedSchemes        : ['http', 'https', 'data']
