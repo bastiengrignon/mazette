@@ -1,15 +1,17 @@
 import loadable from '@loadable/component'
 import {
     Button,
-    Form, Modal,
+    Form,
+    Modal,
     Popconfirm,
-    Table,
-    Tooltip, Typography,
-    message
+    Table, Tooltip,
+    Typography, message
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
+import AdminFormAddPartners from '../AdminFormAddPartners'
 import { AdvancedImage } from '@cloudinary/react'
+import Link from '../../Link'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { UploadChangeParam } from 'antd/es/upload'
@@ -18,7 +20,6 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IPartner, PartnerService, UploadService } from '../../../services'
 
-const AdminFormAddImages = loadable(() => import('../AdminFormAddImages'))
 const EditableCell = loadable(() => import('../EditableCell'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
@@ -53,6 +54,7 @@ const DashboardPartner: React.FC = () => {
     const editRow = (record: Partial<IPartner>): void => {
         formRowEdition.setFieldsValue({
             name : '',
+            link : '',
             image: '',
             ...record
         })
@@ -109,6 +111,13 @@ const DashboardPartner: React.FC = () => {
                 </div>
             },
             editable: false
+        },
+        {
+            title    : 'Lien',
+            key      : 'link',
+            dataIndex: 'link',
+            render(link: string) { return <Link src={ link } title={ link }/> },
+            editable : true
         },
         {
             title    : 'Action',
@@ -188,10 +197,10 @@ const DashboardPartner: React.FC = () => {
                 </Table>
             </Form>
 
-            <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau partenaire" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
+                <AdminFormAddPartners form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
         </Navigation>
