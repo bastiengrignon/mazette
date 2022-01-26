@@ -2,6 +2,7 @@ export interface IText {
     id: number
     text: string
     type: TextType
+    isShowed: boolean
     updatedAt?: Date
     createdAt?: Date
 }
@@ -16,5 +17,5 @@ export enum TextType {
     food = 'food',
     journey = 'journey',
     home = 'home',
-    covid = 'covid'
+    info = 'info'
 }
