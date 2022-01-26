@@ -17,7 +17,7 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services'
 
-const AdminFormAddTrombinoscope = loadable(() => import('../AdminFormAddTrombinoscope'))
+const AdminFormAddTrombinoscope = loadable(() => import('./components/AdminFormAddTrombinoscope'))
 const EditableCell = loadable(() => import('../EditableCell'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))

@@ -9,7 +9,7 @@ import {
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
-import AdminFormAddPartners from '../AdminFormAddPartners'
+import AdminFormAddPartners from './components/AdminFormAddPartners'
 import { AdvancedImage } from '@cloudinary/react'
 import Link from '../../Link'
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'

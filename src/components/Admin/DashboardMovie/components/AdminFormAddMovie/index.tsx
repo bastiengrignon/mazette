@@ -4,7 +4,7 @@ import { Button, DatePicker, Form, FormInstance, Input, TimePicker, Upload } fro
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
-import { UploadService } from '../../../services'
+import { UploadService } from '../../../../../services'
 
 interface AdminFormAddMovieProps {
     form: FormInstance
