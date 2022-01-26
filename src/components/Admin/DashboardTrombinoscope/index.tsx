@@ -17,7 +17,7 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services'
 
-const AdminFormAddImages = loadable(() => import('../AdminFormAddImages'))
+const AdminFormAddTrombinoscope = loadable(() => import('./components/AdminFormAddTrombinoscope'))
 const EditableCell = loadable(() => import('../EditableCell'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
@@ -190,7 +190,7 @@ const DashboardTrombinoscope: React.FC = () => {
             <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddImages form={ formRowAddition } onUploadChange={ handleChange }/>
+                <AdminFormAddTrombinoscope form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
             <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
         </Navigation>

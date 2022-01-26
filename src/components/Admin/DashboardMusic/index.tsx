@@ -18,7 +18,7 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMusic, MusicService, UploadService } from '../../../services'
 
-const AdminFormAddArtist = loadable(() => import('../AdminFormAddArtist'))
+const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'))
 const EditableCell = loadable(() => import('../EditableCell'))
 const Link = loadable(() => import('../../Link'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))

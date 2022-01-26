@@ -37,8 +37,18 @@ const Footer: React.FC = () => {
                     {
                         partners.map((partner, key) => (
                             <Skeleton key={ key } avatar={ true } active={ true } loading={ isPartnerLoading }>
-                                <AdvancedImage cldImg={ cloudinary.image(partner.image) }
-                                    alt={ partner.name } className="w-auto h-16  2xl:h-24 object-contain"/>
+                                {
+                                    partner.link.trim() === '' ?
+                                        <AdvancedImage cldImg={ cloudinary.image(partner.image) }
+                                            alt={ partner.name }
+                                            className="w-auto h-16 2xl:h-24 object-contain"/>
+                                        :
+                                        <ExternalLink src={ partner.link }>
+                                            <AdvancedImage cldImg={ cloudinary.image(partner.image) }
+                                                alt={ partner.name }
+                                                className="w-auto h-16 2xl:h-24 object-contain"/>
+                                        </ExternalLink>
+                                }
                             </Skeleton>
                         ))
                     }

@@ -1,20 +1,11 @@
 import loadable from '@loadable/component'
-import {
-    Button,
-    Card,
-    Collapse,
-    Form,
-    List,
-    Modal,
-    Select,
-    Skeleton,
-    Typography,
-    message
-} from 'antd'
-import { CommonService, IText, TextService, TextType } from '../../../services'
-import { EditOutlined, SaveOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
-import { associationTitle, informationTitle, programmationTitle } from '../../../constants'
+
+import { Button, Card, Checkbox, Collapse, Form, List, Modal, Select, Skeleton, Typography, message } from 'antd'
+import { EditOutlined, SaveOutlined } from '@ant-design/icons'
+
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
+import { CommonService, IText, TextService, TextType } from '../../../services'
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
@@ -31,13 +22,14 @@ const selectTextType = [
     { text: 'Boire et manger', value: TextType.food },
     { text: 'Venir au festival', value: TextType.journey },
     { text: 'Accueil', value: TextType.home },
-    { text: 'Pass sanitaire', value: TextType.covid }
+    { text: 'Info', value: TextType.info }
 ]
 
 const Dashboard: React.FC = () => {
     const [isTextLoading, setIsTextLoading] = useState<boolean>(false)
     const [texts, setTexts] = useState<IText[]>([])
     const [newTexts, setNewTexts] = useState<IText[]>(texts)
+    const [infoText, setInfoText] = useState<IText>({} as IText)
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [editingId, setEditingId] = useState<number>(0)
@@ -49,6 +41,7 @@ const Dashboard: React.FC = () => {
         TextService.getAll()
             .then(texts => setTexts(texts))
             .finally(() => setIsTextLoading(false))
+        TextService.getByTextType(TextType.info).then(text => setInfoText(text))
     }, [newTexts])
 
     const isEditing = (item: IText): boolean => item.id === editingId
@@ -127,25 +120,20 @@ const Dashboard: React.FC = () => {
         }).catch(err => message.warn('Validation failed: ', err))
     }
 
-    const collapseTitle = (textType: string): string => {
-        let tmpTextType
-        if (textType === TextType.music) tmpTextType = programmationTitle.musique
-        if (textType === TextType.movie) tmpTextType = programmationTitle.films
-        if (textType === TextType.contest) tmpTextType = programmationTitle.concours
-        if (textType === TextType.association) tmpTextType = associationTitle.association
-        if (textType === TextType.team) tmpTextType = associationTitle.equipe
-        if (textType === TextType.adhere) tmpTextType = associationTitle.adherer
-        if (textType === TextType.food) tmpTextType = informationTitle.food
-        if (textType === TextType.journey) tmpTextType = informationTitle.festival
-        if (textType === TextType.home) tmpTextType = 'Accueil'
-        if (textType === TextType.covid) tmpTextType = 'Pass sanitaire'
-        return CommonService.capitalize(tmpTextType)
-    }
+    const collapseTitle = (textType: string): string => CommonService.capitalize(selectTextType.find(item => item.value === textType)?.text || '')
 
+    const updateInformationsVisibility = (event: CheckboxChangeEvent) => {
+        TextService.update(infoText?.id || 0, { ...infoText, isShowed: event.target.checked }).then(res =>
+            setInfoText({
+                ...infoText,
+                ...res
+            }))
+    }
+    
     return (
         <Navigation>
-            <div className="grid grid-cols-6 gap-2 md:gap-5">
-                <Card bordered={ false } className="rounded-lg col-span-6 lg:col-span-4">
+            <div className="grid grid-cols-12 gap-2 md:gap-5">
+                <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-8">
                     <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                         Ajouter un texte
                     </Button>
@@ -163,6 +151,12 @@ const Dashboard: React.FC = () => {
                             )
                         }
                     </Collapse>
+                </Card>
+                <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
+                    <div className="text-3xl text-center mb-5">Informations générales</div>
+                    <Checkbox onChange={updateInformationsVisibility} checked={infoText?.isShowed}>
+                        Afficher les informations sur la page d&apos;accueil
+                    </Checkbox>
                 </Card>
             </div>
             <Modal title="Nouveau texte" visible={ addRowModalVisible } okText="Ajouter"

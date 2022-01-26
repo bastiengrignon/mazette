@@ -20,7 +20,7 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMovie, MovieService, UploadService } from '../../../services'
 
-const AdminFormAddMovie = loadable(() => import('../AdminFormAddMovie'))
+const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'))
 const EditableCell = loadable(() => import('../EditableCell'))
 const Link = loadable(() => import('../../Link'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))

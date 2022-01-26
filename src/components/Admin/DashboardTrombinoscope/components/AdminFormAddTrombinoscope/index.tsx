@@ -4,14 +4,14 @@ import { Button, Form, FormInstance, Input, Upload } from 'antd'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
-import { UploadService } from '../../../services'
+import { UploadService } from '../../../../../services'
 
 interface AdminFormAddPartnerProps {
     form: FormInstance
     onUploadChange: (info: UploadChangeParam<UploadFile<File>>) => void
 }
 
-const AdminFormAddImages: React.FC<AdminFormAddPartnerProps> = ({ form, onUploadChange }) => (
+const AdminFormAddTrombinoscope: React.FC<AdminFormAddPartnerProps> = ({ form, onUploadChange }) => (
     <Form form={ form }>
         <Form.Item label="Nom" name="name"
             rules={ [{ required: true, message: 'Entrez un nom' }] }>
@@ -24,4 +24,4 @@ const AdminFormAddImages: React.FC<AdminFormAddPartnerProps> = ({ form, onUpload
         </Form.Item>
     </Form>
 )
-export default AdminFormAddImages
+export default AdminFormAddTrombinoscope
