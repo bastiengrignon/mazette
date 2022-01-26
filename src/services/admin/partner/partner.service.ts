@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { IPartner } from './partner.interface'
-import { UploadService } from '../upload/upload.service'
+import { UploadService } from '../upload'
 
 export class PartnerService {
     static getAll = async (): Promise<IPartner[]> => await axios.get('/partner').then(r => r.data)
