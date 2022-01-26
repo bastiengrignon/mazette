@@ -27,7 +27,7 @@ export const cloudinary = new Cloudinary({ cloud: { cloudName: 'mazette' } })
 const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === adminSubdomain;
 
 (() => {
-    axios.defaults.baseURL = process.env.REACT_APP_API_URL
+    axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API_URL : 'http://localhost:3005'
 })()
 
 ReactDOM.hydrate(
