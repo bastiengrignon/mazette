@@ -22,7 +22,8 @@ const selectTextType = [
     { text: 'Boire et manger', value: TextType.food },
     { text: 'Venir au festival', value: TextType.journey },
     { text: 'Accueil', value: TextType.home },
-    { text: 'Info', value: TextType.info }
+    { text: 'Info', value: TextType.info },
+    { text: 'Edition 2021', value: TextType.previousEdition }
 ]
 
 const Dashboard: React.FC = () => {

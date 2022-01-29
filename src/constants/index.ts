@@ -37,6 +37,7 @@ export enum associationTitle {
     association = 'l\'association',
     equipe = 'l\'équipe',
     adherer = 'adhérer',
+    previousEdition = 'Edition 2021',
 }
 
 export enum informationTitle {
@@ -71,6 +72,10 @@ export const associationItems: DropdownItem[] = [
     },
     {
         name: associationTitle.adherer,
+        link: RouterUrl.association
+    },
+    {
+        name: associationTitle.previousEdition,
         link: RouterUrl.association
     }
 ]
