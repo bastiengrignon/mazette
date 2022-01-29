@@ -68,19 +68,22 @@ const DashboardMovie: React.FC = () => {
 
     const saveRow = async (id: number) => {
         const hideLoadingMessage = message.loading('Modification en cours', 0)
-        formRowEdition.validateFields()
-            .then(row => {
-                MovieService.update(id, row).then(res => {
+        formRowEdition.validateFields().then(row => {
+            MovieService.update(id, row)
+                .then(res => {
                     const index = movies.findIndex(movie => movie.id === id)
                     setNewMovies(movies.splice(index, 1, {
                         ...movies[index],
                         ...res
                     }))
-                }).finally(() => {
-                    hideLoadingMessage()
                     message.success('Modification effectuée', 2.5)
                 })
-            })
+                .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                .finally(() => {
+                    hideLoadingMessage()
+                    formRowEdition.resetFields()
+                })
+        })
             .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
     }
@@ -216,11 +219,13 @@ const DashboardMovie: React.FC = () => {
         formRowAddition.validateFields()
             .then(values => {
                 MovieService.create(values, file)
-                    .then(movie => setMovies([...movies, movie]))
-                    .catch(err => console.log(err))
+                    .then(movie => {
+                        setMovies([...movies, movie])
+                        message.success('Court-métrage ajouté', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success('Court-métrage ajouté', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)

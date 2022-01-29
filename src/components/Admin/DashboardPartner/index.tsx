@@ -65,16 +65,20 @@ const DashboardPartner: React.FC = () => {
         const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
-                PartnerService.update(id, row).then(res => {
-                    const index = partners.findIndex(movie => movie.id === id)
-                    setNewPartners(partners.splice(index, 1, {
-                        ...partners[index],
-                        ...res
-                    }))
-                }).finally(() => {
-                    hideLoadingMessage()
-                    message.success('Modification effectuée', 2.5)
-                })
+                PartnerService.update(id, row)
+                    .then(res => {
+                        const index = partners.findIndex(movie => movie.id === id)
+                        setNewPartners(partners.splice(index, 1, {
+                            ...partners[index],
+                            ...res
+                        }))
+                        message.success('Modification effectuée', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                    .finally(() => {
+                        hideLoadingMessage()
+                        formRowEdition.resetFields()
+                    })
             })
             .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
@@ -163,11 +167,13 @@ const DashboardPartner: React.FC = () => {
         formRowAddition.validateFields()
             .then(values => {
                 PartnerService.create(values, file)
-                    .then(partner => setPartners([...partners, partner]))
-                    .catch(err => console.log(err))
+                    .then(partner => {
+                        setPartners([...partners, partner])
+                        message.success('Partenaire ajouté', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success('Partenaire ajouté', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)

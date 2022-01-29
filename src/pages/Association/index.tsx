@@ -61,6 +61,10 @@ const Association: React.FC = () => {
                         src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                         className="w-full px-2 h-screen pr-0 md:pr-10"/>
                 </div>
+                <Anchor id={ associationTitle.previousEdition } className={ titleCSS }/>
+                <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
+                    <FormattedText textType={ TextType.previousEdition }/>
+                </div>
             </div>
         </div>
     )

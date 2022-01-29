@@ -17,5 +17,6 @@ export enum TextType {
     food = 'food',
     journey = 'journey',
     home = 'home',
-    info = 'info'
+    info = 'info',
+    previousEdition = 'previousEdition'
 }

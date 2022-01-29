@@ -62,16 +62,20 @@ const DashboardTrombinoscope: React.FC = () => {
         const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
-                TrombinoscopeService.update(id, row).then(res => {
-                    const index = trombinoscopes.findIndex(movie => movie.id === id)
-                    setNewTrombinoscope(trombinoscopes.splice(index, 1, {
-                        ...trombinoscopes[index],
-                        ...res
-                    }))
-                }).finally(() => {
-                    hideLoadingMessage()
-                    message.success('Modification effectuée', 2.5)
-                })
+                TrombinoscopeService.update(id, row)
+                    .then(res => {
+                        const index = trombinoscopes.findIndex(movie => movie.id === id)
+                        setNewTrombinoscope(trombinoscopes.splice(index, 1, {
+                            ...trombinoscopes[index],
+                            ...res
+                        }))
+                        message.success('Modification effectuée', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de la modiifcation: ${ err }`, 2.5))
+                    .finally(() => {
+                        hideLoadingMessage()
+                        formRowEdition.resetFields()
+                    })
             })
             .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
@@ -153,11 +157,13 @@ const DashboardTrombinoscope: React.FC = () => {
         formRowAddition.validateFields()
             .then(values => {
                 TrombinoscopeService.create(values, file)
-                    .then(trombinoscope => setTrombinoscopes([...trombinoscopes, trombinoscope]))
-                    .catch(err => console.log(err))
+                    .then(trombinoscope => {
+                        setTrombinoscopes([...trombinoscopes, trombinoscope])
+                        message.success('Trombinoscope ajouté', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success('Trombinoscope ajouté', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)
