@@ -41,9 +41,27 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
                                     class: 'absolute inset-0 w-full h-full'
                                 }
                             }),
-                            'h1': sanitizeHtml.simpleTransform('div', { class: 'text-3xl w-full' }),
-                            'h2': sanitizeHtml.simpleTransform('div', { class: 'text-2xl w-full' }),
-                            'h3': sanitizeHtml.simpleTransform('div', { class: 'text-xl w-full' }),
+                            'h1': (tagName, attribs) => ({
+                                tagName: 'div',
+                                attribs: {
+                                    ...attribs,
+                                    class: 'text-3xl w-full'
+                                }
+                            }),
+                            'h2': (tagName, attribs) => ({
+                                tagName: 'div',
+                                attribs: {
+                                    ...attribs,
+                                    class: 'text-2xl w-full'
+                                }
+                            }),
+                            'h3': (tagName, attribs) => ({
+                                tagName: 'div',
+                                attribs: {
+                                    ...attribs,
+                                    class: 'text-xl w-full'
+                                }
+                            }),
                         },
                         allowedAttributes: {
                             'ul'    : ['class'],
