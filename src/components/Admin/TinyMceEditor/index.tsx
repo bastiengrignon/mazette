@@ -33,7 +33,8 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
             forced_root_block  : false,
             no_newline_selector: '',
             entity_encoding    : 'raw',
-            language           : 'fr_FR'
+            language           : 'fr_FR',
+            min_height         : 500,
         }}
     />
 )
