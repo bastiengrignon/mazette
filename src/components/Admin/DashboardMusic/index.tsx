@@ -67,16 +67,20 @@ const DashboardMusic: React.FC = () => {
         const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
-                MusicService.update(id, row).then(res => {
-                    const index = musics.findIndex(movie => movie.id === id)
-                    setNewMusics(musics.splice(index, 1, {
-                        ...musics[index],
-                        ...res
-                    }))
-                }).finally(() => {
-                    hideLoadingMessage()
-                    message.success('Modification effectuée', 2.5)
-                })
+                MusicService.update(id, row)
+                    .then(res => {
+                        const index = musics.findIndex(music => music.id === id)
+                        setNewMusics(musics.splice(index, 1, {
+                            ...musics[index],
+                            ...res
+                        }))
+                        message.success('Modification effectuée', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                    .finally(() => {
+                        hideLoadingMessage()
+                        formRowEdition.resetFields()
+                    })
             })
             .catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
@@ -197,11 +201,13 @@ const DashboardMusic: React.FC = () => {
         formRowAddition.validateFields()
             .then(values => {
                 MusicService.create(values, file)
-                    .then(music => setMusics([...musics, music]))
-                    .catch(err => console.log(err))
+                    .then(music => {
+                        setMusics([...musics, music])
+                        message.success('Musique ajoutée', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
-                        message.success('Musique ajoutée', 2.5)
                         formRowAddition.resetFields()
                     })
                 setAddRowModalVisible(false)

@@ -51,16 +51,20 @@ const Dashboard: React.FC = () => {
         const hideLoadingMessage = message.loading('Modification en cours', 0)
         formRowEdition.validateFields()
             .then(row => {
-                TextService.update(id, row).then(res => {
-                    const index = texts.findIndex(text => text.id === id)
-                    setNewTexts(texts.splice(index, 1, {
-                        ...texts[index],
-                        ...res
-                    }))
-                }).finally(() => {
-                    hideLoadingMessage()
-                    message.success('Modification effectuée', 2.5)
-                })
+                TextService.update(id, row)
+                    .then(res => {
+                        const index = texts.findIndex(text => text.id === id)
+                        setNewTexts(texts.splice(index, 1, {
+                            ...texts[index],
+                            ...res
+                        }))
+                        message.success('Modification effectuée', 2.5)
+                    })
+                    .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                    .finally(() => {
+                        hideLoadingMessage()
+                        formRowEdition.resetFields()
+                    })
             }).catch(err => console.log('Validate Failed: ', err))
             .finally(() => setEditingId(0))
     }
@@ -110,11 +114,13 @@ const Dashboard: React.FC = () => {
         const hideLoadingMessage = message.loading('Ajout en cours', 0)
         formRowAddition.validateFields().then(values => {
             TextService.create(values)
-                .then(text => setTexts([...texts, text]))
-                .catch(err => console.log(err))
+                .then(text => {
+                    setTexts([...texts, text])
+                    message.success('Texte ajouté', 2.5)
+                })
+                .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                 .finally(() => {
                     hideLoadingMessage()
-                    message.success('Texte ajouté', 2.5)
                     formRowAddition.resetFields()
                 })
             setAddRowModalVisible(false)
