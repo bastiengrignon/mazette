@@ -5,7 +5,7 @@ import React from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 
 const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons preview quickbars'
-const editorToolbarConfig = 'undo redo | fontselect formatselect | bold italic underline strikethrough | link ' +
+const editorToolbarConfig = 'undo redo | fontselect formatselect | removeformat bold italic underline strikethrough | link ' +
     'media quickimage emoticons | bullist numlist | alignleft aligncenter alignright alignjustify | preview'
 
 interface TinyMceEditorProps {
