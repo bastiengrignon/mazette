@@ -19,7 +19,7 @@ const Association: React.FC = () => {
     useEffect(() => {
         setTrombinoscopeLoading(true)
         TrombinoscopeService.getAll()
-            .then(trombinoscopes => setTrombinoscopes(trombinoscopes))
+            .then(setTrombinoscopes)
             .finally(() => setTrombinoscopeLoading(false))
     }, [])
 

@@ -28,8 +28,8 @@ const Programmation: React.FC = () => {
         FestivalService.getById(FESTIVAL_ID).then(setFestival)
         setIsMusicLoading(true)
         setIsMovieLoading(true)
-        MusicService.getAll().then(musics => setMusics(musics)).finally(() => setIsMusicLoading(false))
-        MovieService.getAll().then(movies => setMovies(movies)).finally(() => setIsMovieLoading(false))
+        MusicService.getAll().then(setMusics).finally(() => setIsMusicLoading(false))
+        MovieService.getAll().then(setMovies).finally(() => setIsMovieLoading(false))
     }, [])
 
     const getFestivalDate = (festival: IFestival) => {

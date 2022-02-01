@@ -45,7 +45,7 @@ const DashboardMusic: React.FC = () => {
     useEffect(() => {
         setIsMusicLoading(true)
         MusicService.getAll()
-            .then(musics => setMusics(musics))
+            .then(setMusics)
             .finally(() => setIsMusicLoading(false))
     }, [newMusics])
 

@@ -59,10 +59,10 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         setIsTextLoading(true)
         TextService.getAll()
-            .then(texts => setTexts(texts))
+            .then(setTexts)
             .finally(() => setIsTextLoading(false))
-        TextService.getByTextType(TextType.info).then(text => setInfoText(text))
-        FestivalService.getById(FESTIVAL_ID).then(festival => setFestival(festival))
+        TextService.getByTextType(TextType.info).then(setInfoText)
+        FestivalService.getById(FESTIVAL_ID).then(setFestival)
     }, [newTexts])
 
     const isEditing = (item: IText): boolean => item.id === editingId

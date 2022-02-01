@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     const [text, setText] = React.useState<IText>()
 
     useEffect(() => {
-        TextService.getByTextType(TextType.info).then(text => setText(text))
+        TextService.getByTextType(TextType.info).then(setText)
     }, [])
 
     return (

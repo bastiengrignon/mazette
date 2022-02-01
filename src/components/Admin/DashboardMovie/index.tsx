@@ -46,7 +46,7 @@ const DashboardMovie: React.FC = () => {
     useEffect(() => {
         setIsMovieLoading(true)
         MovieService.getAll()
-            .then(movies => setMovies(movies))
+            .then(setMovies)
             .finally(() => setIsMovieLoading(false))
     }, [newMovies])
 
