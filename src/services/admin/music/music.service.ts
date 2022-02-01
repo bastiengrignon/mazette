@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { IMusic } from './music.interface'
-import { UploadService } from '../upload/upload.service'
+import { UploadService } from '../upload'
 
 export class MusicService {
     static getAll = async (): Promise<IMusic[]> => await axios.get('/music').then(r => r.data)
