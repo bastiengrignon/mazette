@@ -62,6 +62,13 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
                                     class: 'text-xl w-full'
                                 }
                             }),
+                            'img': (tagName, attribs) => ({
+                                tagName: 'img',
+                                attribs: {
+                                    ...attribs,
+                                    alt: attribs.alt || 'Cloudinary image',
+                                }
+                            }),
                         },
                         allowedAttributes: {
                             'ul'    : ['class'],
