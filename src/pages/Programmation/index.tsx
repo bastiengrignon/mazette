@@ -1,8 +1,10 @@
 import loadable from '@loadable/component'
 import React, { useEffect, useState } from 'react'
 
-import { programmationTitle } from '../../constants'
+import { FESTIVAL_ID, programmationTitle } from '../../constants'
+import { FestivalService, IFestival } from '../../services/admin/festival'
 import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
+import { formatDates, getDatesBetween, numericDateRegexp } from '../../lib/date'
 
 const Anchor = loadable(() => import('../../components/Anchor'))
 const Vignette = loadable(() => import('../../components/Vignette'))
@@ -12,9 +14,10 @@ export const titleCSS = 'text-2xl sm:text-3xl uppercase font-bold text-red mt-2 
     ' mb-4 font-sifonn'
 export const subtitleCSS = 'text-base sm:text-lg md:text-xl'
 
-const dateCSS = 'text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn'
+const dateCSS = 'text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn capitalize'
 
 const Programmation: React.FC = () => {
+    const [festival, setFestival] = useState<IFestival>({} as IFestival)
     const [musics, setMusics] = useState<IMusic[]>([])
     const [movies, setMovies] = useState<IMovie[]>([])
 
@@ -22,11 +25,18 @@ const Programmation: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     useEffect(() => {
+        FestivalService.getById(FESTIVAL_ID).then(setFestival)
         setIsMusicLoading(true)
         setIsMovieLoading(true)
         MusicService.getAll().then(musics => setMusics(musics)).finally(() => setIsMusicLoading(false))
         MovieService.getAll().then(movies => setMovies(movies)).finally(() => setIsMovieLoading(false))
     }, [])
+
+    const getFestivalDate = (festival: IFestival) => {
+        const { startDate, endDate } = festival
+        const festivalDates = getDatesBetween(new Date(startDate), new Date(endDate), true)
+        return formatDates(festivalDates)
+    }
 
     return (
         <div className="flex flex-col z-10 page-content">
@@ -34,44 +44,47 @@ const Programmation: React.FC = () => {
             <div className={ subtitleCSS }>
                 <FormattedText textType={ TextType.music }/>
             </div>
-            <p className={ dateCSS }>Vendredi 30 juillet</p>
-            <div className="grid grid-cols-2 gap-2 sm:gap-10">
-                {
-                    musics.filter(music => music.publicationDate === '30').map((music, key) => (
-                        <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
-                    ))
-                }
-            </div>
-            <p className={ dateCSS }>Samedi 31 juillet</p>
-            <div className="grid grid-cols-2 gap-2 sm:gap-10">
-                {
-                    musics.filter(music => music.publicationDate === '31').map((music, key) => (
-                        <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
-                    ))
-                }
-            </div>
+            {
+                festival.id && getFestivalDate(festival).map((date, index) => {
+                    const day = date.match(numericDateRegexp)?.[0]
+                    return (
+                        <div key={index}>
+                            <p className={ dateCSS }>{ date }</p>
+                            <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                                {
+                                    musics.filter(music => music.publicationDate === day).map((music, key) => (
+                                        <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )
+
+                })
+            }
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
             <div className={ subtitleCSS }>
                 <FormattedText textType={ TextType.movie }/>
             </div>
-            <p className={ dateCSS }>Vendredi 30 juillet</p>
-            <div className="grid grid-cols-2 gap-2 sm:gap-10">
-                {
-                    movies.filter(film => film.publicationDate === '30').map((film, key) => (
-                        <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
-                    ))
-                }
-            </div>
-            <p className={ dateCSS }>Samedi 31 juillet</p>
-            <div className="grid grid-cols-2 gap-2 sm:gap-10">
-                {
-                    movies.filter(film => film.publicationDate === '31').map((film, key) => (
-                        <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
-                    ))
-                }
-            </div>
+            {
+                festival.id && getFestivalDate(festival).map((date, index) => {
+                    const day = date.match(numericDateRegexp)?.[0]
+                    return (
+                        <div key={index}>
+                            <p className={ dateCSS }>{ date }</p>
+                            <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                                {
+                                    movies.filter(film => film.publicationDate === day).map((film, key) => (
+                                        <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )
 
+                })
+            }
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <div className={ subtitleCSS }>
                 <FormattedText textType={ TextType.contest }/>
