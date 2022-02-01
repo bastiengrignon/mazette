@@ -1,16 +1,34 @@
 import loadable from '@loadable/component'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
-import { Button, Card, Checkbox, Collapse, Form, List, Modal, Select, Skeleton, Typography, message } from 'antd'
+import {
+    Button,
+    Card,
+    Checkbox,
+    Collapse,
+    DatePicker,
+    Form,
+    InputNumber,
+    List,
+    Modal,
+    Select,
+    Skeleton,
+    Typography,
+    message
+} from 'antd'
 import { EditOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
+import { FESTIVAL_ID } from '../../../constants'
 import { CommonService, IText, TextService, TextType } from '../../../services'
+import { FestivalService, IFestival } from '../../../services/admin/festival'
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
 const { Panel } = Collapse
 const { Option } = Select
+const { RangePicker } = DatePicker
 
 const selectTextType = [
     { text: 'Musique', value: TextType.music },
@@ -31,6 +49,7 @@ const Dashboard: React.FC = () => {
     const [texts, setTexts] = useState<IText[]>([])
     const [newTexts, setNewTexts] = useState<IText[]>(texts)
     const [infoText, setInfoText] = useState<IText>({} as IText)
+    const [festival, setFestival] = useState<IFestival>({} as IFestival)
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [editingId, setEditingId] = useState<number>(0)
@@ -40,9 +59,10 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         setIsTextLoading(true)
         TextService.getAll()
-            .then(texts => setTexts(texts))
+            .then(setTexts)
             .finally(() => setIsTextLoading(false))
-        TextService.getByTextType(TextType.info).then(text => setInfoText(text))
+        TextService.getByTextType(TextType.info).then(setInfoText)
+        FestivalService.getById(FESTIVAL_ID).then(setFestival)
     }, [newTexts])
 
     const isEditing = (item: IText): boolean => item.id === editingId
@@ -85,8 +105,7 @@ const Dashboard: React.FC = () => {
             <List.Item key={ key } className="inline-flex items-center justify-between w-full">
                 {
                     editable ?
-                        <Form.Item className="w-full" name="text" initialValue={ item.text }
-                            rules={ [{ required: true, message: 'Entrez le texte' }] }>
+                        <Form.Item className="w-full" name="text" initialValue={ item.text } rules={ [{ required: true, message: 'Entrez le texte' }] }>
                             <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
@@ -136,7 +155,39 @@ const Dashboard: React.FC = () => {
                 ...res
             }))
     }
-    
+
+    const handleFestivalDate = (_, dateString: [string, string]) => {
+        const startDate = new Date(dateString[0])
+        const endDate = new Date(dateString[1])
+        FestivalService.update(festival.id || 0, { ...festival, startDate, endDate }).then(res =>
+            setFestival({
+                ...festival,
+                ...res
+            }))
+    }
+
+    const handleFestivalLatitude = (newLatitude: number) => {
+        FestivalService.update(festival.id || 0, {
+            ...festival,
+            location: { ...festival.location, latitude: newLatitude }
+        }).then(res =>
+            setFestival({
+                ...festival,
+                ...res
+            }))
+    }
+
+    const handleFestivalLongitude = (newLongitude: number) => {
+        FestivalService.update(festival.id || 0, {
+            ...festival,
+            location: { ...festival.location, longitude: newLongitude }
+        }).then(res =>
+            setFestival({
+                ...festival,
+                ...res
+            }))
+    }
+
     return (
         <Navigation>
             <div className="grid grid-cols-12 gap-2 md:gap-5">
@@ -159,21 +210,43 @@ const Dashboard: React.FC = () => {
                         }
                     </Collapse>
                 </Card>
-                <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
+                <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-4">
                     <div className="text-3xl text-center mb-5">Informations générales</div>
-                    <Checkbox onChange={updateInformationsVisibility} checked={infoText?.isShowed}>
+                    <Checkbox onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }>
                         Afficher les informations sur la page d&apos;accueil
                     </Checkbox>
+                    <div className="flex items-baseline w-full justify-between">
+                        <div className="mt-5">Date du festival :</div>
+                        { festival.id &&
+                            <RangePicker defaultValue={ [moment(festival.startDate), moment(festival.endDate)] }
+                                onChange={ handleFestivalDate }/> }
+                    </div>
+                    <div className="flex items-baseline w-full justify-between">
+                        <div className="w-1/2 mt-5">Coordonnées GPS :</div>
+                        <div className="flex w-full justify-start space-x-4">
+                            { festival.location &&
+                                <InputNumber className="w-full" placeholder="latitude" step="0.00000000001"
+                                    defaultValue={ festival.location.latitude }
+                                    onChange={ handleFestivalLatitude }/>
+                            }
+                            { festival.location &&
+                                <InputNumber className="w-full" placeholder="longitude" step="0.00000000001"
+                                    defaultValue={ festival.location.longitude }
+                                    onChange={ handleFestivalLongitude }/>
+                            }
+                        </div>
+                    </div>
                 </Card>
             </div>
             <Modal title="Nouveau texte" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } cancelText="Annuler"
-                okButtonProps={{ className: 'button' }} onOk={ handleOkModal }>
+                okButtonProps={ { className: 'button' } } onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
                     <Form.Item label="Texte" name="text" rules={ [{ required: true, message: 'Entrez du texte' }] }>
                         <TinyMceEditor textareaName="text" form={ formRowAddition }/>
                     </Form.Item>
-                    <Form.Item label="Type" name="type" rules={ [{ required: true, message: 'Entrez le type de texte' }] }>
+                    <Form.Item label="Type" name="type"
+                        rules={ [{ required: true, message: 'Entrez le type de texte' }] }>
                         <Select>
                             {
                                 selectTextType.map((type, key) =>

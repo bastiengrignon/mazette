@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { ITrombinoscope } from './trombinoscope.interface'
-import { UploadService } from '../upload/upload.service'
+import { UploadService } from '../upload'
 
 export class TrombinoscopeService {
     static getAll = async (): Promise<ITrombinoscope[]> => await axios.get('/trombinoscope').then(r => r.data)

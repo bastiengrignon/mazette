@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { IMovie } from './movie.interface'
-import { UploadService } from '../upload/upload.service'
+import { UploadService } from '../upload'
 
 export class MovieService {
     static getAll = async (): Promise<IMovie[]> => await axios.get('/movie').then(r => r.data)

@@ -15,7 +15,7 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
 
     useEffect(() => {
         setTextsLoading(true)
-        TextService.getAll().then(texts => setTexts(texts)).finally(() => setTextsLoading(false))
+        TextService.getAll().then(setTexts).finally(() => setTextsLoading(false))
     }, [])
 
     return (

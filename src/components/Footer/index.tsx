@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
     useEffect(() => {
         setIsPartnerLoading(true)
         PartnerService.getAll()
-            .then(partners => setPartners(partners))
+            .then(setPartners)
             .finally(() => setIsPartnerLoading(false))
     }, [])
     

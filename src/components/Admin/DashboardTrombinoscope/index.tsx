@@ -43,7 +43,7 @@ const DashboardTrombinoscope: React.FC = () => {
     useEffect(() => {
         setIsTrombinoscopeLoading(true)
         TrombinoscopeService.getAll()
-            .then(trombinoscopes => setTrombinoscopes(trombinoscopes))
+            .then(setTrombinoscopes)
             .finally(() => setIsTrombinoscopeLoading(false))
     }, [newTrombinoscope])
 
