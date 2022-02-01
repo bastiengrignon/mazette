@@ -6,6 +6,8 @@ export const musicFolder = `${ defaultImgFolder }/musics`
 export const filmsImgFolder = `${ defaultImgFolder }/films`
 export const partnersFolder = `${ defaultImgFolder }/partners`
 
+export const FESTIVAL_ID = 1
+
 export const adminSubdomain = 'admin'
 
 export enum RouterUrl {
