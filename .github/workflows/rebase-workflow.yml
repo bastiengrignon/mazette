@@ -1,26 +1,73 @@
 name: Automatic Rebase on "/rebase"
 on:
+  workflow_dispatch:
   issue_comment:
     types: [created]
+
 jobs:
+  comment-reaction:
+    name: Comment Reaction
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Add eyes reaction
+      uses: khan/pull-request-comment-trigger@master
+      with:
+        trigger: '/rebase'
+        reaction: eyes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   rebase:
     name: Rebase
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
-        with:
-          trigger: '/rebase'
-          reaction: eyes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Automatic Rebase
-        uses: Teroneko-NET-Tools/action-auto-rebase@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    - name: Automatic Rebase
+      id: automatic-rebase
+      uses: cirrus-actions/rebase@1.5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Print output
+      run: |
+        echo "Printing output: ${{ steps.automatic-rebase.output }}"
+
+  rebase-reaction:
+    name: Add rebase status
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    needs: rebase
+
+    steps:
+    - name: Remove eyes reaction
+      uses: khan/pull-request-comment-trigger@master
+      with:
+        trigger: '/rebase'
+        reaction: eyes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add rocket reaction if success
+      if: ${{ always() && contains(needs.rebase.result, 'success') }}
+      uses: khan/pull-request-comment-trigger@master
+      id: check
+      with:
+        trigger: '/rebase'
+        reaction: rocket
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add confused reaction if failure
+      if: ${{ always() && contains(needs.rebase.result, 'failure') }}
+      uses: khan/pull-request-comment-trigger@master
+      with:
+        trigger: '/rebase'
+        reaction: confused
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
