@@ -9,7 +9,7 @@ export class CommonService {
                 ...col,
                 onCell: (record: IPartner) => ({
                     record,
-                    inputType: 'text',
+                    inputType: col.inputType || 'text',
                     dataIndex: col.dataIndex,
                     title    : col.title,
                     required : col.dataIndex !== 'videoLink',

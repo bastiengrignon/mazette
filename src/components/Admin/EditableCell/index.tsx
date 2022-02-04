@@ -1,11 +1,13 @@
 import React from 'react'
-import { Form, Input } from 'antd'
+import { DatePicker, Form, Input } from 'antd'
+
+export type ColumnInputType = 'text' | 'textarea' | 'date'
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean
     dataIndex: string
     title: string
-    inputType: 'text' | 'textarea'
+    inputType: ColumnInputType
     children: React.ReactNode
     required: boolean
 }
@@ -19,7 +21,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     required,
     ...restProps
 }) => {
-    const inputNode = inputType === 'textarea' ? <Input.TextArea /> : <Input />
+    const inputNode = inputType === 'textarea' ? <Input.TextArea /> : inputType === 'text' ? <Input /> : <DatePicker/>
 
     return (
         <td { ...restProps }>

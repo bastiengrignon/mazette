@@ -20,7 +20,7 @@ export class MusicService {
     private static formatMovieDates = (music: IMusic): IMusic => {
         return {
             ...music,
-            publicationDate: new Date(music.publicationDate).getUTCDate().toString(),
+            publicationDate: new Date(music.publicationDate),
         }
     }
 }

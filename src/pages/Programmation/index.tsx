@@ -52,7 +52,8 @@ const Programmation: React.FC = () => {
                             <p className={ dateCSS }>{ date }</p>
                             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                                 {
-                                    musics.filter(music => music.publicationDate === day).map((music, key) => (
+
+                                    musics.filter(music => music.publicationDate.getDate() === Number(day)).map((music, key) => (
                                         <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
                                     ))
                                 }

@@ -1,11 +1,11 @@
 import loadable from '@loadable/component'
 import {
     Button,
-    Form, Modal,
+    Form,
+    Modal,
     Popconfirm,
-    Table,
-    Tooltip, Typography,
-    message
+    Table, Tooltip,
+    Typography, message
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
@@ -132,9 +132,9 @@ const DashboardMusic: React.FC = () => {
             title    : 'Date de publication',
             key      : 'publicationDate',
             dataIndex: 'publicationDate',
+            inputType: 'date',
             editable : true,
             sorter   : (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
-
         },
         {
             title    : 'Lien Vidéo',

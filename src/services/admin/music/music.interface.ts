@@ -3,7 +3,7 @@ export interface IMusic {
     name: string
     type: string
     description: string
-    publicationDate: string
+    publicationDate: Date
     image: string
     videoLink?: string
 }
