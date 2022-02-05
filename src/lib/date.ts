@@ -9,11 +9,11 @@ export const getDatesBetween = (startDate: Date, endDate: Date, includeEndDate?:
     return dates
 }
 
-export const formatDates = (dates: Date[]): string[] =>
-    dates.map((date) => new Intl.DateTimeFormat('fr-FR', {
+export const formatDates = (date: Date): string =>
+    new Intl.DateTimeFormat('fr-FR', {
         weekday: 'long',
         day    : 'numeric',
         month  : 'long'
-    }).format(new Date(date)))
+    }).format(new Date(date))
 
-export const numericDateRegexp = new RegExp('[0-9]{1,2}')
+export const datesMatched = (date1: Date, date2: Date): boolean => new Date(date1).toDateString() === new Date(date2).toDateString()
