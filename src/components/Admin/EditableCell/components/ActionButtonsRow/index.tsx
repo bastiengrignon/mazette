@@ -57,7 +57,7 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({ editable, record, s
             console.error('ActionButtonType not found')
             break
         }
-        setObject(object)
+        setObject(object.filter((item: IMusic) => item.id !== id))
     }
 
     const editRow = (record: Partial<IMusic>): void => {
