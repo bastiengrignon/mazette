@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
 import loadable from '@loadable/component'
-import { Button, Form, Modal, Table, Tooltip, message } from 'antd'
+import { Button, Form, Modal, Tooltip, message } from 'antd'
 
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
@@ -11,10 +11,10 @@ import { formatDate } from '../../../lib/date'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMusic, MusicService, UploadService } from '../../../services'
 
+import CustomTable from '../CustomTable'
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
 
 const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'))
-const EditableCell = loadable(() => import('../EditableCell'))
 const Link = loadable(() => import('../../Link'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
@@ -22,6 +22,7 @@ const PreviewModal = loadable(() => import('../PreviewModal'))
 const DashboardMusic: React.FC = () => {
     const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
     const [musics, setMusics] = useState<IMusic[]>([])
+    const [newMusics, setNewMusics] = useState<IMusic[]>([])
 
     // Row edition
     const [editingId, setEditingId] = useState(0)
@@ -41,7 +42,7 @@ const DashboardMusic: React.FC = () => {
         MusicService.getAll()
             .then(setMusics)
             .finally(() => setIsMusicLoading(false))
-    }, [musics.length])
+    }, [newMusics])
 
     const isEditing = (record: IMusic): boolean => record.id === editingId
 
@@ -70,8 +71,6 @@ const DashboardMusic: React.FC = () => {
         setPreviewURL(imageId)
         toggle()
     }
-
-    const tableRowView = { body: { cell: EditableCell } }
 
     const columns = [
         {
@@ -149,7 +148,8 @@ const DashboardMusic: React.FC = () => {
             render(_, record: IMusic) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setMusics } object={ musics } type={ActionButtonType.MUSIC}/>
+                    form={ formRowEdition } setObject={ setNewMusics } object={ musics }
+                    type={ ActionButtonType.MUSIC }/>
             }
         }
     ]
@@ -162,12 +162,8 @@ const DashboardMusic: React.FC = () => {
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un artiste
             </Button>
-            <Form form={ formRowEdition } component={ false }>
-                <Table components={ tableRowView } rowClassName="editable-row" rowKey="id"
-                    pagination={ { onChange: () => setEditingId(0), position: ['bottomCenter'] } }
-                    bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
-                </Table>
-            </Form>
+            <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ musics }
+                loading={ isMusicLoading } setEditingId={ setEditingId }/>
 
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }

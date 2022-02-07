@@ -3,13 +3,14 @@ import {
     Button,
     Form,
     Modal,
-    Table,
     message
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import AdminFormAddPartners from './components/AdminFormAddPartners'
 import { AdvancedImage } from '@cloudinary/react'
+
+import CustomTable from '../CustomTable'
 import Link from '../../Link'
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
 
@@ -19,13 +20,13 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, IPartner, PartnerService, UploadService } from '../../../services'
 
-const EditableCell = loadable(() => import('../EditableCell'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardPartner: React.FC = () => {
     const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false)
     const [partners, setPartners] = useState<IPartner[]>([])
+    const [newPartners, setNewPartners] = useState<IPartner[]>([])
 
     // Row edition
     const [editingId, setEditingId] = useState(0)
@@ -45,7 +46,7 @@ const DashboardPartner: React.FC = () => {
         PartnerService.getAll()
             .then(setPartners)
             .finally(() => setIsPartnerLoading(false))
-    }, [partners.length])
+    }, [newPartners])
 
     const isEditing = (record: IPartner): boolean => record.id === editingId
 
@@ -55,8 +56,10 @@ const DashboardPartner: React.FC = () => {
             key      : 'name',
             dataIndex: 'name',
             editable : true,
-            render(name: string) { return <div className="font-avenirBL">{ name }</div> },
-            sorter   : (a: IPartner, b: IPartner) => a.name.localeCompare(b.name)
+            render(name: string) {
+                return <div className="font-avenirBL">{ name }</div>
+            },
+            sorter: (a: IPartner, b: IPartner) => a.name.localeCompare(b.name)
         },
         {
             title    : 'Image',
@@ -74,19 +77,23 @@ const DashboardPartner: React.FC = () => {
             title    : 'Lien',
             key      : 'link',
             dataIndex: 'link',
-            render(link: string) { return <Link src={ link } title={ link }/> },
-            editable : true
+            render(link: string) {
+                return <Link src={ link } title={ link }/>
+            },
+            editable: true
         },
         {
             title    : 'Action',
             key      : 'action',
             dataIndex: 'action',
             render(_, record: IPartner) {
+                console.log({ partners })
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setPartners } object={ partners } type={ActionButtonType.PARTNER}/>
+                    form={ formRowEdition } setObject={ setNewPartners } object={ partners }
+                    type={ ActionButtonType.PARTNER }/>
             }
-        },
+        }
     ]
 
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
@@ -123,19 +130,15 @@ const DashboardPartner: React.FC = () => {
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un partenaire
             </Button>
-            <Form form={ formRowEdition } component={ false }>
-                <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => setEditingId(0), position: [ 'bottomCenter'] }}
-                    bordered dataSource={ partners } columns={ mergedColumns } loading={ isPartnerLoading }>
-                </Table>
-            </Form>
+            <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ partners }
+                loading={ isPartnerLoading } setEditingId={ setEditingId }/>
 
             <Modal title="Nouveau partenaire" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddPartners form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
-            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL }/>
         </Navigation>
     )
 }

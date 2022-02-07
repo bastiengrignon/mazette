@@ -3,7 +3,6 @@ import {
     Button,
     Form,
     Modal,
-    Table,
     Tooltip,
     message
 } from 'antd'
@@ -18,10 +17,10 @@ import { formatDate } from '../../../lib/date'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMovie, MovieService, UploadService } from '../../../services'
 
+import CustomTable from '../CustomTable'
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
 
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'))
-const EditableCell = loadable(() => import('../EditableCell'))
 const Link = loadable(() => import('../../Link'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
@@ -29,6 +28,7 @@ const PreviewModal = loadable(() => import('../PreviewModal'))
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
     const [movies, setMovies] = useState<IMovie[]>([])
+    const [newMovies, setNewMovies] = useState<IMovie[]>([])
 
     // Row edition
     const [editingId, setEditingId] = useState<number>(0)
@@ -48,7 +48,7 @@ const DashboardMovie: React.FC = () => {
         MovieService.getAll()
             .then(setMovies)
             .finally(() => setIsMovieLoading(false))
-    }, [movies.length])
+    }, [newMovies])
 
     const isEditing = (record: IMovie): boolean => record.id === editingId
 
@@ -58,8 +58,10 @@ const DashboardMovie: React.FC = () => {
             key      : 'title',
             dataIndex: 'title',
             editable : true,
-            render(title: string) { return <div className="font-avenirBL">{ title }</div> },
-            sorter   : (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
+            render(title: string) {
+                return <div className="font-avenirBL">{ title }</div>
+            },
+            sorter: (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
         },
         {
             title    : 'Auteur',
@@ -117,7 +119,9 @@ const DashboardMovie: React.FC = () => {
             dataIndex: 'videoLink',
             editable : true,
             ellipsis : { showTitle: false },
-            render(link: string) { return <Link src={ link } title={ link }/> }
+            render(link: string) {
+                return <Link src={ link } title={ link }/>
+            }
         },
         {
             title    : 'Image',
@@ -139,9 +143,10 @@ const DashboardMovie: React.FC = () => {
             render(_, record: IMovie) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setMovies } object={ movies } type={ActionButtonType.MOVIE}/>
+                    form={ formRowEdition } setObject={ setNewMovies } object={ movies }
+                    type={ ActionButtonType.MOVIE }/>
             }
-        },
+        }
     ]
 
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
@@ -178,19 +183,15 @@ const DashboardMovie: React.FC = () => {
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un court-métrage
             </Button>
-            <Form form={ formRowEdition } component={ false }>
-                <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => setEditingId(0), position: [ 'bottomCenter'] }}
-                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
-                </Table>
-            </Form>
+            <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ movies }
+                loading={ isMovieLoading } setEditingId={ setEditingId }/>
 
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddMovie form={formRowAddition} onUploadChange={ handleChange }/>
+                <AdminFormAddMovie form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
-            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL }/>
         </Navigation>
     )
 }
