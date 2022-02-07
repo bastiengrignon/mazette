@@ -87,7 +87,6 @@ const DashboardPartner: React.FC = () => {
             key      : 'action',
             dataIndex: 'action',
             render(_, record: IPartner) {
-                console.log({ partners })
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
                     form={ formRowEdition } setObject={ setNewPartners } object={ partners }
