@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { FESTIVAL_ID, programmationTitle } from '../../constants'
 import { FestivalService, IFestival } from '../../services/admin/festival'
 import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
-import { datesMatched, formatDates, getDatesBetween } from '../../lib/date'
+import { datesMatched, formatDate, getDatesBetween } from '../../lib/date'
 
 const Anchor = loadable(() => import('../../components/Anchor'))
 const Vignette = loadable(() => import('../../components/Vignette'))
@@ -44,7 +44,7 @@ const Programmation: React.FC = () => {
                 festival.id && getFestivalDate(festival).map((date, index) =>
                     (
                         <div key={ index }>
-                            <p className={ dateCSS }>{ formatDates(date) }</p>
+                            <p className={ dateCSS }>{ formatDate(date) }</p>
                             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                                 {
                                     musics.filter(music => datesMatched(music.publicationDate, date)).map((music, key) => (
@@ -64,7 +64,7 @@ const Programmation: React.FC = () => {
                 festival.id && getFestivalDate(festival).map((date, index) =>
                     (
                         <div key={ index }>
-                            <p className={ dateCSS }>{ formatDates(date) }</p>
+                            <p className={ dateCSS }>{ formatDate(date) }</p>
                             <div className="grid grid-cols-2 gap-2 sm:gap-10">
                                 {
                                     movies.filter(film => datesMatched(film.publicationDate, date)).map((film, key) => (
