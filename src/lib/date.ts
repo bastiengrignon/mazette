@@ -9,7 +9,7 @@ export const getDatesBetween = (startDate: Date, endDate: Date, includeEndDate?:
     return dates
 }
 
-export const formatDates = (date: Date): string =>
+export const formatDate = (date: Date): string =>
     new Intl.DateTimeFormat('fr-FR', {
         weekday: 'long',
         day    : 'numeric',
