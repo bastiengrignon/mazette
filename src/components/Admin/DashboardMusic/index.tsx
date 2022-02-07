@@ -1,22 +1,17 @@
-import loadable from '@loadable/component'
-import {
-    Button,
-    Form,
-    Modal,
-    Popconfirm,
-    Table, Tooltip,
-    Typography, message
-} from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
+import loadable from '@loadable/component'
+import { Button, Form, Modal, Table, Tooltip, message } from 'antd'
 
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
+import { formatDate } from '../../../lib/date'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMusic, MusicService, UploadService } from '../../../services'
+
+import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
 
 const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'))
 const EditableCell = loadable(() => import('../EditableCell'))
@@ -51,51 +46,33 @@ const DashboardMusic: React.FC = () => {
 
     const isEditing = (record: IMusic): boolean => record.id === editingId
 
-    const editRow = (record: Partial<IMusic>): void => {
-        formRowEdition.setFieldsValue({
-            name           : '',
-            type           : '',
-            description    : '',
-            publicationDate: '',
-            image          : '',
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading('Modification en cours', 0)
-        formRowEdition.validateFields()
-            .then(row => {
-                MusicService.update(id, row)
-                    .then(res => {
-                        const index = musics.findIndex(music => music.id === id)
-                        setNewMusics(musics.splice(index, 1, {
-                            ...musics[index],
-                            ...res
-                        }))
-                        message.success('Modification effectuée', 2.5)
+    const handleOkModal = (): void => {
+        const hideLoadingMessage = message.loading('Ajout en cours', 0)
+        formRowAddition.validateFields()
+            .then(values => {
+                MusicService.create(values, file)
+                    .then(music => {
+                        setMusics([...musics, music])
+                        message.success('Musique ajoutée', 2.5)
                     })
-                    .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
-                        formRowEdition.resetFields()
+                        formRowAddition.resetFields()
                     })
+                setAddRowModalVisible(false)
             })
-            .catch(err => console.log('Validate Failed: ', err))
-            .finally(() => setEditingId(0))
+            .catch(err => message.warn('Validation failed: ', err))
     }
 
-    const cancel = (): void => setEditingId(0)
+    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info))
 
-    const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading('Suppression en cours', 0)
-        await MusicService.delete(id).then(() => {
-            hideLoadingMessage()
-            message.success('Ligne supprimée')
-        })
-        setNewMusics(musics)
+    const openModalPreview = (imageId: string) => {
+        setPreviewURL(imageId)
+        toggle()
     }
+
+    const tableRowView = { body: { cell: EditableCell } }
 
     const columns = [
         {
@@ -103,6 +80,7 @@ const DashboardMusic: React.FC = () => {
             key      : 'name',
             dataIndex: 'name',
             editable : true,
+            required : true,
             render   : function renderTitle(name: string) {
                 return <div className="font-avenirBL">{ name }</div>
             },
@@ -118,11 +96,13 @@ const DashboardMusic: React.FC = () => {
             title    : 'Description',
             key      : 'description',
             dataIndex: 'description',
+            inputType: 'textarea',
             editable : true,
+            required : true,
             ellipsis : { showTitle: false },
             render(description: string) {
                 return (
-                    <Tooltip placement="top" title={ description } color="blue">
+                    <Tooltip placement="topLeft" title={ description } color="blue">
                         { description }
                     </Tooltip>
                 )
@@ -134,7 +114,11 @@ const DashboardMusic: React.FC = () => {
             dataIndex: 'publicationDate',
             inputType: 'date',
             editable : true,
-            sorter   : (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate)
+            required : true,
+            sorter   : (a: IMusic, b: IMusic) => Number(a.publicationDate) - Number(b.publicationDate),
+            render(date: Date) {
+                return <span>{ formatDate(date) }</span>
+            }
         },
         {
             title    : 'Lien Vidéo',
@@ -142,7 +126,9 @@ const DashboardMusic: React.FC = () => {
             dataIndex: 'videoLink',
             editable : true,
             ellipsis : { showTitle: false },
-            render(link: string) { return <Link src={ link } title={ link }/> }
+            render(link: string) {
+                return <Link src={ link } title={ link }/>
+            }
         },
         {
             title    : 'Image',
@@ -163,66 +149,13 @@ const DashboardMusic: React.FC = () => {
             fixed    : 'right',
             render(_, record: IMusic) {
                 const editable = isEditing(record)
-                return editable
-                    ?
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Sauvegarder">
-                            <div className="text-blue-500 cursor-pointer"
-                                onClick={ () => saveRow(record.id) }>
-                                <SaveOutlined/>
-                            </div>
-                        </Tooltip>
-                        <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
-                    </span>
-                    :
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Modifier">
-                            <Typography.Link disabled={ editingId !== 0 }
-                                onClick={ () => editRow(record) }>
-                                <EditOutlined/>
-                            </Typography.Link>
-                        </Tooltip>
-                        <Tooltip title="Supprimer" placement="bottom">
-                            <Popconfirm placement="left" className="text-red cursor-pointer"
-                                title="Veux-tu vraiment supprimer ?"
-                                onConfirm={ () => deleteRow(record.id) }>
-                                <a><DeleteOutlined/></a>
-                            </Popconfirm>
-                        </Tooltip>
-                    </span>
+                return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
+                    form={ formRowEdition } setObject={ setNewMusics } object={ musics } type={ActionButtonType.MUSIC}/>
             }
-        },
+        }
     ]
 
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
-
-    const handleOkModal = () => {
-        const hideLoadingMessage = message.loading('Ajout en cours', 0)
-        formRowAddition.validateFields()
-            .then(values => {
-                MusicService.create(values, file)
-                    .then(music => {
-                        setMusics([...musics, music])
-                        message.success('Musique ajoutée', 2.5)
-                    })
-                    .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
-                    .finally(() => {
-                        hideLoadingMessage()
-                        formRowAddition.resetFields()
-                    })
-                setAddRowModalVisible(false)
-            })
-            .catch(err => message.warn('Validation failed: ', err))
-    }
-
-    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        setFile(UploadService.handleChange(info))
-    }
-
-    const openModalPreview = (imageId: string) => {
-        setPreviewURL(imageId)
-        toggle()
-    }
 
     return (
         <Navigation>
@@ -231,18 +164,18 @@ const DashboardMusic: React.FC = () => {
                 Ajouter un artiste
             </Button>
             <Form form={ formRowEdition } component={ false }>
-                <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
+                <Table components={ tableRowView } rowClassName="editable-row" rowKey="id"
+                    pagination={ { onChange: () => setEditingId(0), position: ['bottomCenter'] } }
                     bordered dataSource={ musics } columns={ mergedColumns } loading={ isMusicLoading }>
                 </Table>
             </Form>
 
             <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddArtist form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
-            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL }/>
         </Navigation>
     )
 }

@@ -3,22 +3,22 @@ import {
     Button,
     Form,
     Modal,
-    Popconfirm,
     Table,
     Tooltip,
-    Typography,
     message
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
+import { formatDate } from '../../../lib/date'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMovie, MovieService, UploadService } from '../../../services'
+
+import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
 
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'))
 const EditableCell = loadable(() => import('../EditableCell'))
@@ -51,53 +51,6 @@ const DashboardMovie: React.FC = () => {
     }, [newMovies])
 
     const isEditing = (record: IMovie): boolean => record.id === editingId
-
-    const editRow = (record: Partial<IMovie>): void => {
-        formRowEdition.setFieldsValue({
-            title          : '',
-            author         : '',
-            description    : '',
-            date           : '',
-            publicationDate: '',
-            location       : '',
-            duration       : '',
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading('Modification en cours', 0)
-        formRowEdition.validateFields().then(row => {
-            MovieService.update(id, row)
-                .then(res => {
-                    const index = movies.findIndex(movie => movie.id === id)
-                    setNewMovies(movies.splice(index, 1, {
-                        ...movies[index],
-                        ...res
-                    }))
-                    message.success('Modification effectuée', 2.5)
-                })
-                .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
-                .finally(() => {
-                    hideLoadingMessage()
-                    formRowEdition.resetFields()
-                })
-        })
-            .catch(err => console.log('Validate Failed: ', err))
-            .finally(() => setEditingId(0))
-    }
-
-    const cancel = (): void => setEditingId(0)
-
-    const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading('Suppression en cours', 0)
-        await MovieService.delete(id).then(() => {
-            hideLoadingMessage()
-            message.success('Ligne supprimée')
-        })
-        setNewMovies(movies)
-    }
 
     const columns = [
         {
@@ -150,8 +103,12 @@ const DashboardMovie: React.FC = () => {
             title    : 'Date de publication',
             key      : 'publicationDate',
             dataIndex: 'publicationDate',
+            inputType: 'date',
             editable : true,
-            sorter   : (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate)
+            sorter   : (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate),
+            render(date: Date) {
+                return <span>{ formatDate(date) }</span>
+            }
 
         },
         {
@@ -181,33 +138,8 @@ const DashboardMovie: React.FC = () => {
             fixed    : 'right',
             render(_, record: IMovie) {
                 const editable = isEditing(record)
-                return editable
-                    ?
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Sauvegarder">
-                            <div className="text-blue-500 cursor-pointer"
-                                onClick={ () => saveRow(record.id) }>
-                                <SaveOutlined/>
-                            </div>
-                        </Tooltip>
-                        <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
-                    </span>
-                    :
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Modifier">
-                            <Typography.Link disabled={ editingId !== 0 }
-                                onClick={ () => editRow(record) }>
-                                <EditOutlined/>
-                            </Typography.Link>
-                        </Tooltip>
-                        <Tooltip title="Supprimer" placement="bottom">
-                            <Popconfirm placement="left" className="text-red cursor-pointer"
-                                title="Veux-tu vraiment supprimer ?"
-                                onConfirm={ () => deleteRow(record.id) }>
-                                <a><DeleteOutlined/></a>
-                            </Popconfirm>
-                        </Tooltip>
-                    </span>
+                return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
+                    form={ formRowEdition } setObject={ setNewMovies } object={ movies } type={ActionButtonType.MOVIE}/>
             }
         },
     ]
@@ -238,9 +170,7 @@ const DashboardMovie: React.FC = () => {
         toggle()
     }
 
-    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        setFile(UploadService.handleChange(info))
-    }
+    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info))
 
     return (
         <Navigation>
@@ -250,7 +180,7 @@ const DashboardMovie: React.FC = () => {
             </Button>
             <Form form={ formRowEdition } component={ false }>
                 <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
+                    rowKey="id" pagination={{ onChange: () => setEditingId(0), position: [ 'bottomCenter'] }}
                     bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
                 </Table>
             </Form>
