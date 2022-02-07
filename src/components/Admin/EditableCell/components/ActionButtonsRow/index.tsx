@@ -148,7 +148,7 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({ editable, record, s
     return editable ?
         <span className="inline-flex justify-around w-full">
             <Tooltip title="Sauvegarder">
-                <div className="text-blue-500 cursor-pointer" onClick={ () => saveRow(record.id) }>
+                <div className="text-green cursor-pointer" onClick={ () => saveRow(record.id) }>
                     <SaveOutlined/>
                 </div>
             </Tooltip>
