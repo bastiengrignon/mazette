@@ -29,8 +29,8 @@ const PreviewModal = loadable(() => import('../PreviewModal'))
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
     const [movies, setMovies] = useState<IMovie[]>([])
+
     // Row edition
-    const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
     const [editingId, setEditingId] = useState<number>(0)
     const [formRowEdition] = Form.useForm()
 
@@ -48,7 +48,7 @@ const DashboardMovie: React.FC = () => {
         MovieService.getAll()
             .then(setMovies)
             .finally(() => setIsMovieLoading(false))
-    }, [newMovies])
+    }, [movies.length])
 
     const isEditing = (record: IMovie): boolean => record.id === editingId
 
@@ -139,7 +139,7 @@ const DashboardMovie: React.FC = () => {
             render(_, record: IMovie) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setNewMovies } object={ movies } type={ActionButtonType.MOVIE}/>
+                    form={ formRowEdition } setObject={ setMovies } object={ movies } type={ActionButtonType.MOVIE}/>
             }
         },
     ]

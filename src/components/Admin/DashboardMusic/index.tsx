@@ -24,7 +24,6 @@ const DashboardMusic: React.FC = () => {
     const [musics, setMusics] = useState<IMusic[]>([])
 
     // Row edition
-    const [newMusics, setNewMusics] = useState<IMusic[]>(musics)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -42,7 +41,7 @@ const DashboardMusic: React.FC = () => {
         MusicService.getAll()
             .then(setMusics)
             .finally(() => setIsMusicLoading(false))
-    }, [newMusics])
+    }, [musics.length])
 
     const isEditing = (record: IMusic): boolean => record.id === editingId
 
@@ -150,7 +149,7 @@ const DashboardMusic: React.FC = () => {
             render(_, record: IMusic) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setNewMusics } object={ musics } type={ActionButtonType.MUSIC}/>
+                    form={ formRowEdition } setObject={ setMusics } object={ musics } type={ActionButtonType.MUSIC}/>
             }
         }
     ]

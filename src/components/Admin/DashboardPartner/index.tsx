@@ -28,7 +28,6 @@ const DashboardPartner: React.FC = () => {
     const [partners, setPartners] = useState<IPartner[]>([])
 
     // Row edition
-    const [newPartners, setNewPartners] = useState<IPartner[]>(partners)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -46,7 +45,7 @@ const DashboardPartner: React.FC = () => {
         PartnerService.getAll()
             .then(setPartners)
             .finally(() => setIsPartnerLoading(false))
-    }, [newPartners])
+    }, [partners.length])
 
     const isEditing = (record: IPartner): boolean => record.id === editingId
 
@@ -85,7 +84,7 @@ const DashboardPartner: React.FC = () => {
             render(_, record: IPartner) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setNewPartners } object={ partners } type={ActionButtonType.PARTNER}/>
+                    form={ formRowEdition } setObject={ setPartners } object={ partners } type={ActionButtonType.PARTNER}/>
             }
         },
     ]

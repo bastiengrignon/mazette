@@ -26,7 +26,6 @@ const DashboardTrombinoscope: React.FC = () => {
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
 
     // Row edition
-    const [newTrombinoscope, setNewTrombinoscope] = useState<ITrombinoscope[]>(trombinoscopes)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -44,7 +43,7 @@ const DashboardTrombinoscope: React.FC = () => {
         TrombinoscopeService.getAll()
             .then(setTrombinoscopes)
             .finally(() => setIsTrombinoscopeLoading(false))
-    }, [newTrombinoscope])
+    }, [trombinoscopes.length])
 
     const isEditing = (record: ITrombinoscope): boolean => record.id === editingId
 
@@ -76,7 +75,7 @@ const DashboardTrombinoscope: React.FC = () => {
             render(_, record: ITrombinoscope) {
                 const editable = isEditing(record)
                 return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
-                    form={ formRowEdition } setObject={ setNewTrombinoscope } object={ trombinoscopes } type={ActionButtonType.TROMBINOSCOPE}/>
+                    form={ formRowEdition } setObject={ setTrombinoscopes } object={ trombinoscopes } type={ActionButtonType.TROMBINOSCOPE}/>
             }
         },
     ]
