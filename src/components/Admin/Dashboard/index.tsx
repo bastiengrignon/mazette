@@ -148,7 +148,7 @@ const Dashboard: React.FC = () => {
 
     const collapseTitle = (textType: string): string => CommonService.capitalize(selectTextType.find(item => item.value === textType)?.text || '')
 
-    const updateInformationsVisibility = (event: CheckboxChangeEvent) => {
+    const updateInformationsVisibility = (event: CheckboxChangeEvent): void => {
         TextService.update(infoText?.id || 0, { ...infoText, isShowed: event.target.checked }).then(res =>
             setInfoText({
                 ...infoText,
@@ -156,7 +156,7 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleFestivalDate = (_, dateString: [string, string]) => {
+    const handleFestivalDate = (_, dateString: [string, string]): void => {
         const startDate = new Date(dateString[0])
         const endDate = new Date(dateString[1])
         FestivalService.update(festival.id || 0, { ...festival, startDate, endDate }).then(res =>
@@ -166,7 +166,7 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleFestivalLatitude = (newLatitude: number) => {
+    const handleFestivalLatitude = (newLatitude: number): void => {
         FestivalService.update(festival.id || 0, {
             ...festival,
             location: { ...festival.location, latitude: newLatitude }
@@ -177,10 +177,32 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleFestivalLongitude = (newLongitude: number) => {
+    const handleFestivalLongitude = (newLongitude: number): void => {
         FestivalService.update(festival.id || 0, {
             ...festival,
             location: { ...festival.location, longitude: newLongitude }
+        }).then(res =>
+            setFestival({
+                ...festival,
+                ...res
+            }))
+    }
+
+    const handleShowMusics = (event: CheckboxChangeEvent): void => {
+        FestivalService.update(FESTIVAL_ID, {
+            ...festival,
+            showMusic: event.target.checked
+        }).then(res =>
+            setFestival({
+                ...festival,
+                ...res
+            }))
+    }
+
+    const handleShowMovies = (event: CheckboxChangeEvent): void => {
+        FestivalService.update(FESTIVAL_ID, {
+            ...festival,
+            showMovie: event.target.checked
         }).then(res =>
             setFestival({
                 ...festival,
@@ -235,6 +257,16 @@ const Dashboard: React.FC = () => {
                                     onChange={ handleFestivalLongitude }/>
                             }
                         </div>
+                    </div>
+                    <div className="my-5">
+                        <Checkbox onChange={ handleShowMusics } checked={ festival.showMusic }>
+                            Afficher les musiques
+                        </Checkbox>
+                    </div>
+                    <div className="my-5">
+                        <Checkbox onChange={ handleShowMovies } checked={ festival.showMovie }>
+                            Afficher les courts-métrages
+                        </Checkbox>
                     </div>
                 </Card>
             </div>
