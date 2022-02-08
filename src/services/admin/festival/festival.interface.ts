@@ -4,6 +4,8 @@ export interface IFestival {
     location: ICoordinates
     startDate: Date
     endDate: Date
+    showMusic: boolean
+    showMovie: boolean
     updatedAt?: Date
     createdAt?: Date
 }
