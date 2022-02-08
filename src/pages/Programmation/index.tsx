@@ -6,6 +6,7 @@ import { FestivalService, IFestival } from '../../services/admin/festival'
 import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
 import { datesMatched, formatDate, getDatesBetween } from '../../lib/date'
 
+import ComingSoon from '../../components/ComingSoon'
 const Anchor = loadable(() => import('../../components/Anchor'))
 const Vignette = loadable(() => import('../../components/Vignette'))
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
@@ -41,7 +42,7 @@ const Programmation: React.FC = () => {
                 <FormattedText textType={ TextType.music }/>
             </div>
             {
-                festival.id && getFestivalDate(festival).map((date, index) =>
+                festival.id && festival.showMusic ? getFestivalDate(festival).map((date, index) =>
                     (
                         <div key={ index }>
                             <p className={ dateCSS }>{ formatDate(date) }</p>
@@ -53,7 +54,7 @@ const Programmation: React.FC = () => {
                                 }
                             </div>
                         </div>
-                    ))
+                    )) : <ComingSoon>Programmation des musiques à venir</ComingSoon>
             }
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
@@ -61,7 +62,7 @@ const Programmation: React.FC = () => {
                 <FormattedText textType={ TextType.movie }/>
             </div>
             {
-                festival.id && getFestivalDate(festival).map((date, index) =>
+                festival.id && festival.showMovie ? getFestivalDate(festival).map((date, index) =>
                     (
                         <div key={ index }>
                             <p className={ dateCSS }>{ formatDate(date) }</p>
@@ -73,7 +74,7 @@ const Programmation: React.FC = () => {
                                 }
                             </div>
                         </div>
-                    ))
+                    )) : <ComingSoon>Programmation des courts-métrages à venir</ComingSoon>
             }
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <div className={ subtitleCSS }>
