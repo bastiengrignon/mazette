@@ -17,12 +17,10 @@ export class MovieService {
 
     static delete = async (id: number): Promise<void> => await axios.delete(`/movie/${ id }`).then(r => r.data)
 
-    private static formatMovieDates = (movie: IMovie): IMovie => {
-        return {
-            ...movie,
-            date           : new Date(movie.date).getUTCFullYear().toString(),
-            publicationDate: new Date(movie.publicationDate).getUTCDate().toString(),
-            duration       : `${ new Date(movie.duration).getUTCMinutes() }min ${ new Date(movie.duration).getUTCSeconds() !== 0 ? `${ new Date(movie.duration).getUTCSeconds()}s` : '' }`
-        }
-    }
+    private static formatMovieDates = (movie: IMovie): IMovie => ({
+        ...movie,
+        date           : new Date(movie.date).getUTCFullYear().toString(),
+        publicationDate: new Date(movie.publicationDate),
+        duration       : `${ new Date(movie.duration).getUTCMinutes() }min ${ new Date(movie.duration).getUTCSeconds() !== 0 ? `${ new Date(movie.duration).getUTCSeconds() }s` : '' }`
+    })
 }

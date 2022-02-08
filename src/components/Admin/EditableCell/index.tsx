@@ -1,13 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import { Form, Input } from 'antd'
+
+import CellInputNode from './components/CellInputNode'
+import { Form } from 'antd'
+
+export type ColumnInputType = 'text' | 'textarea' | 'date'
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean
     dataIndex: string
     title: string
-    inputType: 'text' | 'textarea'
+    inputType: ColumnInputType
     children: React.ReactNode
     required: boolean
+    currentValue: any
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -17,28 +23,23 @@ const EditableCell: React.FC<EditableCellProps> = ({
     inputType,
     children,
     required,
+    currentValue,
     ...restProps
 }) => {
-    const inputNode = inputType === 'textarea' ? <Input.TextArea /> : <Input />
+    const childNode = !editing ? children :
+        <Form.Item
+            name={ dataIndex }
+            style={ { margin: 0 } }
+            rules={ [
+                {
+                    required: required,
+                    message : `Entrer un ${ title } !`,
+                },
+            ] }
+        >
+            <CellInputNode inputType={inputType} value={currentValue} />
+        </Form.Item>
 
-    return (
-        <td { ...restProps }>
-            { editing ?
-                <Form.Item
-                    name={ dataIndex }
-                    style={ { margin: 0 } }
-                    rules={ [
-                        {
-                            required: required,
-                            message : `Entrer un ${ title } !`,
-                        },
-                    ] }
-                >
-                    { inputNode }
-                </Form.Item> :
-                children
-            }
-        </td>
-    )
+    return <td {...restProps}>{childNode}</td>
 }
 export default EditableCell

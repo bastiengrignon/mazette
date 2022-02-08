@@ -3,25 +3,24 @@ import {
     Button,
     Form,
     Modal,
-    Popconfirm,
-    Table,
     Tooltip,
-    Typography,
     message
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
-import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { cloudinary } from '../../../index'
+import { formatDate } from '../../../lib/date'
 import useModal from '../../../constants/hooks'
 import { CommonService, IMovie, MovieService, UploadService } from '../../../services'
 
+import CustomTable from '../CustomTable'
+import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
+
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'))
-const EditableCell = loadable(() => import('../EditableCell'))
 const Link = loadable(() => import('../../Link'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
@@ -29,8 +28,9 @@ const PreviewModal = loadable(() => import('../PreviewModal'))
 const DashboardMovie: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
     const [movies, setMovies] = useState<IMovie[]>([])
+    const [newMovies, setNewMovies] = useState<IMovie[]>([])
+
     // Row edition
-    const [newMovies, setNewMovies] = useState<IMovie[]>(movies)
     const [editingId, setEditingId] = useState<number>(0)
     const [formRowEdition] = Form.useForm()
 
@@ -52,61 +52,16 @@ const DashboardMovie: React.FC = () => {
 
     const isEditing = (record: IMovie): boolean => record.id === editingId
 
-    const editRow = (record: Partial<IMovie>): void => {
-        formRowEdition.setFieldsValue({
-            title          : '',
-            author         : '',
-            description    : '',
-            date           : '',
-            publicationDate: '',
-            location       : '',
-            duration       : '',
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading('Modification en cours', 0)
-        formRowEdition.validateFields().then(row => {
-            MovieService.update(id, row)
-                .then(res => {
-                    const index = movies.findIndex(movie => movie.id === id)
-                    setNewMovies(movies.splice(index, 1, {
-                        ...movies[index],
-                        ...res
-                    }))
-                    message.success('Modification effectuée', 2.5)
-                })
-                .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
-                .finally(() => {
-                    hideLoadingMessage()
-                    formRowEdition.resetFields()
-                })
-        })
-            .catch(err => console.log('Validate Failed: ', err))
-            .finally(() => setEditingId(0))
-    }
-
-    const cancel = (): void => setEditingId(0)
-
-    const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading('Suppression en cours', 0)
-        await MovieService.delete(id).then(() => {
-            hideLoadingMessage()
-            message.success('Ligne supprimée')
-        })
-        setNewMovies(movies)
-    }
-
     const columns = [
         {
             title    : 'Titre',
             key      : 'title',
             dataIndex: 'title',
             editable : true,
-            render(title: string) { return <div className="font-avenirBL">{ title }</div> },
-            sorter   : (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
+            render(title: string) {
+                return <div className="font-avenirBL">{ title }</div>
+            },
+            sorter: (a: IMovie, b: IMovie) => a.title.localeCompare(b.title)
         },
         {
             title    : 'Auteur',
@@ -150,8 +105,12 @@ const DashboardMovie: React.FC = () => {
             title    : 'Date de publication',
             key      : 'publicationDate',
             dataIndex: 'publicationDate',
+            inputType: 'date',
             editable : true,
-            sorter   : (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate)
+            sorter   : (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate),
+            render(date: Date) {
+                return <span>{ formatDate(date) }</span>
+            }
 
         },
         {
@@ -160,7 +119,9 @@ const DashboardMovie: React.FC = () => {
             dataIndex: 'videoLink',
             editable : true,
             ellipsis : { showTitle: false },
-            render(link: string) { return <Link src={ link } title={ link }/> }
+            render(link: string) {
+                return <Link src={ link } title={ link }/>
+            }
         },
         {
             title    : 'Image',
@@ -181,35 +142,11 @@ const DashboardMovie: React.FC = () => {
             fixed    : 'right',
             render(_, record: IMovie) {
                 const editable = isEditing(record)
-                return editable
-                    ?
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Sauvegarder">
-                            <div className="text-blue-500 cursor-pointer"
-                                onClick={ () => saveRow(record.id) }>
-                                <SaveOutlined/>
-                            </div>
-                        </Tooltip>
-                        <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
-                    </span>
-                    :
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Modifier">
-                            <Typography.Link disabled={ editingId !== 0 }
-                                onClick={ () => editRow(record) }>
-                                <EditOutlined/>
-                            </Typography.Link>
-                        </Tooltip>
-                        <Tooltip title="Supprimer" placement="bottom">
-                            <Popconfirm placement="left" className="text-red cursor-pointer"
-                                title="Veux-tu vraiment supprimer ?"
-                                onConfirm={ () => deleteRow(record.id) }>
-                                <a><DeleteOutlined/></a>
-                            </Popconfirm>
-                        </Tooltip>
-                    </span>
+                return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
+                    form={ formRowEdition } setObject={ setNewMovies } object={ movies }
+                    type={ ActionButtonType.MOVIE }/>
             }
-        },
+        }
     ]
 
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
@@ -238,9 +175,7 @@ const DashboardMovie: React.FC = () => {
         toggle()
     }
 
-    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        setFile(UploadService.handleChange(info))
-    }
+    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info))
 
     return (
         <Navigation>
@@ -248,19 +183,15 @@ const DashboardMovie: React.FC = () => {
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un court-métrage
             </Button>
-            <Form form={ formRowEdition } component={ false }>
-                <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
-                    bordered dataSource={ movies } columns={ mergedColumns } loading={ isMovieLoading }>
-                </Table>
-            </Form>
+            <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ movies }
+                loading={ isMovieLoading } setEditingId={ setEditingId }/>
 
             <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddMovie form={formRowAddition} onUploadChange={ handleChange }/>
+                <AdminFormAddMovie form={ formRowAddition } onUploadChange={ handleChange }/>
             </Modal>
-            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL }/>
         </Navigation>
     )
 }

@@ -2,12 +2,8 @@ import loadable from '@loadable/component'
 import {
     Button,
     Form, Modal,
-    Popconfirm,
-    Table,
-    Tooltip, Typography,
     message
 } from 'antd'
-import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
@@ -17,17 +13,19 @@ import { cloudinary } from '../../../index'
 import useModal from '../../../constants/hooks'
 import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services'
 
+import CustomTable from '../CustomTable'
+import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow'
+
 const AdminFormAddTrombinoscope = loadable(() => import('./components/AdminFormAddTrombinoscope'))
-const EditableCell = loadable(() => import('../EditableCell'))
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const PreviewModal = loadable(() => import('../PreviewModal'))
 
 const DashboardTrombinoscope: React.FC = () => {
     const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false)
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
+    const [newTrombinoscopes, setNewTrombinoscopes] = useState<ITrombinoscope[]>([])
 
     // Row edition
-    const [newTrombinoscope, setNewTrombinoscope] = useState<ITrombinoscope[]>(trombinoscopes)
     const [editingId, setEditingId] = useState(0)
     const [formRowEdition] = Form.useForm()
 
@@ -45,52 +43,9 @@ const DashboardTrombinoscope: React.FC = () => {
         TrombinoscopeService.getAll()
             .then(setTrombinoscopes)
             .finally(() => setIsTrombinoscopeLoading(false))
-    }, [newTrombinoscope])
+    }, [newTrombinoscopes])
 
     const isEditing = (record: ITrombinoscope): boolean => record.id === editingId
-
-    const editRow = (record: Partial<ITrombinoscope>): void => {
-        formRowEdition.setFieldsValue({
-            name : '',
-            image: '',
-            ...record
-        })
-        setEditingId(record.id || 0)
-    }
-
-    const saveRow = async (id: number) => {
-        const hideLoadingMessage = message.loading('Modification en cours', 0)
-        formRowEdition.validateFields()
-            .then(row => {
-                TrombinoscopeService.update(id, row)
-                    .then(res => {
-                        const index = trombinoscopes.findIndex(movie => movie.id === id)
-                        setNewTrombinoscope(trombinoscopes.splice(index, 1, {
-                            ...trombinoscopes[index],
-                            ...res
-                        }))
-                        message.success('Modification effectuée', 2.5)
-                    })
-                    .catch(err => message.error(`Erreur lors de la modiifcation: ${ err }`, 2.5))
-                    .finally(() => {
-                        hideLoadingMessage()
-                        formRowEdition.resetFields()
-                    })
-            })
-            .catch(err => console.log('Validate Failed: ', err))
-            .finally(() => setEditingId(0))
-    }
-
-    const cancel = (): void => setEditingId(0)
-
-    const deleteRow = async (id: number): Promise<void> => {
-        const hideLoadingMessage = message.loading('Suppression en cours', 0)
-        await TrombinoscopeService.delete(id).then(() => {
-            hideLoadingMessage()
-            message.success('Ligne supprimée')
-        })
-        setNewTrombinoscope(trombinoscopes)
-    }
 
     const columns = [
         {
@@ -98,8 +53,10 @@ const DashboardTrombinoscope: React.FC = () => {
             key      : 'name',
             dataIndex: 'name',
             editable : true,
-            render(name: string) { return <div className="font-avenirBL">{ name }</div> },
-            sorter   : (a: ITrombinoscope, b: ITrombinoscope) => a.name.localeCompare(b.name)
+            render(name: string) {
+                return <div className="font-avenirBL">{ name }</div>
+            },
+            sorter: (a: ITrombinoscope, b: ITrombinoscope) => a.name.localeCompare(b.name)
         },
         {
             title    : 'Image',
@@ -119,35 +76,11 @@ const DashboardTrombinoscope: React.FC = () => {
             dataIndex: 'action',
             render(_, record: ITrombinoscope) {
                 const editable = isEditing(record)
-                return editable
-                    ?
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Sauvegarder">
-                            <div className="text-blue-500 cursor-pointer"
-                                onClick={ () => saveRow(record.id) }>
-                                <SaveOutlined/>
-                            </div>
-                        </Tooltip>
-                        <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
-                    </span>
-                    :
-                    <span className="inline-flex justify-around w-full">
-                        <Tooltip title="Modifier">
-                            <Typography.Link disabled={ editingId !== 0 }
-                                onClick={ () => editRow(record) }>
-                                <EditOutlined/>
-                            </Typography.Link>
-                        </Tooltip>
-                        <Tooltip title="Supprimer" placement="bottom">
-                            <Popconfirm placement="left" className="text-red cursor-pointer"
-                                title="Veux-tu vraiment supprimer ?"
-                                onConfirm={ () => deleteRow(record.id) }>
-                                <a><DeleteOutlined/></a>
-                            </Popconfirm>
-                        </Tooltip>
-                    </span>
+                return <ActionButtonsRow editable={ editable } record={ record } setEditingId={ setEditingId }
+                    form={ formRowEdition } setObject={ setNewTrombinoscopes }
+                    object={ trombinoscopes } type={ ActionButtonType.TROMBINOSCOPE }/>
             }
-        },
+        }
     ]
 
     const mergedColumns = CommonService.mergedColumns(columns, isEditing)
@@ -171,9 +104,7 @@ const DashboardTrombinoscope: React.FC = () => {
             .catch(err => message.warn('Validation failed: ', err))
     }
 
-    const handleChange = (info: UploadChangeParam<UploadFile<File>>) => {
-        setFile(UploadService.handleChange(info))
-    }
+    const handleFileChange = (info: UploadChangeParam<UploadFile<File>>): void => setFile(UploadService.handleChange(info))
 
     const openModalPreview = (imageId: string) => {
         setPreviewURL(imageId)
@@ -186,19 +117,15 @@ const DashboardTrombinoscope: React.FC = () => {
             <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
                 Ajouter un trombinoscope
             </Button>
-            <Form form={ formRowEdition } component={ false }>
-                <Table components={{ body: { cell: EditableCell, } }} rowClassName="editable-row"
-                    rowKey="id" pagination={{ onChange: () => cancel(), position: [ 'bottomCenter'] }}
-                    bordered dataSource={ trombinoscopes } columns={ mergedColumns } loading={ isTrombinoscopeLoading }>
-                </Table>
-            </Form>
+            <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ trombinoscopes }
+                loading={ isTrombinoscopeLoading } setEditingId={ setEditingId }/>
 
             <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={{ className: 'button' }}
+                onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
-                <AdminFormAddTrombinoscope form={ formRowAddition } onUploadChange={ handleChange }/>
+                <AdminFormAddTrombinoscope form={ formRowAddition } onUploadChange={ handleFileChange }/>
             </Modal>
-            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL } />
+            <PreviewModal open={ isOpen } hide={ toggle } previewURL={ previewURL }/>
         </Navigation>
     )
 }

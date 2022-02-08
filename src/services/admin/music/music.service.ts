@@ -17,10 +17,8 @@ export class MusicService {
 
     static delete = async (id: number): Promise<void> => await axios.delete(`/music/${ id }`).then(r => r.data)
 
-    private static formatMovieDates = (music: IMusic): IMusic => {
-        return {
-            ...music,
-            publicationDate: new Date(music.publicationDate).getUTCDate().toString(),
-        }
-    }
+    private static formatMovieDates = (music: IMusic): IMusic => ({
+        ...music,
+        publicationDate: new Date(music.publicationDate)
+    })
 }

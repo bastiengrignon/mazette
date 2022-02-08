@@ -30,7 +30,7 @@ const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === admi
     axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API_URL : 'http://localhost:3005'
 })()
 
-ReactDOM.hydrate(
+ReactDOM.render(
     <React.StrictMode>
         <ConfigProvider locale={frFR}>
             <App/>

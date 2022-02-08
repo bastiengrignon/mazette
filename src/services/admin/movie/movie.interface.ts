@@ -4,7 +4,7 @@ export interface IMovie {
     author: string
     description: string
     date: string
-    publicationDate: string
+    publicationDate: Date
     location: string
     duration: string
     imgThumbnail: string

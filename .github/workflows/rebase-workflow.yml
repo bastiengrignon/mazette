@@ -5,19 +5,6 @@ on:
     types: [created]
 
 jobs:
-  comment-reaction:
-    name: Comment Reaction
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Add eyes reaction
-      uses: khan/pull-request-comment-trigger@master
-      with:
-        trigger: '/rebase'
-        reaction: eyes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   rebase:
     name: Rebase
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
@@ -34,10 +21,6 @@ jobs:
       uses: cirrus-actions/rebase@1.5
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Print output
-      run: |
-        echo "Printing output: ${{ steps.automatic-rebase.output }}"
-
   rebase-reaction:
     name: Add rebase status
     if: ${{ always() }}
@@ -45,14 +28,6 @@ jobs:
     needs: rebase
 
     steps:
-    - name: Remove eyes reaction
-      uses: khan/pull-request-comment-trigger@master
-      with:
-        trigger: '/rebase'
-        reaction: eyes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Add rocket reaction if success
       if: ${{ always() && contains(needs.rebase.result, 'success') }}
       uses: khan/pull-request-comment-trigger@master
