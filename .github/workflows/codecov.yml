@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x, 16.x]
 
     steps:
     - name: Checkout repository
@@ -24,10 +24,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install NPM
-      run: npm install
+    - name: Set locale to fr_FR
+      run: |
+        sudo locale-gen fr_FR.UTF-8
+        sudo update-locale LANG=fr_FR.UTF-8
+
+    - name: Cache dependencies
+      id: cache-node-modules
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: node-modules-${{ hashFiles('./package-lock.json') }}-caching
+        restore-keys: |
+          node-modules-
+
+    - name: Install dependencies
+      if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      run: npm ci
+
     - name: Run the tests
       run: npm test -- --coverage --passWithNoTests
-      
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
