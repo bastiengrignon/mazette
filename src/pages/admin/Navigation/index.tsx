@@ -103,7 +103,7 @@ const Navigation: React.FC = ({ children }) => {
                 </nav>
             </div>
             <div className="col-span-11 sm:col-span-10 md:col-span-10 bg-gray-200">
-                <header className="flex justify-center text-xl py-1 bg-white border-b-4 border-green font-avenir capitalize">
+                <header className="flex justify-center text-xl py-1 bg-white border-b-4 border-green font-avenir capitalize animate-pulse">
                     { adminTitleFromPathname(location.pathname) }
                 </header>
                 <main className="overflow-x-hidden overflow-y-auto px-4 mt-4">

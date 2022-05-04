@@ -9,6 +9,7 @@ import {
     Collapse,
     DatePicker,
     Form,
+    Input,
     InputNumber,
     List,
     Modal,
@@ -17,7 +18,7 @@ import {
     Typography,
     message
 } from 'antd'
-import { EditOutlined, SaveOutlined } from '@ant-design/icons'
+import { EditOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import { FESTIVAL_ID } from '../../../constants'
@@ -45,16 +46,22 @@ const selectTextType = [
 ]
 
 const Dashboard: React.FC = () => {
+    // Data
     const [isTextLoading, setIsTextLoading] = useState<boolean>(false)
     const [texts, setTexts] = useState<IText[]>([])
     const [newTexts, setNewTexts] = useState<IText[]>(texts)
     const [infoText, setInfoText] = useState<IText>({} as IText)
     const [festival, setFestival] = useState<IFestival>({} as IFestival)
 
+    // Modal
+    const [addNewEditionModalVisible, setAddNewEditionModalVisible] = useState<boolean>(false)
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
-    const [editingId, setEditingId] = useState<number>(0)
+
+    // Form
     const [formRowAddition] = Form.useForm()
     const [formRowEdition] = Form.useForm()
+    const [formNewFestival] = Form.useForm()
+    const [editingId, setEditingId] = useState<number>(0)
 
     useEffect(() => {
         setIsTextLoading(true)
@@ -105,7 +112,8 @@ const Dashboard: React.FC = () => {
             <List.Item key={ key } className="inline-flex items-center justify-between w-full">
                 {
                     editable ?
-                        <Form.Item className="w-full" name="text" initialValue={ item.text } rules={ [{ required: true, message: 'Entrez le texte' }] }>
+                        <Form.Item className="w-full" name="text" initialValue={ item.text }
+                            rules={ [{ required: true, message: 'Entrez le texte' }] }>
                             <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
@@ -210,8 +218,31 @@ const Dashboard: React.FC = () => {
             }))
     }
 
+    const handleNewEditionOkModal = (): void => {
+        console.log('handleNewEditionOkModal')
+        formNewFestival.validateFields().then(values => {
+            const startDate = new Date(values.dates[0])
+            const endDate = new Date(values.dates[1])
+            const { name, edition, latitude, longitude } = values
+            const location = { latitude, longitude }
+            FestivalService.create({ name, edition, startDate, endDate, location }).then(res => {
+                console.log({ res })
+                /*                setFestival({
+                    ...festival,
+                    ...res
+                })*/
+                // message.success('Festival créé', 2.5)
+            }).catch(err => message.error(`Erreur lors de la création: ${ err }`, 2.5))
+            // setAddNewEditionModalVisible(false)
+        }).catch(err => message.warn(`Validation failed: ${JSON.stringify(err)}`, 2.5))
+    }
+
     return (
         <Navigation>
+            <div className="flex mb-3">
+                <Button type="primary" className="button" icon={ <PlusOutlined/> }
+                    onClick={ () => setAddNewEditionModalVisible(true) }>Nouvelle édition</Button>
+            </div>
             <div className="grid grid-cols-12 gap-2 md:gap-5">
                 <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-8">
                     <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
@@ -234,6 +265,15 @@ const Dashboard: React.FC = () => {
                 </Card>
                 <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-4">
                     <div className="text-3xl text-center mb-5">Informations générales</div>
+                    <div className="flex">
+                        <Select>
+                            <Option value="Edition 2021">Edition 2021</Option>
+                            <Option value="2">2</Option>
+                            <Option value="3">3</Option>
+                            <Option value="4">4</Option>
+                            <Option value="5">5</Option>
+                        </Select>
+                    </div>
                     <Checkbox onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }>
                         Afficher les informations sur la page d&apos;accueil
                     </Checkbox>
@@ -287,6 +327,34 @@ const Dashboard: React.FC = () => {
                             }
                         </Select>
                     </Form.Item>
+                </Form>
+            </Modal>
+            <Modal title="Nouvelle édition" visible={ addNewEditionModalVisible } okText="Ajouter"
+                onCancel={ () => setAddNewEditionModalVisible(false) } cancelText="Annuler"
+                okButtonProps={ { className: 'button' } } onOk={ handleNewEditionOkModal }>
+                <Form form={ formNewFestival }>
+                    <Form.Item label="Name" name="name" className="inline-flex"
+                        rules={ [{ required: true, message: 'Entrez un nom' }] }>
+                        <Input type="text" defaultValue="Festival Mazette!"/>
+                    </Form.Item>
+                    <Form.Item label="Edition" name="edition"
+                        rules={ [{ required: true, message: 'Entrez l\'année de l\'édition' }] }>
+                        <InputNumber min={ 2021 } max={ 2100 } defaultValue={ 2021 }/>
+                    </Form.Item>
+                    <Form.Item label="Dates" name="dates" rules={ [{ required: true, message: 'Les dates sont obligatoires' }] }>
+                        <RangePicker/>
+                    </Form.Item>
+                    <div className="flex items-baseline space-x-4">
+                        <span>Coordonnées GPS : </span>
+                        <Form.Item name="latitude" rules={ [{ required: true }] }>
+                            <InputNumber className="w-full" placeholder="latitude" step="0.00000000001"
+                                defaultValue={ 0 }/>
+                        </Form.Item>
+                        <Form.Item name="longitude" rules={ [{ required: true }] }>
+                            <InputNumber className="w-full" placeholder="longitude" step="0.00000000001"
+                                defaultValue={ 0 }/>
+                        </Form.Item>
+                    </div>
                 </Form>
             </Modal>
         </Navigation>
