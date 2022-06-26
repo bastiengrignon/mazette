@@ -1,5 +1,6 @@
 import Input from '../Input'
 import emailJs from 'emailjs-com'
+import { isEmailValid } from '../../lib/validation'
 import loadable from '@loadable/component'
 import React, { useState } from 'react'
 
@@ -33,11 +34,10 @@ const ContactForm: React.FC = () => {
     }
 
     const validEmail = (value: string): void => {
-        const regexpEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        if (regexpEmail.test(value)) {
-            setEmailValid(true)
+        if (isEmailValid(value)) {
             setEmail(value)
-        } else setEmailValid(false)
+        }
+        setEmailValid(isEmailValid(value))
     }
 
     const clearInput = (): void => {
