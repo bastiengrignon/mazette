@@ -7,6 +7,7 @@ import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../serv
 import { datesMatched, formatDate, getDatesBetween } from '../../lib/date'
 
 import ComingSoon from '../../components/ComingSoon'
+import { COMING_SOON_MOVIES, COMING_SOON_MUSICS } from './Programmation.constants'
 const Anchor = loadable(() => import('../../components/Anchor'))
 const Vignette = loadable(() => import('../../components/Vignette'))
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
@@ -54,7 +55,7 @@ const Programmation: React.FC = () => {
                                 }
                             </div>
                         </div>
-                    )) : <ComingSoon>Programmation des musiques à venir</ComingSoon>
+                    )) : <ComingSoon>{ COMING_SOON_MUSICS }</ComingSoon>
             }
 
             <Anchor id={ programmationTitle.films } className={ titleCSS }/>
@@ -74,7 +75,7 @@ const Programmation: React.FC = () => {
                                 }
                             </div>
                         </div>
-                    )) : <ComingSoon>Programmation des courts-métrages à venir</ComingSoon>
+                    )) : <ComingSoon>{ COMING_SOON_MOVIES }</ComingSoon>
             }
             <Anchor id={ programmationTitle.concours } className={ titleCSS }/>
             <div className={ subtitleCSS }>

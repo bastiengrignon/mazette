@@ -14,6 +14,7 @@ import {
     TextType,
     TrombinoscopeService
 } from '../../services'
+import { MAZETTE, MAZETTE_WHO, SECTION_MOVIES, SECTION_MUSICS } from './Association.contants'
 import { associationTitle, staticImgFolder } from '../../constants'
 import { subtitleCSS, titleCSS } from '../Programmation'
 
@@ -46,7 +47,7 @@ const Association: React.FC = () => {
         <div>
             <div className="page-content">
                 <Anchor id={ associationTitle.association } className={ titleCSS }>
-                    { associationTitle.association } <span className="italic"> Mazette!</span>
+                    { associationTitle.association } <span className="italic"> { MAZETTE }</span>
                 </Anchor>
                 <div className="flex flex-col sm:flex-row items-center md:grid grid-cols-3">
                     <div className="w-1/2 sm:w-full h-auto float-left col-span-1">
@@ -58,7 +59,7 @@ const Association: React.FC = () => {
                     </div>
                 </div>
                 <Anchor id={ associationTitle.equipe } className={ titleCSS }>
-                    Mazette! C’est qui ?
+                    { MAZETTE_WHO }
                 </Anchor>
                 <div
                     className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
@@ -66,7 +67,8 @@ const Association: React.FC = () => {
                         trombinoscopes.map((trombinoscope, key) => (
                             <Skeleton key={ key } avatar={ true } active={ true } loading={ isTrombinoscopeLoading }>
                                 <AdvancedImage cldImg={ cloudinary.image(trombinoscope.image) }
-                                    alt={ trombinoscope.name } className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"/>
+                                    alt={ trombinoscope.name }
+                                    className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"/>
                             </Skeleton>
                         ))
                     }
@@ -84,7 +86,7 @@ const Association: React.FC = () => {
                 <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
                     <FormattedText textType={ TextType.previousEdition }/>
                 </div>
-                <div className="text-3xl my-5">Musiques: </div>
+                <div className="text-3xl my-5">{ SECTION_MUSICS }</div>
                 <div className="grid grid-cols-2 gap-2 sm:gap-10">
                     {
                         musics.map((music, key) => (
@@ -92,7 +94,7 @@ const Association: React.FC = () => {
                         ))
                     }
                 </div>
-                <div className="text-3xl my-5">Court-métrages: </div>
+                <div className="text-3xl my-5">{ SECTION_MOVIES }</div>
                 <div className="grid grid-cols-2 gap-2 sm:gap-10">
                     {
                         movies.map((film, key) => (
