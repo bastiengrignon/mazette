@@ -3,8 +3,17 @@ import React, { useEffect, useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
 import { Skeleton } from 'antd'
+import Vignette from '../../components/Vignette'
 import { cloudinary } from '../../index'
-import { ITrombinoscope, TextType, TrombinoscopeService } from '../../services'
+import {
+    IMovie,
+    IMusic,
+    ITrombinoscope,
+    MovieService,
+    MusicService,
+    TextType,
+    TrombinoscopeService
+} from '../../services'
 import { associationTitle, staticImgFolder } from '../../constants'
 import { subtitleCSS, titleCSS } from '../Programmation'
 
@@ -14,13 +23,23 @@ const FormattedText = loadable(() => import('../../components/Admin/FormattedTex
 
 const Association: React.FC = () => {
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
+    const [musics, setMusics] = useState<IMusic[]>([])
+    const [movies, setMovies] = useState<IMovie[]>([])
+
     const [isTrombinoscopeLoading, setTrombinoscopeLoading] = useState<boolean>(false)
+    const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false)
+    const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setTrombinoscopeLoading(true)
+        setIsMusicLoading(true)
+        setIsMovieLoading(true)
         TrombinoscopeService.getAll()
             .then(setTrombinoscopes)
             .finally(() => setTrombinoscopeLoading(false))
+        MusicService.getAll().then(setMusics).finally(() => setIsMusicLoading(false))
+        MovieService.getAll().then(setMovies).finally(() => setIsMovieLoading(false))
+
     }, [])
 
     return (
@@ -57,13 +76,29 @@ const Association: React.FC = () => {
                     <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
                         <FormattedText textType={ TextType.adhere }/>
                     </div>
-                    <iframe id="haWidget" scrolling="auto"
+                    <iframe id="haWidget"
                         src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
                         className="w-full px-2 h-screen pr-0 md:pr-10"/>
                 </div>
                 <Anchor id={ associationTitle.previousEdition } className={ titleCSS }/>
                 <div className={ `${ subtitleCSS } my-0 sm:my-2` }>
                     <FormattedText textType={ TextType.previousEdition }/>
+                </div>
+                <div className="text-3xl my-5">Musiques: </div>
+                <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                    {
+                        musics.map((music, key) => (
+                            <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
+                        ))
+                    }
+                </div>
+                <div className="text-3xl my-5">Court-métrages: </div>
+                <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                    {
+                        movies.map((film, key) => (
+                            <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
+                        ))
+                    }
                 </div>
             </div>
         </div>
