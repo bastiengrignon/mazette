@@ -87,7 +87,7 @@ const Association: React.FC = () => {
                     <FormattedText textType={ TextType.previousEdition }/>
                 </div>
                 <div className="text-3xl my-5">{ SECTION_MUSICS }</div>
-                <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                <div className="grid grid-cols-4 gap-2 sm:gap-10">
                     {
                         musics.map((music, key) => (
                             <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
@@ -95,7 +95,7 @@ const Association: React.FC = () => {
                     }
                 </div>
                 <div className="text-3xl my-5">{ SECTION_MOVIES }</div>
-                <div className="grid grid-cols-2 gap-2 sm:gap-10">
+                <div className="grid grid-cols-4 gap-2 sm:gap-10">
                     {
                         movies.map((film, key) => (
                             <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
