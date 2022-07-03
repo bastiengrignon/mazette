@@ -14,7 +14,7 @@ import {
     TextType,
     TrombinoscopeService
 } from '../../services'
-import { MAZETTE, MAZETTE_WHO, SECTION_MOVIES, SECTION_MUSICS } from './Association.contants'
+import { MAZETTE, MAZETTE_WHO, SECTION_COMPETITION, SECTION_MOVIES, SECTION_MUSICS } from './Association.contants'
 import { associationTitle, staticImgFolder } from '../../constants'
 import { subtitleCSS, titleCSS } from '../Programmation'
 
@@ -101,6 +101,10 @@ const Association: React.FC = () => {
                             <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
                         ))
                     }
+                </div>
+                <div className="text-3xl my-5">{ SECTION_COMPETITION }</div>
+                <div className="w-1/2 mx-auto">
+                    <FormattedText textType={ TextType.contest }/>
                 </div>
             </div>
         </div>
