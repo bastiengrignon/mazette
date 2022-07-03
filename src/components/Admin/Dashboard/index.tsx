@@ -24,6 +24,24 @@ import { FESTIVAL_ID } from '../../../constants'
 import { CommonService, IText, TextService, TextType } from '../../../services'
 import { FestivalService, IFestival } from '../../../services/admin/festival'
 
+import {
+    DASHBOARD_ADD_TEXT,
+    DASHBOARD_MODAL_NEW_TEXT_TITLE,
+    DASHBOARD_MODAL_TEXT,
+    DASHBOARD_MODAL_TEXT_RULE,
+    DASHBOARD_MODAL_TYPE,
+    DASHBOARD_MODAL_TYPE_RULE,
+    DASHBOARD_PLACEHOLDER_LATITUDE,
+    DASHBOARD_PLACEHOLDER_LONGITUDE,
+    DASHBOARD_SHOW_HOME_INFORMATION,
+    DASHBOARD_SHOW_MOVIES,
+    DASHBOARD_SHOW_MUSICS,
+    DASHBOARD_TITLE_DATE,
+    DASHBOARD_TITLE_GPS_COORDS,
+    DASHBOARD_TITLE_INFORMATION
+} from './Dashboard.constants'
+import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants'
+
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
 const { Panel } = Collapse
@@ -105,7 +123,8 @@ const Dashboard: React.FC = () => {
             <List.Item key={ key } className="inline-flex items-center justify-between w-full">
                 {
                     editable ?
-                        <Form.Item className="w-full" name="text" initialValue={ item.text } rules={ [{ required: true, message: 'Entrez le texte' }] }>
+                        <Form.Item className="w-full" name="text" initialValue={ item.text }
+                            rules={ [{ required: true, message: 'Entrez le texte' }] }>
                             <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
                         </Form.Item>
                         :
@@ -215,7 +234,7 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-12 gap-2 md:gap-5">
                 <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-8">
                     <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
-                        Ajouter un texte
+                        { DASHBOARD_ADD_TEXT }
                     </Button>
                     <Collapse accordion={ true } onChange={ cancel } defaultActiveKey={ 0 }>
                         {
@@ -233,26 +252,26 @@ const Dashboard: React.FC = () => {
                     </Collapse>
                 </Card>
                 <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-4">
-                    <div className="text-3xl text-center mb-5">Informations générales</div>
+                    <div className="text-3xl text-center mb-5">{ DASHBOARD_TITLE_INFORMATION }</div>
                     <Checkbox onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }>
-                        Afficher les informations sur la page d&apos;accueil
+                        { DASHBOARD_SHOW_HOME_INFORMATION }
                     </Checkbox>
                     <div className="flex items-baseline w-full justify-between">
-                        <div className="mt-5">Date du festival :</div>
+                        <div className="mt-5">{ DASHBOARD_TITLE_DATE }</div>
                         { festival.id &&
                             <RangePicker defaultValue={ [moment(festival.startDate), moment(festival.endDate)] }
                                 onChange={ handleFestivalDate }/> }
                     </div>
                     <div className="flex items-baseline w-full justify-between">
-                        <div className="w-1/2 mt-5">Coordonnées GPS :</div>
+                        <div className="w-1/2 mt-5">{ DASHBOARD_TITLE_GPS_COORDS }</div>
                         <div className="flex w-full justify-start space-x-4">
                             { festival.location &&
-                                <InputNumber className="w-full" placeholder="latitude" step="0.00000000001"
+                                <InputNumber className="w-full" placeholder={DASHBOARD_PLACEHOLDER_LATITUDE} step="0.00000000001"
                                     defaultValue={ festival.location.latitude }
                                     onChange={ handleFestivalLatitude }/>
                             }
                             { festival.location &&
-                                <InputNumber className="w-full" placeholder="longitude" step="0.00000000001"
+                                <InputNumber className="w-full" placeholder={DASHBOARD_PLACEHOLDER_LONGITUDE} step="0.00000000001"
                                     defaultValue={ festival.location.longitude }
                                     onChange={ handleFestivalLongitude }/>
                             }
@@ -260,25 +279,25 @@ const Dashboard: React.FC = () => {
                     </div>
                     <div className="my-5">
                         <Checkbox onChange={ handleShowMusics } checked={ festival.showMusic }>
-                            Afficher les musiques
+                            { DASHBOARD_SHOW_MUSICS }
                         </Checkbox>
                     </div>
                     <div className="my-5">
                         <Checkbox onChange={ handleShowMovies } checked={ festival.showMovie }>
-                            Afficher les courts-métrages
+                            { DASHBOARD_SHOW_MOVIES }
                         </Checkbox>
                     </div>
                 </Card>
             </div>
-            <Modal title="Nouveau texte" visible={ addRowModalVisible } okText="Ajouter"
-                onCancel={ () => setAddRowModalVisible(false) } cancelText="Annuler"
+            <Modal title={DASHBOARD_MODAL_NEW_TEXT_TITLE} visible={ addRowModalVisible } okText={MODAL_ADD_TEXT}
+                onCancel={ () => setAddRowModalVisible(false) } cancelText={MODAL_CANCEL_TEXT}
                 okButtonProps={ { className: 'button' } } onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
-                    <Form.Item label="Texte" name="text" rules={ [{ required: true, message: 'Entrez du texte' }] }>
+                    <Form.Item label={DASHBOARD_MODAL_TEXT} name="text" rules={ [{ required: true, message: DASHBOARD_MODAL_TEXT_RULE }] }>
                         <TinyMceEditor textareaName="text" form={ formRowAddition }/>
                     </Form.Item>
-                    <Form.Item label="Type" name="type"
-                        rules={ [{ required: true, message: 'Entrez le type de texte' }] }>
+                    <Form.Item label={DASHBOARD_MODAL_TYPE} name="type"
+                        rules={ [{ required: true, message: DASHBOARD_MODAL_TYPE_RULE }] }>
                         <Select>
                             {
                                 selectTextType.map((type, key) =>
