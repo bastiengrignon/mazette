@@ -17,3 +17,5 @@ export const formatDate = (date: Date): string =>
     }).format(new Date(date))
 
 export const datesMatched = (date1: Date, date2: Date): boolean => new Date(date1).toDateString() === new Date(date2).toDateString()
+
+export const isBetweenDates = (dateStart: Date, dateEnd: Date, dateToCheck: Date): boolean => new Date(dateToCheck).getTime() >= new Date(dateStart).getTime() && new Date(dateToCheck).getTime() <= new Date(dateEnd).getTime()

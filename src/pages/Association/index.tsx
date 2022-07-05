@@ -1,10 +1,13 @@
+import { AdvancedImage } from '@cloudinary/react'
+import { Skeleton } from 'antd'
 import loadable from '@loadable/component'
 import React, { useEffect, useState } from 'react'
 
-import { AdvancedImage } from '@cloudinary/react'
-import { Skeleton } from 'antd'
 import Vignette from '../../components/Vignette'
 import { cloudinary } from '../../index'
+import { isBetweenDates } from '../../lib/date'
+import { FESTIVAL_ID, associationTitle, staticImgFolder } from '../../constants'
+import { FestivalService, IFestival } from '../../services/admin/festival'
 import {
     IMovie,
     IMusic,
@@ -15,7 +18,6 @@ import {
     TrombinoscopeService
 } from '../../services'
 import { MAZETTE, MAZETTE_WHO, SECTION_COMPETITION, SECTION_MOVIES, SECTION_MUSICS } from './Association.contants'
-import { associationTitle, staticImgFolder } from '../../constants'
 import { subtitleCSS, titleCSS } from '../Programmation'
 
 const Anchor = loadable(() => import('../../components/Anchor'))
@@ -23,6 +25,7 @@ const Image = loadable(() => import('../../components/Image'))
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'))
 
 const Association: React.FC = () => {
+    const [festival, setFestival] = useState<IFestival>({} as IFestival)
     const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([])
     const [musics, setMusics] = useState<IMusic[]>([])
     const [movies, setMovies] = useState<IMovie[]>([])
@@ -35,6 +38,7 @@ const Association: React.FC = () => {
         setTrombinoscopeLoading(true)
         setIsMusicLoading(true)
         setIsMovieLoading(true)
+        FestivalService.getById(FESTIVAL_ID).then(setFestival)
         TrombinoscopeService.getAll()
             .then(setTrombinoscopes)
             .finally(() => setTrombinoscopeLoading(false))
@@ -89,7 +93,7 @@ const Association: React.FC = () => {
                 <div className="text-3xl my-5">{ SECTION_MUSICS }</div>
                 <div className="grid grid-cols-4 gap-2 sm:gap-10">
                     {
-                        musics.map((music, key) => (
+                        musics.filter(music => !isBetweenDates(festival.startDate, festival.endDate, music.publicationDate)).map((music, key) => (
                             <Vignette key={ key } type="music" properties={ music } loading={ isMusicLoading }/>
                         ))
                     }
@@ -97,7 +101,7 @@ const Association: React.FC = () => {
                 <div className="text-3xl my-5">{ SECTION_MOVIES }</div>
                 <div className="grid grid-cols-4 gap-2 sm:gap-10">
                     {
-                        movies.map((film, key) => (
+                        movies.filter(movie => !isBetweenDates(festival.startDate, festival.endDate, movie.publicationDate)).map((film, key) => (
                             <Vignette key={ key } type="movie" properties={ film } loading={ isMovieLoading }/>
                         ))
                     }
