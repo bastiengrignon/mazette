@@ -1,3 +1,10 @@
+import isBetween from 'dayjs/plugin/isBetween'
+import dayjs, { Dayjs } from 'dayjs'
+
+dayjs.extend(isBetween)
+
+type AcceptedDate = Dayjs | Date | string
+
 export const getDatesBetween = (startDate: Date, endDate: Date, includeEndDate?: boolean): Date[] => {
     let dates: Date[] = []
     const currentDate = startDate
@@ -18,4 +25,5 @@ export const formatDate = (date: Date): string =>
 
 export const datesMatched = (date1: Date, date2: Date): boolean => new Date(date1).toDateString() === new Date(date2).toDateString()
 
-export const isBetweenDates = (dateStart: Date, dateEnd: Date, dateToCheck: Date): boolean => new Date(dateToCheck).getTime() >= new Date(dateStart).getTime() && new Date(dateToCheck).getTime() <= new Date(dateEnd).getTime()
+export const isBetweenDates = (dateStart: AcceptedDate, dateEnd: AcceptedDate, dateToCheck: AcceptedDate): boolean =>
+    dayjs(dateToCheck).isBetween(dayjs(dateStart), dayjs(dateEnd), 'year', '[]')
