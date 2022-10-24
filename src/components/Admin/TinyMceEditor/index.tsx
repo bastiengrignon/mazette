@@ -4,9 +4,9 @@ import React from 'react'
 
 import { Editor } from '@tinymce/tinymce-react'
 
-const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons preview quickbars'
+const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons preview quickbars image'
 const editorToolbarConfig = 'undo redo | fontselect formatselect | removeformat bold italic underline strikethrough | link ' +
-    'media quickimage emoticons | bullist numlist | alignleft aligncenter alignright alignjustify | preview'
+    'media image emoticons | bullist numlist | alignleft aligncenter alignright alignjustify | preview'
 
 interface TinyMceEditorProps {
     textareaName: string
@@ -35,6 +35,8 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
             entity_encoding    : 'raw',
             language           : 'fr_FR',
             min_height         : 500,
+            automatic_uploads  : true,
+            images_upload_url  : process.env.REACT_APP_API_URL + '/text/upload-image',
         }}
     />
 )
