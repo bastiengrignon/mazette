@@ -29,7 +29,7 @@
   "dependencies": {
     "@cloudinary/base": "^1.0.0-beta.4",
     "@cloudinary/react": "^1.0.0-beta.11",
-    "@craco/craco": "^6.3.0",
+    "@craco/craco": "^7.0.0",
     "@loadable/component": "^5.15.0",
     "@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
     "@tinymce/tinymce-react": "^4.2.0",
@@ -46,7 +46,7 @@
     "react-leaflet": ">=3.1.0 <3.2.0 || ^3.2.1",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "sanitize-html": "^2.5.1"
   },
   "scripts": {
