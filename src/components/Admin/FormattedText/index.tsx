@@ -71,6 +71,7 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
                             }),
                         },
                         allowedAttributes: {
+                            'p'     : ['style'],
                             'ul'    : ['class'],
                             'a'     : ['href', 'target', 'alt', 'class'],
                             'iframe': ['src', 'class', 'allow', 'allowfullscreen'],
