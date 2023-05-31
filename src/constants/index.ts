@@ -2,9 +2,6 @@ import { DropdownItem } from '../components/DropDown'
 
 const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
-export const musicFolder = `${ defaultImgFolder }/musics`
-export const filmsImgFolder = `${ defaultImgFolder }/films`
-export const partnersFolder = `${ defaultImgFolder }/partners`
 
 export const FESTIVAL_ID = 1
 
