@@ -30,7 +30,7 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
         onEditorChange={(value) => form.setFields([{ name: textareaName, value: value }]) }
         init={{
             menubar            : false,
-            forced_root_block  : false,
+            forced_root_block  : 'div',
             no_newline_selector: '',
             entity_encoding    : 'raw',
             language           : 'fr_FR',

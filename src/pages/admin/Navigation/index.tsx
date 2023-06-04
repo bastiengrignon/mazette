@@ -60,7 +60,7 @@ const Navigation: React.FC = ({ children }) => {
                     message.success(`${ result.username } connecté`)
                 })
                 .catch(async (error: AxiosError) => {
-                    await message.error(error.response?.data)
+                    await message.error(error.response?.data as string)
                     setConfirmLoginLoading(false)
                     CookieService.set(CookieService.authToken, 'false')
                 })
