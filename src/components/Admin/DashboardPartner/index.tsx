@@ -132,7 +132,7 @@ const DashboardPartner: React.FC = () => {
             <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ partners }
                 loading={ isPartnerLoading } setEditingId={ setEditingId }/>
 
-            <Modal title="Nouveau partenaire" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau partenaire" open={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddPartners form={ formRowAddition } onUploadChange={ handleChange }/>

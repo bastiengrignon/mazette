@@ -120,7 +120,7 @@ const DashboardTrombinoscope: React.FC = () => {
             <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ trombinoscopes }
                 loading={ isTrombinoscopeLoading } setEditingId={ setEditingId }/>
 
-            <Modal title="Nouveau trombinoscope" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau trombinoscope" open={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddTrombinoscope form={ formRowAddition } onUploadChange={ handleFileChange }/>

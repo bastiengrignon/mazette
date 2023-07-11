@@ -110,7 +110,7 @@ const Navigation: React.FC = ({ children }) => {
                     { !isModalVisible && children }
                 </main>
             </div>
-            <Modal title="Admin Login" visible={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: 'none' } }}
+            <Modal title="Admin Login" open={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: 'none' } }}
                 confirmLoading={ confirmLoginLoading } onOk={ handleLogin } okText="Connexion">
                 <Form name="login_form" form={ loginForm } initialValues={{ remember: true }}>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: 'Veuillez entrer votre nom d\'utilisateur!' }] }>

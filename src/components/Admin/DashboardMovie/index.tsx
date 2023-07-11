@@ -186,7 +186,7 @@ const DashboardMovie: React.FC = () => {
             <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ movies }
                 loading={ isMovieLoading } setEditingId={ setEditingId }/>
 
-            <Modal title="Nouveau court-métrage" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouveau court-métrage" open={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddMovie form={ formRowAddition } onUploadChange={ handleChange }/>

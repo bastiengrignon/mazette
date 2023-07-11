@@ -59,7 +59,7 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties, ...props }) => {
                                 className="w-full h-full"/>
                         </div>
             }
-            <Modal visible={ visibility } onCancel={ () => setVisibility(false)} footer={ null }
+            <Modal open={ visibility } onCancel={ () => setVisibility(false)} footer={ null }
                 title={ formattedModalTitle() } centered={ true }>
                 <div className="text-xl">
                     { isMusic() ? `${ properties.type }` : `${ properties.location }, ${ properties.duration } (${ properties.date })` }

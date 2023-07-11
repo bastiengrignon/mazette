@@ -288,7 +288,7 @@ const Dashboard: React.FC = () => {
                     </div>
                 </Card>
             </div>
-            <Modal title={ DASHBOARD_MODAL_NEW_TEXT_TITLE } visible={ addRowModalVisible } okText={ MODAL_ADD_TEXT }
+            <Modal title={ DASHBOARD_MODAL_NEW_TEXT_TITLE } open={ addRowModalVisible } okText={ MODAL_ADD_TEXT }
                 onCancel={ () => setAddRowModalVisible(false) } cancelText={ MODAL_CANCEL_TEXT }
                 okButtonProps={ { className: 'button' } } onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>

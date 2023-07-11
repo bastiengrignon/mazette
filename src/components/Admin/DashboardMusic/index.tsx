@@ -165,7 +165,7 @@ const DashboardMusic: React.FC = () => {
             <CustomTable form={ formRowEdition } columns={ mergedColumns } dataSource={ musics }
                 loading={ isMusicLoading } setEditingId={ setEditingId }/>
 
-            <Modal title="Nouvel artiste" visible={ addRowModalVisible } okText="Ajouter"
+            <Modal title="Nouvel artiste" open={ addRowModalVisible } okText="Ajouter"
                 onCancel={ () => setAddRowModalVisible(false) } okButtonProps={ { className: 'button' } }
                 onOk={ handleOkModal } cancelText="Annuler">
                 <AdminFormAddArtist form={ formRowAddition } onUploadChange={ handleChange }/>
