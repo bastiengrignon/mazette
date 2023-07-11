@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import {
     Button,
     Card,
-    Checkbox,
     Collapse,
     DatePicker,
     Form,
@@ -14,12 +13,12 @@ import {
     Modal,
     Select,
     Skeleton,
+    Switch,
     Typography,
     message
 } from 'antd'
 import { EditOutlined, SaveOutlined } from '@ant-design/icons'
 
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import { FESTIVAL_ID } from '../../../constants'
 import { CommonService, IText, TextService, TextType } from '../../../services'
 import { FestivalService, IFestival } from '../../../services/admin/festival'
@@ -167,8 +166,8 @@ const Dashboard: React.FC = () => {
 
     const collapseTitle = (textType: string): string => CommonService.capitalize(selectTextType.find(item => item.value === textType)?.text || '')
 
-    const updateInformationsVisibility = (event: CheckboxChangeEvent): void => {
-        TextService.update(infoText?.id || 0, { ...infoText, isShowed: event.target.checked }).then(res =>
+    const updateInformationsVisibility = (checked: boolean): void => {
+        TextService.update(infoText?.id || 0, { ...infoText, isShowed: checked }).then(res =>
             setInfoText({
                 ...infoText,
                 ...res
@@ -185,10 +184,10 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleFestivalLatitude = (newLatitude: number): void => {
+    const handleFestivalLatitude = (newLatitude: number | null): void => {
         FestivalService.update(festival.id || 0, {
             ...festival,
-            location: { ...festival.location, latitude: newLatitude }
+            location: { ...festival.location, latitude: newLatitude || 0 }
         }).then(res =>
             setFestival({
                 ...festival,
@@ -196,10 +195,10 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleFestivalLongitude = (newLongitude: number): void => {
+    const handleFestivalLongitude = (newLongitude: number | null): void => {
         FestivalService.update(festival.id || 0, {
             ...festival,
-            location: { ...festival.location, longitude: newLongitude }
+            location: { ...festival.location, longitude: newLongitude || 0 }
         }).then(res =>
             setFestival({
                 ...festival,
@@ -207,10 +206,10 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleShowMusics = (event: CheckboxChangeEvent): void => {
+    const handleShowMusics = (checked: boolean): void => {
         FestivalService.update(FESTIVAL_ID, {
             ...festival,
-            showMusic: event.target.checked
+            showMusic: checked
         }).then(res =>
             setFestival({
                 ...festival,
@@ -218,10 +217,10 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleShowMovies = (event: CheckboxChangeEvent): void => {
+    const handleShowMovies = (checked: boolean): void => {
         FestivalService.update(FESTIVAL_ID, {
             ...festival,
-            showMovie: event.target.checked
+            showMovie: checked
         }).then(res =>
             setFestival({
                 ...festival,
@@ -253,9 +252,8 @@ const Dashboard: React.FC = () => {
                 </Card>
                 <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-4">
                     <div className="text-3xl text-center mb-5">{ DASHBOARD_TITLE_INFORMATION }</div>
-                    <Checkbox onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }>
-                        { DASHBOARD_SHOW_HOME_INFORMATION }
-                    </Checkbox>
+                    <Switch onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }
+                        className="mr-2"/> { DASHBOARD_SHOW_HOME_INFORMATION }
                     <div className="flex items-baseline w-full justify-between">
                         <div className="mt-5">{ DASHBOARD_TITLE_DATE }</div>
                         { festival.id &&
@@ -266,37 +264,39 @@ const Dashboard: React.FC = () => {
                         <div className="w-1/2 mt-5">{ DASHBOARD_TITLE_GPS_COORDS }</div>
                         <div className="flex w-full justify-start space-x-4">
                             { festival.location &&
-                                <InputNumber className="w-full" placeholder={DASHBOARD_PLACEHOLDER_LATITUDE} step="0.00000000001"
+                                <InputNumber className="w-full" placeholder={ DASHBOARD_PLACEHOLDER_LATITUDE }
+                                    step="0.00000000001"
                                     defaultValue={ festival.location.latitude }
                                     onChange={ handleFestivalLatitude }/>
                             }
                             { festival.location &&
-                                <InputNumber className="w-full" placeholder={DASHBOARD_PLACEHOLDER_LONGITUDE} step="0.00000000001"
+                                <InputNumber className="w-full" placeholder={ DASHBOARD_PLACEHOLDER_LONGITUDE }
+                                    step="0.00000000001"
                                     defaultValue={ festival.location.longitude }
                                     onChange={ handleFestivalLongitude }/>
                             }
                         </div>
                     </div>
-                    <div className="my-5">
-                        <Checkbox onChange={ handleShowMusics } checked={ festival.showMusic }>
-                            { DASHBOARD_SHOW_MUSICS }
-                        </Checkbox>
+                    <div className="my-5 flex align-center">
+                        <Switch onChange={ handleShowMusics } checked={ festival.showMusic }
+                            className="mr-2"/> { DASHBOARD_SHOW_MUSICS }
                     </div>
                     <div className="my-5">
-                        <Checkbox onChange={ handleShowMovies } checked={ festival.showMovie }>
-                            { DASHBOARD_SHOW_MOVIES }
-                        </Checkbox>
+                        <Switch onChange={ handleShowMovies } checked={ festival.showMovie }
+                            className="mr-2"/> { DASHBOARD_SHOW_MOVIES }
+
                     </div>
                 </Card>
             </div>
-            <Modal title={DASHBOARD_MODAL_NEW_TEXT_TITLE} visible={ addRowModalVisible } okText={MODAL_ADD_TEXT}
-                onCancel={ () => setAddRowModalVisible(false) } cancelText={MODAL_CANCEL_TEXT}
+            <Modal title={ DASHBOARD_MODAL_NEW_TEXT_TITLE } visible={ addRowModalVisible } okText={ MODAL_ADD_TEXT }
+                onCancel={ () => setAddRowModalVisible(false) } cancelText={ MODAL_CANCEL_TEXT }
                 okButtonProps={ { className: 'button' } } onOk={ handleOkModal }>
                 <Form form={ formRowAddition }>
-                    <Form.Item label={DASHBOARD_MODAL_TEXT} name="text" rules={ [{ required: true, message: DASHBOARD_MODAL_TEXT_RULE }] }>
+                    <Form.Item label={ DASHBOARD_MODAL_TEXT } name="text"
+                        rules={ [{ required: true, message: DASHBOARD_MODAL_TEXT_RULE }] }>
                         <TinyMceEditor textareaName="text" form={ formRowAddition }/>
                     </Form.Item>
-                    <Form.Item label={DASHBOARD_MODAL_TYPE} name="type"
+                    <Form.Item label={ DASHBOARD_MODAL_TYPE } name="type"
                         rules={ [{ required: true, message: DASHBOARD_MODAL_TYPE_RULE }] }>
                         <Select>
                             {

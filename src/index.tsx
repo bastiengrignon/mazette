@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd'
 import axios from 'axios'
 import frFR from 'antd/lib/locale/fr_FR'
+import 'moment/locale/fr'
 
 import { Cloudinary } from '@cloudinary/base'
 import React from 'react'
