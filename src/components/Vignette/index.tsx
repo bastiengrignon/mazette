@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import { AdvancedImage } from '@cloudinary/react'
 import { cloudinary } from '../../index'
-import { fill } from '@cloudinary/base/actions/resize'
+import { fill } from '@cloudinary/url-gen/actions/resize'
 import { IMovie, IMusic } from '../../services'
 
 const Link = loadable(() => import('../Link'))

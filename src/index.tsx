@@ -3,7 +3,7 @@ import axios from 'axios'
 import frFR from 'antd/lib/locale/fr_FR'
 import 'moment/locale/fr'
 
-import { Cloudinary } from '@cloudinary/base'
+import { Cloudinary } from '@cloudinary/url-gen'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
