@@ -3,7 +3,7 @@ import { DropdownItem } from '../components/DropDown'
 const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
 
-export const FESTIVAL_ID = 1
+export const FESTIVAL_ID = 'd3d3c4a0-afac-4e4b-b9bc-c10e5162d308'
 
 export const adminSubdomain = 'admin'
 
