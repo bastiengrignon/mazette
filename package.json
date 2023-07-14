@@ -27,6 +27,7 @@
     "url": "https://github.com/bastiengrignon/mazette"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
     "@cloudinary/react": "^1.11.2",
     "@cloudinary/url-gen": "^1.10.1",
     "@craco/craco": "^6.3.0",

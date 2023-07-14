@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 
 import { FESTIVAL_ID } from '../../../../../constants'
@@ -37,9 +37,9 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
 
 
     const disabledDates = (current) => {
-        const festivalStartDate = moment(festival.startDate).format('YYYY-MM-DD')
-        const festivalEndDate = moment(festival.endDate).format('YYYY-MM-DD')
-        const currentDay = moment(current).format('YYYY-MM-DD')
+        const festivalStartDate = dayjs(festival.startDate).format('YYYY-MM-DD')
+        const festivalEndDate = dayjs(festival.endDate).format('YYYY-MM-DD')
+        const currentDay = dayjs(current).format('YYYY-MM-DD')
         return current && currentDay !== festivalStartDate && currentDay !== festivalEndDate
     }
 
@@ -69,7 +69,7 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
             <Form.Item label={ ADMIN_ARTIST_IMAGE } name="image"
                 rules={ [{ required: true, message: ADMIN_ARTIST_IMAGE_RULE }] }>
                 <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
-                    <Button icon={ <UploadOutlined/> }>{ ADMIN_ARTIST_IMAGE_RULE }</Button>
+                    <Button icon={ <UploadOutlined rev={undefined} /> }>{ ADMIN_ARTIST_IMAGE_RULE }</Button>
                 </Upload>
             </Form.Item>
         </Form>

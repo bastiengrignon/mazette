@@ -62,7 +62,7 @@ const DashboardMusic: React.FC = () => {
                     })
                 setAddRowModalVisible(false)
             })
-            .catch(err => message.warn('Validation failed: ', err))
+            .catch(err => message.warning('Validation failed: ', err))
     }
 
     const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info))

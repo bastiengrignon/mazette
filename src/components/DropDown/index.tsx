@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Menu } from 'antd'
+import { Dropdown, MenuProps } from 'antd'
 
 import { NavHashLink } from 'react-router-hash-link'
 
@@ -16,6 +16,19 @@ interface DropDownProps {
     isMobile?: boolean
 }
 
+const menuStyle = {
+    boxShadow      : 'none',
+    backgroundColor: 'transparent',
+    padding        : 0,
+    borderRadius   : 0,
+}
+
+const dropdownRenderMenu = (menu) => (
+    <div>
+        {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+    </div>
+)
+
 const DropDown: React.FC<DropDownProps> = ({
     children,
     className,
@@ -29,24 +42,31 @@ const DropDown: React.FC<DropDownProps> = ({
         onItemClick && onItemClick()
     }
 
-    const dropdownMenu = () => (
-        <Menu>
-            {
-                items.map((item, key) => (
-                    <Menu.Item key={ key } onClick={ handleClick }
-                        className="pr-2 py-2 bg-red hover:bg-white uppercase font-light text-right text-white hover:text-red text-base lg:text-xl border border-transparent hover:border-red">
-                        <NavHashLink to={ `${ item.link }#${ item.name }` }>
-                            { item.name }
-                        </NavHashLink>
-                    </Menu.Item>
-                ))
-            }
-        </Menu>
-    )
+    const menuItems: MenuProps['items'] = items.map((item, key) => ({
+        key,
+        label: (
+            <div
+                key={ key }
+                onClick={ handleClick }
+                className="uppercase font-light text-right text-white hover:text-red text-base lg:text-xl border border-transparent hover:bg-white">
+                <NavHashLink to={ `${ item.link }#${ item.name }` } className="hover:text-red">
+                    { item.name }
+                </NavHashLink>
+            </div>
+
+        )
+    }))
 
     return (
-        <Dropdown overlay={ dropdownMenu } overlayClassName="bg-red" placement="bottomCenter" trigger={ [ isMobile ? 'click' : 'hover' ] }>
-            <div className={ `inline-flex items-center w-full justify-center h-full cursor-pointer ${ className } ${ activeClassName }` }>
+        <Dropdown
+            menu={ { items: menuItems } }
+            overlayClassName="bg-red"
+            placement="bottomRight"
+            trigger={ [isMobile ? 'click' : 'hover'] }
+            dropdownRender={ dropdownRenderMenu }
+        >
+            <div
+                className={ `inline-flex items-center w-full justify-center h-full cursor-pointer ${ className } ${ activeClassName }` }>
                 { children }
             </div>
         </Dropdown>

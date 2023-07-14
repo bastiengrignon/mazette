@@ -110,8 +110,7 @@ const DashboardMovie: React.FC = () => {
             sorter   : (a: IMovie, b: IMovie) => Number(a.publicationDate) - Number(b.publicationDate),
             render(date: Date) {
                 return <span>{ formatDate(date) }</span>
-            }
-
+            },
         },
         {
             title    : 'Lien Vidéo',
@@ -167,7 +166,7 @@ const DashboardMovie: React.FC = () => {
                     })
                 setAddRowModalVisible(false)
             })
-            .catch(err => message.warn('Validation failed: ', err))
+            .catch(err => message.warning('Validation failed: ', err))
     }
 
     const openModalPreview = (imageId: string) => {

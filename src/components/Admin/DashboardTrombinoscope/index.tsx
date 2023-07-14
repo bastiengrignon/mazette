@@ -101,7 +101,7 @@ const DashboardTrombinoscope: React.FC = () => {
                     })
                 setAddRowModalVisible(false)
             })
-            .catch(err => message.warn('Validation failed: ', err))
+            .catch(err => message.warning('Validation failed: ', err))
     }
 
     const handleFileChange = (info: UploadChangeParam<UploadFile<File>>): void => setFile(UploadService.handleChange(info))

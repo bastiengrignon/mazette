@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React  from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { DatePicker, Input } from 'antd'
 
 import { ColumnInputType } from '../../index'
@@ -11,7 +11,7 @@ interface CellInputNodeProps {
 }
 
 const CellInputNode: React.FC<CellInputNodeProps> = ({ inputType, value, ...restProps }) => {
-    const newValue = inputType === 'date' ? moment(value || undefined) : value
+    const newValue = inputType === 'date' ? dayjs(value || undefined) : value
 
     switch (inputType) {
     case 'textarea':

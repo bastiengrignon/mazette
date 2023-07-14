@@ -1,7 +1,8 @@
 import { ConfigProvider } from 'antd'
 import axios from 'axios'
+import dayjs from 'dayjs'
 import frFR from 'antd/lib/locale/fr_FR'
-import 'moment/locale/fr'
+import 'dayjs/locale/fr'
 
 import { Cloudinary } from '@cloudinary/url-gen'
 import React from 'react'
@@ -12,8 +13,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import CookieNotice from './components/CookieNotice'
 import Routes from './components/Routes'
 import { adminSubdomain } from './constants'
-import 'antd/dist/antd.css'
 import './index.css'
+
+dayjs.locale('fr')
 
 const App: React.FC = () => (
     <div className="min-h-full flex flex-col justify-between">

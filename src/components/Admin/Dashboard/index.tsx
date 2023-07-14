@@ -1,5 +1,5 @@
+import dayjs from 'dayjs'
 import loadable from '@loadable/component'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
 import {
@@ -134,13 +134,13 @@ const Dashboard: React.FC = () => {
                         <span className="inline-flex justify-around space-x-3 ml-5">
                             <div className="text-blue-500 cursor-pointer"
                                 onClick={ () => saveRow(item.id) }>
-                                <SaveOutlined/>
+                                <SaveOutlined rev={undefined}/>
                             </div>
                             <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
                         </span>
                         :
                         <div className="ml-5 text-blue-500 cursor-pointer" onClick={ () => editRow(item) }>
-                            <EditOutlined/>
+                            <EditOutlined rev={undefined} />
                         </div>
                 }
             </List.Item>
@@ -161,7 +161,7 @@ const Dashboard: React.FC = () => {
                     formRowAddition.resetFields()
                 })
             setAddRowModalVisible(false)
-        }).catch(err => message.warn('Validation failed: ', err))
+        }).catch(err => message.warning('Validation failed: ', err))
     }
 
     const collapseTitle = (textType: string): string => CommonService.capitalize(selectTextType.find(item => item.value === textType)?.text || '')
@@ -257,7 +257,7 @@ const Dashboard: React.FC = () => {
                     <div className="flex items-baseline w-full justify-between">
                         <div className="mt-5">{ DASHBOARD_TITLE_DATE }</div>
                         { festival.id &&
-                            <RangePicker defaultValue={ [moment(festival.startDate), moment(festival.endDate)] }
+                            <RangePicker defaultValue={ [dayjs(festival.startDate), dayjs(festival.endDate)] }
                                 onChange={ handleFestivalDate }/> }
                     </div>
                     <div className="flex items-baseline w-full justify-between">

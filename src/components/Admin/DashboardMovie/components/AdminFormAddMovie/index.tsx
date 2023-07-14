@@ -1,4 +1,4 @@
-import moment from 'moment/moment'
+import dayjs from 'dayjs'
 import { Button, DatePicker, Form, FormInstance, Input, TimePicker, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 
@@ -33,9 +33,9 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
 
 
     const disabledDates = (current) => {
-        const festivalStartDate = moment(festival.startDate).format('YYYY-MM-DD')
-        const festivalEndDate = moment(festival.endDate).format('YYYY-MM-DD')
-        const currentDay = moment(current).format('YYYY-MM-DD')
+        const festivalStartDate = dayjs(festival.startDate).format('YYYY-MM-DD')
+        const festivalEndDate = dayjs(festival.endDate).format('YYYY-MM-DD')
+        const currentDay = dayjs(current).format('YYYY-MM-DD')
         return current && currentDay !== festivalStartDate && currentDay !== festivalEndDate
     }
 
@@ -81,7 +81,7 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
                     rules={ [{ required: true, message: ADMIN_MOVIE_IMAGE_THUMBNAIL_RULE }] }>
                     <Upload name="imgThumbnail" onChange={ onUploadChange }
                         customRequest={ UploadService.dummyUploadRequest }>
-                        <Button icon={ <UploadOutlined/> }>{ ADMIN_MOVIE_IMAGE_ADD_FILE }</Button>
+                        <Button icon={ <UploadOutlined rev={undefined} /> }>{ ADMIN_MOVIE_IMAGE_ADD_FILE }</Button>
                     </Upload>
                 </Form.Item>
                 <Form.Item label={ ADMIN_MOVIE_LINK }>

@@ -20,11 +20,11 @@ const activatedClassCSS = 'flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 
 const deactivatedClassCSS = 'flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100'
 
 const adminTabIcon = (url: string): React.ReactNode => {
-    if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
-    if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
-    if (url === RouterUrl.adminPartner) return <TeamOutlined />
-    if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />
-    else return <DashboardOutlined />
+    if (url === RouterUrl.adminMovie) return <VideoCameraOutlined rev={undefined} />
+    if (url === RouterUrl.adminMusic) return <PlayCircleOutlined rev={undefined} />
+    if (url === RouterUrl.adminPartner) return <TeamOutlined rev={undefined} />
+    if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined rev={undefined} />
+    else return <DashboardOutlined rev={undefined} />
 }
 
 const adminTitleFromPathname = (url: string): string => {
@@ -73,14 +73,14 @@ const Navigation: React.FC = ({ children }) => {
             <div className="col-span-1 sm:col-span-2 md:col-span-2 bg-gray-900">
                 <div className="flex items-center justify-center mt-8">
                     <Link to={ RouterUrl.home } className="inline-flex justify-center items-center text-2xl mx-2">
-                        <MenuOutlined className="text-white flex md:hidden" />
-                        <FireFilled className="text-green hidden md:flex"/>
+                        <MenuOutlined className="text-white flex md:hidden" rev={ undefined } />
+                        <FireFilled className="text-green hidden md:flex" rev={ undefined }/>
                         <span className="text-white ml-2 font-semibold hidden md:flex">Mazette! Dashboard</span>
                     </Link>
                 </div>
                 <nav className="my-10 capitalize">
                     <Link to={ RouterUrl.home } className={ location.pathname === RouterUrl.home ? activatedClassCSS : deactivatedClassCSS }>
-                        <DashboardOutlined />
+                        <DashboardOutlined rev={undefined} />
                         <span className="mx-3 hidden md:flex">Dashboard</span>
                     </Link>
                     <div className="mt-2.5 space-y-2.5">
@@ -97,7 +97,7 @@ const Navigation: React.FC = ({ children }) => {
                         }
                     </div>
                     <Link to={ RouterUrl.home } onClick={ logout } className={ `${deactivatedClassCSS} mt-24` }>
-                        <LogoutOutlined />
+                        <LogoutOutlined rev={undefined} />
                         <span className="mx-3 hidden md:flex">Déconnexion</span>
                     </Link>
                 </nav>
