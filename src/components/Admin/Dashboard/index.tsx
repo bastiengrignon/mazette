@@ -177,7 +177,7 @@ const Dashboard: React.FC = () => {
     const handleFestivalDate = (_, dateString: [string, string]): void => {
         const startDate = new Date(dateString[0])
         const endDate = new Date(dateString[1])
-        FestivalService.update(festival.id || 0, { ...festival, startDate, endDate }).then(res =>
+        FestivalService.update(festival.id || FESTIVAL_ID, { ...festival, startDate, endDate }).then(res =>
             setFestival({
                 ...festival,
                 ...res
@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
     }
 
     const handleFestivalLatitude = (newLatitude: number | null): void => {
-        FestivalService.update(festival.id || 0, {
+        FestivalService.update(festival.id || FESTIVAL_ID, {
             ...festival,
             location: { ...festival.location, latitude: newLatitude || 0 }
         }).then(res =>
@@ -196,7 +196,7 @@ const Dashboard: React.FC = () => {
     }
 
     const handleFestivalLongitude = (newLongitude: number | null): void => {
-        FestivalService.update(festival.id || 0, {
+        FestivalService.update(festival.id || FESTIVAL_ID, {
             ...festival,
             location: { ...festival.location, longitude: newLongitude || 0 }
         }).then(res =>

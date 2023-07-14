@@ -1,5 +1,5 @@
 export interface IFestival {
-    id: number
+    id: string
     name: string
     location: ICoordinates
     startDate: Date

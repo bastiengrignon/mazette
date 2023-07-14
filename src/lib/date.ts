@@ -26,4 +26,4 @@ export const formatDate = (date: Date): string =>
 export const datesMatched = (date1: Date, date2: Date): boolean => new Date(date1).toDateString() === new Date(date2).toDateString()
 
 export const isBetweenDates = (dateStart: AcceptedDate, dateEnd: AcceptedDate, dateToCheck: AcceptedDate): boolean =>
-    dayjs(dateToCheck).isBetween(dayjs(dateStart), dayjs(dateEnd), 'year', '[]')
+    dayjs(dateToCheck).isBetween(dayjs(dateStart), dayjs(dateEnd), 'day', '[]')
