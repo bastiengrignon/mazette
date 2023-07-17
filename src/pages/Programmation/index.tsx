@@ -18,6 +18,8 @@ export const subtitleCSS = 'text-base sm:text-lg md:text-xl'
 
 const dateCSS = 'text-xl sm:text-2xl mt-4 sm:mt-6 mb-2 sm:mb-8 font-sifonn capitalize'
 
+const getFestivalDate = (festival: IFestival) => getDatesBetween(new Date(festival.startDate), new Date(festival.endDate), true)
+
 const Programmation: React.FC = () => {
     const [festival, setFestival] = useState<IFestival>({} as IFestival)
     const [musics, setMusics] = useState<IMusic[]>([])
@@ -33,8 +35,6 @@ const Programmation: React.FC = () => {
         MusicService.getAll().then(setMusics).finally(() => setIsMusicLoading(false))
         MovieService.getAll().then(setMovies).finally(() => setIsMovieLoading(false))
     }, [])
-
-    const getFestivalDate = (festival: IFestival) => getDatesBetween(new Date(festival.startDate), new Date(festival.endDate), true)
 
     return (
         <div className="flex flex-col z-10 page-content">
