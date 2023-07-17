@@ -35,7 +35,11 @@ const adminTitleFromPathname = (url: string): string => {
     else return 'Dashboard'
 }
 
-const Navigation: React.FC = ({ children }) => {
+interface NavigationProps {
+    children?: React.ReactNode
+}
+
+const Navigation: React.FC<NavigationProps> = ({ children }) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(!AuthenticationService.connectedUserCookie())
     const [confirmLoginLoading, setConfirmLoginLoading] = useState<boolean>(false)
     const [loginForm] = Form.useForm()

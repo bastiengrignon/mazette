@@ -8,6 +8,7 @@ import { Cloudinary } from '@cloudinary/url-gen'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { theme } from './constants/theme'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import CookieNotice from './components/CookieNotice'
@@ -35,7 +36,7 @@ const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === admi
 
 ReactDOM.render(
     <React.StrictMode>
-        <ConfigProvider locale={frFR}>
+        <ConfigProvider locale={frFR} theme={theme}>
             <App/>
         </ConfigProvider>
     </React.StrictMode>,

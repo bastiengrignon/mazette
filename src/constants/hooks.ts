@@ -1,5 +1,4 @@
 import ReactGA from 'react-ga'
-import { setInterval } from 'timers'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 

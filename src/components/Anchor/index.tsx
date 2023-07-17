@@ -3,6 +3,7 @@ import React from 'react'
 interface AnchorProps {
     id: string
     className: string
+    children?: React.ReactNode
 }
 
 const anchorCSS = 'pt-5 sm:pt-20 -mt-5 sm:-mt-20'

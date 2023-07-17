@@ -31,7 +31,7 @@ const AdminFormAddPartners: React.FC<AdminFormAddPartnerProps> = ({ form, onUplo
         <Form.Item label={ ADMIN_PARTNERS_IMAGE } name="image"
             rules={ [{ required: true, message: ADMIN_PARTNERS_IMAGE_RULE }] }>
             <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
-                <Button icon={ <UploadOutlined/> }>{ ADMIN_PARTNERS_IMAGE_RULE }</Button>
+                <Button icon={ <UploadOutlined rev={undefined}/> }>{ ADMIN_PARTNERS_IMAGE_RULE }</Button>
             </Upload>
         </Form.Item>
         <Form.Item label={ ADMIN_PARTNERS_LINK } name="link"

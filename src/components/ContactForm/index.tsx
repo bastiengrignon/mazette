@@ -1,112 +1,106 @@
-import Input from '../Input'
 import emailJs from 'emailjs-com'
-import { isEmailValid } from '../../lib/validation'
 import loadable from '@loadable/component'
+import { Button, Form, Input } from 'antd'
 import React, { useState } from 'react'
 
 const Notification = loadable(() => import('../Notification'))
 
-const successMessage = 'Votre message à bien été envoyé'
+const successMessage = 'Message envoyé'
 const errorMessage = 'Une erreur est survenue ! Ré-essayer plus tard'
 
+const isEnvVariablesUndefined =
+    process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined ||
+    process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined ||
+    process.env.REACT_APP_EMAILJS_USER_ID === undefined
+
 const ContactForm: React.FC = () => {
-    const [name, setName] = useState<string>('')
-    const [email, setEmail] = useState<string>('')
-    const [subject, setSubject] = useState<string>('')
-    const [message, setMessage] = useState<string>('')
     const [messageSent, setMessageSent] = useState<boolean>(false)
+    const [messageSentLoading, setMessageSentLoading] = useState<boolean>(false)
     const [messageSentError, setMessageSentError] = useState<boolean>(false)
-    const [emailValid, setEmailValid] = useState<boolean>(true)
-    const [nameValid, setNameValid] = useState<boolean>(true)
 
-    const templateParameters = {
-        fromName : name,
-        userEmail: email,
-        subject  : subject,
-        message  : message
-    }
+    const [contactForm] = Form.useForm()
+    const initialValues = { name: '', email: '', subject: '', message: '' }
 
-    const validName = (value: string): void => {
-        if (value) {
-            setNameValid(true)
-            setName(value)
-        } else setNameValid(false)
-    }
-
-    const validEmail = (value: string): void => {
-        if (isEmailValid(value)) {
-            setEmail(value)
+    const sendEmail = ({ name, email, subject, message }): void => {
+        setMessageSentLoading(true)
+        const templateParameters = {
+            fromName : name,
+            userEmail: email,
+            subject  : subject,
+            message  : message
         }
-        setEmailValid(isEmailValid(value))
-    }
-
-    const clearInput = (): void => {
-        setName('')
-        setEmail('')
-        setSubject('')
-        setMessage('')
-        Array.from(document.querySelectorAll('input, textarea')).forEach(input => input['value'] = '')
-    }
-
-    const sendEmail = (): void => {
-        if (!!name && !!email) {
-            if (process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined
-                || process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined
-                || process.env.REACT_APP_EMAILJS_USER_ID === undefined) {
-                console.warn('Not variable env found')
-                return
-            }
-
-            emailJs.send(process.env.REACT_APP_EMAILJS_SERVICE_ID,
-                process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-                templateParameters,
-                process.env.REACT_APP_EMAILJS_USER_ID)
-                .then(() => {
-                    clearInput()
-                    setMessageSent(true)
-                })
-                .catch(() => setMessageSentError(true))
+        if (isEnvVariablesUndefined) {
+            console.warn('No variable env found')
+            setMessageSentLoading(false)
+            return
         }
+
+        emailJs.send(String(process.env.REACT_APP_EMAILJS_SERVICE_ID),
+            String(process.env.REACT_APP_EMAILJS_TEMPLATE_ID),
+            templateParameters,
+            String(process.env.REACT_APP_EMAILJS_USER_ID))
+            .then(() => {
+                setMessageSent(true)
+                contactForm.resetFields()
+            })
+            .catch(() => {
+                setMessageSent(false)
+                setMessageSentError(true)
+            })
+            .finally(() => setMessageSentLoading(false))
     }
 
     return (
         <div className="flex flex-col w-full sm:w-2/3 xl:w-2/5">
-            <div className="mt-2">
-                <p>Votre nom <span className="text-2xl text-red-600">*</span></p>
-                <Input required={ true } onChange={ validName }
-                    className={ `capitalize ${ nameValid ? '' : 'border-red-600 bg-red-200 focus:border-red-600' }` }/>
-            </div>
-
-            <div className="mt-2">
-                <p>Votre e-mail <span className="text-2xl text-red-600">*</span></p>
-                <Input required={ true } type="email" title={ emailValid ? '' : 'Email not valid' }
-                    className={ emailValid ? '' : 'border-red-600 bg-red-200 focus:border-red-600' }
-                    onChange={ validEmail }/>
-            </div>
-
-            <div className="mt-2">
-                <p>Sujet</p>
-                <Input onChange={ setSubject }/>
-            </div>
-
-            <div className="flex flex-col mt-2">
-                <p>Message</p>
-                <label><textarea rows={ 5 } onChange={ ({ target: { value } }) => setMessage(value) }
-                    className="border border-gray-300 rounded focus:border focus:outline-none focus:border-green px-0.5 mt-1.5 w-full"/></label>
-                <div className="flex items-center">
-                    <button onClick={ sendEmail }
-                        className="px-6 py-1 rounded bg-green text-xs font-medium leading-6 text-center text-white shadow hover:shadow-lg hover:bg-red
-                        w-min transform active:scale-110">
-                        Envoyer
-                    </button>
-                    <div
-                        className={ `flex w-full ml-5 ${ messageSent ? 'text-green-700' : 'text-red-500' } font-bold` }>
-                        { messageSent && <Notification text={ successMessage }/> }
-                        { !messageSent && messageSentError &&
-                        <Notification text={ errorMessage }/> }
-                    </div>
+            <Form
+                onFinish={ sendEmail }
+                form={contactForm}
+                layout="vertical"
+                initialValues={initialValues}
+                scrollToFirstError
+                className="max-w-lg"
+            >
+                <div className="flex items-center space-x-2 w-full">
+                    <Form.Item
+                        className="w-2/5"
+                        label="Votre nom"
+                        name="name"
+                        required={ true }
+                        rules={[{ required: true, message: 'Entrez votre nom' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        className="w-3/5"
+                        label="Votre e-mail"
+                        name="email"
+                        required={ true }
+                        hasFeedback
+                        rules={[{ required: true, type: 'email', message: 'Entrez une adresse mail valide !' }]}
+                    >
+                        <Input />
+                    </Form.Item>
                 </div>
-            </div>
+                <Form.Item label="Sujet" name="subject">
+                    <Input />
+                </Form.Item>
+                <Form.Item label="Message" name="message" rules={[{ required: true, message: 'Dites-nous tout en quelques mots !' }]}>
+                    <Input.TextArea rows={ 5 } />
+                </Form.Item>
+                <Form.Item>
+                    <div className="flex items-center space-x-2">
+                        <Button
+                            htmlType="submit"
+                            loading={ messageSentLoading }
+                            className="website-button">
+                        Envoyer
+                        </Button>
+                        <span>
+                            {messageSent && <Notification text={ messageSentError ? errorMessage : successMessage }/> }
+                        </span>
+                    </div>
+                </Form.Item>
+            </Form>
         </div>
     )
 }

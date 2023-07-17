@@ -25,7 +25,7 @@ const AdminFormAddTrombinoscope: React.FC<AdminFormAddPartnerProps> = ({ form, o
         </Form.Item>
         <Form.Item label={ADMIN_TROMBINOSCOPE_IMAGE} name="image" rules={ [{ required: true, message: ADMIN_TROMBINOSCOPE_IMAGE_RULE }] }>
             <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
-                <Button icon={ <UploadOutlined/> }>{ADMIN_TROMBINOSCOPE_IMAGE_RULE}</Button>
+                <Button icon={ <UploadOutlined rev={undefined}/> }>{ADMIN_TROMBINOSCOPE_IMAGE_RULE}</Button>
             </Upload>
         </Form.Item>
     </Form>

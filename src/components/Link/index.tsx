@@ -6,6 +6,7 @@ interface LinkProps {
     className?: string
     title?: string
     onClick?: () => void
+    children?: React.ReactNode
 }
 
 const Link: React.FC<LinkProps> = ({ src, newTab = true, className = '', title, onClick, children }) => {
