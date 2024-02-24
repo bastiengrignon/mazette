@@ -149,7 +149,7 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({ editable, record, s
         <span className="inline-flex justify-around w-full">
             <Tooltip title="Sauvegarder">
                 <div className="text-green cursor-pointer" onClick={ () => saveRow(record.id) }>
-                    <SaveOutlined rev={undefined}/>
+                    <SaveOutlined />
                 </div>
             </Tooltip>
             <Typography.Link onClick={ cancelRow }>Annuler</Typography.Link>
@@ -157,12 +157,12 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({ editable, record, s
         :
         <span className="inline-flex justify-around w-full">
             <Typography.Link onClick={ () => editRow(record) }>
-                <EditOutlined rev={undefined}/>
+                <EditOutlined />
             </Typography.Link>
             <Popconfirm placement="left" className="text-red cursor-pointer hover:text-gray-700"
                 title="Veux-tu vraiment supprimer ?"
                 onConfirm={ () => deleteRow(record.id) }>
-                <DeleteOutlined rev={undefined}/>
+                <DeleteOutlined />
             </Popconfirm>
         </span>
 }

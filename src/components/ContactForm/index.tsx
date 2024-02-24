@@ -9,9 +9,9 @@ const successMessage = 'Message envoyé'
 const errorMessage = 'Une erreur est survenue ! Ré-essayer plus tard'
 
 const isEnvVariablesUndefined =
-    process.env.REACT_APP_EMAILJS_SERVICE_ID === undefined ||
-    process.env.REACT_APP_EMAILJS_TEMPLATE_ID === undefined ||
-    process.env.REACT_APP_EMAILJS_USER_ID === undefined
+    import.meta.env.VITE_EMAILJS_SERVICE_ID === undefined ||
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID === undefined ||
+    import.meta.env.VITE_EMAILJS_USER_ID === undefined
 
 const ContactForm: React.FC = () => {
     const [messageSent, setMessageSent] = useState<boolean>(false)
@@ -35,10 +35,10 @@ const ContactForm: React.FC = () => {
             return
         }
 
-        emailJs.send(String(process.env.REACT_APP_EMAILJS_SERVICE_ID),
-            String(process.env.REACT_APP_EMAILJS_TEMPLATE_ID),
+        emailJs.send(String(import.meta.env.VITE_EMAILJS_SERVICE_ID),
+            String(import.meta.env.VITE_EMAILJS_TEMPLATE_ID),
             templateParameters,
-            String(process.env.REACT_APP_EMAILJS_USER_ID))
+            String(import.meta.env.VITE_EMAILJS_USER_ID))
             .then(() => {
                 setMessageSent(true)
                 contactForm.resetFields()

@@ -1,6 +1,6 @@
 import React from 'react'
 import loadable from '@loadable/component'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes as RouterRoutes } from 'react-router-dom'
 
 import Home from '../../pages/Home'
 import { RouterUrl } from '../../constants'
@@ -12,12 +12,12 @@ const Association = loadable(() => import('../../pages/Association'))
 const LegalMention = loadable(() => import('../../pages/LegalMention'))
 const SanitaryPass = loadable(() => import('../../pages/SanitaryPass'))
 const Dashboard = loadable(() => import('../Admin/Dashboard'))
-const DashboardMovie = loadable(() => import('../Admin/DashboardMovie'))
+import DashboardMovie from '../Admin/DashboardMovie'
 const DashboardMusic = loadable(() => import('../Admin/DashboardMusic'))
 const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'))
 const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'))
 const Footer = loadable(() => import('../../components/Footer'))
-const Navbar = loadable(() => import('../../components/Navbar'))
+import Navbar from '../../components/Navbar'
 
 interface RoutesProps {
     isAdmin: boolean
@@ -29,26 +29,26 @@ const Routes: React.FC<RoutesProps> = ({ isAdmin }) => {
     return (
         isAdmin
             ?
-            <Switch>
-                <Route path={ RouterUrl.adminMovie } component={ DashboardMovie }/>
-                <Route path={ RouterUrl.adminMusic } component={ DashboardMusic }/>
-                <Route path={ RouterUrl.adminPartner } component={ DashboardPartner }/>
-                <Route path={ RouterUrl.adminTrombinoscope } component={ DashboardTrombinoscope }/>
+            <RouterRoutes>
+                <Route path={ RouterUrl.adminMovie } element={ <DashboardMovie /> }/>
+                <Route path={ RouterUrl.adminMusic } element={ <DashboardMusic /> }/>
+                <Route path={ RouterUrl.adminPartner } element={ <DashboardPartner /> }/>
+                <Route path={ RouterUrl.adminTrombinoscope } element={ <DashboardTrombinoscope /> }/>
 
-                <Route path={ RouterUrl.home } component={ Dashboard }/>
-            </Switch>
+                <Route path={ RouterUrl.home } element={ <Dashboard /> }/>
+            </RouterRoutes>
             :
             <>
                 <Navbar/>
-                <Switch>
-                    <Route path={ RouterUrl.programmation } component={ Programmation }/>
-                    <Route path={ RouterUrl.association } component={ Association }/>
-                    <Route path={ RouterUrl.information } component={ Information }/>
-                    <Route path={ RouterUrl.mention } component={ LegalMention }/>
-                    <Route path={ RouterUrl.passSanitaire } component={ SanitaryPass }/>
+                <RouterRoutes>
+                    <Route path={ RouterUrl.programmation } element={ <Programmation /> }/>
+                    <Route path={ RouterUrl.association } element={ <Association /> }/>
+                    <Route path={ RouterUrl.information } element={ <Information /> }/>
+                    <Route path={ RouterUrl.mention } element={ <LegalMention /> }/>
+                    <Route path={ RouterUrl.passSanitaire } element={ <SanitaryPass /> }/>
 
-                    <Route path={ RouterUrl.home } component={ Home }/>
-                </Switch>
+                    <Route path={ RouterUrl.home } element={ <Home /> }/>
+                </RouterRoutes>
                 <Footer/>
             </>
     )

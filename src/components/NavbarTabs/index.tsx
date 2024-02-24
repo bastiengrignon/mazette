@@ -110,8 +110,7 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({
                 </div>
             </Popover>
             <NavLink to={ RouterUrl.information } onClick={ () => setMenuOpen(false) }
-                className={ `${ tabClass } ${ isMenuOpen ? 'block' : 'hidden' }` }
-                activeClassName={ isInformationURL ? activeClass : '' }>
+                className={({isActive}) => `${ tabClass } ${ isMenuOpen ? 'block' : 'hidden' } ${isActive ? isInformationURL ? activeClass : '' : ''}` }>
                 { TabName.information }
             </NavLink>
         </div>

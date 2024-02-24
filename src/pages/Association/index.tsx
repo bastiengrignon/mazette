@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import Vignette from '../../components/Vignette'
 import { cloudinary } from '../../index'
 import { isBetweenDates } from '../../lib/date'
-import { FESTIVAL_ID, associationTitle, staticImgFolder } from '../../constants'
+import { associationTitle, staticImgFolder } from '../../constants'
 import { FestivalService, IFestival } from '../../services/admin/festival'
 import {
     IMovie,
@@ -38,7 +38,7 @@ const Association: React.FC = () => {
         setTrombinoscopeLoading(true)
         setIsMusicLoading(true)
         setIsMovieLoading(true)
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then(setFestival)
         TrombinoscopeService.getAll()
             .then(setTrombinoscopes)
             .finally(() => setTrombinoscopeLoading(false))

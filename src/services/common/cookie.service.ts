@@ -3,6 +3,7 @@ import { adminSubdomain } from '../../constants'
 export class CookieService {
     static cookieName = 'allow-cookies'
     static authToken = 'authToken'
+    static festivalId = 'festivalId'
 
     static isCookiesAllowed = (): boolean => {
         if (!CookieService.cookieExists()) return false

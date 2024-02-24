@@ -3,7 +3,6 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import React, { useEffect, useState } from 'react'
 import 'leaflet-routing-machine'
 
-import { FESTIVAL_ID } from '../../constants'
 import { FestivalService, IFestival } from '../../services/admin/festival'
 
 interface MapProps {
@@ -18,7 +17,7 @@ const Maps: React.FC<MapProps> = ({ className = '' }) => {
     const [festival, setFestival] = useState<IFestival>()
 
     useEffect(() => {
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then(setFestival)
     }, [])
 
     return (
@@ -27,8 +26,8 @@ const Maps: React.FC<MapProps> = ({ className = '' }) => {
             zoomAnimation={ true } fadeAnimation={ true } attributionControl={ true }
             className={ `w-full px-2 h-64 sm:h-96 ${ className }` }>
             <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors'
             />
             { festival?.location && <Marker
                 position={ [festival?.location.latitude, festival?.location.longitude] as LatLngExpression }

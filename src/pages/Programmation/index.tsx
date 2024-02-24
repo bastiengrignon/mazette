@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import React, { useEffect, useState } from 'react'
 
-import { FESTIVAL_ID, programmationTitle } from '../../constants'
+import { programmationTitle } from '../../constants'
 import { FestivalService, IFestival } from '../../services/admin/festival'
 import { IMovie, IMusic, MovieService, MusicService, TextType } from '../../services'
 import { datesMatched, formatDate, getDatesBetween } from '../../lib/date'
@@ -29,7 +29,7 @@ const Programmation: React.FC = () => {
     const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then(setFestival)
         setIsMusicLoading(true)
         setIsMovieLoading(true)
         MusicService.getAll().then(setMusics).finally(() => setIsMusicLoading(false))

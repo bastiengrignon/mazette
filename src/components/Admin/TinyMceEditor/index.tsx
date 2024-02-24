@@ -24,7 +24,7 @@ interface TinyMceEditorProps {
  * @constructor
  */
 const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValue, editorRef, form }) => (
-    <Editor apiKey={ process.env.REACT_APP_KEY_TINYMCE } textareaName={ textareaName }
+    <Editor apiKey={ import.meta.env.VITE_KEY_TINYMCE } textareaName={ textareaName }
         initialValue={ initialValue } toolbar={ editorToolbarConfig } plugins={ editorPluginsConfig }
         onInit={(event, editor) => editorRef ? editorRef.current = editor : null }
         onEditorChange={(value) => form.setFields([{ name: textareaName, value: value }]) }
@@ -36,7 +36,7 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
             language           : 'fr_FR',
             min_height         : 500,
             automatic_uploads  : true,
-            images_upload_url  : process.env.REACT_APP_API_URL + '/text/upload-image',
+            images_upload_url  : import.meta.env.VITE_API_URL + '/text/upload-image',
         }}
     />
 )

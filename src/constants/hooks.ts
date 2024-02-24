@@ -23,7 +23,7 @@ export const useGATracker = (): void => {
     const initialized = CookieService.isCookiesAllowed()
 
     useEffect(() => {
-        ReactGA.initialize(String(process.env.REACT_APP_GA_TRACKING_ID))
+        ReactGA.initialize(String(import.meta.env.VITE_GA_TRACKING_ID))
     }, [])
 
     useEffect(() => {

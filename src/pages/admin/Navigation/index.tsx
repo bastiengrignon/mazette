@@ -9,7 +9,7 @@ import {
     VideoCameraOutlined
 } from '@ant-design/icons'
 import { Form, Input, Modal, message } from 'antd'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 
 import { AxiosError } from 'axios'
@@ -20,11 +20,11 @@ const activatedClassCSS = 'flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 
 const deactivatedClassCSS = 'flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100'
 
 const adminTabIcon = (url: string): React.ReactNode => {
-    if (url === RouterUrl.adminMovie) return <VideoCameraOutlined rev={undefined} />
-    if (url === RouterUrl.adminMusic) return <PlayCircleOutlined rev={undefined} />
-    if (url === RouterUrl.adminPartner) return <TeamOutlined rev={undefined} />
-    if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined rev={undefined} />
-    else return <DashboardOutlined rev={undefined} />
+    if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />
+    if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />
+    if (url === RouterUrl.adminPartner) return <TeamOutlined />
+    if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />
+    else return <DashboardOutlined />
 }
 
 const adminTitleFromPathname = (url: string): string => {
@@ -44,12 +44,12 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
     const [confirmLoginLoading, setConfirmLoginLoading] = useState<boolean>(false)
     const [loginForm] = Form.useForm()
     const location = useLocation()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const logout = () => {
         AuthenticationService.logout()
-        history.push(RouterUrl.home)
-        if (location.pathname === RouterUrl.home) history.go(0)
+        navigate(RouterUrl.home)
+        if (location.pathname === RouterUrl.home) navigate(0)
     }
 
     const handleLogin = () => {
@@ -77,14 +77,14 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
             <div className="col-span-1 sm:col-span-2 md:col-span-2 bg-gray-900">
                 <div className="flex items-center justify-center mt-8">
                     <Link to={ RouterUrl.home } className="inline-flex justify-center items-center text-2xl mx-2">
-                        <MenuOutlined className="text-white flex md:hidden" rev={ undefined } />
-                        <FireFilled className="text-green hidden md:flex" rev={ undefined }/>
+                        <MenuOutlined className="text-white flex md:hidden" />
+                        <FireFilled className="text-green hidden md:flex" />
                         <span className="text-white ml-2 font-semibold hidden md:flex">Mazette! Dashboard</span>
                     </Link>
                 </div>
                 <nav className="my-10 capitalize">
                     <Link to={ RouterUrl.home } className={ location.pathname === RouterUrl.home ? activatedClassCSS : deactivatedClassCSS }>
-                        <DashboardOutlined rev={undefined} />
+                        <DashboardOutlined />
                         <span className="mx-3 hidden md:flex">Dashboard</span>
                     </Link>
                     <div className="mt-2.5 space-y-2.5">
@@ -101,7 +101,7 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
                         }
                     </div>
                     <Link to={ RouterUrl.home } onClick={ logout } className={ `${deactivatedClassCSS} mt-24` }>
-                        <LogoutOutlined rev={undefined} />
+                        <LogoutOutlined />
                         <span className="mx-3 hidden md:flex">Déconnexion</span>
                     </Link>
                 </nav>
@@ -115,7 +115,7 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
                 </main>
             </div>
             <Modal title="Admin Login" open={ isModalVisible } closable={ false } cancelButtonProps={{ style: { display: 'none' } }}
-                confirmLoading={ confirmLoginLoading } onOk={ handleLogin } okText="Connexion">
+                confirmLoading={ confirmLoginLoading } onOk={ handleLogin } okText="Connexion" okButtonProps={{ className: 'bg-gray-700' }}>
                 <Form name="login_form" form={ loginForm } initialValues={{ remember: true }}>
                     <Form.Item label="Nom d'utilisateur" name="username" rules={ [{ required: true, message: 'Veuillez entrer votre nom d\'utilisateur!' }] }>
                         <Input autoFocus={ true }/>

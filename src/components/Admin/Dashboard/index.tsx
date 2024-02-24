@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import loadable from '@loadable/component'
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {
     Button,
@@ -17,11 +17,11 @@ import {
     Typography,
     message
 } from 'antd'
-import { EditOutlined, SaveOutlined } from '@ant-design/icons'
+import {EditOutlined, SaveOutlined} from '@ant-design/icons'
 
-import { FESTIVAL_ID } from '../../../constants'
-import { CommonService, IText, TextService, TextType } from '../../../services'
-import { FestivalService, IFestival } from '../../../services/admin/festival'
+import {FESTIVAL_ID} from '../../../constants'
+import {CommonService, CookieService, IText, TextService, TextType} from '../../../services'
+import {FestivalService, IFestival} from '../../../services/admin/festival'
 
 import {
     DASHBOARD_ADD_TEXT,
@@ -39,26 +39,26 @@ import {
     DASHBOARD_TITLE_GPS_COORDS,
     DASHBOARD_TITLE_INFORMATION
 } from './Dashboard.constants'
-import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants'
+import {MODAL_ADD_TEXT, MODAL_CANCEL_TEXT} from '../Admin.constants'
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'))
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'))
-const { Panel } = Collapse
-const { Option } = Select
-const { RangePicker } = DatePicker
+const {Panel} = Collapse
+const {Option} = Select
+const {RangePicker} = DatePicker
 
 const selectTextType = [
-    { text: 'Musique', value: TextType.music },
-    { text: 'Court-métrage', value: TextType.movie },
-    { text: 'Concours', value: TextType.contest },
-    { text: 'Association', value: TextType.association },
-    { text: 'Mazette c\'est qui', value: TextType.team },
-    { text: 'Adhérer', value: TextType.adhere },
-    { text: 'Boire et manger', value: TextType.food },
-    { text: 'Venir au festival', value: TextType.journey },
-    { text: 'Accueil', value: TextType.home },
-    { text: 'Info', value: TextType.info },
-    { text: 'Edition 2021', value: TextType.previousEdition }
+    {text: 'Musique', value: TextType.music},
+    {text: 'Court-métrage', value: TextType.movie},
+    {text: 'Concours', value: TextType.contest},
+    {text: 'Association', value: TextType.association},
+    {text: 'Mazette c\'est qui', value: TextType.team},
+    {text: 'Adhérer', value: TextType.adhere},
+    {text: 'Boire et manger', value: TextType.food},
+    {text: 'Venir au festival', value: TextType.journey},
+    {text: 'Accueil', value: TextType.home},
+    {text: 'Info', value: TextType.info},
+    {text: 'Edition 2021', value: TextType.previousEdition}
 ]
 
 const Dashboard: React.FC = () => {
@@ -67,6 +67,7 @@ const Dashboard: React.FC = () => {
     const [newTexts, setNewTexts] = useState<IText[]>(texts)
     const [infoText, setInfoText] = useState<IText>({} as IText)
     const [festival, setFestival] = useState<IFestival>({} as IFestival)
+    const [toggleLoading, setToggleLoading] = useState<{ [x: string]: boolean }>({})
 
     const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false)
     const [editingId, setEditingId] = useState<number>(0)
@@ -79,7 +80,10 @@ const Dashboard: React.FC = () => {
             .then(setTexts)
             .finally(() => setIsTextLoading(false))
         TextService.getByTextType(TextType.info).then(setInfoText)
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then((festival) => {
+            CookieService.set(CookieService.festivalId, festival.id)
+            setFestival(festival)
+        })
     }, [newTexts])
 
     const isEditing = (item: IText): boolean => item.id === editingId
@@ -97,7 +101,7 @@ const Dashboard: React.FC = () => {
                         }))
                         message.success('Modification effectuée', 2.5)
                     })
-                    .catch(err => message.error(`Erreur lors de la modification: ${ err }`, 2.5))
+                    .catch(err => message.error(`Erreur lors de la modification: ${err}`, 2.5))
                     .finally(() => {
                         hideLoadingMessage()
                         formRowEdition.resetFields()
@@ -119,29 +123,24 @@ const Dashboard: React.FC = () => {
     const renderListTextItem = (item: IText, key: number): React.ReactNode => {
         const editable = isEditing(item)
         return (
-            <List.Item key={ key } className="inline-flex items-center justify-between w-full">
+            <List.Item key={key} className="inline-flex items-center justify-between w-full">
                 {
                     editable ?
-                        <Form.Item className="w-full" name="text" initialValue={ item.text }
-                            rules={ [{ required: true, message: 'Entrez le texte' }] }>
-                            <TinyMceEditor textareaName="text" initialValue={ item.text } form={ formRowEdition }/>
+                        <Form.Item className="w-full" name="text" initialValue={item.text}
+                                   rules={[{required: true, message: 'Entrez le texte'}]}>
+                            <TinyMceEditor textareaName="text" initialValue={item.text} form={formRowEdition}/>
                         </Form.Item>
                         :
-                        <div className="w-full whitespace-pre-line">{ item.text }</div>
+                        <div className="w-full whitespace-pre-line">{item.text}</div>
                 }
                 {
                     editable ?
                         <span className="inline-flex justify-around space-x-3 ml-5">
-                            <div className="text-blue-500 cursor-pointer"
-                                onClick={ () => saveRow(item.id) }>
-                                <SaveOutlined rev={undefined}/>
-                            </div>
-                            <Typography.Link onClick={ cancel }>Annuler</Typography.Link>
+                            <Button icon={<SaveOutlined/>} onClick={() => saveRow(item.id)}/>
+                            <Typography.Link onClick={cancel}>Annuler</Typography.Link>
                         </span>
                         :
-                        <div className="ml-5 text-blue-500 cursor-pointer" onClick={ () => editRow(item) }>
-                            <EditOutlined rev={undefined} />
-                        </div>
+                        <Button icon={<EditOutlined/>} onClick={() => editRow(item)}/>
                 }
             </List.Item>
         )
@@ -155,7 +154,7 @@ const Dashboard: React.FC = () => {
                     setTexts([...texts, text])
                     message.success('Texte ajouté', 2.5)
                 })
-                .catch(err => message.error(`Erreur lors de l'ajout: ${ err }`, 2.5))
+                .catch(err => message.error(`Erreur lors de l'ajout: ${err}`, 2.5))
                 .finally(() => {
                     hideLoadingMessage()
                     formRowAddition.resetFields()
@@ -167,7 +166,7 @@ const Dashboard: React.FC = () => {
     const collapseTitle = (textType: string): string => CommonService.capitalize(selectTextType.find(item => item.value === textType)?.text || '')
 
     const updateInformationsVisibility = (checked: boolean): void => {
-        TextService.update(infoText?.id || 0, { ...infoText, isShowed: checked }).then(res =>
+        TextService.update(infoText?.id || 0, {...infoText, isShowed: checked}).then(res =>
             setInfoText({
                 ...infoText,
                 ...res
@@ -177,7 +176,7 @@ const Dashboard: React.FC = () => {
     const handleFestivalDate = (_, dateString: [string, string]): void => {
         const startDate = new Date(dateString[0])
         const endDate = new Date(dateString[1])
-        FestivalService.update(festival.id || FESTIVAL_ID, { ...festival, startDate, endDate }).then(res =>
+        FestivalService.update(festival.id || FESTIVAL_ID, {...festival, startDate, endDate}).then(res =>
             setFestival({
                 ...festival,
                 ...res
@@ -187,7 +186,7 @@ const Dashboard: React.FC = () => {
     const handleFestivalLatitude = (newLatitude: number | null): void => {
         FestivalService.update(festival.id || FESTIVAL_ID, {
             ...festival,
-            location: { ...festival.location, latitude: newLatitude || 0 }
+            location: {...festival.location, latitude: newLatitude || 0}
         }).then(res =>
             setFestival({
                 ...festival,
@@ -198,7 +197,7 @@ const Dashboard: React.FC = () => {
     const handleFestivalLongitude = (newLongitude: number | null): void => {
         FestivalService.update(festival.id || FESTIVAL_ID, {
             ...festival,
-            location: { ...festival.location, longitude: newLongitude || 0 }
+            location: {...festival.location, longitude: newLongitude || 0}
         }).then(res =>
             setFestival({
                 ...festival,
@@ -206,43 +205,32 @@ const Dashboard: React.FC = () => {
             }))
     }
 
-    const handleShowMusics = (checked: boolean): void => {
-        FestivalService.update(FESTIVAL_ID, {
+    const toggleVisibility = (key: string) => (checked: boolean) : void => {
+        setToggleLoading({ [key]: true })
+        FestivalService.update(festival.id, {
             ...festival,
-            showMusic: checked
-        }).then(res =>
-            setFestival({
-                ...festival,
-                ...res
-            }))
-    }
+            [key]: checked
+        })
+        .then(res => setFestival({ ...festival, ...res }))
+        .finally(() => setToggleLoading({ [key]: false }))
 
-    const handleShowMovies = (checked: boolean): void => {
-        FestivalService.update(FESTIVAL_ID, {
-            ...festival,
-            showMovie: checked
-        }).then(res =>
-            setFestival({
-                ...festival,
-                ...res
-            }))
     }
 
     return (
         <Navigation>
             <div className="grid grid-cols-12 gap-2 md:gap-5">
-                <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-8">
-                    <Button type="primary" className="my-4 button" onClick={ () => setAddRowModalVisible(true) }>
-                        { DASHBOARD_ADD_TEXT }
+                <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-8">
+                    <Button type="primary" className="my-4 button" onClick={() => setAddRowModalVisible(true)}>
+                        {DASHBOARD_ADD_TEXT}
                     </Button>
-                    <Collapse accordion={ true } onChange={ cancel } defaultActiveKey={ 0 }>
+                    <Collapse accordion={true} onChange={cancel} defaultActiveKey={0}>
                         {
                             Object.values(TextType).map((textType, key) => (
-                                <Panel key={ key } header={ collapseTitle(textType) } className="whitespace-pre-wrap">
-                                    <Skeleton avatar={ true } active={ true } loading={ isTextLoading }>
-                                        <Form form={ formRowEdition } component={ false }>
-                                            <List dataSource={ texts.filter(value => value.type === textType) }
-                                                renderItem={ renderListTextItem }/>
+                                <Panel key={key} header={collapseTitle(textType)} className="whitespace-pre-wrap">
+                                    <Skeleton avatar={true} active={true} loading={isTextLoading}>
+                                        <Form form={formRowEdition} component={false}>
+                                            <List dataSource={texts.filter(value => value.type === textType)}
+                                                  renderItem={renderListTextItem}/>
                                         </Form>
                                     </Skeleton>
                                 </Panel>)
@@ -250,58 +238,72 @@ const Dashboard: React.FC = () => {
                         }
                     </Collapse>
                 </Card>
-                <Card bordered={ false } className="rounded-lg col-span-12 lg:col-span-4">
-                    <div className="text-3xl text-center mb-5">{ DASHBOARD_TITLE_INFORMATION }</div>
-                    <Switch onChange={ updateInformationsVisibility } checked={ infoText?.isShowed }
-                        className="mr-2"/> { DASHBOARD_SHOW_HOME_INFORMATION }
+                <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
+                    <div className="text-3xl text-center mb-5">{DASHBOARD_TITLE_INFORMATION}</div>
+                    <Switch
+                        onChange={updateInformationsVisibility}
+                        checked={infoText?.isShowed}
+                        className="mr-2"
+                    /> {DASHBOARD_SHOW_HOME_INFORMATION}
                     <div className="flex items-baseline w-full justify-between">
-                        <div className="mt-5">{ DASHBOARD_TITLE_DATE }</div>
-                        { festival.id &&
-                            <RangePicker defaultValue={ [dayjs(festival.startDate), dayjs(festival.endDate)] }
-                                onChange={ handleFestivalDate }/> }
+                        <div className="mt-5">{DASHBOARD_TITLE_DATE}</div>
+                        <RangePicker
+                            defaultValue={[dayjs(festival?.startDate), dayjs(festival?.endDate)]}
+                            onChange={handleFestivalDate}
+                        />
                     </div>
                     <div className="flex items-baseline w-full justify-between">
-                        <div className="w-1/2 mt-5">{ DASHBOARD_TITLE_GPS_COORDS }</div>
+                        <div className="w-1/2 mt-5">{DASHBOARD_TITLE_GPS_COORDS}</div>
                         <div className="flex w-full justify-start space-x-4">
-                            { festival.location &&
-                                <InputNumber className="w-full" placeholder={ DASHBOARD_PLACEHOLDER_LATITUDE }
-                                    step="0.00000000001"
-                                    defaultValue={ festival.location.latitude }
-                                    onChange={ handleFestivalLatitude }/>
-                            }
-                            { festival.location &&
-                                <InputNumber className="w-full" placeholder={ DASHBOARD_PLACEHOLDER_LONGITUDE }
-                                    step="0.00000000001"
-                                    defaultValue={ festival.location.longitude }
-                                    onChange={ handleFestivalLongitude }/>
-                            }
+                            <InputNumber
+                                className="w-full"
+                                placeholder={DASHBOARD_PLACEHOLDER_LATITUDE}
+                                step="0.00000000001"
+                                defaultValue={festival?.location?.latitude}
+                                onChange={handleFestivalLatitude}/>
+                            <InputNumber
+                                className="w-full"
+                                placeholder={DASHBOARD_PLACEHOLDER_LONGITUDE}
+                                step="0.00000000001"
+                                defaultValue={festival?.location?.longitude}
+                                onChange={handleFestivalLongitude}/>
                         </div>
                     </div>
                     <div className="my-5 flex align-center">
-                        <Switch onChange={ handleShowMusics } checked={ festival.showMusic }
-                            className="mr-2"/> { DASHBOARD_SHOW_MUSICS }
+                        <Switch
+                            onChange={toggleVisibility('showMusic')}
+                            checked={festival.showMusic}
+                            loading={toggleLoading['showMusic']}
+                            className="mr-2"/> {DASHBOARD_SHOW_MUSICS}
                     </div>
                     <div className="my-5">
-                        <Switch onChange={ handleShowMovies } checked={ festival.showMovie }
-                            className="mr-2"/> { DASHBOARD_SHOW_MOVIES }
+                        <Switch
+                            onChange={toggleVisibility('showMovie')}
+                            checked={festival.showMovie}
+                            loading={toggleLoading['showMovie']}
+                            className="mr-2"/> {DASHBOARD_SHOW_MOVIES}
 
                     </div>
                 </Card>
             </div>
-            <Modal title={ DASHBOARD_MODAL_NEW_TEXT_TITLE } open={ addRowModalVisible } okText={ MODAL_ADD_TEXT }
-                onCancel={ () => setAddRowModalVisible(false) } cancelText={ MODAL_CANCEL_TEXT }
-                okButtonProps={ { className: 'button' } } onOk={ handleOkModal }>
-                <Form form={ formRowAddition }>
-                    <Form.Item label={ DASHBOARD_MODAL_TEXT } name="text"
-                        rules={ [{ required: true, message: DASHBOARD_MODAL_TEXT_RULE }] }>
-                        <TinyMceEditor textareaName="text" form={ formRowAddition }/>
+            <Modal title={DASHBOARD_MODAL_NEW_TEXT_TITLE}
+                   open={addRowModalVisible}
+                   okText={MODAL_ADD_TEXT}
+                   onCancel={() => setAddRowModalVisible(false)}
+                   cancelText={MODAL_CANCEL_TEXT}
+                   okButtonProps={{className: 'button'}}
+                   onOk={handleOkModal}>
+                <Form form={formRowAddition}>
+                    <Form.Item label={DASHBOARD_MODAL_TEXT} name="text"
+                               rules={[{required: true, message: DASHBOARD_MODAL_TEXT_RULE}]}>
+                        <TinyMceEditor textareaName="text" form={formRowAddition}/>
                     </Form.Item>
-                    <Form.Item label={ DASHBOARD_MODAL_TYPE } name="type"
-                        rules={ [{ required: true, message: DASHBOARD_MODAL_TYPE_RULE }] }>
+                    <Form.Item label={DASHBOARD_MODAL_TYPE} name="type"
+                               rules={[{required: true, message: DASHBOARD_MODAL_TYPE_RULE}]}>
                         <Select>
                             {
                                 selectTextType.map((type, key) =>
-                                    <Option key={ key } value={ type.value }>{ type.text }</Option>
+                                    <Option key={key} value={type.value}>{type.text}</Option>
                                 )
                             }
                         </Select>

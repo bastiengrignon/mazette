@@ -1,9 +1,7 @@
-import { DropdownItem } from '../components/DropDown'
-
-const defaultImgFolder = `${ process.env.PUBLIC_URL }/assets/img`
+const defaultImgFolder = `/assets/img`
 export const staticImgFolder = `${ defaultImgFolder }/static`
 
-export const FESTIVAL_ID = process.env.NODE_ENV === 'production' ? 'd3d3c4a0-afac-4e4b-b9bc-c10e5162d308' : '07a5ea90-fe26-4489-905d-df66dedc6384'
+export const FESTIVAL_ID = import.meta.env.NODE_ENV === 'production' ? 'd3d3c4a0-afac-4e4b-b9bc-c10e5162d308' : '07a5ea90-fe26-4489-905d-df66dedc6384'
 
 export const adminSubdomain = 'admin'
 
@@ -45,7 +43,7 @@ export enum informationTitle {
     contact = 'Nous contacter'
 }
 
-export const programmationItems: DropdownItem[] = [
+export const programmationItems = [
     {
         name: programmationTitle.musique,
         link: RouterUrl.programmation
@@ -60,7 +58,7 @@ export const programmationItems: DropdownItem[] = [
     }
 ]
 
-export const associationItems: DropdownItem[] = [
+export const associationItems = [
     {
         name: associationTitle.association,
         link: RouterUrl.association
@@ -101,6 +99,6 @@ export const externalLinks = {
     },
     others: {
         payotte : 'https://www.lapayotte.net',
-        schedule: `${process.env.PUBLIC_URL}/assets/ligne403_schedule.pdf`
+        schedule: `${import.meta.env.VITE_API_URL}/assets/ligne403_schedule.pdf`
     }
 }

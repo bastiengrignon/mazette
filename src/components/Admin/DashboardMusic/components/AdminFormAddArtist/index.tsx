@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 
-import { FESTIVAL_ID } from '../../../../../constants'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
@@ -32,7 +31,7 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
     const [festival, setFestival] = useState<IFestival>({} as IFestival)
 
     useEffect(() => {
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then(setFestival)
     }, [])
 
 
@@ -69,7 +68,7 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
             <Form.Item label={ ADMIN_ARTIST_IMAGE } name="image"
                 rules={ [{ required: true, message: ADMIN_ARTIST_IMAGE_RULE }] }>
                 <Upload name="image" onChange={ onUploadChange } customRequest={ UploadService.dummyUploadRequest }>
-                    <Button icon={ <UploadOutlined rev={undefined} /> }>{ ADMIN_ARTIST_IMAGE_RULE }</Button>
+                    <Button icon={ <UploadOutlined /> }>{ ADMIN_ARTIST_IMAGE_RULE }</Button>
                 </Upload>
             </Form.Item>
         </Form>

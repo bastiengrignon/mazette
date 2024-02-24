@@ -110,6 +110,10 @@ body {
     @apply font-avenirM;
 }
 
+.ant-switch {
+    @apply bg-gray-200;
+}
+
 .page-content {
     @apply text-black px-1 sm:px-2 md:px-8 lg:px-16;
 }
@@ -133,7 +137,7 @@ strong {
 }
 
 .button {
-    @apply bg-blueGray-700 hover:text-blueGray-700 hover:bg-blueGray-200 border border-transparent hover:border-blueGray-700;
+    @apply bg-slate-700 hover:text-slate-700 hover:bg-slate-200;
 }
 
 .ant-popover-inner {

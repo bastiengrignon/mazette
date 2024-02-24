@@ -2,7 +2,6 @@ import dayjs from 'dayjs'
 import { Button, DatePicker, Form, FormInstance, Input, TimePicker, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 
-import { FESTIVAL_ID } from '../../../../../constants'
 import { UploadChangeParam } from 'antd/es/upload'
 import { UploadFile } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
@@ -28,7 +27,7 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
     const [festival, setFestival] = useState<IFestival>({} as IFestival)
 
     useEffect(() => {
-        FestivalService.getById(FESTIVAL_ID).then(setFestival)
+        FestivalService.getLastFestival().then(setFestival)
     }, [])
 
 
@@ -81,7 +80,7 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
                     rules={ [{ required: true, message: ADMIN_MOVIE_IMAGE_THUMBNAIL_RULE }] }>
                     <Upload name="imgThumbnail" onChange={ onUploadChange }
                         customRequest={ UploadService.dummyUploadRequest }>
-                        <Button icon={ <UploadOutlined rev={undefined} /> }>{ ADMIN_MOVIE_IMAGE_ADD_FILE }</Button>
+                        <Button icon={ <UploadOutlined /> }>{ ADMIN_MOVIE_IMAGE_ADD_FILE }</Button>
                     </Upload>
                 </Form.Item>
                 <Form.Item label={ ADMIN_MOVIE_LINK }>
