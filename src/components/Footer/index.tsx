@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
           <Link to={RouterUrl.mention} className="link">
             Mentions Légales
           </Link>{' '}
-          - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien</ExternalLink>
+          - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien Grignon</ExternalLink>
         </div>
       </div>
     </footer>

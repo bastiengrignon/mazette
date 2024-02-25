@@ -51,13 +51,13 @@ const selectTextType = [
   { text: 'Court-métrage', value: TextType.movie },
   { text: 'Concours', value: TextType.contest },
   { text: 'Association', value: TextType.association },
-  { text: 'Mazette c\'est qui', value: TextType.team },
+  { text: 'Mazette c’est qui', value: TextType.team },
   { text: 'Adhérer', value: TextType.adhere },
   { text: 'Boire et manger', value: TextType.food },
   { text: 'Venir au festival', value: TextType.journey },
   { text: 'Accueil', value: TextType.home },
   { text: 'Info', value: TextType.info },
-  { text: 'Edition 2021', value: TextType.previousEdition },
+  { text: 'Editions précédentes', value: TextType.previousEdition },
 ];
 
 const Dashboard: React.FC = () => {
@@ -174,15 +174,17 @@ const Dashboard: React.FC = () => {
     CommonService.capitalize(selectTextType.find((item) => item.value === textType)?.text || '');
 
   const updateInformationsVisibility = (checked: boolean): void => {
-    TextService.update(infoText?.id || 0, {
-      ...infoText,
-      isShowed: checked,
-    }).then((res) =>
-      setInfoText({
+    if (infoText) {
+      TextService.update(infoText.id, {
         ...infoText,
-        ...res,
-      })
-    );
+        isShowed: checked,
+      }).then((res) =>
+        setInfoText({
+          ...infoText,
+          ...res,
+        })
+      );
+    }
   };
 
   const handleFestivalDate = (_, dateString: [string, string]): void => {
@@ -260,7 +262,12 @@ const Dashboard: React.FC = () => {
         </Card>
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
           <div className="text-3xl text-center mb-5">{DASHBOARD_TITLE_INFORMATION}</div>
-          <Switch onChange={updateInformationsVisibility} checked={infoText?.isShowed} className="mr-2" />{' '}
+          <Switch
+            disabled={!infoText?.id}
+            onChange={updateInformationsVisibility}
+            checked={infoText?.isShowed}
+            className="mr-2"
+          />{' '}
           {DASHBOARD_SHOW_HOME_INFORMATION}
           <div className="flex items-baseline w-full justify-between">
             <div className="mt-5">{DASHBOARD_TITLE_DATE}</div>

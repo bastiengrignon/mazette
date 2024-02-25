@@ -29,10 +29,10 @@ export enum programmationTitle {
 }
 
 export enum associationTitle {
-  association = 'l\'association',
-  equipe = 'l\'équipe',
+  association = 'l’association',
+  equipe = 'l’équipe',
   adherer = 'adhérer',
-  previousEdition = 'Edition 2021',
+  previousEdition = 'Éditions précédentes',
 }
 
 export enum informationTitle {
