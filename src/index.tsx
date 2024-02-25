@@ -19,16 +19,14 @@ import './index.css';
 dayjs.locale('fr');
 
 const App: React.FC = () => (
-  <ConfigProvider>
-    <div className="min-h-full flex flex-col justify-between">
-      <BrowserRouter>
-        <CookieNotice />
-        <Routes isAdmin={isAdminRoutes()} />
-      </BrowserRouter>
-      <Analytics />
-      <SpeedInsights />
-    </div>
-  </ConfigProvider>
+  <div className="min-h-full flex flex-col justify-between">
+    <BrowserRouter>
+      <CookieNotice />
+      <Routes isAdmin={isAdminRoutes()} />
+    </BrowserRouter>
+    <Analytics />
+    <SpeedInsights />
+  </div>
 );
 export const cloudinary = new Cloudinary({ cloud: { cloudName: 'mazette' } });
 
@@ -41,3 +39,11 @@ createRoot(document.getElementById('root')!).render(
     </ConfigProvider>
   </React.StrictMode>
 );
+
+if (window.navigator && navigator.serviceWorker) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
