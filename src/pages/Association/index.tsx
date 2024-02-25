@@ -1,13 +1,12 @@
 import { AdvancedImage } from '@cloudinary/react';
-import { Skeleton } from 'antd';
+import { Select, Skeleton } from 'antd';
 import loadable from '@loadable/component';
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 import Vignette from '../../components/Vignette';
 import { cloudinary } from '../../index';
-import { isBetweenDates } from '../../lib/date';
 import { associationTitle, staticImgFolder } from '../../constants';
-import { FestivalService, IFestival } from '../../services/admin/festival';
 import {
   IMovie,
   IMusic,
@@ -24,8 +23,18 @@ const Anchor = loadable(() => import('../../components/Anchor'));
 const Image = loadable(() => import('../../components/Image'));
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'));
 
+type PreviousEdition = {
+  value: string;
+  label: string;
+};
+
+const previousEditions: PreviousEdition[] = [
+  { value: '2021', label: 'Édition 2021' },
+  { value: '2022', label: 'Édition 2022' },
+  { value: '2023', label: 'Édition 2023' },
+];
+
 const Association: React.FC = () => {
-  const [festival, setFestival] = useState<IFestival>({} as IFestival);
   const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([]);
   const [musics, setMusics] = useState<IMusic[]>([]);
   const [movies, setMovies] = useState<IMovie[]>([]);
@@ -34,11 +43,12 @@ const Association: React.FC = () => {
   const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false);
   const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false);
 
+  const [selectedEdition, setSelectedEdition] = useState<string>(previousEditions[0].value);
+
   useEffect(() => {
     setTrombinoscopeLoading(true);
     setIsMusicLoading(true);
     setIsMovieLoading(true);
-    FestivalService.getLastFestival().then(setFestival);
     TrombinoscopeService.getAll()
       .then(setTrombinoscopes)
       .finally(() => setTrombinoscopeLoading(false));
@@ -93,10 +103,16 @@ const Association: React.FC = () => {
         <div className={`${subtitleCSS} my-0 sm:my-2`}>
           <FormattedText textType={TextType.previousEdition} />
         </div>
+        <Select
+          options={previousEditions}
+          onChange={setSelectedEdition}
+          defaultValue={selectedEdition}
+          className="w-44"
+        />
         <div className="text-3xl my-5">{SECTION_MUSICS}</div>
         <div className="grid grid-cols-4 gap-2 sm:gap-10">
           {musics
-            .filter((music) => !isBetweenDates(festival.startDate, festival.endDate, music.publicationDate))
+            .filter((music) => dayjs(music.publicationDate).year() === Number(selectedEdition))
             .map((music, key) => (
               <Vignette key={key} type="music" properties={music} loading={isMusicLoading} />
             ))}
@@ -104,7 +120,7 @@ const Association: React.FC = () => {
         <div className="text-3xl my-5">{SECTION_MOVIES}</div>
         <div className="grid grid-cols-4 gap-2 sm:gap-10">
           {movies
-            .filter((movie) => !isBetweenDates(festival.startDate, festival.endDate, movie.publicationDate))
+            .filter((movie) => dayjs(movie.publicationDate).year() === Number(selectedEdition))
             .map((film, key) => (
               <Vignette key={key} type="movie" properties={film} loading={isMovieLoading} />
             ))}
