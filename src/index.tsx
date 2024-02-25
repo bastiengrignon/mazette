@@ -1,5 +1,4 @@
 import {ConfigProvider} from 'antd'
-import axios from 'axios'
 import dayjs from 'dayjs'
 import frFR from 'antd/lib/locale/fr_FR'
 import 'dayjs/locale/fr'
@@ -34,10 +33,6 @@ const App: React.FC = () => (
 export const cloudinary = new Cloudinary({cloud: {cloudName: 'mazette'}})
 
 const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === adminSubdomain;
-
-(() => {
-    axios.defaults.baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:3005'
-})()
 
 createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
