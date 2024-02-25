@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { datesMatched, formatDate, getDatesBetween } from '../lib/date';
 
 const DATE_RIGHT = new Date(2022, 2, 8);

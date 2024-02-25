@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { isEmailValid } from '../validation';
 
 const VALID_EMAIL = 'test@gmail.com';
