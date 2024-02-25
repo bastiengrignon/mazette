@@ -1,2 +1,2 @@
-export * from './music.interface'
-export * from './music.service'
+export * from './music.interface';
+export * from './music.service';

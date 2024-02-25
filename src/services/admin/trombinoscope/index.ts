@@ -1,2 +1,2 @@
-export * from './trombinoscope.interface'
-export * from './trombinoscope.service'
+export * from './trombinoscope.interface';
+export * from './trombinoscope.service';

@@ -1,8 +1,8 @@
 name: Lighthouse Report
 
 on:
-  push: 
-    branches: [ main ]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -11,17 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Generate Lighthouse Report
-      # waiting for new version with fixed 'comment_url' issue
-      uses: justinribeiro/lighthouse-action@v1.1.0
-      with:
-        secret: ${{ secrets.GITHUB_TOKEN }}
-        url: https://festivalmazette.fr
-        lighthouseConfiguration: .github/config/lighthouse-config.js
-    - name: Saving Lighthouse Audit Artifacts
-      uses: actions/upload-artifact@master
-      with:
-        name: lighthouse-artifacts
-        path: './results'
-      
+      - uses: actions/checkout@v1
+      - name: Generate Lighthouse Report
+        # waiting for new version with fixed 'comment_url' issue
+        uses: justinribeiro/lighthouse-action@v1.1.0
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          url: https://festivalmazette.fr
+          lighthouseConfiguration: .github/config/lighthouse-config.js
+      - name: Saving Lighthouse Audit Artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: lighthouse-artifacts
+          path: './results'

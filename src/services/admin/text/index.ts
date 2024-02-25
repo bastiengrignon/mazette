@@ -1,2 +1,2 @@
-export * from './text.interface'
-export * from './text.service'
+export * from './text.interface';
+export * from './text.service';

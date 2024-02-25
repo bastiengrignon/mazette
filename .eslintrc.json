@@ -1,57 +1,50 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "es6": true,
+    "node": true
   },
   "settings": {
     "react": {
       "version": "detect"
     }
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint", "unused-imports"],
   "rules": {
-    "react/prop-types": "off",
-    "no-unused-vars": "off",
-    "arrow-spacing": "error",
-    "prefer-const": "error",
-
-    "prefer-arrow-callback": "warn",
-    "no-var": "warn",
-    "camelcase": "warn",
-    "indent": ["error", 4],
-    "semi": ["error", "never"],
-    "quotes": ["error", "single"],
     "eqeqeq": ["error", "always"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "prefer-const": "error",
+    "prefer-arrow-callback": "error",
+    "arrow-parens": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "brace-style": "error",
     "object-curly-spacing": ["error", "always"],
+    "template-curly-spacing": "error",
+    "space-before-blocks": "error",
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-var": "warn",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "indent": "off",
+    "camelcase": "warn",
     "comma-spacing": ["error", { "before": false, "after": true }],
-    "sort-imports": ["error", {
-      "ignoreCase": false,
-      "ignoreDeclarationSort": false,
-      "ignoreMemberSort": false,
-      "memberSyntaxSortOrder": ["all", "single", "multiple", "none"],
-      "allowSeparatedGroups": true
-    }],
-    "key-spacing": ["error",{
-      "beforeColon": false,
-      "afterColon": true,
-      "mode": "strict",
-      "align": "colon"
-    }]
+    "unused-imports/no-unused-imports": "error",
+    "react/prop-types": "off"
   }
 }

@@ -1,2 +1,2 @@
-export * from './festival.interface'
-export * from './festival.service'
+export * from './festival.interface';
+export * from './festival.service';

@@ -1,6 +1,6 @@
 export interface ITrombinoscope {
-    id: number
-    name: string
-    image: string
-    createdAt?: Date
+  id: number;
+  name: string;
+  image: string;
+  createdAt?: Date;
 }

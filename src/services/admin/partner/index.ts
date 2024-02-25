@@ -1,2 +1,2 @@
-export * from './partner.interface'
-export * from './partner.service'
+export * from './partner.interface';
+export * from './partner.service';

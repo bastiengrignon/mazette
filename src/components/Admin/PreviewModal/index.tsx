@@ -1,19 +1,18 @@
-import { Modal } from 'antd'
-import React from 'react'
+import { Modal } from 'antd';
+import React from 'react';
 
-import { AdvancedImage } from '@cloudinary/react'
-import { cloudinary } from '../../../index'
+import { AdvancedImage } from '@cloudinary/react';
+import { cloudinary } from '../../../index';
 
 interface PreviewModalProps {
-    open: boolean
-    hide: () => void
-    previewURL: string
+  open: boolean;
+  hide: () => void;
+  previewURL: string;
 }
 
 const PreviewModal: React.FC<PreviewModalProps> = ({ open, hide, previewURL }) => (
-    <Modal open={ open } footer={ null } onCancel={ hide }>
-        <AdvancedImage cldImg={ cloudinary.image(previewURL) }
-            className="w-full h-auto my-5"/>
-    </Modal>
-)
-export default PreviewModal
+  <Modal open={open} footer={null} onCancel={hide}>
+    <AdvancedImage cldImg={cloudinary.image(previewURL)} className="w-full h-auto my-5" />
+  </Modal>
+);
+export default PreviewModal;

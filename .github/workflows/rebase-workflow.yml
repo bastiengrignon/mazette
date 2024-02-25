@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
-    - name: Automatic Rebase
-      id: automatic-rebase
-      uses: cirrus-actions/rebase@1.5
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Automatic Rebase
+        id: automatic-rebase
+        uses: cirrus-actions/rebase@1.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   rebase-reaction:
     name: Add rebase status
     if: ${{ always() }}
@@ -28,21 +28,21 @@ jobs:
     needs: rebase
 
     steps:
-    - name: Add rocket reaction if success
-      if: ${{ always() && contains(needs.rebase.result, 'success') }}
-      uses: khan/pull-request-comment-trigger@master
-      id: check
-      with:
-        trigger: '/rebase'
-        reaction: rocket
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add rocket reaction if success
+        if: ${{ always() && contains(needs.rebase.result, 'success') }}
+        uses: khan/pull-request-comment-trigger@master
+        id: check
+        with:
+          trigger: '/rebase'
+          reaction: rocket
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Add confused reaction if failure
-      if: ${{ always() && contains(needs.rebase.result, 'failure') }}
-      uses: khan/pull-request-comment-trigger@master
-      with:
-        trigger: '/rebase'
-        reaction: confused
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add confused reaction if failure
+        if: ${{ always() && contains(needs.rebase.result, 'failure') }}
+        uses: khan/pull-request-comment-trigger@master
+        with:
+          trigger: '/rebase'
+          reaction: confused
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

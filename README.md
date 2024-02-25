@@ -3,6 +3,6 @@
 [![Build Status](https://travis-ci.com/bastiengrignon/mazette.svg?branch=main)](https://travis-ci.com/bastiengrignon/mazette)
 [![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=mazette)](https://mazette.vercel.app)
 
---- 
+---
 
 # Website of festival Mazette!
