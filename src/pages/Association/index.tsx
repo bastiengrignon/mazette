@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 import Vignette from '../../components/Vignette';
 import { cloudinary } from '../../index';
-import { associationTitle, staticImgFolder } from '../../constants';
+import { associationTitle, previousEditions, staticImgFolder } from '../../constants';
 import {
   IMovie,
   IMusic,
@@ -22,17 +22,6 @@ import { subtitleCSS, titleCSS } from '../Programmation';
 const Anchor = loadable(() => import('../../components/Anchor'));
 const Image = loadable(() => import('../../components/Image'));
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'));
-
-type PreviousEdition = {
-  value: string;
-  label: string;
-};
-
-const previousEditions: PreviousEdition[] = [
-  { value: '2021', label: 'Édition 2021' },
-  { value: '2022', label: 'Édition 2022' },
-  { value: '2023', label: 'Édition 2023' },
-];
 
 const Association: React.FC = () => {
   const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([]);

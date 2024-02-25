@@ -100,3 +100,14 @@ export const externalLinks = {
     schedule: `${import.meta.env.VITE_API_URL}/assets/ligne403_schedule.pdf`,
   },
 };
+
+type PreviousEdition = {
+  value: string;
+  label: string;
+};
+
+export const previousEditions: PreviousEdition[] = [
+  { value: '2023', label: 'Édition 2023' },
+  { value: '2022', label: 'Édition 2022' },
+  { value: '2021', label: 'Édition 2021' },
+];
