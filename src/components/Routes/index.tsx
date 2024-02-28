@@ -18,6 +18,7 @@ const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'));
 const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'));
 const Footer = loadable(() => import('../../components/Footer'));
 import Navbar from '../../components/Navbar';
+import VotePage from '../../pages/Vote';
 
 interface RoutesProps {
   isAdmin: boolean;
@@ -44,6 +45,7 @@ const Routes: React.FC<RoutesProps> = ({ isAdmin }) => {
         <Route path={RouterUrl.information} element={<Information />} />
         <Route path={RouterUrl.mention} element={<LegalMention />} />
         <Route path={RouterUrl.passSanitaire} element={<SanitaryPass />} />
+        <Route path={RouterUrl.vote} element={<VotePage />} />
 
         <Route path={RouterUrl.home} element={<Home />} />
       </RouterRoutes>

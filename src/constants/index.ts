@@ -14,6 +14,7 @@ export enum RouterUrl {
   adminMusic = '/music',
   adminPartner = '/partner',
   adminTrombinoscope = '/trombinoscope',
+  vote = '/vote',
 }
 
 export enum TabName {
