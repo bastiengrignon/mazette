@@ -72,6 +72,7 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({ className, style, isMenuOpen, s
         trigger={[isMobile ? 'click' : 'hover']}
         overlayClassName={clsx(isMobile ? 'w-full pr-4' : 'w-80')}
         open={openAssociationPopover}
+        overlayInnerStyle={{ padding: 0 }}
         onOpenChange={setOpenAssociationPopover}>
         <div
           className={clsx(dropdownTriggerClass, isAssociationURL ? activeClass : '', isMenuOpen ? 'block' : 'hidden')}>
@@ -86,6 +87,7 @@ const NavbarTabs: React.FC<NavbarTabsProps> = ({ className, style, isMenuOpen, s
         trigger={[isMobile ? 'click' : 'hover']}
         overlayClassName={clsx(isMobile ? 'w-full pr-4' : 'w-72')}
         open={openProgrammationPopover}
+        overlayInnerStyle={{ padding: 0 }}
         onOpenChange={setOpenProgrammationPopover}>
         <div className={clsx(dropdownTriggerClass, isProgramURL ? activeClass : '', isMenuOpen ? 'block' : 'hidden')}>
           {TabName.programmation}

@@ -2,6 +2,7 @@ const defaultImgFolder = '/assets/img';
 export const staticImgFolder = `${defaultImgFolder}/static`;
 
 export const adminSubdomain = 'admin';
+export const MAZETTE_USER_ID = 'mazette-user-id';
 
 export enum RouterUrl {
   home = '/',
@@ -10,11 +11,14 @@ export enum RouterUrl {
   information = '/information',
   mention = '/mention-legales',
   passSanitaire = '/pass-sanitaire',
+  vote = '/vote',
+
   adminMovie = '/movie',
   adminMusic = '/music',
   adminPartner = '/partner',
   adminTrombinoscope = '/trombinoscope',
-  vote = '/vote',
+  adminVote = '/votes',
+  adminVoteStatistics = '/votes/:voteId',
 }
 
 export enum TabName {

@@ -5,37 +5,55 @@ import {
   LogoutOutlined,
   MenuOutlined,
   PlayCircleOutlined,
+  QuestionCircleOutlined,
   TeamOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Form, Input, Modal, message } from 'antd';
+import { Form, Input, message, Modal } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import { AxiosError } from 'axios';
 import { AuthenticationService, CookieService } from '../../../services';
-import { RouterUrl, programmationTitle } from '../../../constants';
+import { programmationTitle, RouterUrl } from '../../../constants';
 
 const activatedClassCSS =
   'flex items-center py-2 px-6 bg-gray-200 bg-opacity-1 text-gray-700 hover:text-gray-900 rounded-l-full';
 const deactivatedClassCSS =
   'flex items-center py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100';
 
-const adminTabIcon = (url: string): React.ReactNode => {
-  if (url === RouterUrl.adminMovie) return <VideoCameraOutlined />;
-  if (url === RouterUrl.adminMusic) return <PlayCircleOutlined />;
-  if (url === RouterUrl.adminPartner) return <TeamOutlined />;
-  if (url === RouterUrl.adminTrombinoscope) return <AppstoreOutlined />;
-  else return <DashboardOutlined />;
-};
-
-const adminTitleFromPathname = (url: string): string => {
-  if (url === RouterUrl.adminMovie) return programmationTitle.films;
-  else if (url === RouterUrl.adminMusic) return programmationTitle.musique;
-  else if (url === RouterUrl.adminPartner) return 'Partenaires';
-  else if (url === RouterUrl.adminTrombinoscope) return 'Trombinoscope';
-  else return 'Dashboard';
-};
+const adminRoutes = [
+  {
+    name: 'Dashboard',
+    link: RouterUrl.home,
+    icon: <DashboardOutlined />,
+  },
+  {
+    name: programmationTitle.films,
+    link: RouterUrl.adminMovie,
+    icon: <VideoCameraOutlined />,
+  },
+  {
+    name: programmationTitle.musique,
+    link: RouterUrl.adminMusic,
+    icon: <PlayCircleOutlined />,
+  },
+  {
+    name: 'Partenaires',
+    link: RouterUrl.adminPartner,
+    icon: <TeamOutlined />,
+  },
+  {
+    name: 'Trombinoscope',
+    link: RouterUrl.adminTrombinoscope,
+    icon: <AppstoreOutlined />,
+  },
+  {
+    name: 'Votes',
+    link: RouterUrl.adminVote,
+    icon: <QuestionCircleOutlined />,
+  },
+];
 
 interface NavigationProps {
   children?: React.ReactNode;
@@ -87,27 +105,21 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
           </Link>
         </div>
         <nav className="my-10 capitalize">
-          <Link
-            to={RouterUrl.home}
-            className={location.pathname === RouterUrl.home ? activatedClassCSS : deactivatedClassCSS}>
-            <DashboardOutlined />
-            <span className="mx-3 hidden md:flex">Dashboard</span>
-          </Link>
           <div className="mt-2.5 space-y-2.5">
-            {Object.keys(RouterUrl)
-              .filter((key) => key.match(/^admin.*$/g))
-              .map((url, key) => {
-                const modifiedUrl = `/${url.split('admin')[1].toString().toLowerCase()}`;
-                return (
-                  <Link
-                    key={key}
-                    to={modifiedUrl}
-                    className={location.pathname === modifiedUrl ? activatedClassCSS : deactivatedClassCSS}>
-                    {adminTabIcon(modifiedUrl)}
-                    <span className="mx-3 hidden md:flex"> {adminTitleFromPathname(modifiedUrl)}</span>
-                  </Link>
-                );
-              })}
+            {adminRoutes.map((route, key) => (
+              <Link
+                key={key}
+                to={route.link}
+                className={
+                  location.pathname === route.link ||
+                  (route.link !== RouterUrl.home && location.pathname.startsWith(route.link))
+                    ? activatedClassCSS
+                    : deactivatedClassCSS
+                }>
+                {route.icon}
+                <span className="mx-3 hidden md:flex">{route.name}</span>
+              </Link>
+            ))}
           </div>
           <Link to={RouterUrl.home} onClick={logout} className={`${deactivatedClassCSS} mt-24`}>
             <LogoutOutlined />
@@ -117,7 +129,7 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
       </div>
       <div className="col-span-11 sm:col-span-10 md:col-span-10 bg-gray-200">
         <header className="flex justify-center text-xl py-1 bg-white border-b-4 border-green font-avenir capitalize">
-          {adminTitleFromPathname(location.pathname)}
+          {adminRoutes.find(({ link }) => link === location.pathname)?.name ?? 'Dashboard'}
         </header>
         <main className="overflow-x-hidden overflow-y-auto px-4 mt-4">{!isModalVisible && children}</main>
       </div>
@@ -137,7 +149,7 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
             rules={[
               {
                 required: true,
-                message: 'Veuillez entrer votre nom d\'utilisateur!',
+                message: 'Veuillez entrer votre nom d’utilisateur!',
               },
             ]}>
             <Input autoFocus={true} />
