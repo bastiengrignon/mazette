@@ -12,12 +12,15 @@ const Association = loadable(() => import('../../pages/Association'));
 const LegalMention = loadable(() => import('../../pages/LegalMention'));
 const SanitaryPass = loadable(() => import('../../pages/SanitaryPass'));
 const Dashboard = loadable(() => import('../Admin/Dashboard'));
+const VotePage = loadable(() => import('../../pages/Vote'));
 import DashboardMovie from '../Admin/DashboardMovie';
 const DashboardMusic = loadable(() => import('../Admin/DashboardMusic'));
 const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'));
 const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'));
+const DashboardVote = loadable(() => import('../Admin/DashboardVote'));
 const Footer = loadable(() => import('../../components/Footer'));
 import Navbar from '../../components/Navbar';
+import DashboardVoteStatistics from '../Admin/DashboardVoteStatistics';
 
 interface RoutesProps {
   isAdmin: boolean;
@@ -32,6 +35,8 @@ const Routes: React.FC<RoutesProps> = ({ isAdmin }) => {
       <Route path={RouterUrl.adminMusic} element={<DashboardMusic />} />
       <Route path={RouterUrl.adminPartner} element={<DashboardPartner />} />
       <Route path={RouterUrl.adminTrombinoscope} element={<DashboardTrombinoscope />} />
+      <Route path={RouterUrl.adminVote} element={<DashboardVote />} />
+      <Route path={RouterUrl.adminVoteStatistics} element={<DashboardVoteStatistics />} />
 
       <Route path={RouterUrl.home} element={<Dashboard />} />
     </RouterRoutes>
@@ -44,6 +49,7 @@ const Routes: React.FC<RoutesProps> = ({ isAdmin }) => {
         <Route path={RouterUrl.information} element={<Information />} />
         <Route path={RouterUrl.mention} element={<LegalMention />} />
         <Route path={RouterUrl.passSanitaire} element={<SanitaryPass />} />
+        <Route path={RouterUrl.vote} element={<VotePage />} />
 
         <Route path={RouterUrl.home} element={<Home />} />
       </RouterRoutes>
