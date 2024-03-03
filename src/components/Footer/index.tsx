@@ -10,6 +10,7 @@ import { cloudinary } from '../../index';
 import { FaFacebookF, FaInstagram } from 'react-icons/fa';
 import { IPartner, PartnerService } from '../../services';
 import { RouterUrl, externalLinks } from '../../constants';
+import { ALT_TEXT_SOCIAL_MEDIAS, CREATED_BY, LEGAL_MENTION, WEBSITE_AUTHOR } from './Footer.constants';
 
 const Footer: React.FC = () => {
   const [partners, setPartners] = useState<IPartner[]>([]);
@@ -55,17 +56,20 @@ const Footer: React.FC = () => {
         </div>
         <div className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
           <ExternalLink src={externalLinks.social.instagram} onClick={() => trackSocialMediaGA('instagram')}>
-            <FaInstagram className="hover:text-green" title="Instagram logo" />
+            <FaInstagram className="hover:text-green" title={ALT_TEXT_SOCIAL_MEDIAS.instagram} />
           </ExternalLink>
           <ExternalLink src={externalLinks.social.facebook} onClick={() => trackSocialMediaGA('facebook')}>
-            <FaFacebookF className="hover:text-green" title="Facebook logo" />
+            <FaFacebookF className="hover:text-green" title={ALT_TEXT_SOCIAL_MEDIAS.facebook} />
           </ExternalLink>
         </div>
         <div className="col-span-6 row-span-1 italic mt-4">
           <Link to={RouterUrl.mention} className="link">
-            Mentions Légales
-          </Link>{' '}
-          - Créé par <ExternalLink src={externalLinks.social.myLinkedin}>Bastien Grignon</ExternalLink>
+            {LEGAL_MENTION}
+          </Link>
+          <div>
+            {CREATED_BY}
+            <ExternalLink src={externalLinks.social.myLinkedin}>{WEBSITE_AUTHOR}</ExternalLink>
+          </div>
         </div>
       </div>
     </footer>

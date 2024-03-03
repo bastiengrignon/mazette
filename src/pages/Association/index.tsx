@@ -85,10 +85,10 @@ const Association: React.FC = () => {
           <iframe
             id="haWidget"
             src="https://www.helloasso.com/associations/mazette/adhesions/adhesion-association-mazette/widget"
-            className="w-full px-2 h-screen pr-0 md:pr-10"
+            className="w-full px-4 h-screen"
           />
         </div>
-        <Anchor id={associationTitle.previousEdition} className={titleCSS} />
+        <Anchor id={associationTitle.previousEdition} className={`${titleCSS} mt-6`} />
         <div className={`${subtitleCSS} my-0 sm:my-2`}>
           <FormattedText textType={TextType.previousEdition} />
         </div>

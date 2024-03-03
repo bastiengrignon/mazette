@@ -102,7 +102,7 @@ export const externalLinks = {
   },
   others: {
     payotte: 'https://www.lapayotte.net',
-    schedule: `${import.meta.env.VITE_API_URL}/assets/ligne403_schedule.pdf`,
+    schedule: '/ligne403.pdf',
   },
 };
 

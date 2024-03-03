@@ -3,7 +3,7 @@ import loadable from '@loadable/component';
 import { Route, Routes as RouterRoutes } from 'react-router-dom';
 
 import Home from '../../pages/Home';
-import { RouterUrl } from '../../constants';
+import { adminSubdomain, RouterUrl } from '../../constants';
 import { useGATracker } from '../../constants/hooks';
 
 const Information = loadable(() => import('../../pages/Information'));
@@ -22,12 +22,9 @@ const Footer = loadable(() => import('../../components/Footer'));
 import Navbar from '../../components/Navbar';
 import DashboardVoteStatistics from '../Admin/DashboardVoteStatistics';
 
-interface RoutesProps {
-  isAdmin: boolean;
-}
-
-const Routes: React.FC<RoutesProps> = ({ isAdmin }) => {
+const Routes: React.FC = () => {
   useGATracker();
+  const isAdmin = window.location.host.split('.')[0] === adminSubdomain;
 
   return isAdmin ? (
     <RouterRoutes>

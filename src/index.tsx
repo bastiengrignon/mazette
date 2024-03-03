@@ -13,7 +13,6 @@ import { theme } from './constants/theme';
 
 import CookieNotice from './components/CookieNotice';
 import Routes from './components/Routes';
-import { adminSubdomain } from './constants';
 import './index.css';
 
 dayjs.locale('fr');
@@ -22,15 +21,13 @@ const App: React.FC = () => (
   <div className="min-h-full flex flex-col justify-between">
     <BrowserRouter>
       <CookieNotice />
-      <Routes isAdmin={isAdminRoutes()} />
+      <Routes />
     </BrowserRouter>
     <Analytics />
     <SpeedInsights />
   </div>
 );
 export const cloudinary = new Cloudinary({ cloud: { cloudName: 'mazette' } });
-
-const isAdminRoutes = (): boolean => window.location.host.split('.')[0] === adminSubdomain;
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

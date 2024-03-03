@@ -12,45 +12,46 @@ interface FormattedTextProps {
 const sanitizeConfig = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'iframe']),
   transformTags: {
-    a: (tagName, attribs) => ({
-      tagName: 'a',
+    a: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
+        ...attribs,
         href: attribs.href,
         target: '_blank',
         class: 'link',
       },
     }),
     ul: sanitizeHtml.simpleTransform('ul', { class: 'list-disc' }),
-    iframe: (tagName, attribs) => ({
-      tagName: 'iframe',
+    iframe: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
         ...attribs,
         class: 'absolute inset-0 w-full h-full',
       },
     }),
-    h1: (tagName, attribs) => ({
-      tagName: 'div',
+    h1: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
         ...attribs,
         class: 'text-3xl w-full',
       },
     }),
-    h2: (tagName, attribs) => ({
-      tagName: 'div',
+    h2: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
         ...attribs,
         class: 'text-2xl w-full',
       },
     }),
-    h3: (tagName, attribs) => ({
-      tagName: 'div',
+    h3: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
         ...attribs,
         class: 'text-xl w-full',
       },
     }),
-    img: (tagName, attribs) => ({
-      tagName: 'img',
+    img: (tagName: string, attribs) => ({
+      tagName,
       attribs: {
         ...attribs,
         alt: attribs.alt || 'Cloudinary image',
@@ -88,7 +89,7 @@ const FormattedText: React.FC<FormattedTextProps> = ({ textType, skeletonRows = 
         .map((text, key) => {
           const sanitizedHTML = sanitizeHtml(text.text, sanitizeConfig).replaceAll(
             /<iframe(.+)<\/iframe>/g,
-            '<div class=\'aspect-w-16 aspect-h-9 relative\'>$&</div>'
+            '<div class="aspect-w-16 aspect-h-9 relative">$&</div>'
           );
           return (
             <Skeleton key={key} loading={isTextsLoading} active={true} paragraph={{ rows: skeletonRows }}>

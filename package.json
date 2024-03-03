@@ -48,6 +48,7 @@
     "react-ga": "^3.3.1",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
+    "react-qr-code": "^2.0.12",
     "react-router-dom": "^6.22.1",
     "react-router-hash-link": "^2.4.3",
     "sanitize-html": "^2.12.1",

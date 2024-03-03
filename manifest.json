@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "short_name": "Festival Mazette!",
-  "description": "Site web du festival Mazette!",
+  "short_name": "Mazette!",
+  "description": "Du cinéma, de la musique et du plein air, le festival Mazette! c’est ce combo chaleureux et festif que nous vous proposons",
   "name": "Festival Mazette!",
   "icons": [
     {
@@ -23,6 +23,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
+  "display_override": ["minimal-ui", "browser"],
   "theme_color": "#21BD8F",
   "background_color": "#21BD8F"
 }

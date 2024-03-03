@@ -1,8 +1,9 @@
-export const TITLE_VOTE = 'Système de vote :';
-export const BUTTON_CREATE_NEW_VOTE = 'Créer un nouveau vote';
-export const MODAL_TITLE_NEW_VOTE = 'Nouveau vote';
-export const MODAL_BUTTON_VOTE_OK = 'Créer';
-export const MODAL_INPUT_PLACEHOLDER_ADD_CHOICE = 'Ajouter un choix au vote';
-export const MODAL_INPUT_PLACEHOLDER_TITLE = 'Titre du vote';
-export const MODAL_BUTTON_ADD_CHOICE = 'Ajouter';
-export const VOTE_STATISTICS = 'Statistiques';
+export const TITLE_VOTE: string = 'Système de vote';
+export const SHOW_QR_CODE: string = 'Afficher le QR code';
+export const BUTTON_CREATE_NEW_VOTE: string = 'Créer un nouveau vote';
+export const MODAL_TITLE_NEW_VOTE: string = 'Nouveau vote';
+export const MODAL_BUTTON_VOTE_OK: string = 'Créer';
+export const MODAL_INPUT_PLACEHOLDER_ADD_CHOICE: string = 'Ajouter un choix au vote';
+export const MODAL_INPUT_PLACEHOLDER_TITLE: string = 'Titre du vote';
+export const MODAL_BUTTON_ADD_CHOICE: string = 'Ajouter';
+export const VOTE_STATISTICS: string = 'Statistiques';

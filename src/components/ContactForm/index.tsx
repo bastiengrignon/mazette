@@ -2,6 +2,7 @@ import emailJs from 'emailjs-com';
 import loadable from '@loadable/component';
 import { Button, Form, Input } from 'antd';
 import React, { useState } from 'react';
+import { BUTTON_SEND_FORM, ERROR_MESSAGES_FORM, LABEL_FORM } from './ContactForm.constants';
 
 const Notification = loadable(() => import('../Notification'));
 
@@ -53,7 +54,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full sm:w-2/3 xl:w-2/5">
+    <div className="flex flex-col w-full sm:w-2/3 xl:w-2/5 px-4 sm:px-0">
       <Form
         onFinish={sendEmail}
         form={contactForm}
@@ -64,15 +65,15 @@ const ContactForm: React.FC = () => {
         <div className="flex items-center space-x-2 w-full">
           <Form.Item
             className="w-2/5"
-            label="Votre nom"
+            label={LABEL_FORM.name}
             name="name"
             required={true}
-            rules={[{ required: true, message: 'Entrez votre nom' }]}>
+            rules={[{ required: true, message: ERROR_MESSAGES_FORM.name }]}>
             <Input />
           </Form.Item>
           <Form.Item
             className="w-3/5"
-            label="Votre e-mail"
+            label={LABEL_FORM.email}
             name="email"
             required={true}
             hasFeedback
@@ -80,28 +81,26 @@ const ContactForm: React.FC = () => {
               {
                 required: true,
                 type: 'email',
-                message: 'Entrez une adresse mail valide !',
+                message: ERROR_MESSAGES_FORM.email,
               },
             ]}>
             <Input />
           </Form.Item>
         </div>
-        <Form.Item label="Sujet" name="subject">
+        <Form.Item label={LABEL_FORM.subject} name="subject">
           <Input />
         </Form.Item>
         <Form.Item
-          label="Message"
+          label={LABEL_FORM.message}
           name="message"
-          rules={[{ required: true, message: 'Dites-nous tout en quelques mots !' }]}>
+          rules={[{ required: true, message: ERROR_MESSAGES_FORM.message }]}>
           <Input.TextArea rows={5} />
         </Form.Item>
-        <Form.Item>
-          <div className="flex items-center space-x-2">
-            <Button htmlType="submit" loading={messageSentLoading} className="website-button">
-              Envoyer
-            </Button>
-            <span>{messageSent && <Notification text={messageSentError ? errorMessage : successMessage} />}</span>
-          </div>
+        <Form.Item className="flex items-center justify-end space-x-2">
+          <Button htmlType="submit" loading={messageSentLoading} className="website-button">
+            {BUTTON_SEND_FORM}
+          </Button>
+          <span>{messageSent && <Notification text={messageSentError ? errorMessage : successMessage} />}</span>
         </Form.Item>
       </Form>
     </div>

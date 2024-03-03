@@ -20,6 +20,7 @@ import {
   Collapse,
   Popconfirm,
   InputRef,
+  QRCode,
 } from 'antd';
 import {
   BUTTON_CREATE_NEW_VOTE,
@@ -28,6 +29,7 @@ import {
   MODAL_INPUT_PLACEHOLDER_ADD_CHOICE,
   MODAL_INPUT_PLACEHOLDER_TITLE,
   MODAL_TITLE_NEW_VOTE,
+  SHOW_QR_CODE,
   TITLE_VOTE,
   VOTE_STATISTICS,
 } from './DashboardVote.constants';
@@ -69,6 +71,7 @@ const DashboardVote = () => {
   const handleCloseModal = () => {
     setIsModalVisible(false);
     setVoteChoices([]);
+    setNewVoteTitle('');
   };
 
   const toggleVoteActivation = (id: string) => (checked: boolean) => {
@@ -81,13 +84,31 @@ const DashboardVote = () => {
     VoteService.deleteVote(id).then(() => setVotes(votes.filter((v) => v.id !== id)));
   };
 
+  const showQrCodeModal = () => {
+    const websiteURL = window.location.origin.replace('admin.', '');
+    Modal.info({
+      okButtonProps: { className: 'button' },
+      title: 'QR Code',
+      content: (
+        <Flex align="center" justify="center">
+          <QRCode size={300} bordered={false} value={`${websiteURL}/vote`} />
+        </Flex>
+      ),
+    });
+  };
+
   useEffect(() => {
     VoteService.getAll().then((votes) => setVotes(votes));
   }, []);
 
   return (
     <Navigation>
-      <Title>{TITLE_VOTE}</Title>
+      <Flex justify="space-between" align="center">
+        <Title>{TITLE_VOTE}</Title>
+        <Button type="link" onClick={showQrCodeModal}>
+          {SHOW_QR_CODE}
+        </Button>
+      </Flex>
       <Button type="primary" className="button" onClick={() => setIsModalVisible(true)}>
         {BUTTON_CREATE_NEW_VOTE}
       </Button>
