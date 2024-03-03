@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import loadable from '@loadable/component';
 import React, { useEffect, useState } from 'react';
 
@@ -16,6 +16,7 @@ import {
   Switch,
   Typography,
   message,
+  Flex,
 } from 'antd';
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 
@@ -45,6 +46,8 @@ const TinyMceEditor = loadable(() => import('../TinyMceEditor'));
 const { Panel } = Collapse;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+type NoUndefinedRangeValueType<DateType> = [DateType | null, DateType | null];
 
 const selectTextType = [
   { text: 'Musique', value: TextType.music },
@@ -187,19 +190,19 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleFestivalDate = (_, dateString: [string, string]): void => {
-    const startDate = new Date(dateString[0]);
-    const endDate = new Date(dateString[1]);
-    FestivalService.update(festival.id, {
-      ...festival,
-      startDate,
-      endDate,
-    }).then((res) =>
-      setFestival({
+  const handleFestivalDate = (dates: NoUndefinedRangeValueType<Dayjs>): void => {
+    if (dates[0] && dates[1]) {
+      FestivalService.update(festival.id, {
         ...festival,
-        ...res,
-      })
-    );
+        startDate: dates[0].toDate(),
+        endDate: dates[1].toDate(),
+      }).then((res) =>
+        setFestival({
+          ...festival,
+          ...res,
+        })
+      );
+    }
   };
 
   const handleFestivalLatitude = (newLatitude: number | null): void => {
@@ -261,57 +264,61 @@ const Dashboard: React.FC = () => {
           </Collapse>
         </Card>
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
-          <div className="text-3xl text-center mb-5">{DASHBOARD_TITLE_INFORMATION}</div>
-          <Switch
-            disabled={!infoText?.id}
-            onChange={updateInformationsVisibility}
-            checked={infoText?.isShowed}
-            className="mr-2"
-          />{' '}
-          {DASHBOARD_SHOW_HOME_INFORMATION}
-          <div className="flex items-baseline w-full justify-between">
-            <div className="mt-5">{DASHBOARD_TITLE_DATE}</div>
-            <RangePicker
-              defaultValue={[dayjs(festival?.startDate), dayjs(festival?.endDate)]}
-              onChange={handleFestivalDate}
-            />
-          </div>
-          <div className="flex items-baseline w-full justify-between">
-            <div className="w-1/2 mt-5">{DASHBOARD_TITLE_GPS_COORDS}</div>
-            <div className="flex w-full justify-start space-x-4">
-              <InputNumber
-                className="w-full"
-                placeholder={DASHBOARD_PLACEHOLDER_LATITUDE}
-                step="0.00000000001"
-                defaultValue={festival?.location?.latitude}
-                onChange={handleFestivalLatitude}
+          <div className="space-y-4">
+            <div className="text-3xl text-center">{DASHBOARD_TITLE_INFORMATION}</div>
+            <Flex align="baseline" justify="space-between">
+              <div>{DASHBOARD_TITLE_DATE}</div>
+              {festival.startDate && festival.endDate && (
+                <RangePicker
+                  defaultValue={[dayjs(festival.startDate), dayjs(festival.endDate)]}
+                  onChange={handleFestivalDate}
+                  format="D MMM YYYY"
+                />
+              )}
+            </Flex>
+            <Flex align="baseline" justify="space-between">
+              <div className="w-1/2">{DASHBOARD_TITLE_GPS_COORDS}</div>
+              <Flex justify="flex-start" gap="small">
+                {festival.location && (
+                  <InputNumber
+                    className="w-full"
+                    placeholder={DASHBOARD_PLACEHOLDER_LATITUDE}
+                    step="0.00000000001"
+                    defaultValue={festival.location?.latitude}
+                    onChange={handleFestivalLatitude}
+                  />
+                )}
+                {festival.location && (
+                  <InputNumber
+                    className="w-full"
+                    placeholder={DASHBOARD_PLACEHOLDER_LONGITUDE}
+                    step="0.00000000001"
+                    defaultValue={festival.location?.longitude}
+                    onChange={handleFestivalLongitude}
+                  />
+                )}
+              </Flex>
+            </Flex>
+            <Flex align="center" gap="small">
+              <Switch disabled={!infoText?.id} onChange={updateInformationsVisibility} checked={infoText?.isShowed} />
+              <div>{DASHBOARD_SHOW_HOME_INFORMATION}</div>
+            </Flex>
+            <Flex align="center" gap="small">
+              <Switch
+                onChange={toggleVisibility('showMusic')}
+                checked={festival.showMusic}
+                loading={toggleLoading['showMusic']}
               />
-              <InputNumber
-                className="w-full"
-                placeholder={DASHBOARD_PLACEHOLDER_LONGITUDE}
-                step="0.00000000001"
-                defaultValue={festival?.location?.longitude}
-                onChange={handleFestivalLongitude}
+              <div>{DASHBOARD_SHOW_MUSICS}</div>
+            </Flex>
+            <Flex align="center" gap="small">
+              <Switch
+                onChange={toggleVisibility('showMovie')}
+                checked={festival.showMovie}
+                loading={toggleLoading['showMovie']}
               />
-            </div>
-          </div>
-          <div className="my-5 flex align-center">
-            <Switch
-              onChange={toggleVisibility('showMusic')}
-              checked={festival.showMusic}
-              loading={toggleLoading['showMusic']}
-              className="mr-2"
-            />{' '}
-            {DASHBOARD_SHOW_MUSICS}
-          </div>
-          <div className="my-5">
-            <Switch
-              onChange={toggleVisibility('showMovie')}
-              checked={festival.showMovie}
-              loading={toggleLoading['showMovie']}
-              className="mr-2"
-            />{' '}
-            {DASHBOARD_SHOW_MOVIES}
+              <div>{DASHBOARD_SHOW_MOVIES}</div>
+            </Flex>
           </div>
         </Card>
       </div>
