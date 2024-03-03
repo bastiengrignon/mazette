@@ -13,14 +13,15 @@ const LegalMention = loadable(() => import('../../pages/LegalMention'));
 const SanitaryPass = loadable(() => import('../../pages/SanitaryPass'));
 const Dashboard = loadable(() => import('../Admin/Dashboard'));
 const VotePage = loadable(() => import('../../pages/Vote'));
-import DashboardMovie from '../Admin/DashboardMovie';
+const NotFound = loadable(() => import('../../pages/NotFound'));
+const DashboardMovie = loadable(() => import('../Admin/DashboardMovie'));
 const DashboardMusic = loadable(() => import('../Admin/DashboardMusic'));
 const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'));
 const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'));
 const DashboardVote = loadable(() => import('../Admin/DashboardVote'));
+const DashboardVoteStatistics = loadable(() => import('../Admin/DashboardVoteStatistics'));
 const Footer = loadable(() => import('../../components/Footer'));
 import Navbar from '../../components/Navbar';
-import DashboardVoteStatistics from '../Admin/DashboardVoteStatistics';
 
 const Routes: React.FC = () => {
   useGATracker();
@@ -49,6 +50,7 @@ const Routes: React.FC = () => {
         <Route path={RouterUrl.vote} element={<VotePage />} />
 
         <Route path={RouterUrl.home} element={<Home />} />
+        <Route path={RouterUrl.notFound} element={<NotFound />} />
       </RouterRoutes>
       <Footer />
     </>

@@ -19,6 +19,8 @@ export enum RouterUrl {
   adminTrombinoscope = '/trombinoscope',
   adminVote = '/votes',
   adminVoteStatistics = '/votes/:voteId',
+
+  notFound = '*',
 }
 
 export enum TabName {
