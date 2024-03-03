@@ -21,7 +21,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "display_override": ["minimal-ui", "browser"],
   "theme_color": "#21BD8F",
