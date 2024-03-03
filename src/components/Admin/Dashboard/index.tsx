@@ -24,6 +24,7 @@ import { CommonService, CookieService, IText, TextService, TextType } from '../.
 import { FestivalService, IFestival } from '../../../services/admin/festival';
 
 import {
+  CANCEL,
   DASHBOARD_ADD_TEXT,
   DASHBOARD_MODAL_NEW_TEXT_TITLE,
   DASHBOARD_MODAL_TEXT,
@@ -43,7 +44,6 @@ import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'));
-const { Panel } = Collapse;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -139,12 +139,14 @@ const Dashboard: React.FC = () => {
             <TinyMceEditor textareaName="text" initialValue={item.text} form={formRowEdition} />
           </Form.Item>
         ) : (
-          <div className="w-full whitespace-pre-line">{item.text}</div>
+          <div className="w-full whitespace-pre-line" dangerouslySetInnerHTML={{ __html: item.text }} />
         )}
         {editable ? (
-          <span className="inline-flex justify-around space-x-3 ml-5">
+          <span className="flex flex-col items-center ml-4 gap-2">
             <Button icon={<SaveOutlined />} onClick={() => saveRow(item.id)} />
-            <Typography.Link onClick={cancel}>Annuler</Typography.Link>
+            <Typography.Link onClick={cancel} className="text-nowrap">
+              {CANCEL}
+            </Typography.Link>
           </span>
         ) : (
           <Button icon={<EditOutlined />} onClick={() => editRow(item)} />
@@ -248,9 +250,14 @@ const Dashboard: React.FC = () => {
           <Button type="primary" className="my-4 button" onClick={() => setAddRowModalVisible(true)}>
             {DASHBOARD_ADD_TEXT}
           </Button>
-          <Collapse accordion={true} onChange={cancel} defaultActiveKey={0}>
-            {Object.values(TextType).map((textType, key) => (
-              <Panel key={key} header={collapseTitle(textType)} className="whitespace-pre-wrap">
+          <Collapse
+            accordion={true}
+            onChange={cancel}
+            defaultActiveKey={0}
+            items={Object.values(TextType).map((textType) => ({
+              key: textType,
+              label: collapseTitle(textType),
+              children: (
                 <Skeleton avatar={true} active={true} loading={isTextLoading}>
                   <Form form={formRowEdition} component={false}>
                     <List
@@ -259,9 +266,9 @@ const Dashboard: React.FC = () => {
                     />
                   </Form>
                 </Skeleton>
-              </Panel>
-            ))}
-          </Collapse>
+              ),
+            }))}
+          />
         </Card>
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
           <div className="space-y-4">

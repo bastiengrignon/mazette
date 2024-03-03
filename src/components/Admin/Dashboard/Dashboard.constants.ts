@@ -13,3 +13,5 @@ export const DASHBOARD_MODAL_TEXT: string = 'Entrez du texte';
 export const DASHBOARD_MODAL_TEXT_RULE: string = 'Entrez du texte';
 export const DASHBOARD_MODAL_TYPE: string = 'Type';
 export const DASHBOARD_MODAL_TYPE_RULE: string = 'Entrez le type de texte';
+
+export const CANCEL: string = 'Annuler';
