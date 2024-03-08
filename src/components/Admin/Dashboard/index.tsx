@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import loadable from '@loadable/component';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   Button,
@@ -17,6 +18,7 @@ import {
   Typography,
   message,
   Flex,
+  Tabs,
 } from 'antd';
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 
@@ -25,6 +27,7 @@ import { FestivalService, IFestival } from '../../../services/admin/festival';
 
 import {
   CANCEL,
+  DASHBOARD_ADD_ELEMENT,
   DASHBOARD_ADD_TEXT,
   DASHBOARD_MODAL_NEW_TEXT_TITLE,
   DASHBOARD_MODAL_TEXT,
@@ -33,6 +36,7 @@ import {
   DASHBOARD_MODAL_TYPE_RULE,
   DASHBOARD_PLACEHOLDER_LATITUDE,
   DASHBOARD_PLACEHOLDER_LONGITUDE,
+  DASHBOARD_PREVIEW_PAGE,
   DASHBOARD_SHOW_HOME_INFORMATION,
   DASHBOARD_SHOW_MOVIES,
   DASHBOARD_SHOW_MUSICS,
@@ -42,6 +46,16 @@ import {
 } from './Dashboard.constants';
 import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants';
 import { showErrorFormMessage } from '../../../lib/validation';
+import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import Draggable from '../Draggable';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { TbDeviceFloppy } from 'react-icons/tb';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'));
@@ -49,6 +63,12 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 type NoUndefinedRangeValueType<DateType> = [DateType | null, DateType | null];
+
+type DraggableItem = {
+  id: string;
+  content: string;
+  isVisible: boolean;
+};
 
 const selectTextType = [
   { text: 'Musique', value: TextType.music },
@@ -247,10 +267,73 @@ const Dashboard: React.FC = () => {
         .finally(() => setToggleLoading({ [key]: false }));
     };
 
-  return (
-    <Navigation>
-      <div className="grid grid-cols-12 gap-2 md:gap-5">
-        <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-8">
+  const [draggableItems, setDraggableItems] = useState<DraggableItem[]>([
+    { id: '1', content: '1', isVisible: false },
+    { id: '2', content: '2', isVisible: false },
+    { id: '3', content: '3', isVisible: false },
+    { id: '4', content: '4', isVisible: false },
+  ]);
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const onDragEnd = useCallback(({ over, active }): void => {
+    if (active.id !== over?.id) {
+      setDraggableItems((items) => {
+        const oldIndex = items.findIndex(({ id }) => id === active.id);
+        const newIndex = items.findIndex(({ id }) => id === over?.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }, []);
+
+  const addDraggableItem = () =>
+    setDraggableItems([
+      {
+        id: uuidv4(),
+        content: 'Ajouter du text ici',
+        isVisible: false,
+      },
+      ...draggableItems,
+    ]);
+
+  const removeDraggableItem = (id: string | null) => setDraggableItems(draggableItems.filter((item) => item.id !== id));
+
+  const updateDraggableContent = (id: string, content: string) =>
+    setDraggableItems(
+      draggableItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              content,
+            }
+          : item
+      )
+    );
+
+  const toggleDraggableVisibility = (id: string) =>
+    setDraggableItems(
+      draggableItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              isVisible: !item.isVisible,
+            }
+          : item
+      )
+    );
+
+  const savePage = () => {
+    console.log({ draggableItems });
+  };
+
+  const pages = [
+    {
+      key: 'default',
+      label: 'Défaut',
+      children: (
+        <>
           <Button type="primary" className="my-4 button" onClick={() => setAddRowModalVisible(true)}>
             {DASHBOARD_ADD_TEXT}
           </Button>
@@ -273,6 +356,57 @@ const Dashboard: React.FC = () => {
               ),
             }))}
           />
+        </>
+      ),
+    },
+    {
+      key: 'home',
+      label: 'Accueil',
+      children: (
+        <>
+          <Flex justify="center">
+            <Typography.Title level={2}>{DASHBOARD_PREVIEW_PAGE}</Typography.Title>
+          </Flex>
+          <Flex align="center" justify="space-between">
+            <Button type="primary" className="button my-4" onClick={addDraggableItem}>
+              {DASHBOARD_ADD_ELEMENT}
+            </Button>
+            <TbDeviceFloppy size={30} className="cursor-pointer hover:text-green" onClick={savePage} />
+          </Flex>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={onDragEnd}
+            modifiers={[restrictToVerticalAxis]}>
+            <SortableContext items={draggableItems.map(({ id }) => id)} strategy={verticalListSortingStrategy}>
+              <Flex vertical gap="small">
+                {draggableItems.map(({ id, content, isVisible }) => (
+                  <Draggable
+                    key={id}
+                    id={id}
+                    content={content}
+                    isVisible={isVisible}
+                    onRemove={removeDraggableItem}
+                    onSave={updateDraggableContent}
+                    toggleVisibility={toggleDraggableVisibility}
+                  />
+                ))}
+              </Flex>
+            </SortableContext>
+          </DndContext>
+        </>
+      ),
+    },
+    { key: 'association', label: 'Association' },
+    { key: 'programmation', label: 'Programmation' },
+    { key: 'information', label: 'Information' },
+  ];
+
+  return (
+    <Navigation>
+      <div className="grid grid-cols-12 gap-2 md:gap-5">
+        <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-8">
+          <Tabs defaultActiveKey="home" items={pages} />
         </Card>
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
           <div className="space-y-4">
@@ -346,7 +480,7 @@ const Dashboard: React.FC = () => {
             label={DASHBOARD_MODAL_TEXT}
             name="text"
             rules={[{ required: true, message: DASHBOARD_MODAL_TEXT_RULE }]}>
-            <TinyMceEditor textareaName="text" form={formRowAddition} />
+            <TinyMceEditor textareaName="text" form={formRowAddition} minHeight={150} />
           </Form.Item>
           <Form.Item
             label={DASHBOARD_MODAL_TYPE}
