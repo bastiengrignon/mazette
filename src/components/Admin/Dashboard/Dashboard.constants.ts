@@ -15,3 +15,6 @@ export const DASHBOARD_MODAL_TYPE: string = 'Type';
 export const DASHBOARD_MODAL_TYPE_RULE: string = 'Entrez le type de texte';
 
 export const CANCEL: string = 'Annuler';
+
+export const DASHBOARD_PREVIEW_PAGE: string = 'Aperçu de la page';
+export const DASHBOARD_ADD_ELEMENT: string = 'Ajouter un élément';
