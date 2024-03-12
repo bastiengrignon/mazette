@@ -1,18 +1,22 @@
-import { IMovie } from './movie.interface';
-import { UploadService } from '../upload';
+import { IMovie, IMovieUpload } from './movie.interface';
 import axiosInstance from '../../axios';
 
 export class MovieService {
   static getAll = async (): Promise<IMovie[]> => await axiosInstance.get('/movie').then((r) => r.data);
 
-  static create = async (movie: IMovie, file?: File): Promise<IMovie> => {
-    let tmpFile;
-    if (file) await UploadService.getBase64(file).then((base64Url) => (tmpFile = base64Url));
-    const tmpMovie = {
-      ...MovieService.formatMovieDates(movie),
-      imgThumbnail: tmpFile,
-    };
-    return await axiosInstance.post('/movie', tmpMovie).then((r) => r.data);
+  static create = async (movie: IMovieUpload): Promise<IMovie> => {
+    const formattedMovie = MovieService.formatMovieDates(movie);
+
+    const formData = new FormData();
+    formData.append('image', movie.imgThumbnail.file.originFileObj);
+    Object.entries(formattedMovie).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    return await axiosInstance
+      .post('/movie', formData, {
+        headers: { 'content-type': 'multipart/form-data' },
+      })
+      .then((r) => r.data);
   };
 
   static update = async (id: number, updatedMovie: IMovie): Promise<IMovie> =>
@@ -20,7 +24,7 @@ export class MovieService {
 
   static delete = async (id: number): Promise<void> => await axiosInstance.delete(`/movie/${id}`).then((r) => r.data);
 
-  private static formatMovieDates = (movie: IMovie): IMovie => ({
+  private static formatMovieDates = (movie: IMovieUpload): IMovieUpload => ({
     ...movie,
     date: new Date(movie.date).getUTCFullYear().toString(),
     publicationDate: new Date(movie.publicationDate),

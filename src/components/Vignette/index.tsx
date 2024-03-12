@@ -2,7 +2,7 @@ import loadable from '@loadable/component';
 import { Modal, Skeleton } from 'antd';
 import React, { useState } from 'react';
 
-import { AdvancedImage } from '@cloudinary/react';
+import { AdvancedImage, lazyload } from '@cloudinary/react';
 import { cloudinary } from '../../index';
 import { fill } from '@cloudinary/url-gen/actions/resize';
 import { IMovie, IMusic } from '../../services';
@@ -44,7 +44,11 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties, ...props }) => {
         <Skeleton.Avatar active={true} size="large" className="mx-auto" />
       ) : props.type === 'music' ? (
         <div className={`relative ${vignetteCSS}`} onClick={() => setVisibility(true)}>
-          <AdvancedImage cldImg={cloudinary.image(properties.image)} alt={properties.name} />
+          <AdvancedImage
+            cldImg={cloudinary.image(properties.image)}
+            alt={properties.name}
+            plugins={[lazyload({ threshold: 0.5 })]}
+          />
           <div className="fixed top-0 h-full w-full opacity-0 hover:opacity-100">
             <div className="flex justify-center items-center h-full">
               <span className="w-full font-medium bg-green text-white text-center text-base sm:text-2xl md:text-3xl lg:text-5xl py-2">
@@ -56,6 +60,7 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties, ...props }) => {
       ) : (
         <div className={`relative ${vignetteCSS}`} onClick={() => setVisibility(true)}>
           <AdvancedImage
+            plugins={[lazyload({ threshold: 0.5 })]}
             cldImg={cloudinary.image(properties.imgThumbnail)}
             alt={`${properties.title} ${properties.author}`}
             className="w-full h-full"
@@ -74,6 +79,7 @@ const Vignette: React.FC<VignetteProps<any>> = ({ properties, ...props }) => {
         <div className="grid grid-cols-6">
           <div className="col-span-6 sm:col-span-6 md:col-span-2 flex justify-center my-2 md:my-0">
             <AdvancedImage
+              plugins={[lazyload({ threshold: 0.5 })]}
               cldImg={cloudinary.image(publicImgId()).resize(fill().width(250).height(250))}
               alt={altImgName()}
               className="rounded"

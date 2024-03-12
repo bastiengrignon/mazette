@@ -1,15 +1,21 @@
-import { ITrombinoscope } from './trombinoscope.interface';
-import { UploadService } from '../upload';
+import { ITrombinoscope, ITrombinoscopeUpload } from './trombinoscope.interface';
 import axiosInstance from '../../axios';
 
 export class TrombinoscopeService {
   static getAll = async (): Promise<ITrombinoscope[]> => await axiosInstance.get('/trombinoscope').then((r) => r.data);
 
-  static create = async (partner: ITrombinoscope, file?: File): Promise<ITrombinoscope> => {
-    let tmpFile;
-    if (file) await UploadService.getBase64(file).then((base64Url) => (tmpFile = base64Url));
-    const tmpTrombinoscope = { ...partner, image: tmpFile };
-    return await axiosInstance.post('/trombinoscope', tmpTrombinoscope).then((r) => r.data);
+  static create = async (trombinoscope: ITrombinoscopeUpload): Promise<ITrombinoscope> => {
+    const formData = new FormData();
+    formData.append('image', trombinoscope.image.file.originFileObj);
+    Object.entries(trombinoscope).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    return await axiosInstance
+      .post('/trombinoscope', formData, {
+        headers: { 'content-type': 'multipart/form-data' },
+      })
+      .then((r) => r.data);
   };
 
   static update = async (id: number, updatedTrombinoscope: ITrombinoscope): Promise<ITrombinoscope> =>

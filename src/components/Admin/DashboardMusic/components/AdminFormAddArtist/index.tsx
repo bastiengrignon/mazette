@@ -1,10 +1,8 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, FormInstance, Input, Upload } from 'antd';
+import { Button, DatePicker, Form, FormInstance, Input, InputRef, Upload } from 'antd';
 
 import { UploadService } from '../../../../../services';
 import {
@@ -25,11 +23,17 @@ import { FestivalService, IFestival } from '../../../../../services/admin/festiv
 
 interface AdminFormAddArtistProps {
   form: FormInstance;
-  onUploadChange: (info: UploadChangeParam<UploadFile<File>>) => void;
 }
 
-const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadChange }) => {
+const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form }) => {
   const [festival, setFestival] = useState<IFestival>({} as IFestival);
+  const inputRef = useRef<InputRef>(null);
+
+  setTimeout(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, 0);
 
   useEffect(() => {
     FestivalService.getLastFestival().then(setFestival);
@@ -45,7 +49,7 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
   return (
     <Form form={form}>
       <Form.Item label={ADMIN_ARTIST_NAME} name="name" rules={[{ required: true, message: ADMIN_ARTIST_NAME_RULE }]}>
-        <Input />
+        <Input ref={inputRef} />
       </Form.Item>
       <Form.Item label={ADMIN_ARTIST_STYLE} name="type" rules={[{ required: true, message: ADMIN_ARTIST_STYLE_RULE }]}>
         <Input className="capitalize" />
@@ -74,7 +78,7 @@ const AdminFormAddArtist: React.FC<AdminFormAddArtistProps> = ({ form, onUploadC
         </Form.Item>
       </div>
       <Form.Item label={ADMIN_ARTIST_IMAGE} name="image" rules={[{ required: true, message: ADMIN_ARTIST_IMAGE_RULE }]}>
-        <Upload name="image" onChange={onUploadChange} customRequest={UploadService.dummyUploadRequest}>
+        <Upload name="image" customRequest={UploadService.dummyUploadRequest}>
           <Button icon={<UploadOutlined />}>{ADMIN_ARTIST_IMAGE_RULE}</Button>
         </Upload>
       </Form.Item>

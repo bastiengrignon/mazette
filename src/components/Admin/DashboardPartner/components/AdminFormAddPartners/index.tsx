@@ -1,8 +1,6 @@
-import React from 'react';
-import { Button, Form, FormInstance, Input, Upload } from 'antd';
+import React, { useRef } from 'react';
+import { Button, Form, FormInstance, Input, InputRef, Upload } from 'antd';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 
 import { UploadService } from '../../../../../services';
@@ -19,25 +17,40 @@ import {
 
 interface AdminFormAddPartnerProps {
   form: FormInstance;
-  onUploadChange: (info: UploadChangeParam<UploadFile<File>>) => void;
 }
 
-const AdminFormAddPartners: React.FC<AdminFormAddPartnerProps> = ({ form, onUploadChange }) => (
-  <Form form={form}>
-    <Form.Item label={ADMIN_PARTNERS_NAME} name="name" rules={[{ required: true, message: ADMIN_PARTNERS_NAME_RULE }]}>
-      <Input placeholder={ADMIN_PARTNERS_NAME_PLACEHOLDER} />
-    </Form.Item>
-    <Form.Item
-      label={ADMIN_PARTNERS_IMAGE}
-      name="image"
-      rules={[{ required: true, message: ADMIN_PARTNERS_IMAGE_RULE }]}>
-      <Upload name="image" onChange={onUploadChange} customRequest={UploadService.dummyUploadRequest}>
-        <Button icon={<UploadOutlined />}>{ADMIN_PARTNERS_IMAGE_RULE}</Button>
-      </Upload>
-    </Form.Item>
-    <Form.Item label={ADMIN_PARTNERS_LINK} name="link" rules={[{ required: false, message: ADMIN_PARTNERS_LINK_RULE }]}>
-      <Input placeholder={ADMIN_PARTNERS_LINK_PLACEHOLDER} />
-    </Form.Item>
-  </Form>
-);
+const AdminFormAddPartners: React.FC<AdminFormAddPartnerProps> = ({ form }) => {
+  const inputRef = useRef<InputRef>(null);
+
+  setTimeout(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, 0);
+
+  return (
+    <Form form={form}>
+      <Form.Item
+        label={ADMIN_PARTNERS_NAME}
+        name="name"
+        rules={[{ required: true, message: ADMIN_PARTNERS_NAME_RULE }]}>
+        <Input placeholder={ADMIN_PARTNERS_NAME_PLACEHOLDER} ref={inputRef} />
+      </Form.Item>
+      <Form.Item
+        label={ADMIN_PARTNERS_IMAGE}
+        name="image"
+        rules={[{ required: true, message: ADMIN_PARTNERS_IMAGE_RULE }]}>
+        <Upload name="image" customRequest={UploadService.dummyUploadRequest}>
+          <Button icon={<UploadOutlined />}>{ADMIN_PARTNERS_IMAGE_RULE}</Button>
+        </Upload>
+      </Form.Item>
+      <Form.Item
+        label={ADMIN_PARTNERS_LINK}
+        name="link"
+        rules={[{ required: false, message: ADMIN_PARTNERS_LINK_RULE }]}>
+        <Input placeholder={ADMIN_PARTNERS_LINK_PLACEHOLDER} />
+      </Form.Item>
+    </Form>
+  );
+};
 export default AdminFormAddPartners;

@@ -1,4 +1,4 @@
-import { AdvancedImage } from '@cloudinary/react';
+import { AdvancedImage, lazyload } from '@cloudinary/react';
 import { Select, Skeleton } from 'antd';
 import loadable from '@loadable/component';
 import React, { useEffect, useState } from 'react';
@@ -70,6 +70,7 @@ const Association: React.FC = () => {
           {trombinoscopes.map((trombinoscope, key) => (
             <Skeleton key={key} avatar={true} active={true} loading={isTrombinoscopeLoading}>
               <AdvancedImage
+                plugins={[lazyload({ threshold: 0.5 })]}
                 cldImg={cloudinary.image(trombinoscope.image)}
                 alt={trombinoscope.name}
                 className="w-36 sm:w-48 xl:w-60 h-auto mx-auto"

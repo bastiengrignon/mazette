@@ -37,28 +37,38 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({
     const hideLoadingMessage = message.loading('Suppression en cours', 0);
     switch (type) {
       case ActionButtonType.MUSIC:
-        await MusicService.delete(id).then(() => {
-          hideLoadingMessage();
-          message.success('Enregistrement supprimée');
-        });
+        await MusicService.delete(id)
+          .then(() => {
+            hideLoadingMessage();
+            message.success('Enregistrement supprimée');
+          })
+          .finally(() => hideLoadingMessage());
         break;
       case ActionButtonType.MOVIE:
-        await MovieService.delete(id).then(() => {
-          hideLoadingMessage();
-          message.success('Enregistrement supprimée');
-        });
+        await MovieService.delete(id)
+          .then(() => {
+            hideLoadingMessage();
+            message.success('Enregistrement supprimée');
+          })
+          .finally(() => hideLoadingMessage());
+
         break;
       case ActionButtonType.PARTNER:
-        await PartnerService.delete(id).then(() => {
-          hideLoadingMessage();
-          message.success('Enregistrement supprimée');
-        });
+        await PartnerService.delete(id)
+          .then(() => {
+            hideLoadingMessage();
+            message.success('Enregistrement supprimée');
+          })
+          .finally(() => hideLoadingMessage());
         break;
       case ActionButtonType.TROMBINOSCOPE:
-        await TrombinoscopeService.delete(id).then(() => {
-          hideLoadingMessage();
-          message.success('Enregistrement supprimée');
-        });
+        await TrombinoscopeService.delete(id)
+          .then(() => {
+            hideLoadingMessage();
+            message.success('Enregistrement supprimée');
+          })
+          .finally(() => hideLoadingMessage());
+
         break;
       default:
         break;

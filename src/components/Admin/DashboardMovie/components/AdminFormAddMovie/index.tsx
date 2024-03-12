@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
-import { Button, DatePicker, Form, FormInstance, Input, TimePicker, Upload } from 'antd';
-import React, { useEffect, useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { Button, DatePicker, Form, FormInstance, Input, InputRef, TimePicker, Upload } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { UploadChangeParam } from 'antd/es/upload';
 import { UploadFile } from 'antd/es/upload/interface';
@@ -31,27 +31,33 @@ import { FestivalService, IFestival } from '../../../../../services/admin/festiv
 
 interface AdminFormAddMovieProps {
   form: FormInstance;
-  onUploadChange: (info: UploadChangeParam<UploadFile<File>>) => void;
+  onUploadChange?: (info: UploadChangeParam<UploadFile<File>>) => void;
 }
 
-const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadChange }) => {
+const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form }) => {
   const [festival, setFestival] = useState<IFestival>({} as IFestival);
+  const inputRef = useRef<InputRef>(null);
+
+  setTimeout(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, 0);
 
   useEffect(() => {
     FestivalService.getLastFestival().then(setFestival);
   }, []);
 
-  const disabledDates = (current) => {
-    const festivalStartDate = dayjs(festival.startDate).format('YYYY-MM-DD');
-    const festivalEndDate = dayjs(festival.endDate).format('YYYY-MM-DD');
-    const currentDay = dayjs(current).format('YYYY-MM-DD');
-    return current && currentDay !== festivalStartDate && currentDay !== festivalEndDate;
+  const disabledDates = (current: Dayjs) => {
+    const festivalStartDate = dayjs(festival.startDate);
+    const festivalEndDate = dayjs(festival.endDate);
+    return current && (current.isAfter(festivalEndDate) || current.isBefore(festivalStartDate));
   };
 
   return (
     <Form form={form}>
       <Form.Item label={ADMIN_MOVIE_TITLE} name="title" rules={[{ required: true, message: ADMIN_MOVIE_TITLE_RULE }]}>
-        <Input />
+        <Input ref={inputRef} />
       </Form.Item>
       <Form.Item
         label={ADMIN_MOVIE_AUTHOR}
@@ -90,7 +96,7 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
               message: ADMIN_MOVIE_DURATION_RULE,
             },
           ]}>
-          <TimePicker showHour={false} format="mm:ss" />
+          <TimePicker defaultValue={dayjs()} format="HH:mm" />
         </Form.Item>
         <Form.Item
           label={ADMIN_MOVIE_PUBLICATION_DATE}
@@ -110,7 +116,7 @@ const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form, onUploadCha
           label={ADMIN_MOVIE_IMAGE_THUMBNAIL}
           name="imgThumbnail"
           rules={[{ required: true, message: ADMIN_MOVIE_IMAGE_THUMBNAIL_RULE }]}>
-          <Upload name="imgThumbnail" onChange={onUploadChange} customRequest={UploadService.dummyUploadRequest}>
+          <Upload name="imgThumbnail" customRequest={UploadService.dummyUploadRequest}>
             <Button icon={<UploadOutlined />}>{ADMIN_MOVIE_IMAGE_ADD_FILE}</Button>
           </Upload>
         </Form.Item>

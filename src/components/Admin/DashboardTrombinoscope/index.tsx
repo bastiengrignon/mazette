@@ -3,11 +3,9 @@ import { Button, Form, Modal, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { AdvancedImage } from '@cloudinary/react';
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { cloudinary } from '../../../index';
 import useModal from '../../../constants/hooks';
-import { CommonService, ITrombinoscope, TrombinoscopeService, UploadService } from '../../../services';
+import { CommonService, ITrombinoscope, TrombinoscopeService } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
@@ -28,7 +26,6 @@ const DashboardTrombinoscope: React.FC = () => {
   // Add row modal
   const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
   const [formRowAddition] = Form.useForm();
-  const [file, setFile] = useState<File>();
 
   // Preview modal
   const { isOpen, toggle } = useModal();
@@ -98,7 +95,7 @@ const DashboardTrombinoscope: React.FC = () => {
     formRowAddition
       .validateFields()
       .then((values) => {
-        TrombinoscopeService.create(values, file)
+        TrombinoscopeService.create(values)
           .then((trombinoscope) => {
             setTrombinoscopes([...trombinoscopes, trombinoscope]);
             message.success('Trombinoscope ajouté', 2.5);
@@ -110,11 +107,9 @@ const DashboardTrombinoscope: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err));
+      .catch((err) => message.warning('Validation failed: ', err))
+      .finally(() => hideLoadingMessage());
   };
-
-  const handleFileChange = (info: UploadChangeParam<UploadFile<File>>): void =>
-    setFile(UploadService.handleChange(info));
 
   const openModalPreview = (imageId: string) => {
     setPreviewURL(imageId);
@@ -143,7 +138,7 @@ const DashboardTrombinoscope: React.FC = () => {
         okButtonProps={{ className: 'button' }}
         onOk={handleOkModal}
         cancelText="Annuler">
-        <AdminFormAddTrombinoscope form={formRowAddition} onUploadChange={handleFileChange} />
+        <AdminFormAddTrombinoscope form={formRowAddition} />
       </Modal>
       <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL} />
     </Navigation>

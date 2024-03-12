@@ -9,11 +9,9 @@ import CustomTable from '../CustomTable';
 import Link from '../../Link';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { cloudinary } from '../../../index';
 import useModal from '../../../constants/hooks';
-import { CommonService, IPartner, PartnerService, UploadService } from '../../../services';
+import { CommonService, IPartner, PartnerService } from '../../../services';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
@@ -30,7 +28,6 @@ const DashboardPartner: React.FC = () => {
   // Add row modal
   const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
   const [formRowAddition] = Form.useForm();
-  const [file, setFile] = useState<File>();
 
   // Preview modal
   const { isOpen, toggle } = useModal();
@@ -109,7 +106,7 @@ const DashboardPartner: React.FC = () => {
     formRowAddition
       .validateFields()
       .then((values) => {
-        PartnerService.create(values, file)
+        PartnerService.create(values)
           .then((partner) => {
             setPartners([...partners, partner]);
             message.success('Partenaire ajouté', 2.5);
@@ -121,10 +118,9 @@ const DashboardPartner: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err));
+      .catch((err) => message.warning('Validation failed: ', err))
+      .finally(() => hideLoadingMessage());
   };
-
-  const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info));
 
   const openModalPreview = (imageId: string) => {
     setPreviewURL(imageId);
@@ -153,7 +149,7 @@ const DashboardPartner: React.FC = () => {
         okButtonProps={{ className: 'button' }}
         onOk={handleOkModal}
         cancelText="Annuler">
-        <AdminFormAddPartners form={formRowAddition} onUploadChange={handleChange} />
+        <AdminFormAddPartners form={formRowAddition} />
       </Modal>
       <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL} />
     </Navigation>

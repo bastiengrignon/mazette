@@ -4,3 +4,8 @@ export interface ITrombinoscope {
   image: string;
   createdAt?: Date;
 }
+
+export interface ITrombinoscopeUpload {
+  name: string;
+  image: { file: { originFileObj: Blob } };
+}

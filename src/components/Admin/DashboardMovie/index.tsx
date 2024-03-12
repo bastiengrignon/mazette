@@ -4,12 +4,10 @@ import React, { useEffect, useState } from 'react';
 
 import { AdvancedImage } from '@cloudinary/react';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { cloudinary } from '../../../index';
 import { formatDate } from '../../../lib/date';
 import useModal from '../../../constants/hooks';
-import { CommonService, IMovie, MovieService, UploadService } from '../../../services';
+import { CommonService, IMovie, MovieService } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
@@ -31,7 +29,6 @@ const DashboardMovie: React.FC = () => {
   // Add row modal
   const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
   const [formRowAddition] = Form.useForm();
-  const [file, setFile] = useState<File>();
 
   // Preview modal
   const { isOpen, toggle } = useModal();
@@ -161,7 +158,7 @@ const DashboardMovie: React.FC = () => {
     formRowAddition
       .validateFields()
       .then((values) => {
-        MovieService.create(values, file)
+        MovieService.create(values)
           .then((movie) => {
             setMovies([...movies, movie]);
             message.success('Court-métrage ajouté', 2.5);
@@ -173,15 +170,14 @@ const DashboardMovie: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err));
+      .catch((err) => message.warning('Validation failed: ', err))
+      .finally(() => hideLoadingMessage());
   };
 
   const openModalPreview = (imageId: string) => {
     setPreviewURL(imageId);
     toggle();
   };
-
-  const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info));
 
   return (
     <Navigation>
@@ -205,7 +201,7 @@ const DashboardMovie: React.FC = () => {
         okButtonProps={{ className: 'button' }}
         onOk={handleOkModal}
         cancelText="Annuler">
-        <AdminFormAddMovie form={formRowAddition} onUploadChange={handleChange} />
+        <AdminFormAddMovie form={formRowAddition} />
       </Modal>
       <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL} />
     </Navigation>

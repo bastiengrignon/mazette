@@ -15,7 +15,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, loading = false, className = ''
   ) : (
     <picture>
       <source type="image/webp" srcSet={`${src}.webp`} className={className} />
-      <img src={`${src}.${isPng ? 'png' : 'jpg'}`} alt={alt} className={className} />
+      <img src={`${src}.${isPng ? 'png' : 'jpg'}`} alt={alt} className={className} loading="lazy" />
     </picture>
   );
 

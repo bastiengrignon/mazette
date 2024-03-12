@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import { AdvancedImage } from '@cloudinary/react';
+import { AdvancedImage, lazyload } from '@cloudinary/react';
 import { Link } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
@@ -38,6 +38,7 @@ const Footer: React.FC = () => {
             <Skeleton key={key} avatar={true} active={true} loading={isPartnerLoading}>
               {partner.link.trim() === '' ? (
                 <AdvancedImage
+                  plugins={[lazyload({ threshold: 0.5 })]}
                   cldImg={cloudinary.image(partner.image)}
                   alt={partner.name}
                   className="w-auto h-16 2xl:h-24 object-contain"
@@ -45,6 +46,7 @@ const Footer: React.FC = () => {
               ) : (
                 <ExternalLink src={partner.link}>
                   <AdvancedImage
+                    plugins={[lazyload({ threshold: 0.5 })]}
                     cldImg={cloudinary.image(partner.image)}
                     alt={partner.name}
                     className="w-auto h-16 2xl:h-24 object-contain"

@@ -4,12 +4,10 @@ import { AdvancedImage } from '@cloudinary/react';
 import loadable from '@loadable/component';
 import { Button, Form, Modal, Tooltip, message } from 'antd';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { cloudinary } from '../../../index';
 import { formatDate } from '../../../lib/date';
 import useModal from '../../../constants/hooks';
-import { CommonService, IMusic, MusicService, UploadService } from '../../../services';
+import { CommonService, IMusic, MusicService } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
@@ -31,7 +29,6 @@ const DashboardMusic: React.FC = () => {
   // Add row modal
   const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
   const [formRowAddition] = Form.useForm();
-  const [file, setFile] = useState<File>();
 
   // Preview modal
   const { isOpen, toggle } = useModal();
@@ -51,7 +48,7 @@ const DashboardMusic: React.FC = () => {
     formRowAddition
       .validateFields()
       .then((values) => {
-        MusicService.create(values, file)
+        MusicService.create(values)
           .then((music) => {
             setMusics([...musics, music]);
             message.success('Musique ajoutée', 2.5);
@@ -63,10 +60,9 @@ const DashboardMusic: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err));
+      .catch((err) => message.warning('Validation failed: ', err))
+      .finally(() => hideLoadingMessage());
   };
-
-  const handleChange = (info: UploadChangeParam<UploadFile<File>>) => setFile(UploadService.handleChange(info));
 
   const openModalPreview = (imageId: string) => {
     setPreviewURL(imageId);
@@ -75,7 +71,7 @@ const DashboardMusic: React.FC = () => {
 
   const columns = [
     {
-      title: 'Nom d\'artiste',
+      title: 'Nom d’artiste',
       key: 'name',
       dataIndex: 'name',
       editable: true,
@@ -191,7 +187,7 @@ const DashboardMusic: React.FC = () => {
         okButtonProps={{ className: 'button' }}
         onOk={handleOkModal}
         cancelText="Annuler">
-        <AdminFormAddArtist form={formRowAddition} onUploadChange={handleChange} />
+        <AdminFormAddArtist form={formRowAddition} />
       </Modal>
       <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL} />
     </Navigation>
