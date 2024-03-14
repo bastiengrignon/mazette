@@ -1,5 +1,6 @@
 import { IMovie, IMovieUpload } from './movie.interface';
 import axiosInstance from '../../axios';
+import { fillFormDataWithKeys } from '../../../lib/form';
 
 export class MovieService {
   static getAll = async (): Promise<IMovie[]> => await axiosInstance.get('/movie').then((r) => r.data);
@@ -9,9 +10,8 @@ export class MovieService {
 
     const formData = new FormData();
     formData.append('image', movie.imgThumbnail.file.originFileObj);
-    Object.entries(formattedMovie).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    fillFormDataWithKeys(formData, formattedMovie);
+
     return await axiosInstance
       .post('/movie', formData, {
         headers: { 'content-type': 'multipart/form-data' },

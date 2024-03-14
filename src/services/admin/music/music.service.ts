@@ -1,5 +1,6 @@
 import { IMusic, IMusicUpload } from './music.interface';
 import axiosInstance from '../../axios';
+import { fillFormDataWithKeys } from '../../../lib/form';
 
 export class MusicService {
   static getAll = async (): Promise<IMusic[]> => await axiosInstance.get('/music').then((r) => r.data);
@@ -9,9 +10,8 @@ export class MusicService {
 
     const formData = new FormData();
     formData.append('image', music.image.file.originFileObj);
-    Object.entries(formattedMusic).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    fillFormDataWithKeys(formData, formattedMusic);
+
     return await axiosInstance
       .post('/music', formData, {
         headers: { 'content-type': 'multipart/form-data' },

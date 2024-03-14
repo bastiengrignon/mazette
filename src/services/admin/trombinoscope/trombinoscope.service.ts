@@ -1,5 +1,6 @@
 import { ITrombinoscope, ITrombinoscopeUpload } from './trombinoscope.interface';
 import axiosInstance from '../../axios';
+import { fillFormDataWithKeys } from '../../../lib/form';
 
 export class TrombinoscopeService {
   static getAll = async (): Promise<ITrombinoscope[]> => await axiosInstance.get('/trombinoscope').then((r) => r.data);
@@ -7,9 +8,7 @@ export class TrombinoscopeService {
   static create = async (trombinoscope: ITrombinoscopeUpload): Promise<ITrombinoscope> => {
     const formData = new FormData();
     formData.append('image', trombinoscope.image.file.originFileObj);
-    Object.entries(trombinoscope).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    fillFormDataWithKeys(formData, trombinoscope);
 
     return await axiosInstance
       .post('/trombinoscope', formData, {

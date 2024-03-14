@@ -1,5 +1,6 @@
 import { IPartner, IPartnerUpload } from './partner.interface';
 import axiosInstance from '../../axios';
+import { fillFormDataWithKeys } from '../../../lib/form';
 
 export class PartnerService {
   static getAll = async (): Promise<IPartner[]> => await axiosInstance.get('/partner').then((r) => r.data);
@@ -7,9 +8,7 @@ export class PartnerService {
   static create = async (partner: IPartnerUpload): Promise<IPartner> => {
     const formData = new FormData();
     formData.append('image', partner.image.file.originFileObj);
-    Object.entries(partner).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    fillFormDataWithKeys(formData, partner);
 
     return await axiosInstance
       .post('/partner', formData, {
