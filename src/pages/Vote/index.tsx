@@ -36,7 +36,7 @@ const VotePage = () => {
   }, []);
 
   useEffect(() => {
-    VoteService.getActivatedVotes().then(setVotes);
+    VoteService.getActivatedVotes(userId).then(setVotes);
   }, []);
 
   return (
@@ -45,25 +45,27 @@ const VotePage = () => {
         {votes.length > 0 ? (
           <>
             {votes.map((vote) => (
-              <>
+              <div key={vote.id}>
                 <Title level={3}>{vote.title}</Title>
-                <Radio.Group onChange={({ target: { value } }) => setSelectedChoice(value)}>
-                  <Flex vertical gap="middle">
-                    {vote.choices.map((choice) => (
-                      <Radio
-                        key={choice.id}
-                        value={choice.id}
-                        className={`${selectedChoice === choice.id ? 'bg-slate-400' : 'bg-gray-200'} rounded-md p-3`}>
-                        {choice.label}
-                      </Radio>
-                    ))}
-                  </Flex>
-                </Radio.Group>
+                <Flex vertical>
+                  <Radio.Group onChange={({ target: { value } }) => setSelectedChoice(value)}>
+                    <Flex vertical gap="middle">
+                      {vote.choices.map((choice) => (
+                        <Radio
+                          key={choice.id}
+                          value={choice.id}
+                          className={`${selectedChoice === choice.id ? 'bg-slate-400' : 'bg-gray-200'} rounded-md p-3`}>
+                          {choice.label}
+                        </Radio>
+                      ))}
+                    </Flex>
+                  </Radio.Group>
+                </Flex>
                 <Button type="primary" className="mt-4 button" onClick={() => answerVoteChoice(vote.id || '')}>
                   {BUTTON_SEND_VOTE}
                 </Button>
                 <div className="mb-6" />
-              </>
+              </div>
             ))}
           </>
         ) : (

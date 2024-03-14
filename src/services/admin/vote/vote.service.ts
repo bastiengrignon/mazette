@@ -17,6 +17,6 @@ export class VoteService {
   static answerVoteChoice = async (voteId: string, choiceId: string, userId: string): Promise<void> =>
     await axiosInstance.post(`/vote/${voteId}/answer`, { choiceId, userId }).then((r) => r.data);
 
-  static getActivatedVotes = async (): Promise<IVote[]> =>
-    await axiosInstance.get('/vote/activated').then((r) => r.data);
+  static getActivatedVotes = async (userId: string | null): Promise<IVote[]> =>
+    await axiosInstance.get('/vote/activated', { params: { userId } }).then((r) => r.data);
 }
