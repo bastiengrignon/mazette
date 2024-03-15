@@ -73,6 +73,7 @@ const DashboardPartner: React.FC = () => {
       title: 'Lien',
       key: 'link',
       dataIndex: 'link',
+      required: false,
       render(link: string) {
         return <Link src={link} title={link} />;
       },

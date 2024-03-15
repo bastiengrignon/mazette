@@ -3,14 +3,25 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { FormInstance, Popconfirm, Tooltip, Typography, message } from 'antd';
-import { IMusic, MovieService, MusicService, PartnerService, TrombinoscopeService } from '../../../../../services';
+import {
+  MovieService,
+  MusicService,
+  PartnerService,
+  TrombinoscopeService,
+  serviceOperation,
+  HttpServiceType,
+} from '../../../../../services';
 
-export enum ActionButtonType {
-  MUSIC = 'music',
-  MOVIE = 'movie',
-  PARTNER = 'partner',
-  TROMBINOSCOPE = 'trombinoscope',
+interface IObject {
+  id: number;
 }
+
+export const ActionButtonType = {
+  MUSIC: MusicService,
+  MOVIE: MovieService,
+  PARTNER: PartnerService,
+  TROMBINOSCOPE: TrombinoscopeService,
+};
 
 interface ButtonGroupTableProps {
   editable: boolean;
@@ -19,7 +30,7 @@ interface ButtonGroupTableProps {
   setObject: Dispatch<SetStateAction<any>>;
   object: Record<any, any>;
   form: FormInstance;
-  type: ActionButtonType;
+  type: HttpServiceType;
 }
 
 const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({
@@ -35,51 +46,17 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({
 
   const deleteRow = async (id: number): Promise<void> => {
     const hideLoadingMessage = message.loading('Suppression en cours', 0);
-    switch (type) {
-      case ActionButtonType.MUSIC:
-        await MusicService.delete(id)
-          .then(() => {
-            hideLoadingMessage();
-            message.success('Enregistrement supprimée');
-          })
-          .finally(() => hideLoadingMessage());
-        break;
-      case ActionButtonType.MOVIE:
-        await MovieService.delete(id)
-          .then(() => {
-            hideLoadingMessage();
-            message.success('Enregistrement supprimée');
-          })
-          .finally(() => hideLoadingMessage());
-
-        break;
-      case ActionButtonType.PARTNER:
-        await PartnerService.delete(id)
-          .then(() => {
-            hideLoadingMessage();
-            message.success('Enregistrement supprimée');
-          })
-          .finally(() => hideLoadingMessage());
-        break;
-      case ActionButtonType.TROMBINOSCOPE:
-        await TrombinoscopeService.delete(id)
-          .then(() => {
-            hideLoadingMessage();
-            message.success('Enregistrement supprimée');
-          })
-          .finally(() => hideLoadingMessage());
-
-        break;
-      default:
-        break;
-    }
-    setObject(object.filter((item: IMusic) => item.id !== id));
+    await serviceOperation(type, 'delete', id)
+      .then(() => {
+        hideLoadingMessage();
+        message.success('Enregistrement supprimée');
+      })
+      .finally(() => hideLoadingMessage());
+    setObject(object.filter((item: IObject) => item.id !== id));
   };
 
-  const editRow = (record: Partial<IMusic>): void => {
-    form.setFieldsValue({
-      ...record,
-    });
+  const editRow = (record: Partial<IObject>): void => {
+    form.setFieldsValue(record);
     setEditingId(record.id || 0);
   };
 
@@ -88,85 +65,31 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({
     form
       .validateFields()
       .then((row) => {
-        switch (type) {
-          case ActionButtonType.MUSIC:
-            MusicService.update(id, row)
-              .then((res) => {
-                const index = object.findIndex((music) => music.id === id);
-                setObject(
-                  object.splice(index, 1, {
-                    ...object[index],
-                    ...res,
-                  })
-                );
-                message.success('Modification effectuée', 2.5);
+        serviceOperation(type, 'update', id, row)
+          .then((res) => {
+            const index = object.findIndex((item: IObject) => item.id === id);
+            setObject(
+              object.splice(index, 1, {
+                ...object[index],
+                ...res,
               })
-              .catch((err) => message.error(`Erreur lors de la modification: ${err}`, 2.5))
-              .finally(() => {
-                hideLoadingMessage();
-                form.resetFields();
-              });
-            break;
-          case ActionButtonType.MOVIE:
-            MovieService.update(id, row)
-              .then((res) => {
-                const index = object.findIndex((movie) => movie.id === id);
-                setObject(
-                  object.splice(index, 1, {
-                    ...object[index],
-                    ...res,
-                  })
-                );
-                message.success('Modification effectuée', 2.5);
-              })
-              .catch((err) => message.error(`Erreur lors de la modification: ${err}`, 2.5))
-              .finally(() => {
-                hideLoadingMessage();
-                form.resetFields();
-              });
-            break;
-          case ActionButtonType.PARTNER:
-            PartnerService.update(id, row)
-              .then((res) => {
-                const index = object.findIndex((movie) => movie.id === id);
-                setObject(
-                  object.splice(index, 1, {
-                    ...object[index],
-                    ...res,
-                  })
-                );
-                message.success('Modification effectuée', 2.5);
-              })
-              .catch((err) => message.error(`Erreur lors de la modification: ${err}`, 2.5))
-              .finally(() => {
-                hideLoadingMessage();
-                form.resetFields();
-              });
-            break;
-          case ActionButtonType.TROMBINOSCOPE:
-            TrombinoscopeService.update(id, row)
-              .then((res) => {
-                const index = object.findIndex((movie) => movie.id === id);
-                setObject(
-                  object.splice(index, 1, {
-                    ...object[index],
-                    ...res,
-                  })
-                );
-                message.success('Modification effectuée', 2.5);
-              })
-              .catch((err) => message.error(`Erreur lors de la modification: ${err}`, 2.5))
-              .finally(() => {
-                hideLoadingMessage();
-                form.resetFields();
-              });
-            break;
-          default:
-            break;
-        }
+            );
+            message.success('Modification effectuée', 2.5);
+          })
+          .catch((err) => message.error(`Erreur lors de la modification: ${err}`, 2.5))
+          .finally(() => {
+            hideLoadingMessage();
+            form.resetFields();
+          });
       })
-      .catch((err) => message.error(`Validate Failed: ${err}`, 5))
-      .finally(() => setEditingId(0));
+      .catch((err) => {
+        hideLoadingMessage();
+        message.error(`Erreur de validation: ${err.errorFields.map((error) => error.errors.join(', '))}`, 5);
+      })
+      .finally(() => {
+        hideLoadingMessage();
+        setEditingId(0);
+      });
   };
 
   return editable ? (
@@ -187,6 +110,7 @@ const ActionButtonsRow: React.FC<ButtonGroupTableProps> = ({
         placement="left"
         className="text-red cursor-pointer hover:text-gray-700"
         title="Veux-tu vraiment supprimer ?"
+        okButtonProps={{ className: 'bg-red' }}
         onConfirm={() => deleteRow(record.id)}>
         <DeleteOutlined />
       </Popconfirm>

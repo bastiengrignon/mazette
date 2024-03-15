@@ -2,8 +2,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Button, DatePicker, Form, FormInstance, Input, InputRef, TimePicker, Upload } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { UploadChangeParam } from 'antd/es/upload';
-import { UploadFile } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 import { UploadService } from '../../../../../services';
 import {
@@ -31,7 +29,6 @@ import { FestivalService, IFestival } from '../../../../../services/admin/festiv
 
 interface AdminFormAddMovieProps {
   form: FormInstance;
-  onUploadChange?: (info: UploadChangeParam<UploadFile<File>>) => void;
 }
 
 const AdminFormAddMovie: React.FC<AdminFormAddMovieProps> = ({ form }) => {

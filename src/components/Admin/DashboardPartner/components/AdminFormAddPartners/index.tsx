@@ -9,7 +9,6 @@ import {
   ADMIN_PARTNERS_IMAGE_RULE,
   ADMIN_PARTNERS_LINK,
   ADMIN_PARTNERS_LINK_PLACEHOLDER,
-  ADMIN_PARTNERS_LINK_RULE,
   ADMIN_PARTNERS_NAME,
   ADMIN_PARTNERS_NAME_PLACEHOLDER,
   ADMIN_PARTNERS_NAME_RULE,
@@ -44,10 +43,7 @@ const AdminFormAddPartners: React.FC<AdminFormAddPartnerProps> = ({ form }) => {
           <Button icon={<UploadOutlined />}>{ADMIN_PARTNERS_IMAGE_RULE}</Button>
         </Upload>
       </Form.Item>
-      <Form.Item
-        label={ADMIN_PARTNERS_LINK}
-        name="link"
-        rules={[{ required: false, message: ADMIN_PARTNERS_LINK_RULE }]}>
+      <Form.Item label={ADMIN_PARTNERS_LINK} name="link">
         <Input placeholder={ADMIN_PARTNERS_LINK_PLACEHOLDER} />
       </Form.Item>
     </Form>

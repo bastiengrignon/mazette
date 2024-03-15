@@ -22,7 +22,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
   title,
   inputType,
   children,
-  required,
   currentValue,
   ...restProps
 }) => {
@@ -34,11 +33,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
       style={{ margin: 0 }}
       rules={[
         {
-          required: required,
+          required: restProps.required,
           message: `Entrer un ${title} !`,
         },
       ]}>
-      <CellInputNode inputType={inputType} value={currentValue} />
+      <CellInputNode inputType={inputType} value={currentValue} required={restProps.required} />
     </Form.Item>
   );
 
