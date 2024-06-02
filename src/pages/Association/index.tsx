@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 import Vignette from '../../components/Vignette';
 import { cloudinary } from '../../index';
-import { associationTitle, previousEditions, staticImgFolder } from '../../constants';
+import { allEditions, associationTitle, staticImgFolder } from '../../constants';
 import {
   IMovie,
   IMusic,
@@ -24,6 +24,7 @@ const Image = loadable(() => import('../../components/Image'));
 const FormattedText = loadable(() => import('../../components/Admin/FormattedText'));
 
 const Association: React.FC = () => {
+  const editions = allEditions(false);
   const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([]);
   const [musics, setMusics] = useState<IMusic[]>([]);
   const [movies, setMovies] = useState<IMovie[]>([]);
@@ -32,7 +33,7 @@ const Association: React.FC = () => {
   const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false);
   const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false);
 
-  const [selectedEdition, setSelectedEdition] = useState<string>(previousEditions[0].value);
+  const [selectedEdition, setSelectedEdition] = useState<string>(editions[0].value);
 
   useEffect(() => {
     setTrombinoscopeLoading(true);
@@ -94,7 +95,7 @@ const Association: React.FC = () => {
           <FormattedText textType={TextType.previousEdition} />
         </div>
         <Select
-          options={previousEditions}
+          options={editions}
           onChange={setSelectedEdition}
           defaultValue={selectedEdition}
           className="w-44"

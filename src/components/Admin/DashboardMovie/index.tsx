@@ -1,6 +1,7 @@
 import loadable from '@loadable/component';
-import { Button, Form, Modal, Tooltip, message } from 'antd';
+import { Button, Form, Modal, Tooltip, message, Flex, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 import { AdvancedImage } from '@cloudinary/react';
 
@@ -11,6 +12,7 @@ import { CommonService, IMovie, MovieService } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
+import { allEditions } from '../../../constants';
 
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'));
 const Link = loadable(() => import('../../Link'));
@@ -18,9 +20,11 @@ const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardMovie: React.FC = () => {
+  const editions = allEditions(true);
   const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [newMovies, setNewMovies] = useState<IMovie[]>([]);
+  const [selectedEdition, setSelectedEdition] = useState<string>(editions[0].value);
 
   // Row edition
   const [editingId, setEditingId] = useState<number>(0);
@@ -182,13 +186,22 @@ const DashboardMovie: React.FC = () => {
   return (
     <Navigation>
       <p className="text-xl mb-2">Liste des courts-métrages : </p>
-      <Button type="primary" className="my-4 button" onClick={() => setAddRowModalVisible(true)}>
-        Ajouter un court-métrage
-      </Button>
+      <Flex className="my-4" justify="space-between">
+        <Button type="primary" className="button" onClick={() => setAddRowModalVisible(true)}>
+          Ajouter un court-métrage
+        </Button>
+        <Select
+            options={editions}
+            onChange={setSelectedEdition}
+            defaultValue={selectedEdition}
+            className="w-44"
+        />
+      </Flex>
+
       <CustomTable
         form={formRowEdition}
         columns={mergedColumns}
-        dataSource={movies}
+        dataSource={movies.filter((movie) => dayjs(movie.publicationDate).year() === Number(selectedEdition))}
         loading={isMovieLoading}
         setEditingId={setEditingId}
       />

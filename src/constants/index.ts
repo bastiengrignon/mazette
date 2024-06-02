@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 const defaultImgFolder = '/assets/img';
 export const staticImgFolder = `${defaultImgFolder}/static`;
 
@@ -113,8 +115,14 @@ type PreviousEdition = {
   label: string;
 };
 
-export const previousEditions: PreviousEdition[] = [
-  { value: '2023', label: 'Édition 2023' },
-  { value: '2022', label: 'Édition 2022' },
-  { value: '2021', label: 'Édition 2021' },
-];
+const startYearFirstEdition: number = 2021;
+
+export const allEditions = (includeCurrentYear: boolean = true): PreviousEdition[] => {
+    const currentYear = includeCurrentYear ? dayjs().year() : dayjs().year() - 1;
+    return Array.from({ length: currentYear - startYearFirstEdition + 1 }, (_, i) => startYearFirstEdition + i)
+        .map((year) => ({
+            value: `${year}`, label: `Édition ${year}`
+        }))
+        .sort()
+        .reverse();
+};

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { AdvancedImage } from '@cloudinary/react';
 import loadable from '@loadable/component';
-import { Button, Form, Modal, Tooltip, message } from 'antd';
+import { Button, Form, Modal, Tooltip, message, Select, Flex } from 'antd';
+import dayjs from 'dayjs';
 
 import { cloudinary } from '../../../index';
 import { formatDate } from '../../../lib/date';
@@ -11,6 +12,7 @@ import { CommonService, IMusic, MusicService } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
+import { allEditions } from '../../../constants';
 
 const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'));
 const Link = loadable(() => import('../../Link'));
@@ -18,9 +20,11 @@ const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardMusic: React.FC = () => {
+  const editions = allEditions(true);
   const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false);
   const [musics, setMusics] = useState<IMusic[]>([]);
   const [newMusics, setNewMusics] = useState<IMusic[]>([]);
+  const [selectedEdition, setSelectedEdition] = useState<string>(editions[0].value);
 
   // Row edition
   const [editingId, setEditingId] = useState(0);
@@ -168,13 +172,21 @@ const DashboardMusic: React.FC = () => {
   return (
     <Navigation>
       <p className="text-xl mb-2">Liste des artistes : </p>
-      <Button type="primary" className="my-4 button" onClick={() => setAddRowModalVisible(true)}>
-        Ajouter un artiste
-      </Button>
+      <Flex className="my-4" justify="space-between">
+        <Button type="primary" className="button" onClick={() => setAddRowModalVisible(true)}>
+          Ajouter un artiste
+        </Button>
+        <Select
+            options={editions}
+            onChange={setSelectedEdition}
+            defaultValue={selectedEdition}
+            className="w-44"
+        />
+      </Flex>
       <CustomTable
         form={formRowEdition}
         columns={mergedColumns}
-        dataSource={musics}
+        dataSource={musics.filter((music) => dayjs(music.publicationDate).year() === Number(selectedEdition))}
         loading={isMusicLoading}
         setEditingId={setEditingId}
       />
