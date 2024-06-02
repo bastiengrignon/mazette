@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import { TbChevronRight } from 'react-icons/tb';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import Navigation from '../../../pages/admin/Navigation';
@@ -23,19 +23,20 @@ import {
   QRCode,
 } from 'antd';
 import {
-  BUTTON_CREATE_NEW_VOTE,
+  BUTTON_CREATE_NEW_VOTE, GO_TO_VOTE_PAGE,
   MODAL_BUTTON_ADD_CHOICE,
   MODAL_BUTTON_VOTE_OK,
   MODAL_INPUT_PLACEHOLDER_ADD_CHOICE,
   MODAL_INPUT_PLACEHOLDER_TITLE,
-  MODAL_TITLE_NEW_VOTE,
+  MODAL_TITLE_NEW_VOTE, QRCODE_ID,
   SHOW_QR_CODE,
   TITLE_VOTE,
-  VOTE_STATISTICS,
+  VOTE_STATISTICS, WEBSITE_VOTE_PAGE,
 } from './DashboardVote.constants';
 import { VoteService } from '../../../services/admin/vote/vote.service';
 import { IVote } from '../../../services/admin/vote/vote.interface';
 import { RouterUrl } from '../../../constants';
+import { theme } from '../../../constants/theme';
 
 const { Title } = Typography;
 
@@ -84,14 +85,34 @@ const DashboardVote = () => {
     VoteService.deleteVote(id).then(() => setVotes(votes.filter((v) => v.id !== id)));
   };
 
+  const downloadQRCode = () => {
+    const canvas = document.getElementById(QRCODE_ID)?.querySelector<HTMLCanvasElement>('canvas');
+    if (canvas) {
+      const url = canvas.toDataURL();
+      const a = document.createElement('a');
+      a.download = 'QRCode.png';
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   const showQrCodeModal = () => {
     const websiteURL = window.location.origin.replace('admin.', '');
     Modal.info({
       okButtonProps: { className: 'button' },
       title: 'QR Code',
       content: (
-        <Flex align="center" justify="center">
-          <QRCode size={300} bordered={false} value={`${websiteURL}/vote`} />
+        <Flex vertical align="center" justify="center">
+          <Typography.Text>{GO_TO_VOTE_PAGE} <a href={WEBSITE_VOTE_PAGE} target="_blank" rel="noreferrer">de vote</a></Typography.Text>
+          <Typography.Text>OU</Typography.Text>
+          <Flex vertical justify="center" id={QRCODE_ID}>
+            <QRCode size={300} bordered={false} value={`${websiteURL}/vote`} color={theme.token.colorPrimary} />
+            <Button type="primary" className="button" icon={<DownloadOutlined />} onClick={downloadQRCode}>
+              Download
+            </Button>
+          </Flex>
         </Flex>
       ),
     });

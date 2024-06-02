@@ -7,3 +7,6 @@ export const MODAL_INPUT_PLACEHOLDER_ADD_CHOICE: string = 'Ajouter un choix au v
 export const MODAL_INPUT_PLACEHOLDER_TITLE: string = 'Titre du vote';
 export const MODAL_BUTTON_ADD_CHOICE: string = 'Ajouter';
 export const VOTE_STATISTICS: string = 'Statistiques';
+export const GO_TO_VOTE_PAGE: string = 'Rendez vous sur la page ';
+export const WEBSITE_VOTE_PAGE: string = 'https://festivalmazette.fr/vote';
+export const QRCODE_ID: string = 'QRCode';
