@@ -13,6 +13,7 @@ import { CommonService, IMovie, MovieService } from '../../../services';
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
 import { allEditions } from '../../../constants';
+import { showErrorFormMessage } from '../../../lib/validation';
 
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'));
 const Link = loadable(() => import('../../Link'));
@@ -174,7 +175,7 @@ const DashboardMovie: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err))
+      .catch(() => showErrorFormMessage())
       .finally(() => hideLoadingMessage());
   };
 

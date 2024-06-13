@@ -13,6 +13,7 @@ import { CommonService, IMusic, MusicService } from '../../../services';
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
 import { allEditions } from '../../../constants';
+import { showErrorFormMessage } from '../../../lib/validation';
 
 const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'));
 const Link = loadable(() => import('../../Link'));
@@ -64,7 +65,7 @@ const DashboardMusic: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err))
+      .catch(() => showErrorFormMessage())
       .finally(() => hideLoadingMessage());
   };
 

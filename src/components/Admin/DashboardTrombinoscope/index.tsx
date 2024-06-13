@@ -9,6 +9,7 @@ import { CommonService, ITrombinoscope, TrombinoscopeService } from '../../../se
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
+import { showErrorFormMessage } from '../../../lib/validation';
 
 const AdminFormAddTrombinoscope = loadable(() => import('./components/AdminFormAddTrombinoscope'));
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
@@ -107,7 +108,10 @@ const DashboardTrombinoscope: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err))
+      .catch(() => {
+        hideLoadingMessage();
+        showErrorFormMessage();
+      })
       .finally(() => hideLoadingMessage());
   };
 

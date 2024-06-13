@@ -41,6 +41,7 @@ import {
   DASHBOARD_TITLE_INFORMATION,
 } from './Dashboard.constants';
 import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants';
+import { showErrorFormMessage } from '../../../lib/validation';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const TinyMceEditor = loadable(() => import('../TinyMceEditor'));
@@ -112,7 +113,7 @@ const Dashboard: React.FC = () => {
             formRowEdition.resetFields();
           });
       })
-      .catch((err) => message.error(`Validate Failed: ${err}`))
+      .catch(() => showErrorFormMessage())
       .finally(() => setEditingId(0));
   };
 
@@ -172,7 +173,10 @@ const Dashboard: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err));
+      .catch(() => {
+        showErrorFormMessage();
+      })
+      .finally(() => hideLoadingMessage());
   };
 
   const collapseTitle = (textType: string): string =>

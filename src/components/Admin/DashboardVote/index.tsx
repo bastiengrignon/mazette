@@ -107,8 +107,13 @@ const DashboardVote = () => {
         <Flex vertical align="center" justify="center">
           <Typography.Text>{GO_TO_VOTE_PAGE} <a href={WEBSITE_VOTE_PAGE} target="_blank" rel="noreferrer">de vote</a></Typography.Text>
           <Typography.Text>OU</Typography.Text>
-          <Flex vertical justify="center" id={QRCODE_ID}>
-            <QRCode size={300} bordered={false} value={`${websiteURL}/vote`} color={theme.token.colorPrimary} />
+          <Flex vertical justify="center" gap="0.5rem" id={QRCODE_ID}>
+            <QRCode
+              size={300}
+              bordered={false}
+              value={`${websiteURL}/vote`}
+              color={theme.token.colorPrimary}
+            />
             <Button type="primary" className="button" icon={<DownloadOutlined />} onClick={downloadQRCode}>
               Download
             </Button>

@@ -12,6 +12,7 @@ import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/A
 import { cloudinary } from '../../../index';
 import useModal from '../../../constants/hooks';
 import { CommonService, IPartner, PartnerService } from '../../../services';
+import { showErrorFormMessage } from '../../../lib/validation';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
@@ -63,7 +64,7 @@ const DashboardPartner: React.FC = () => {
             className="flex justify-center items-center cursor-pointer"
             title="Visualiser l'image"
             onClick={() => openModalPreview(imageId)}>
-            <AdvancedImage className="w-24 h-auto" cldImg={cloudinary.image(imageId)} />
+            <AdvancedImage className="w-24 h-auto" cldImg={cloudinary.image(imageId)}/>
           </div>
         );
       },
@@ -75,7 +76,7 @@ const DashboardPartner: React.FC = () => {
       dataIndex: 'link',
       required: false,
       render(link: string) {
-        return <Link src={link} title={link} />;
+        return <Link src={link} title={link}/>;
       },
       editable: true,
     },
@@ -119,7 +120,7 @@ const DashboardPartner: React.FC = () => {
           });
         setAddRowModalVisible(false);
       })
-      .catch((err) => message.warning('Validation failed: ', err))
+      .catch(() => showErrorFormMessage())
       .finally(() => hideLoadingMessage());
   };
 
@@ -150,9 +151,9 @@ const DashboardPartner: React.FC = () => {
         okButtonProps={{ className: 'button' }}
         onOk={handleOkModal}
         cancelText="Annuler">
-        <AdminFormAddPartners form={formRowAddition} />
+        <AdminFormAddPartners form={formRowAddition}/>
       </Modal>
-      <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL} />
+      <PreviewModal open={isOpen} hide={toggle} previewURL={previewURL}/>
     </Navigation>
   );
 };
