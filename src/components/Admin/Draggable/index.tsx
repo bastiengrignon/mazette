@@ -35,7 +35,8 @@ const Draggable: React.FC<DraggableProps> = ({ id, content, isVisible, onRemove,
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className={`p-4 min-h-20 border rounded inline-flex relative group ${isVisible ? 'border-green' : 'border-gray-300 shadow-inherit'} ${isDragging ? 'shadow-xl' : 'shadow-md'}`}>
+      onDoubleClick={() => setIsEditing(true)}
+      className={`p-4 min-h-20 select-none border rounded inline-flex relative group ${isVisible ? 'border-green' : 'border-gray-300 shadow-inherit'} ${isDragging ? 'shadow-xl' : 'shadow-md'}`}>
       <div className="absolute top-0 bottom-0 right-6 hidden group-hover:flex items-center">
         <Popconfirm title={CONFIRM_DELETE_TITLE} onConfirm={() => onRemove(id)} okButtonProps={{ className: 'button' }}>
           <TbX size={20} className="hover:text-red" />
