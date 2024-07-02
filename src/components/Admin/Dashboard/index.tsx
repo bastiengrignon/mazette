@@ -48,7 +48,7 @@ const TinyMceEditor = loadable(() => import('../TinyMceEditor'));
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-type NoUndefinedRangeValueType<DateType> = [DateType | null, DateType | null];
+type NoUndefinedRangeValueType<DateType> = [DateType | null, DateType | null] | null;
 
 const selectTextType = [
   { text: 'Musique', value: TextType.music },
@@ -114,7 +114,10 @@ const Dashboard: React.FC = () => {
           });
       })
       .catch(() => showErrorFormMessage())
-      .finally(() => setEditingId(0));
+      .finally(() => {
+        hideLoadingMessage();
+        setEditingId(0);
+      });
   };
 
   const editRow = (item: Partial<IText>): void => {
@@ -135,8 +138,7 @@ const Dashboard: React.FC = () => {
           <Form.Item
             className="w-full"
             name="text"
-            initialValue={item.text}
-            rules={[{ required: true, message: 'Entrez le texte' }]}>
+            initialValue={item.text}>
             <TinyMceEditor textareaName="text" initialValue={item.text} form={formRowEdition} />
           </Form.Item>
         ) : (
@@ -197,17 +199,19 @@ const Dashboard: React.FC = () => {
   };
 
   const handleFestivalDate = (dates: NoUndefinedRangeValueType<Dayjs>): void => {
-    if (dates[0] && dates[1]) {
-      FestivalService.update(festival.id, {
-        ...festival,
-        startDate: dates[0].toDate(),
-        endDate: dates[1].toDate(),
-      }).then((res) =>
-        setFestival({
+    if (dates) {
+      if (dates[0] && dates[1]) {
+        FestivalService.update(festival.id, {
           ...festival,
-          ...res,
-        })
-      );
+          startDate: dates[0].toDate(),
+          endDate: dates[1].toDate(),
+        }).then((res) =>
+          setFestival({
+            ...festival,
+            ...res,
+          })
+        );
+      }
     }
   };
 
