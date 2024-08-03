@@ -6,7 +6,7 @@ import { Editor } from '@tinymce/tinymce-react';
 
 const editorPluginsConfig = 'advlist autolink lists link media wordcount emoticons preview quickbars image';
 const editorToolbarConfig =
-  'undo redo | fontselect formatselect | removeformat bold italic underline strikethrough | link ' +
+  'undo redo | styles | fontselect formatselect | removeformat bold italic underline strikethrough | link ' +
   'media image emoticons | bullist numlist | alignleft aligncenter alignright alignjustify | preview';
 
 interface TinyMceEditorProps {
@@ -31,7 +31,7 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({ textareaName, initialValu
     initialValue={initialValue}
     toolbar={editorToolbarConfig}
     plugins={editorPluginsConfig}
-    onInit={(event, editor) => (editorRef ? (editorRef.current = editor) : null)}
+    onInit={(_, editor) => (editorRef ? (editorRef.current = editor) : null)}
     onEditorChange={(value) => form.setFields([{ name: textareaName, value: value }])}
     init={{
       menubar: false,
