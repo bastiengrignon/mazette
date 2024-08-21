@@ -23,7 +23,7 @@ import {
   DASHBOARD_TITLE_GPS_COORDS,
   DASHBOARD_TITLE_INFORMATION,
 } from './Dashboard.constants';
-import DashboardText from '../DashboardText';
+import DashboardPages from '../DashboardPages';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const { RangePicker } = DatePicker;
@@ -121,7 +121,8 @@ const Dashboard: React.FC = () => {
     <Navigation>
       <div className="grid grid-cols-12 gap-2 md:gap-5">
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-8">
-          <DashboardText isLoading={isTextLoading} texts={texts} setTexts={setTexts} setNewTexts={setNewTexts} />
+          <DashboardPages />
+          {/*<DashboardText isLoading={isTextLoading} texts={texts} setTexts={setTexts} setNewTexts={setNewTexts} />*/}
         </Card>
         <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
           <div className="space-y-4">
