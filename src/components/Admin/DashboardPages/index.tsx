@@ -10,7 +10,7 @@ const DashboardPages: React.FC = () => {
   const pages: TabsProps['items'] = [
     {
       key: '1',
-      label: 'Accueil',
+      label: 'Tout',
       icon: <HomeFilled />,
       children: <DashboardPageHome />
     },
@@ -18,19 +18,22 @@ const DashboardPages: React.FC = () => {
       key: '2',
       label: 'Association',
       icon: <ApartmentOutlined />,
-      children: <DashboardPageAssociation />
+      children: <DashboardPageAssociation />,
+      disabled: true,
     },
     {
       key: '3',
       label: 'Programmation',
       icon: <AppstoreFilled />,
-      children: <DashboardPageProgrammation />
+      children: <DashboardPageProgrammation />,
+      disabled: true,
     },
     {
       key: '4',
       label: 'Information',
       icon: <InfoCircleFilled />,
-      children: <DashboardPageInformation />
+      children: <DashboardPageInformation />,
+      disabled: true,
     }
   ];
   return (<Tabs items={pages} />);
