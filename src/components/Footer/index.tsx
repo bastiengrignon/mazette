@@ -30,13 +30,13 @@ const Footer: React.FC = () => {
     });
 
   return (
-    <footer className="text-black text-center w-full p-2 mt-10">
+    <footer className="text-black text-center w-full p-2 mt-2">
       <div className="bg-footer mx-auto w-11/12 rounded py-1 my-5" />
       <div className="grid grid-cols-5 xl:grid-cols-6 grid-rows-4">
         <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
           {partners.map((partner, key) => (
             <Skeleton key={key} avatar={true} active={true} loading={isPartnerLoading}>
-              {partner.link.trim() === '' ? (
+              {partner.link && partner.link.trim() === '' ? (
                 <AdvancedImage
                   plugins={[lazyload({ threshold: 0.5 })]}
                   cldImg={cloudinary.image(partner.image)}
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
                   className="w-auto h-16 2xl:h-24 object-contain"
                 />
               ) : (
-                <ExternalLink src={partner.link}>
+                <ExternalLink src={partner.link || ''}>
                   <AdvancedImage
                     plugins={[lazyload({ threshold: 0.5 })]}
                     cldImg={cloudinary.image(partner.image)}
