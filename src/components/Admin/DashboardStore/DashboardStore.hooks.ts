@@ -14,13 +14,13 @@ export const useDashboardStore = (): IDashboardStoreHooks => {
   const [items, setItems] = useState<IStore[]>([]);
 
   const onAddArticle: FormProps<IStore>['onFinish'] = useCallback(({ name, price }): void => {
-    StoreService.addArticle({ name, price, }).then((res) => setItems([...items, res]));
+    StoreService.addArticle({ name, price, }).then((res) => setItems((prevState) => [...prevState, res]));
     form.resetFields();
   }, []);
 
   const deleteArticle = useCallback((articleId: string): void => {
     StoreService.removeArticle(articleId).then(() =>
-      setItems(items.filter((item) => item.id !== articleId))
+      setItems((prevState) => prevState.filter((item) => item.id !== articleId))
     );
   }, []);
 
