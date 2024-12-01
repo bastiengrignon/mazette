@@ -6,6 +6,7 @@ import {
   MenuOutlined,
   PlayCircleOutlined,
   QuestionCircleOutlined,
+  ShopOutlined,
   TeamOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
@@ -52,6 +53,11 @@ const adminRoutes = [
     name: 'Votes',
     link: RouterUrl.adminVote,
     icon: <QuestionCircleOutlined />,
+  },
+  {
+    name: 'Magasin',
+    link: RouterUrl.adminStore,
+    icon: <ShopOutlined />,
   },
 ];
 

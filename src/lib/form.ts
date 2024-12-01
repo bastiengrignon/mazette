@@ -5,3 +5,8 @@ export const fillFormDataWithKeys = (form: FormData, object: string | object) =>
     }
   });
 };
+
+export const formattedPrice = (price: number): string => new Intl.NumberFormat('fr-FR', {
+  style: 'currency',
+  currency: 'EUR'
+}).format(price).padEnd(4, '0');
