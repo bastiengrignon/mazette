@@ -21,6 +21,7 @@ export enum RouterUrl {
   adminTrombinoscope = '/trombinoscope',
   adminVote = '/votes',
   adminVoteStatistics = '/votes/:voteId',
+  adminStore = '/store',
 
   notFound = '*',
 }

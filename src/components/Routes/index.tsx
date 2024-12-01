@@ -20,6 +20,7 @@ const DashboardPartner = loadable(() => import('../Admin/DashboardPartner'));
 const DashboardTrombinoscope = loadable(() => import('../Admin/DashboardTrombinoscope'));
 const DashboardVote = loadable(() => import('../Admin/DashboardVote'));
 const DashboardVoteStatistics = loadable(() => import('../Admin/DashboardVoteStatistics'));
+const DashboardStore = loadable(() => import('../Admin/DashboardStore'));
 const Footer = loadable(() => import('../../components/Footer'));
 import Navbar from '../../components/Navbar';
 
@@ -35,6 +36,7 @@ const Routes: React.FC = () => {
       <Route path={RouterUrl.adminTrombinoscope} element={<DashboardTrombinoscope />} />
       <Route path={RouterUrl.adminVote} element={<DashboardVote />} />
       <Route path={RouterUrl.adminVoteStatistics} element={<DashboardVoteStatistics />} />
+      <Route path={RouterUrl.adminStore} element={<DashboardStore />} />
 
       <Route path={RouterUrl.home} element={<Dashboard />} />
     </RouterRoutes>
