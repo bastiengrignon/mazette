@@ -5,6 +5,8 @@ import { IStore, StoreService } from '../../../services/admin/store';
 interface IDashboardStoreHooks {
   form: FormInstance<IStore>
   items: IStore[]
+  articlesLoading: boolean
+  addArticleLoading: boolean
   onAddArticle: (values: IStore) => void
   deleteArticle: (articleId: string) => void
 }
@@ -12,9 +14,14 @@ interface IDashboardStoreHooks {
 export const useDashboardStore = (): IDashboardStoreHooks => {
   const [form] = Form.useForm();
   const [items, setItems] = useState<IStore[]>([]);
+  const [articlesLoading, setArticlesLoading] = useState<boolean>(false);
+  const [addArticleLoading, setAddArticleLoading] = useState<boolean>(false);
 
   const onAddArticle: FormProps<IStore>['onFinish'] = useCallback(({ name, price }): void => {
-    StoreService.addArticle({ name, price, }).then((res) => setItems((prevState) => [...prevState, res]));
+    setAddArticleLoading(true);
+    StoreService.addArticle({ name, price, })
+      .then((res) => setItems((prevState) => [...prevState, res]))
+      .finally(() => setAddArticleLoading(false));
     form.resetFields();
   }, []);
 
@@ -25,12 +32,15 @@ export const useDashboardStore = (): IDashboardStoreHooks => {
   }, []);
 
   useEffect(() => {
-    StoreService.getAllArticles().then(setItems);
+    setArticlesLoading(true);
+    StoreService.getAllArticles().then(setItems).finally(() => setArticlesLoading(false));
   }, []);
 
   return {
     form,
     items,
+    articlesLoading,
+    addArticleLoading,
     onAddArticle,
     deleteArticle,
   };

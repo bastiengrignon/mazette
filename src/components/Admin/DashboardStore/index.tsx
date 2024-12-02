@@ -1,12 +1,12 @@
 import React from 'react';
 import Navigation from '../../../pages/admin/Navigation';
-import { Button, Divider, Flex, Form, Input, InputNumber, Typography } from 'antd';
+import { Button, Divider, Flex, Form, Input, InputNumber, Skeleton, Typography } from 'antd';
 import { formattedPrice } from '../../../lib/form';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useDashboardStore } from './DashboardStore.hooks';
 
 const DashboardStore: React.FC = () => {
-  const { form, items, onAddArticle, deleteArticle } = useDashboardStore();
+  const { form, items, articlesLoading, addArticleLoading, onAddArticle, deleteArticle } = useDashboardStore();
   return (
     <Navigation>
       <p className="text-xl mb-2">Liste des articles : </p>
@@ -18,12 +18,12 @@ const DashboardStore: React.FC = () => {
           <InputNumber min={0} step={0.5} placeholder="Prix"/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="button">Ajouter</Button>
+          <Button type="primary" htmlType="submit" className="button" loading={addArticleLoading}>Ajouter</Button>
         </Form.Item>
       </Form>
       <Divider/>
       <Flex gap={8} className="mt-4">
-        {items.length > 0 ? items.map((article) => (
+        {articlesLoading ? <Skeleton.Image active /> : items.length > 0 ? items.map((article) => (
           <div key={article.id} className="flex bg-white rounded-md p-2 aspect-[1/1] w-28">
             <Flex vertical justify="space-between" gap={8} className="w-full">
               <Flex align="center" justify="space-between" className="w-full">
