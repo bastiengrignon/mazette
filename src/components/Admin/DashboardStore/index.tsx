@@ -24,7 +24,7 @@ const DashboardStore: React.FC = () => {
       <Divider/>
       <Flex gap={8} wrap className="mt-4">
         {articlesLoading ? <Skeleton.Image active /> : items.length > 0 ? items.map((article) => (
-          <div key={article.id} className="flex bg-white rounded-md p-2 aspect-[1/1] w-36">
+          <div key={article.id} className="flex bg-white rounded-md p-2 aspect-[1/1] w-28 sm:w-36">
             <Flex vertical justify="space-between" gap={8} className="w-full">
               <Flex align="center" justify="space-between" className="w-full">
                 <Typography.Text strong ellipsis={{ tooltip: article.name }}>
