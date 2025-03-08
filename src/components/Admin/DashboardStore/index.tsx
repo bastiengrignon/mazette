@@ -6,7 +6,7 @@ import { CloseCircleOutlined } from '@ant-design/icons';
 import { useDashboardStore } from './DashboardStore.hooks';
 
 const DashboardStore: React.FC = () => {
-  const { form, items, articlesLoading, addArticleLoading, onAddArticle, deleteArticle } = useDashboardStore();
+  const { form, items, articlesLoading, addArticleLoading, deleteArticleLoading, onAddArticle, deleteArticle } = useDashboardStore();
   return (
     <Navigation>
       <p className="text-xl mb-2">Liste des articles : </p>
@@ -22,12 +22,12 @@ const DashboardStore: React.FC = () => {
         </Form.Item>
       </Form>
       <Divider/>
-      <Flex gap={8} className="mt-4">
+      <Flex gap={8} wrap className="mt-4">
         {articlesLoading ? <Skeleton.Image active /> : items.length > 0 ? items.map((article) => (
-          <div key={article.id} className="flex bg-white rounded-md p-2 aspect-[1/1] w-28">
+          <div key={article.id} className="flex bg-white rounded-md p-2 aspect-[1/1] w-36">
             <Flex vertical justify="space-between" gap={8} className="w-full">
               <Flex align="center" justify="space-between" className="w-full">
-                <Typography.Text strong>
+                <Typography.Text strong ellipsis={{ tooltip: article.name }}>
                   {article.name}
                 </Typography.Text>
                 <Button
@@ -35,6 +35,7 @@ const DashboardStore: React.FC = () => {
                   variant="filled"
                   color="danger"
                   size="small"
+                  loading={deleteArticleLoading[article.id]}
                   icon={<CloseCircleOutlined/>}
                   onClick={() => deleteArticle(article.id)}
                 />
