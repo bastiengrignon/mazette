@@ -4,7 +4,10 @@ import {
   CANCEL,
   DASHBOARD_ADD_TEXT,
   DASHBOARD_MODAL_NEW_TEXT_TITLE,
-  DASHBOARD_MODAL_TEXT, DASHBOARD_MODAL_TEXT_RULE, DASHBOARD_MODAL_TYPE, DASHBOARD_MODAL_TYPE_RULE
+  DASHBOARD_MODAL_TEXT,
+  DASHBOARD_MODAL_TEXT_RULE,
+  DASHBOARD_MODAL_TYPE,
+  DASHBOARD_MODAL_TYPE_RULE,
 } from '../Dashboard/Dashboard.constants';
 import { IText, TextType } from '../../../services';
 import { MODAL_ADD_TEXT, MODAL_CANCEL_TEXT } from '../Admin.constants';
@@ -20,7 +23,8 @@ interface DashboardTextProps {
 }
 
 const DashboardText: React.FC<DashboardTextProps> = ({ isLoading, texts, setTexts, setNewTexts }) => {
-  const { isEditing,
+  const {
+    isEditing,
     saveRow,
     editRow,
     cancel,

@@ -1,6 +1,6 @@
 import loadable from '@loadable/component';
-import { Button, Form, Modal, message } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Modal } from 'antd';
+import React from 'react';
 
 import AdminFormAddPartners from './components/AdminFormAddPartners';
 import { AdvancedImage } from '@cloudinary/react';
@@ -10,39 +10,29 @@ import Link from '../../Link';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
 
 import { cloudinary } from '../../../index';
-import useModal from '../../../constants/hooks';
-import { CommonService, IPartner, PartnerService } from '../../../services';
-import { showErrorFormMessage } from '../../../lib/validation';
+import { CommonService, IPartner } from '../../../services';
+import { useDashboardPartnerHooks } from './DashboardPartner.hooks';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardPartner: React.FC = () => {
-  const [isPartnerLoading, setIsPartnerLoading] = useState<boolean>(false);
-  const [partners, setPartners] = useState<IPartner[]>([]);
-  const [newPartners, setNewPartners] = useState<IPartner[]>([]);
-
-  // Row edition
-  const [editingId, setEditingId] = useState(0);
-  const [formRowEdition] = Form.useForm();
-
-  // Add row modal
-  const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
-  const [formRowAddition] = Form.useForm();
-
-  // Preview modal
-  const { isOpen, toggle } = useModal();
-  const [previewURL, setPreviewURL] = useState<string>('');
-
-  useEffect(() => {
-    setIsPartnerLoading(true);
-    PartnerService.getAll()
-      .then(setPartners)
-      .finally(() => setIsPartnerLoading(false));
-  }, [newPartners]);
-
-  const isEditing = (record: IPartner): boolean => record.id === editingId;
-
+  const {
+    previewURL,
+    isOpen,
+    partners,
+    addRowModalVisible,
+    formRowAddition,
+    formRowEdition,
+    isPartnerLoading,
+    setEditingId,
+    setNewPartners,
+    setAddRowModalVisible,
+    handleOkModal,
+    isEditing,
+    openModalPreview,
+    toggle,
+  } = useDashboardPartnerHooks();
   const columns = [
     {
       title: 'Nom du partenaire',
@@ -102,32 +92,6 @@ const DashboardPartner: React.FC = () => {
   ];
 
   const mergedColumns = CommonService.mergedColumns(columns, isEditing);
-
-  const handleOkModal = () => {
-    const hideLoadingMessage = message.loading('Ajout en cours', 0);
-    formRowAddition
-      .validateFields()
-      .then((values) => {
-        PartnerService.create(values)
-          .then((partner) => {
-            setPartners([...partners, partner]);
-            message.success('Partenaire ajouté', 2.5);
-          })
-          .catch((err) => message.error(`Erreur lors de l'ajout: ${err}`, 2.5))
-          .finally(() => {
-            hideLoadingMessage();
-            formRowAddition.resetFields();
-          });
-        setAddRowModalVisible(false);
-      })
-      .catch(() => showErrorFormMessage())
-      .finally(() => hideLoadingMessage());
-  };
-
-  const openModalPreview = (imageId: string) => {
-    setPreviewURL(imageId);
-    toggle();
-  };
 
   return (
     <Navigation>

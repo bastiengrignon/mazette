@@ -111,7 +111,7 @@ export const externalLinks = {
   },
 };
 
-type PreviousEdition = {
+export type PreviousEdition = {
   value: string;
   label: string;
 };

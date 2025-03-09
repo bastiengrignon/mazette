@@ -1,7 +1,21 @@
 import { CommonService, IText, TextService, TextType } from '../../../services';
-import { Form, message } from 'antd';
+import { Form, FormInstance, message } from 'antd';
 import { showErrorFormMessage } from '../../../lib/validation';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+interface IDashboardTextHooks {
+  isEditing: (item: IText) => boolean
+  saveRow: (id: number) => void
+  editRow: (item: Partial<IText>) => void
+  cancel: () => void
+  collapseTitle: (textType: string) => string
+  addRowModalVisible: boolean
+  handleOkModal: () => void
+  setAddRowModalVisible: Dispatch<SetStateAction<boolean>>
+  formRowAddition: FormInstance
+  formRowEdition: FormInstance
+  selectTextType: { text: string, value: TextType }[]
+}
 
 const selectTextType = [
   { text: 'Musique', value: TextType.music },
@@ -17,7 +31,7 @@ const selectTextType = [
   { text: 'Editions précédentes', value: TextType.previousEdition },
 ];
 
-export const useDashboardText = ({ texts, setTexts, setNewTexts }) => {
+export const useDashboardText = ({ texts, setTexts, setNewTexts }): IDashboardTextHooks => {
   const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<number>(0);
   const [formRowAddition] = Form.useForm();

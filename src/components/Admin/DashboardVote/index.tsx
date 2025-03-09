@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import dayjs from 'dayjs';
 import { TbChevronRight } from 'react-icons/tb';
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
@@ -18,9 +18,7 @@ import {
   Flex,
   Switch,
   Collapse,
-  Popconfirm,
-  InputRef,
-  QRCode,
+  Popconfirm, QRCode,
 } from 'antd';
 import {
   BUTTON_CREATE_NEW_VOTE, GO_TO_VOTE_PAGE,
@@ -33,72 +31,32 @@ import {
   TITLE_VOTE,
   VOTE_STATISTICS, WEBSITE_VOTE_PAGE,
 } from './DashboardVote.constants';
-import { VoteService } from '../../../services/admin/vote/vote.service';
-import { IVote } from '../../../services/admin/vote/vote.interface';
 import { RouterUrl } from '../../../constants';
 import { theme } from '../../../constants/theme';
+import { useDashboardVoteHooks } from './DashboardVote.hooks';
 
 const { Title } = Typography;
 
 const DashboardVote = () => {
-  const addChoiceInputRef = useRef<InputRef>(null);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [voteChoices, setVoteChoices] = useState<string[]>([]);
-  const [newChoice, setNewChoice] = useState<string>('');
-  const [votes, setVotes] = useState<IVote[]>([]);
-  const [newVoteTitle, setNewVoteTitle] = useState<string>('');
+  const {
+    addChoiceInputRef,
+    votes,
+    newVoteTitle,
+    newChoice,
+    voteChoices,
+    isModalVisible,
+    setNewVoteTitle,
+    setNewChoice,
+    setIsModalVisible,
+    addChoice,
+    handleAddVote,
+    toggleVoteActivation,
+    deleteVote,
+    handleCloseModal,
+    downloadQRCode,
+  } = useDashboardVoteHooks();
 
-  const addChoice = useCallback(() => {
-    if (newChoice !== '') {
-      setVoteChoices([...voteChoices, newChoice]);
-    }
-    setNewChoice('');
-    addChoiceInputRef.current?.focus();
-  }, [newChoice, voteChoices]);
-
-  const handleAddVote = () => {
-    setIsModalVisible(false);
-    VoteService.create({
-      title: newVoteTitle,
-      activated: false,
-      choices: voteChoices.map((value) => ({ label: value })),
-    }).then((vote) => {
-      setVotes([...votes, vote]);
-      setVoteChoices([]);
-      setNewVoteTitle('');
-    });
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-    setVoteChoices([]);
-    setNewVoteTitle('');
-  };
-
-  const toggleVoteActivation = (id: string) => (checked: boolean) => {
-    VoteService.setVoteActivation(id, checked).then((vote) =>
-      setVotes(votes.map((v) => (v.id === vote.id ? vote : v)))
-    );
-  };
-
-  const deleteVote = (id: string) => {
-    VoteService.deleteVote(id).then(() => setVotes(votes.filter((v) => v.id !== id)));
-  };
-
-  const downloadQRCode = () => {
-    const canvas = document.getElementById(QRCODE_ID)?.querySelector<HTMLCanvasElement>('canvas');
-    if (canvas) {
-      const url = canvas.toDataURL();
-      const a = document.createElement('a');
-      a.download = 'QRCode.png';
-      a.href = url;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-  };
-
-  const showQrCodeModal = () => {
+  const showQrCodeModal = useCallback(() => {
     const websiteURL = window.location.origin.replace('admin.', '');
     Modal.info({
       okButtonProps: { className: 'button' },
@@ -121,10 +79,6 @@ const DashboardVote = () => {
         </Flex>
       ),
     });
-  };
-
-  useEffect(() => {
-    VoteService.getAll().then((votes) => setVotes(votes));
   }, []);
 
   return (
@@ -138,7 +92,7 @@ const DashboardVote = () => {
       <Button type="primary" className="button" onClick={() => setIsModalVisible(true)}>
         {BUTTON_CREATE_NEW_VOTE}
       </Button>
-      <div className="my-6" />
+      <div className="my-6"/>
       <Row gutter={[24, 24]}>
         {votes.map((vote) => (
           <Col key={vote.id} className="gutter-row" xs={24} sm={12} xl={8}>
@@ -150,7 +104,7 @@ const DashboardVote = () => {
               <Flex justify="space-between">
                 <div className="space-x-2">
                   <span>Activer</span>
-                  <Switch checked={vote.activated} onChange={toggleVoteActivation(vote.id || '')} />
+                  <Switch checked={vote.activated} onChange={toggleVoteActivation(vote.id || '')}/>
                 </div>
                 <Popconfirm
                   title="Suppression du vote"
@@ -159,7 +113,7 @@ const DashboardVote = () => {
                   cancelText="Non"
                   okButtonProps={{ className: 'button' }}
                   onConfirm={() => vote.id && deleteVote(vote.id)}>
-                  <Button type="primary" className="bg-red" icon={<DeleteOutlined />} />
+                  <Button type="primary" className="bg-red" icon={<DeleteOutlined/>}/>
                 </Popconfirm>
               </Flex>
               <Collapse
@@ -186,7 +140,7 @@ const DashboardVote = () => {
                   <Link to={`${RouterUrl.adminVote}/${vote.id}`} className="underline">
                     <Flex align="center">
                       {VOTE_STATISTICS}
-                      <TbChevronRight />
+                      <TbChevronRight/>
                     </Flex>
                   </Link>
                 </Flex>
@@ -208,7 +162,7 @@ const DashboardVote = () => {
           value={newVoteTitle}
           onChange={({ target: { value } }) => setNewVoteTitle(value)}
         />
-        <div className="my-4" />
+        <div className="my-4"/>
         <Space.Compact className="w-full">
           <Input
             ref={addChoiceInputRef}
@@ -221,7 +175,7 @@ const DashboardVote = () => {
             {MODAL_BUTTON_ADD_CHOICE}
           </Button>
         </Space.Compact>
-        <div className="my-4" />
+        <div className="my-4"/>
         <List
           bordered
           itemLayout="horizontal"

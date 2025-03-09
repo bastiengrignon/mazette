@@ -1,17 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import loadable from '@loadable/component';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import {
-  Card,
-  DatePicker,
-  InputNumber,
-  Switch,
-  Flex,
-} from 'antd';
-
-import { CookieService, IText, TextService, TextType } from '../../../services';
-import { FestivalService, IFestival } from '../../../services/admin/festival';
+import { Card, DatePicker, InputNumber, Switch, Flex, } from 'antd';
 
 import {
   DASHBOARD_PLACEHOLDER_LATITUDE,
@@ -24,106 +15,33 @@ import {
   DASHBOARD_TITLE_INFORMATION,
 } from './Dashboard.constants';
 import DashboardText from '../DashboardText';
+import { useDashboardHooks } from './Dashboard.hooks';
 
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const { RangePicker } = DatePicker;
 
-type NoUndefinedRangeValueType<DateType> = [DateType | null, DateType | null] | null;
-
 const Dashboard: React.FC = () => {
-  const [isTextLoading, setIsTextLoading] = useState<boolean>(false);
-  const [texts, setTexts] = useState<IText[]>([]);
-  const [newTexts, setNewTexts] = useState<IText[]>(texts);
-  const [infoText, setInfoText] = useState<IText>({} as IText);
-  const [festival, setFestival] = useState<IFestival>({} as IFestival);
-  const [toggleLoading, setToggleLoading] = useState<{ [x: string]: boolean }>({});
-
-  useEffect(() => {
-    setIsTextLoading(true);
-    TextService.getAll()
-      .then(setTexts)
-      .finally(() => setIsTextLoading(false));
-    TextService.getByTextType(TextType.info).then(setInfoText);
-    FestivalService.getLastFestival().then((festival) => {
-      CookieService.set(CookieService.festivalId, festival.id);
-      setFestival(festival);
-    });
-  }, [newTexts]);
-
-  const updateInformationsVisibility = (checked: boolean): void => {
-    if (infoText) {
-      TextService.update(infoText.id, {
-        ...infoText,
-        isShowed: checked,
-      }).then((res) =>
-        setInfoText({
-          ...infoText,
-          ...res,
-        })
-      );
-    }
-  };
-
-  const handleFestivalDate = (dates: NoUndefinedRangeValueType<Dayjs>): void => {
-    if (dates) {
-      if (dates[0] && dates[1]) {
-        FestivalService.update(festival.id, {
-          ...festival,
-          startDate: dates[0].toDate(),
-          endDate: dates[1].toDate(),
-        }).then((res) =>
-          setFestival({
-            ...festival,
-            ...res,
-          })
-        );
-      }
-    }
-  };
-
-  const handleFestivalLatitude = (newLatitude: number | null): void => {
-    FestivalService.update(festival.id, {
-      ...festival,
-      location: { ...festival.location, latitude: newLatitude || 0 },
-    }).then((res) =>
-      setFestival({
-        ...festival,
-        ...res,
-      })
-    );
-  };
-
-  const handleFestivalLongitude = (newLongitude: number | null): void => {
-    FestivalService.update(festival.id, {
-      ...festival,
-      location: { ...festival.location, longitude: newLongitude || 0 },
-    }).then((res) =>
-      setFestival({
-        ...festival,
-        ...res,
-      })
-    );
-  };
-
-  const toggleVisibility =
-    (key: string) =>
-    (checked: boolean): void => {
-      setToggleLoading({ [key]: true });
-      FestivalService.update(festival.id, {
-        ...festival,
-        [key]: checked,
-      })
-        .then((res) => setFestival({ ...festival, ...res }))
-        .finally(() => setToggleLoading({ [key]: false }));
-    };
-
+  const {
+    isTextLoading,
+    texts,
+    infoText,
+    festival,
+    setNewTexts,
+    setTexts,
+    handleFestivalDate,
+    handleFestivalLatitude,
+    handleFestivalLongitude,
+    updateInformationsVisibility,
+    toggleVisibility,
+    toggleLoading,
+  } = useDashboardHooks();
   return (
     <Navigation>
       <div className="grid grid-cols-12 gap-2 md:gap-5">
-        <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-8">
-          <DashboardText isLoading={isTextLoading} texts={texts} setTexts={setTexts} setNewTexts={setNewTexts} />
+        <Card variant="borderless" className="rounded-lg col-span-12 lg:col-span-8">
+          <DashboardText isLoading={isTextLoading} texts={texts} setTexts={setTexts} setNewTexts={setNewTexts}/>
         </Card>
-        <Card bordered={false} className="rounded-lg col-span-12 lg:col-span-4">
+        <Card variant="borderless" className="rounded-lg col-span-12 lg:col-span-4">
           <div className="space-y-4">
             <div className="text-3xl text-center">{DASHBOARD_TITLE_INFORMATION}</div>
             <Flex align="baseline" justify="space-between">
@@ -160,7 +78,7 @@ const Dashboard: React.FC = () => {
               </Flex>
             </Flex>
             <Flex align="center" gap="small">
-              <Switch disabled={!infoText?.id} onChange={updateInformationsVisibility} checked={infoText?.isShowed} />
+              <Switch disabled={!infoText?.id} onChange={updateInformationsVisibility} checked={infoText?.isShowed}/>
               <div>{DASHBOARD_SHOW_HOME_INFORMATION}</div>
             </Flex>
             <Flex align="center" gap="small">

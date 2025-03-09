@@ -1,46 +1,36 @@
 import loadable from '@loadable/component';
-import { Button, Form, Modal, message } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Modal } from 'antd';
+import React from 'react';
 
 import { AdvancedImage } from '@cloudinary/react';
 import { cloudinary } from '../../../index';
-import useModal from '../../../constants/hooks';
-import { CommonService, ITrombinoscope, TrombinoscopeService } from '../../../services';
+import { CommonService, ITrombinoscope } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
-import { showErrorFormMessage } from '../../../lib/validation';
+import { useDashboardTrombinoscopeHooks } from './DashboardTrombinoscope.hooks';
 
 const AdminFormAddTrombinoscope = loadable(() => import('./components/AdminFormAddTrombinoscope'));
 const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardTrombinoscope: React.FC = () => {
-  const [isTrombinoscopeLoading, setIsTrombinoscopeLoading] = useState<boolean>(false);
-  const [trombinoscopes, setTrombinoscopes] = useState<ITrombinoscope[]>([]);
-  const [newTrombinoscopes, setNewTrombinoscopes] = useState<ITrombinoscope[]>([]);
-
-  // Row edition
-  const [editingId, setEditingId] = useState(0);
-  const [formRowEdition] = Form.useForm();
-
-  // Add row modal
-  const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
-  const [formRowAddition] = Form.useForm();
-
-  // Preview modal
-  const { isOpen, toggle } = useModal();
-  const [previewURL, setPreviewURL] = useState<string>('');
-
-  useEffect(() => {
-    setIsTrombinoscopeLoading(true);
-    TrombinoscopeService.getAll()
-      .then(setTrombinoscopes)
-      .finally(() => setIsTrombinoscopeLoading(false));
-  }, [newTrombinoscopes]);
-
-  const isEditing = (record: ITrombinoscope): boolean => record.id === editingId;
-
+  const {
+    formRowEdition,
+    formRowAddition,
+    isOpen,
+    trombinoscopes,
+    previewURL,
+    addRowModalVisible,
+    isTrombinoscopeLoading,
+    setEditingId,
+    setNewTrombinoscopes,
+    setAddRowModalVisible,
+    toggle,
+    isEditing,
+    handleOkModal,
+    openModalPreview,
+  } = useDashboardTrombinoscopeHooks();
   const columns = [
     {
       title: 'Prénom',
@@ -90,35 +80,6 @@ const DashboardTrombinoscope: React.FC = () => {
   ];
 
   const mergedColumns = CommonService.mergedColumns(columns, isEditing);
-
-  const handleOkModal = () => {
-    const hideLoadingMessage = message.loading('Ajout en cours', 0);
-    formRowAddition
-      .validateFields()
-      .then((values) => {
-        TrombinoscopeService.create(values)
-          .then((trombinoscope) => {
-            setTrombinoscopes([...trombinoscopes, trombinoscope]);
-            message.success('Trombinoscope ajouté', 2.5);
-          })
-          .catch((err) => message.error(`Erreur lors de l'ajout: ${err}`, 2.5))
-          .finally(() => {
-            hideLoadingMessage();
-            formRowAddition.resetFields();
-          });
-        setAddRowModalVisible(false);
-      })
-      .catch(() => {
-        hideLoadingMessage();
-        showErrorFormMessage();
-      })
-      .finally(() => hideLoadingMessage());
-  };
-
-  const openModalPreview = (imageId: string) => {
-    setPreviewURL(imageId);
-    toggle();
-  };
 
   return (
     <Navigation>

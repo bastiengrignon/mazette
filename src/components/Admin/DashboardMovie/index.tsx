@@ -1,19 +1,17 @@
 import loadable from '@loadable/component';
-import { Button, Form, Modal, Tooltip, message, Flex, Select } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Modal, Tooltip, Flex, Select } from 'antd';
+import React from 'react';
 import dayjs from 'dayjs';
 
 import { AdvancedImage } from '@cloudinary/react';
 
 import { cloudinary } from '../../../index';
 import { formatDate } from '../../../lib/date';
-import useModal from '../../../constants/hooks';
-import { CommonService, IMovie, MovieService } from '../../../services';
+import { CommonService, IMovie } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
-import { allEditions } from '../../../constants';
-import { showErrorFormMessage } from '../../../lib/validation';
+import { useDashboardMovieHooks } from './DashboardMovie.hooks';
 
 const AdminFormAddMovie = loadable(() => import('./components/AdminFormAddMovie'));
 const Link = loadable(() => import('../../Link'));
@@ -21,33 +19,25 @@ const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardMovie: React.FC = () => {
-  const editions = allEditions(true);
-  const [isMovieLoading, setIsMovieLoading] = useState<boolean>(false);
-  const [movies, setMovies] = useState<IMovie[]>([]);
-  const [newMovies, setNewMovies] = useState<IMovie[]>([]);
-  const [selectedEdition, setSelectedEdition] = useState<string>(editions[0].value);
-
-  // Row edition
-  const [editingId, setEditingId] = useState<number>(0);
-  const [formRowEdition] = Form.useForm();
-
-  // Add row modal
-  const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
-  const [formRowAddition] = Form.useForm();
-
-  // Preview modal
-  const { isOpen, toggle } = useModal();
-  const [previewURL, setPreviewURL] = useState<string>('');
-
-  useEffect(() => {
-    setIsMovieLoading(true);
-    MovieService.getAll()
-      .then(setMovies)
-      .finally(() => setIsMovieLoading(false));
-  }, [newMovies]);
-
-  const isEditing = (record: IMovie): boolean => record.id === editingId;
-
+  const {
+    isOpen,
+    previewURL,
+    editions,
+    movies,
+    addRowModalVisible,
+    selectedEdition,
+    formRowAddition,
+    formRowEdition,
+    isMovieLoading,
+    setSelectedEdition,
+    setEditingId,
+    setNewMovies,
+    setAddRowModalVisible,
+    isEditing,
+    openModalPreview,
+    handleOkModal,
+    toggle,
+  } = useDashboardMovieHooks();
   const columns = [
     {
       title: 'Titre',
@@ -157,32 +147,6 @@ const DashboardMovie: React.FC = () => {
   ];
 
   const mergedColumns = CommonService.mergedColumns(columns, isEditing);
-
-  const handleOkModal = () => {
-    const hideLoadingMessage = message.loading('Ajout en cours', 0);
-    formRowAddition
-      .validateFields()
-      .then((values) => {
-        MovieService.create(values)
-          .then((movie) => {
-            setMovies([...movies, movie]);
-            message.success('Court-métrage ajouté', 2.5);
-          })
-          .catch((err) => message.error(`Erreur lors de l'ajout: ${err}`, 2.5))
-          .finally(() => {
-            hideLoadingMessage();
-            formRowAddition.resetFields();
-          });
-        setAddRowModalVisible(false);
-      })
-      .catch(() => showErrorFormMessage())
-      .finally(() => hideLoadingMessage());
-  };
-
-  const openModalPreview = (imageId: string) => {
-    setPreviewURL(imageId);
-    toggle();
-  };
 
   return (
     <Navigation>

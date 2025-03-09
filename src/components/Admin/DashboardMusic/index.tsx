@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { AdvancedImage } from '@cloudinary/react';
 import loadable from '@loadable/component';
-import { Button, Form, Modal, Tooltip, message, Select, Flex } from 'antd';
+import { Button, Modal, Tooltip, Select, Flex } from 'antd';
 import dayjs from 'dayjs';
 
 import { cloudinary } from '../../../index';
 import { formatDate } from '../../../lib/date';
-import useModal from '../../../constants/hooks';
-import { CommonService, IMusic, MusicService } from '../../../services';
+import { CommonService, IMusic } from '../../../services';
 
 import CustomTable from '../CustomTable';
 import ActionButtonsRow, { ActionButtonType } from '../EditableCell/components/ActionButtonsRow';
-import { allEditions } from '../../../constants';
-import { showErrorFormMessage } from '../../../lib/validation';
+import { useDashboardMusicHooks } from './DashboardMusic.hooks';
 
 const AdminFormAddArtist = loadable(() => import('./components/AdminFormAddArtist'));
 const Link = loadable(() => import('../../Link'));
@@ -21,59 +19,25 @@ const Navigation = loadable(() => import('../../../pages/admin/Navigation'));
 const PreviewModal = loadable(() => import('../PreviewModal'));
 
 const DashboardMusic: React.FC = () => {
-  const editions = allEditions(true);
-  const [isMusicLoading, setIsMusicLoading] = useState<boolean>(false);
-  const [musics, setMusics] = useState<IMusic[]>([]);
-  const [newMusics, setNewMusics] = useState<IMusic[]>([]);
-  const [selectedEdition, setSelectedEdition] = useState<string>(editions[0].value);
-
-  // Row edition
-  const [editingId, setEditingId] = useState(0);
-  const [formRowEdition] = Form.useForm();
-
-  // Add row modal
-  const [addRowModalVisible, setAddRowModalVisible] = useState<boolean>(false);
-  const [formRowAddition] = Form.useForm();
-
-  // Preview modal
-  const { isOpen, toggle } = useModal();
-  const [previewURL, setPreviewURL] = useState<string>('');
-
-  useEffect(() => {
-    setIsMusicLoading(true);
-    MusicService.getAll()
-      .then(setMusics)
-      .finally(() => setIsMusicLoading(false));
-  }, [newMusics]);
-
-  const isEditing = (record: IMusic): boolean => record.id === editingId;
-
-  const handleOkModal = (): void => {
-    const hideLoadingMessage = message.loading('Ajout en cours', 0);
-    formRowAddition
-      .validateFields()
-      .then((values) => {
-        MusicService.create(values)
-          .then((music) => {
-            setMusics([...musics, music]);
-            message.success('Musique ajoutée', 2.5);
-          })
-          .catch((err) => message.error(`Erreur lors de l'ajout: ${err}`, 2.5))
-          .finally(() => {
-            hideLoadingMessage();
-            formRowAddition.resetFields();
-          });
-        setAddRowModalVisible(false);
-      })
-      .catch(() => showErrorFormMessage())
-      .finally(() => hideLoadingMessage());
-  };
-
-  const openModalPreview = (imageId: string) => {
-    setPreviewURL(imageId);
-    toggle();
-  };
-
+  const {
+    isOpen,
+    previewURL,
+    editions,
+    musics,
+    addRowModalVisible,
+    selectedEdition,
+    formRowAddition,
+    formRowEdition,
+    isMusicLoading,
+    setSelectedEdition,
+    setEditingId,
+    setNewMusics,
+    setAddRowModalVisible,
+    isEditing,
+    openModalPreview,
+    handleOkModal,
+    toggle,
+  } = useDashboardMusicHooks();
   const columns = [
     {
       title: 'Nom d’artiste',
