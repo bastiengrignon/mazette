@@ -32,39 +32,39 @@ const Footer: React.FC = () => {
   return (
     <footer className="text-black text-center w-full p-2 mt-10">
       <div className="bg-footer mx-auto w-11/12 rounded py-1 my-5" />
-      <div className="grid grid-cols-5 xl:grid-cols-6 grid-rows-4">
-        <div className="col-span-6 lg:col-span-5 row-span-5 text-left flex flex-row flex-wrap justify-evenly overflow-x-auto">
-          {partners.map((partner, key) => (
-            <Skeleton key={key} avatar={true} active={true} loading={isPartnerLoading}>
-              {partner.link.trim() === '' ? (
+      <div className="flex justify-center flex-wrap gap-2">
+        {partners.map((partner, key) => (
+          <Skeleton key={key} avatar={true} active={true} loading={isPartnerLoading}>
+            {(partner.link || '').trim() === '' ? (
+              <AdvancedImage
+                plugins={[lazyload({ threshold: 0.5 })]}
+                cldImg={cloudinary.image(partner.image)}
+                alt={partner.name}
+                className="w-36 h-16 2xl:h-24 object-contain"
+              />
+            ) : (
+              <ExternalLink src={partner.link || ''}>
                 <AdvancedImage
                   plugins={[lazyload({ threshold: 0.5 })]}
                   cldImg={cloudinary.image(partner.image)}
                   alt={partner.name}
-                  className="w-auto h-16 2xl:h-24 object-contain"
+                  className="w-36 h-16 2xl:h-24 object-contain"
                 />
-              ) : (
-                <ExternalLink src={partner.link}>
-                  <AdvancedImage
-                    plugins={[lazyload({ threshold: 0.5 })]}
-                    cldImg={cloudinary.image(partner.image)}
-                    alt={partner.name}
-                    className="w-auto h-16 2xl:h-24 object-contain"
-                  />
-                </ExternalLink>
-              )}
-            </Skeleton>
-          ))}
-        </div>
-        <div className="col-span-6 lg:col-span-1 row-span-4 flex justify-center lg:justify-evenly items-center text-5xl my-2 lg:my-0">
+              </ExternalLink>
+            )}
+          </Skeleton>
+        ))}
+      </div>
+      <div className="flex flex-col items-center gap-2 mt-2">
+        <div className="flex justify-center lg:justify-evenly items-center text-5xl gap-2">
           <ExternalLink src={externalLinks.social.instagram} onClick={() => trackSocialMediaGA('instagram')}>
-            <FaInstagram className="hover:text-green" title={ALT_TEXT_SOCIAL_MEDIAS.instagram} />
+            <FaInstagram className="text-green hover:text-green/50" title={ALT_TEXT_SOCIAL_MEDIAS.instagram} />
           </ExternalLink>
           <ExternalLink src={externalLinks.social.facebook} onClick={() => trackSocialMediaGA('facebook')}>
-            <FaFacebookF className="hover:text-green" title={ALT_TEXT_SOCIAL_MEDIAS.facebook} />
+            <FaFacebookF className="text-green hover:text-green/50" title={ALT_TEXT_SOCIAL_MEDIAS.facebook} />
           </ExternalLink>
         </div>
-        <div className="col-span-6 row-span-1 italic mt-4">
+        <div>
           <Link to={RouterUrl.mention} className="link">
             {LEGAL_MENTION}
           </Link>
